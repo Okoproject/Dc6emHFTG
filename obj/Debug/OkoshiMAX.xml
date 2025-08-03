@@ -1,0 +1,147 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+OkoshiMAX
+</name>
+</assembly>
+<members>
+<member name="T:OkoshiMAX.My.Resources.Resources">
+<summary>
+  ローカライズされた文字列などを検索するための、厳密に型指定されたリソース クラスです。
+</summary>
+</member>
+<member name="P:OkoshiMAX.My.Resources.Resources.ResourceManager">
+<summary>
+  このクラスで使用されているキャッシュされた ResourceManager インスタンスを返します。
+</summary>
+</member>
+<member name="P:OkoshiMAX.My.Resources.Resources.Culture">
+<summary>
+  すべてについて、現在のスレッドの CurrentUICulture プロパティをオーバーライドします
+  現在のスレッドの CurrentUICulture プロパティをオーバーライドします。
+</summary>
+</member>
+<member name="P:OkoshiMAX.My.Resources.Resources.Add_16x">
+<summary>
+  型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+</summary>
+</member>
+<member name="P:OkoshiMAX.My.Resources.Resources.AlwaysVisible_16x">
+<summary>
+  型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+</summary>
+</member>
+<member name="P:OkoshiMAX.My.Resources.Resources.Bookmark_16x">
+<summary>
+  型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+</summary>
+</member>
+<member name="P:OkoshiMAX.My.Resources.Resources.Cancel_16x">
+<summary>
+  型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+</summary>
+</member>
+<member name="P:OkoshiMAX.My.Resources.Resources.CaptureFrame_16x">
+<summary>
+  型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+</summary>
+</member>
+<member name="P:OkoshiMAX.My.Resources.Resources.DestinationAssistant_16x">
+<summary>
+  型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+</summary>
+</member>
+<member name="P:OkoshiMAX.My.Resources.Resources.DownloadDocument_16x">
+<summary>
+  型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+</summary>
+</member>
+<member name="P:OkoshiMAX.My.Resources.Resources.FolderClosed_16x">
+<summary>
+  型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+</summary>
+</member>
+<member name="P:OkoshiMAX.My.Resources.Resources.GlyphRight_16x">
+<summary>
+  型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+</summary>
+</member>
+<member name="P:OkoshiMAX.My.Resources.Resources.ifn0304">
+<summary>
+  型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+</summary>
+</member>
+<member name="P:OkoshiMAX.My.Resources.Resources.Monitor_16x">
+<summary>
+  型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+</summary>
+</member>
+<member name="P:OkoshiMAX.My.Resources.Resources.OkoshiMAX1_5_0">
+<summary>
+  (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
+</summary>
+</member>
+<member name="P:OkoshiMAX.My.Resources.Resources.OpenFolder_16x">
+<summary>
+  型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+</summary>
+</member>
+<member name="P:OkoshiMAX.My.Resources.Resources.Pause_16x">
+<summary>
+  型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+</summary>
+</member>
+<member name="P:OkoshiMAX.My.Resources.Resources.PinnedItem_16x">
+<summary>
+  型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+</summary>
+</member>
+<member name="P:OkoshiMAX.My.Resources.Resources.PlayVideo_16x">
+<summary>
+  型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+</summary>
+</member>
+<member name="P:OkoshiMAX.My.Resources.Resources.Run_16x">
+<summary>
+  型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+</summary>
+</member>
+<member name="P:OkoshiMAX.My.Resources.Resources.SettingsOutline_16x">
+<summary>
+  型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+</summary>
+</member>
+<member name="P:OkoshiMAX.My.Resources.Resources.Stop_grey_16x">
+<summary>
+  型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+</summary>
+</member>
+<member name="P:OkoshiMAX.My.Resources.Resources.Volume_16x">
+<summary>
+  型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+</summary>
+</member>
+<member name="M:OkoshiMAX.Form1.WriteCsvFromDGV(System.Windows.Forms.DataGridView,System.String)">
+ -----------------------------------------------------------------------------
+ <summary>
+ DataGridViewからCSVファイルへの書込処理
+ （WriteCsv:CSVファイルの書込処理の利用による）
+ </summary>
+ <param name="dgv">DataGridView</param>
+ <param name="astrFileName">ファイル名</param>
+ -----------------------------------------------------------------------------
+</member>
+<member name="M:OkoshiMAX.Form1.WriteCsv(System.String,System.String[][])">
+ -----------------------------------------------------------------------------
+ <summary>
+ CSVファイルの書込処理
+ </summary>
+ <param name="astrFileName">ファイル名</param>
+ <param name="aarrData">書込データ文字列の2次元配列</param>
+ <returns>True:結果OK, False:NG</returns>
+ <remarks>カラム名をファイルに出力したい場合は、書込データの先頭に設定すること</remarks>
+ -----------------------------------------------------------------------------
+</member>
+</members>
+</doc>

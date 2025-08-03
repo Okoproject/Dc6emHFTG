@@ -1,0 +1,423 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="My" GeneratedClassName="MySettings" UseMySettingsClassName="true">
+  <Profiles />
+  <Settings>
+    <Setting Name="LastOpenedFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="AutoBack" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="LastIchi" Type="System.Double" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Atama" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Oshiri" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="MyLocation" Type="System.Drawing.Point" Scope="User">
+      <Value Profile="(Default)">0, 0</Value>
+    </Setting>
+    <Setting Name="MyClientSize" Type="System.Drawing.Size" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SK1" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SK2" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SK3" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SK4" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SK5" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SK6" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SK7" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SK8" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SK9" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SK10" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SK11" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SK12" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SK13" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SK14" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SK15" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SK16" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SK17" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SK18" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SK19" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SK20" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKA" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKB" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKC" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKD" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKE" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKAA" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKBA" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKCA" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKDA" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKEA" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Onryou" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="MM1" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="MM2" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="MM3" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="HO1" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="HO2" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="HO3" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKM1" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKM1A" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKM2" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKM2A" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKM3" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKM3A" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKH1" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKH1A" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKH2" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKH2A" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKH3" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKH3A" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Setting" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKF" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKFA" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Atama2" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Oshiri2" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="TimeCode" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Atama3" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Oshiri3" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKG" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKH" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKI" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKJ" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKK" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKL" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKM" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKN" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKO" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKP" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKGA" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKHA" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKIA" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKJA" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKKA" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKLA" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKMA" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKNA" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKOA" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKPA" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKQA" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKRA" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKSA" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKTA" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKUA" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKVA" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKWA" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKXA" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKYA" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKZA" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKQ" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKR" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKS" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKT" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKU" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKV" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKW" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKX" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKY" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKZ" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="p11_width" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="p11_height" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="p12_width" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="p12_height" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="p21_width" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="p21_height" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="p22_width" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="p22_height" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="gamen" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="shiori" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SC1" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)">50</Value>
+    </Setting>
+    <Setting Name="SC2" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="SC3" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)">110</Value>
+    </Setting>
+    <Setting Name="SC4" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)">120</Value>
+    </Setting>
+    <Setting Name="SC5" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)">130</Value>
+    </Setting>
+    <Setting Name="SC6" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)">140</Value>
+    </Setting>
+    <Setting Name="SC7" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)">150</Value>
+    </Setting>
+    <Setting Name="SC1A" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SC2A" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SC3A" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SC4A" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SC5A" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SC6A" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SC7A" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKSC1" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKSC2" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKSC3" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKSC4" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKSC5" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKSC6" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SKSC7" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Fuka" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Fumei" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Sonota" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="shokai" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+  </Settings>
+</SettingsFile>

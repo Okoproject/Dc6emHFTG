@@ -1,0 +1,107 @@
+D:\_Documents_And_DATA\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\obj\Debug\OkoshiMAX.vbprojResolveAssemblyReference.cache
+D:\_Documents_And_DATA\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\obj\Debug\Interop.WMPLib.dll
+D:\_Documents_And_DATA\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\obj\Debug\AxInterop.WMPLib.dll
+D:\_Documents_And_DATA\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\obj\Debug\OkoshiMAX.vbproj.ResolveComReference.cache
+D:\_Documents_And_DATA\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\obj\Debug\OkoshiMAX.Form1.resources
+D:\_Documents_And_DATA\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\obj\Debug\OkoshiMAX.Form2.resources
+D:\_Documents_And_DATA\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\obj\Debug\OkoshiMAX.Resources.resources
+D:\_Documents_And_DATA\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\obj\Debug\OkoshiMAX.vbproj.GenerateResource.Cache
+D:\_Documents_And_DATA\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\obj\Debug\OkoshiMAX.xml
+D:\_Documents_And_DATA\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\bin\Debug\OkoshiMAX.exe.config
+D:\_Documents_And_DATA\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\bin\Debug\OkoshiMAX.exe.manifest
+D:\_Documents_And_DATA\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\bin\Debug\OkoshiMAX.application
+D:\_Documents_And_DATA\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\bin\Debug\OkoshiMAX.exe
+D:\_Documents_And_DATA\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\bin\Debug\OkoshiMAX.pdb
+D:\_Documents_And_DATA\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\bin\Debug\OkoshiMAX.xml
+D:\_Documents_And_DATA\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\bin\Debug\Interop.WMPLib.dll
+D:\_Documents_And_DATA\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\bin\Debug\AxInterop.WMPLib.dll
+D:\_Documents_And_DATA\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\obj\Debug\OkoshiMAX.exe.manifest
+D:\_Documents_And_DATA\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\obj\Debug\OkoshiMAX.application
+D:\_Documents_And_DATA\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\obj\Debug\OkoshiMAX.exe
+D:\_Documents_And_DATA\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\obj\Debug\OkoshiMAX.pdb
+D:\_Documents_And_DATA\＃＃未整理\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\bin\Debug\OkoshiMAX.exe.config
+D:\_Documents_And_DATA\＃＃未整理\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\obj\Debug\Interop.WMPLib.dll
+D:\_Documents_And_DATA\＃＃未整理\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\obj\Debug\AxInterop.WMPLib.dll
+D:\_Documents_And_DATA\＃＃未整理\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\obj\Debug\OkoshiMAX.vbproj.ResolveComReference.cache
+D:\_Documents_And_DATA\＃＃未整理\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\obj\Debug\OkoshiMAX.exe
+D:\_Documents_And_DATA\＃＃未整理\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\obj\Debug\OkoshiMAX.xml
+D:\_Documents_And_DATA\＃＃未整理\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\obj\Debug\OkoshiMAX.pdb
+D:\_Documents_And_DATA\＃＃未整理\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\bin\Debug\OkoshiMAX.exe.manifest
+D:\_Documents_And_DATA\＃＃未整理\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\bin\Debug\OkoshiMAX.application
+D:\_Documents_And_DATA\＃＃未整理\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\bin\Debug\OkoshiMAX.exe
+D:\_Documents_And_DATA\＃＃未整理\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\bin\Debug\OkoshiMAX.pdb
+D:\_Documents_And_DATA\＃＃未整理\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\bin\Debug\OkoshiMAX.xml
+D:\_Documents_And_DATA\＃＃未整理\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\bin\Debug\Interop.WMPLib.dll
+D:\_Documents_And_DATA\＃＃未整理\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\bin\Debug\AxInterop.WMPLib.dll
+D:\_Documents_And_DATA\＃＃未整理\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\obj\Debug\OkoshiMAX.Form1.resources
+D:\_Documents_And_DATA\＃＃未整理\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\obj\Debug\OkoshiMAX.Form2.resources
+D:\_Documents_And_DATA\＃＃未整理\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\obj\Debug\OkoshiMAX.Resources.resources
+D:\_Documents_And_DATA\＃＃未整理\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\obj\Debug\OkoshiMAX.vbproj.GenerateResource.Cache
+D:\_Documents_And_DATA\＃＃未整理\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\obj\Debug\OkoshiMAX.exe.manifest
+D:\_Documents_And_DATA\＃＃未整理\Visual Studio 2015\Projects\OkoshiMAX_2\WindowsApplication4\obj\Debug\OkoshiMAX.application
+C:\Users\吉岡輝久\Desktop\OkoshiMAX_2\WindowsApplication4\bin\Debug\OkoshiMAX.exe.config
+C:\Users\吉岡輝久\Desktop\OkoshiMAX_2\WindowsApplication4\obj\Debug\Interop.WMPLib.dll
+C:\Users\吉岡輝久\Desktop\OkoshiMAX_2\WindowsApplication4\obj\Debug\AxInterop.WMPLib.dll
+C:\Users\吉岡輝久\Desktop\OkoshiMAX_2\WindowsApplication4\obj\Debug\OkoshiMAX.vbproj.ResolveComReference.cache
+C:\Users\吉岡輝久\Desktop\OkoshiMAX_2\WindowsApplication4\obj\Debug\OkoshiMAX.exe
+C:\Users\吉岡輝久\Desktop\OkoshiMAX_2\WindowsApplication4\obj\Debug\OkoshiMAX.xml
+C:\Users\吉岡輝久\Desktop\OkoshiMAX_2\WindowsApplication4\obj\Debug\OkoshiMAX.pdb
+C:\Users\吉岡輝久\Desktop\OkoshiMAX_2\WindowsApplication4\bin\Debug\OkoshiMAX.exe.manifest
+C:\Users\吉岡輝久\Desktop\OkoshiMAX_2\WindowsApplication4\bin\Debug\OkoshiMAX.application
+C:\Users\吉岡輝久\Desktop\OkoshiMAX_2\WindowsApplication4\bin\Debug\OkoshiMAX.exe
+C:\Users\吉岡輝久\Desktop\OkoshiMAX_2\WindowsApplication4\bin\Debug\OkoshiMAX.pdb
+C:\Users\吉岡輝久\Desktop\OkoshiMAX_2\WindowsApplication4\bin\Debug\OkoshiMAX.xml
+C:\Users\吉岡輝久\Desktop\OkoshiMAX_2\WindowsApplication4\bin\Debug\Interop.WMPLib.dll
+C:\Users\吉岡輝久\Desktop\OkoshiMAX_2\WindowsApplication4\bin\Debug\AxInterop.WMPLib.dll
+C:\Users\吉岡輝久\Desktop\OkoshiMAX_2\WindowsApplication4\obj\Debug\OkoshiMAX.Form1.resources
+C:\Users\吉岡輝久\Desktop\OkoshiMAX_2\WindowsApplication4\obj\Debug\OkoshiMAX.Form2.resources
+C:\Users\吉岡輝久\Desktop\OkoshiMAX_2\WindowsApplication4\obj\Debug\OkoshiMAX.Resources.resources
+C:\Users\吉岡輝久\Desktop\OkoshiMAX_2\WindowsApplication4\obj\Debug\OkoshiMAX.vbproj.GenerateResource.Cache
+C:\Users\吉岡輝久\Desktop\OkoshiMAX_2\WindowsApplication4\obj\Debug\OkoshiMAX.exe.manifest
+C:\Users\吉岡輝久\Desktop\OkoshiMAX_2\WindowsApplication4\obj\Debug\OkoshiMAX.application
+C:\Users\吉岡輝久\Desktop\WindowsApplication4\bin\Debug\OkoshiMAX.exe.config
+C:\Users\吉岡輝久\Desktop\WindowsApplication4\bin\Debug\OkoshiMAX.exe.manifest
+C:\Users\吉岡輝久\Desktop\WindowsApplication4\bin\Debug\OkoshiMAX.application
+C:\Users\吉岡輝久\Desktop\WindowsApplication4\bin\Debug\OkoshiMAX.exe
+C:\Users\吉岡輝久\Desktop\WindowsApplication4\bin\Debug\OkoshiMAX.pdb
+C:\Users\吉岡輝久\Desktop\WindowsApplication4\bin\Debug\OkoshiMAX.xml
+C:\Users\吉岡輝久\Desktop\WindowsApplication4\bin\Debug\Interop.WMPLib.dll
+C:\Users\吉岡輝久\Desktop\WindowsApplication4\bin\Debug\AxInterop.WMPLib.dll
+C:\Users\吉岡輝久\Desktop\WindowsApplication4\obj\Debug\Interop.WMPLib.dll
+C:\Users\吉岡輝久\Desktop\WindowsApplication4\obj\Debug\AxInterop.WMPLib.dll
+C:\Users\吉岡輝久\Desktop\WindowsApplication4\obj\Debug\OkoshiMAX.vbproj.ResolveComReference.cache
+C:\Users\吉岡輝久\Desktop\WindowsApplication4\obj\Debug\OkoshiMAX.Form1.resources
+C:\Users\吉岡輝久\Desktop\WindowsApplication4\obj\Debug\OkoshiMAX.Form2.resources
+C:\Users\吉岡輝久\Desktop\WindowsApplication4\obj\Debug\OkoshiMAX.Resources.resources
+C:\Users\吉岡輝久\Desktop\WindowsApplication4\obj\Debug\OkoshiMAX.vbproj.GenerateResource.cache
+C:\Users\吉岡輝久\Desktop\WindowsApplication4\obj\Debug\OkoshiMAX.vbproj.CoreCompileInputs.cache
+C:\Users\吉岡輝久\Desktop\WindowsApplication4\obj\Debug\OkoshiMAX.exe.manifest
+C:\Users\吉岡輝久\Desktop\WindowsApplication4\obj\Debug\OkoshiMAX.application
+C:\Users\吉岡輝久\Desktop\WindowsApplication4\obj\Debug\OkoshiMAX.exe
+C:\Users\吉岡輝久\Desktop\WindowsApplication4\obj\Debug\OkoshiMAX.xml
+C:\Users\吉岡輝久\Desktop\WindowsApplication4\obj\Debug\OkoshiMAX.pdb
+C:\Users\吉岡輝久\Desktop\WindowsApplication4\obj\Debug\OkoshiMAX.Form3.resources
+C:\Users\吉岡輝久\Desktop\WindowsApplication4\obj\Debug\OkoshiMAX.vbprojAssemblyReference.cache
+C:\Users\吉岡輝久\Desktop\OkoshiMAX\WindowsApplication4\bin\Debug\OkoshiMAX.exe.config
+C:\Users\吉岡輝久\Desktop\OkoshiMAX\WindowsApplication4\bin\Debug\OkoshiMAX.exe.manifest
+C:\Users\吉岡輝久\Desktop\OkoshiMAX\WindowsApplication4\bin\Debug\OkoshiMAX.application
+C:\Users\吉岡輝久\Desktop\OkoshiMAX\WindowsApplication4\bin\Debug\OkoshiMAX.exe
+C:\Users\吉岡輝久\Desktop\OkoshiMAX\WindowsApplication4\bin\Debug\OkoshiMAX.pdb
+C:\Users\吉岡輝久\Desktop\OkoshiMAX\WindowsApplication4\bin\Debug\OkoshiMAX.xml
+C:\Users\吉岡輝久\Desktop\OkoshiMAX\WindowsApplication4\bin\Debug\Interop.WMPLib.dll
+C:\Users\吉岡輝久\Desktop\OkoshiMAX\WindowsApplication4\bin\Debug\AxInterop.WMPLib.dll
+C:\Users\吉岡輝久\Desktop\OkoshiMAX\WindowsApplication4\obj\Debug\OkoshiMAX.vbprojAssemblyReference.cache
+C:\Users\吉岡輝久\Desktop\OkoshiMAX\WindowsApplication4\obj\Debug\Interop.WMPLib.dll
+C:\Users\吉岡輝久\Desktop\OkoshiMAX\WindowsApplication4\obj\Debug\AxInterop.WMPLib.dll
+C:\Users\吉岡輝久\Desktop\OkoshiMAX\WindowsApplication4\obj\Debug\OkoshiMAX.vbproj.ResolveComReference.cache
+C:\Users\吉岡輝久\Desktop\OkoshiMAX\WindowsApplication4\obj\Debug\OkoshiMAX.Form1.resources
+C:\Users\吉岡輝久\Desktop\OkoshiMAX\WindowsApplication4\obj\Debug\OkoshiMAX.Form2.resources
+C:\Users\吉岡輝久\Desktop\OkoshiMAX\WindowsApplication4\obj\Debug\OkoshiMAX.Form3.resources
+C:\Users\吉岡輝久\Desktop\OkoshiMAX\WindowsApplication4\obj\Debug\OkoshiMAX.Resources.resources
+C:\Users\吉岡輝久\Desktop\OkoshiMAX\WindowsApplication4\obj\Debug\OkoshiMAX.vbproj.GenerateResource.cache
+C:\Users\吉岡輝久\Desktop\OkoshiMAX\WindowsApplication4\obj\Debug\OkoshiMAX.vbproj.CoreCompileInputs.cache
+C:\Users\吉岡輝久\Desktop\OkoshiMAX\WindowsApplication4\obj\Debug\OkoshiMAX.exe.manifest
+C:\Users\吉岡輝久\Desktop\OkoshiMAX\WindowsApplication4\obj\Debug\OkoshiMAX.application
+C:\Users\吉岡輝久\Desktop\OkoshiMAX\WindowsApplication4\obj\Debug\OkoshiMAX.exe
+C:\Users\吉岡輝久\Desktop\OkoshiMAX\WindowsApplication4\obj\Debug\OkoshiMAX.xml
+C:\Users\吉岡輝久\Desktop\OkoshiMAX\WindowsApplication4\obj\Debug\OkoshiMAX.pdb
