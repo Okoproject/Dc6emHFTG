@@ -1,5 +1,4 @@
 ﻿Imports System.ComponentModel
-Imports AxWMPLib
 Imports System.IO
 Imports System.Text
 Imports System.Drawing.Imaging
@@ -80,6 +79,8 @@ Public Class Form1
     Public Sonomamaka As String
     Public AutoB As Integer
     Public Kidou As Boolean = True
+
+    Private _player As MpvPlayerWrapper
 
     '以下、使ってないが残してる
     Const dan1 As Integer = 7
@@ -180,8 +181,8 @@ Public Class Form1
 
         'On Error Resume Next
 
-        My.Settings.LastOpenedFile = AxWindowsMediaPlayer1.currentMedia.sourceURL
-        My.Settings.LastIchi = AxWindowsMediaPlayer1.Ctlcontrols.currentPosition
+        My.Settings.LastOpenedFile = _player.SourceURL
+        My.Settings.LastIchi = _player.CurrentPosition
 
         'しおりデータの保存
         'WriteCsvFromDGV(Me.DataGridView1, appPath & "\tmp.csv")
@@ -235,7 +236,7 @@ Public Class Form1
             Me.Top = (System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height - Me.Height) / 2
         End If
 
-        AxWindowsMediaPlayer1.Height = My.Settings.p21_height
+        MpvPanel.Height = My.Settings.p21_height
 
 
         If My.Settings.shokai <> 1 Then
@@ -282,8 +283,10 @@ Public Class Form1
         'AxWindowsMediaPlayer1.settings.autoStart = False
         Kidou = True
 
-        AxWindowsMediaPlayer1.settings.volume = My.Settings.Onryou
-        TrackBar6.Value = AxWindowsMediaPlayer1.settings.volume
+        _player = New MpvPlayerWrapper(MpvPanel)
+        AddHandler _player.MediaChanged, AddressOf Player_MediaChanged
+        _player.Volume = My.Settings.Onryou
+        TrackBar6.Value = _player.Volume
         Label5.Text = TrackBar6.Value & "%" 'なぜか反映されない
 
         '===========================================================================
@@ -1473,7 +1476,7 @@ Public Class Form1
 
 
         'Player本体のコントロールをすべて無効
-        AxWindowsMediaPlayer1.uiMode = "none"
+        ' mpvにはUIコントロールがないため不要
 
         'ジャンプボタン表示用
         PuraMai = ""
@@ -1790,8 +1793,8 @@ Public Class Form1
 
 
 
-        AxWindowsMediaPlayer1.URL = My.Settings.LastOpenedFile
-        AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = My.Settings.LastIchi
+        _player.URL = My.Settings.LastOpenedFile
+        _player.CurrentPosition = My.Settings.LastIchi
 
         Dim boolFile_Exists As Boolean
         boolFile_Exists = System.IO.File.Exists(appPath & "om_tmp.csv")
@@ -1856,7 +1859,7 @@ Public Class Form1
 
 
         'If Kidou = True Then
-        'AxWindowsMediaPlayer1.Ctlcontrols.pause()
+        '_player.Pause()
         'Kidou = False
         'End If
 
@@ -1909,38 +1912,38 @@ Public Class Form1
                 'Play / Pause(0)
                 Case hotkeyID_A
                     'axWindowsMediaPlayer1.Ctlcontrols.stop()
-                    Select Case (AxWindowsMediaPlayer1.playState) 'Stop:1 Pause:2 Play:3
+                    Select Case (_player.PlayState) 'Stop:1 Pause:2 Play:3
                         Case 1
-                            AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = AxWindowsMediaPlayer1.Ctlcontrols.currentPosition - (AutoB / 10)
-                            AxWindowsMediaPlayer1.Ctlcontrols.play()
+                            _player.CurrentPosition = _player.CurrentPosition - (AutoB / 10)
+                            _player.Play()
                             'Button200.Text = "一時停止"
                             Button200.Image = My.Resources.Pause_16x
                         Case 2
-                            AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = AxWindowsMediaPlayer1.Ctlcontrols.currentPosition - (AutoB / 10)
-                            AxWindowsMediaPlayer1.Ctlcontrols.play()
+                            _player.CurrentPosition = _player.CurrentPosition - (AutoB / 10)
+                            _player.Play()
                             'Button200.Text = "一時停止"
                             Button200.Image = My.Resources.Pause_16x
                         Case 3
-                            AxWindowsMediaPlayer1.Ctlcontrols.pause()
+                            _player.Pause()
                             'Button200.Text = "再生"
                             Button200.Image = My.Resources.Run_16x
-                            'AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = AxWindowsMediaPlayer1.Ctlcontrols.currentPosition - (AutoB / 10)
+                            '_player.CurrentPosition = _player.CurrentPosition - (AutoB / 10)
                     End Select
                 'Play / Pause & Copying Counter1(1)
                 Case hotkeyID_B
-                    Select Case (AxWindowsMediaPlayer1.playState) 'Stop:1 Pause:2 Play:3
+                    Select Case (_player.PlayState) 'Stop:1 Pause:2 Play:3
                         Case 1
-                            AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = AxWindowsMediaPlayer1.Ctlcontrols.currentPosition - (AutoB / 10)
-                            AxWindowsMediaPlayer1.Ctlcontrols.play()
+                            _player.CurrentPosition = _player.CurrentPosition - (AutoB / 10)
+                            _player.Play()
                             'Button200.Text = "一時停止"
                             Button200.Image = My.Resources.Pause_16x
                         Case 2
-                            AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = AxWindowsMediaPlayer1.Ctlcontrols.currentPosition - (AutoB / 10)
-                            AxWindowsMediaPlayer1.Ctlcontrols.play()
+                            _player.CurrentPosition = _player.CurrentPosition - (AutoB / 10)
+                            _player.Play()
                             'Button200.Text = "一時停止"
                             Button200.Image = My.Resources.Pause_16x
                         Case 3
-                            AxWindowsMediaPlayer1.Ctlcontrols.pause()
+                            _player.Pause()
                             'Button200.Text = "再生"
                             Button200.Image = My.Resources.Run_16x
                             Select Case My.Settings.TimeCode
@@ -1957,19 +1960,19 @@ Public Class Form1
 
                 'Play / Pause & Copying Counter2(2)
                 Case hotkeyID_C
-                    Select Case (AxWindowsMediaPlayer1.playState) 'Stop:1 Pause:2 Play:3
+                    Select Case (_player.PlayState) 'Stop:1 Pause:2 Play:3
                         Case 1
-                            AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = AxWindowsMediaPlayer1.Ctlcontrols.currentPosition - (AutoB / 10)
-                            AxWindowsMediaPlayer1.Ctlcontrols.play()
+                            _player.CurrentPosition = _player.CurrentPosition - (AutoB / 10)
+                            _player.Play()
                             'Button200.Text = "一時停止"
                             Button200.Image = My.Resources.Pause_16x
                         Case 2
-                            AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = AxWindowsMediaPlayer1.Ctlcontrols.currentPosition - (AutoB / 10)
-                            AxWindowsMediaPlayer1.Ctlcontrols.play()
+                            _player.CurrentPosition = _player.CurrentPosition - (AutoB / 10)
+                            _player.Play()
                             'Button200.Text = "一時停止"
                             Button200.Image = My.Resources.Pause_16x
                         Case 3
-                            AxWindowsMediaPlayer1.Ctlcontrols.pause()
+                            _player.Pause()
                             'Button200.Text = "再生"
                             Button200.Image = My.Resources.Run_16x
                             Select Case My.Settings.TimeCode
@@ -1987,25 +1990,25 @@ Public Class Form1
 
                 'Stop(3)
                 Case hotkeyID_D
-                    AxWindowsMediaPlayer1.Ctlcontrols.stop()
+                    _player.Stop()
                     'Button200.Text = "再生"
                     Button200.Image = My.Resources.Run_16x
 
                 'Play / Pause & Copying counter3(4)
                 Case hotkeyID_E
-                    Select Case (AxWindowsMediaPlayer1.playState) 'Stop:1 Pause:2 Play:3
+                    Select Case (_player.PlayState) 'Stop:1 Pause:2 Play:3
                         Case 1
-                            AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = AxWindowsMediaPlayer1.Ctlcontrols.currentPosition - (AutoB / 10)
-                            AxWindowsMediaPlayer1.Ctlcontrols.play()
+                            _player.CurrentPosition = _player.CurrentPosition - (AutoB / 10)
+                            _player.Play()
                             'Button200.Text = "一時停止"
                             Button200.Image = My.Resources.Pause_16x
                         Case 2
-                            AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = AxWindowsMediaPlayer1.Ctlcontrols.currentPosition - (AutoB / 10)
-                            AxWindowsMediaPlayer1.Ctlcontrols.play()
+                            _player.CurrentPosition = _player.CurrentPosition - (AutoB / 10)
+                            _player.Play()
                             'Button200.Text = "一時停止"
                             Button200.Image = My.Resources.Pause_16x
                         Case 3
-                            AxWindowsMediaPlayer1.Ctlcontrols.pause()
+                            _player.Pause()
                             'Button200.Text = "再生"
                             Button200.Image = My.Resources.Run_16x
                             Select Case My.Settings.TimeCode
@@ -2080,19 +2083,19 @@ Public Class Form1
 
                 'Play / Pause & Add Bookmark(9)
                 Case hotkeyID_I
-                    Select Case (AxWindowsMediaPlayer1.playState) 'Stop:1 Pause:2 Play:3
+                    Select Case (_player.PlayState) 'Stop:1 Pause:2 Play:3
                         Case 1
-                            AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = AxWindowsMediaPlayer1.Ctlcontrols.currentPosition - (AutoB / 10)
-                            AxWindowsMediaPlayer1.Ctlcontrols.play()
+                            _player.CurrentPosition = _player.CurrentPosition - (AutoB / 10)
+                            _player.Play()
                             'Button200.Text = "一時停止"
                             Button200.Image = My.Resources.Pause_16x
                         Case 2
-                            AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = AxWindowsMediaPlayer1.Ctlcontrols.currentPosition - (AutoB / 10)
-                            AxWindowsMediaPlayer1.Ctlcontrols.play()
+                            _player.CurrentPosition = _player.CurrentPosition - (AutoB / 10)
+                            _player.Play()
                             'Button200.Text = "一時停止"
                             Button200.Image = My.Resources.Pause_16x
                         Case 3
-                            AxWindowsMediaPlayer1.Ctlcontrols.pause()
+                            _player.Pause()
                             'Button200.Text = "再生"
                             Button200.Image = My.Resources.Run_16x
                             DataGridView1.Rows.Add()
@@ -2116,9 +2119,9 @@ Public Class Form1
                 Case hotkeyID_J
                     TrackBar2.Value += 1
                     Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
-                    AxWindowsMediaPlayer1.Ctlcontrols.pause()
-                    AxWindowsMediaPlayer1.settings.rate = TrackBar2.Value * 0.1
-                    AxWindowsMediaPlayer1.Ctlcontrols.play()
+                    _player.Pause()
+                    _player.Rate = TrackBar2.Value * 0.1
+                    _player.Play()
                     'Button200.Text = "一時停止"
                     Button200.Image = My.Resources.Pause_16x
 
@@ -2127,9 +2130,9 @@ Public Class Form1
                 Case hotkeyID_K
                     TrackBar2.Value -= 1
                     Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
-                    AxWindowsMediaPlayer1.Ctlcontrols.pause()
-                    AxWindowsMediaPlayer1.settings.rate = TrackBar2.Value * 0.1
-                    AxWindowsMediaPlayer1.Ctlcontrols.play()
+                    _player.Pause()
+                    _player.Rate = TrackBar2.Value * 0.1
+                    _player.Play()
                     'Button200.Text = "一時停止"
                     Button200.Image = My.Resources.Pause_16x
 
@@ -2137,9 +2140,9 @@ Public Class Form1
                 Case hotkeyID_L
                     TrackBar2.Value = 10
                     Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
-                    AxWindowsMediaPlayer1.Ctlcontrols.pause()
-                    AxWindowsMediaPlayer1.settings.rate = TrackBar2.Value * 0.1
-                    AxWindowsMediaPlayer1.Ctlcontrols.play()
+                    _player.Pause()
+                    _player.Rate = TrackBar2.Value * 0.1
+                    _player.Play()
                     'Button200.Text = "一時停止"
                     Button200.Image = My.Resources.Pause_16x
 
@@ -2147,9 +2150,9 @@ Public Class Form1
                 Case hotkeyID_M
                     TrackBar2.Value = 5
                     Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
-                    AxWindowsMediaPlayer1.Ctlcontrols.pause()
-                    AxWindowsMediaPlayer1.settings.rate = TrackBar2.Value * 0.1
-                    AxWindowsMediaPlayer1.Ctlcontrols.play()
+                    _player.Pause()
+                    _player.Rate = TrackBar2.Value * 0.1
+                    _player.Play()
                     'Button200.Text = "一時停止"
                     Button200.Image = My.Resources.Pause_16x
 
@@ -2157,9 +2160,9 @@ Public Class Form1
                 Case hotkeyID_N
                     TrackBar2.Value = 20
                     Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
-                    AxWindowsMediaPlayer1.Ctlcontrols.pause()
-                    AxWindowsMediaPlayer1.settings.rate = TrackBar2.Value * 0.1
-                    AxWindowsMediaPlayer1.Ctlcontrols.play()
+                    _player.Pause()
+                    _player.Rate = TrackBar2.Value * 0.1
+                    _player.Play()
                     'Button200.Text = "一時停止"
                     Button200.Image = My.Resources.Pause_16x
 
@@ -2205,7 +2208,7 @@ Public Class Form1
                             cCounter = "0" & cCounter
                     End Select
 
-                    If (Integer.Parse(Strings.Mid(cCounter, 1, 2)) * 3600) + (Integer.Parse(Strings.Mid(cCounter, 3, 2)) * 60) + (Integer.Parse(Strings.Mid(cCounter, 5, 2))) > AxWindowsMediaPlayer1.currentMedia.duration Then
+                    If (Integer.Parse(Strings.Mid(cCounter, 1, 2)) * 3600) + (Integer.Parse(Strings.Mid(cCounter, 3, 2)) * 60) + (Integer.Parse(Strings.Mid(cCounter, 5, 2))) > _player.Duration Then
                         MsgBox("入力されたカウンタがファイルの長さを超えています")
                         TextBox2.Clear()
                         Exit Sub
@@ -2214,8 +2217,8 @@ Public Class Form1
                     'On Error Resume Next 2022/07/03
 
                     TrackBar1.Value = (Integer.Parse(Strings.Mid(cCounter, 1, 2)) * 3600) + (Integer.Parse(Strings.Mid(cCounter, 3, 2)) * 60) + (Integer.Parse(Strings.Mid(cCounter, 5, 2)))
-                    AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = TrackBar1.Value
-                    AxWindowsMediaPlayer1.Ctlcontrols.play()
+                    _player.CurrentPosition = TrackBar1.Value
+                    _player.Play()
                     'Button200.Text = "一時停止"
                     Button200.Image = My.Resources.Pause_16x
                     Timer1.Enabled = True
@@ -2234,78 +2237,78 @@ Public Class Form1
 
                 'Jump1
                 Case hotkeyID_MM1
-                    AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = TrackBar1.Value + My.Settings.MM1
+                    _player.CurrentPosition = TrackBar1.Value + My.Settings.MM1
                 'Jump2
                 Case hotkeyID_MM2
-                    AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = TrackBar1.Value + My.Settings.MM2
+                    _player.CurrentPosition = TrackBar1.Value + My.Settings.MM2
                 'Jump3
                 Case hotkeyID_MM3
-                    AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = TrackBar1.Value + My.Settings.MM3
+                    _player.CurrentPosition = TrackBar1.Value + My.Settings.MM3
                 'Jump4
                 Case hotkeyID_HO1
-                    AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = TrackBar1.Value + My.Settings.HO1
+                    _player.CurrentPosition = TrackBar1.Value + My.Settings.HO1
                 'Jump5
                 Case hotkeyID_HO2
-                    AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = TrackBar1.Value + My.Settings.HO2
+                    _player.CurrentPosition = TrackBar1.Value + My.Settings.HO2
                 'Jump6
                 Case hotkeyID_HO3
-                    AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = TrackBar1.Value + My.Settings.HO3
+                    _player.CurrentPosition = TrackBar1.Value + My.Settings.HO3
 
 
                 Case hotkeyID_SC1
                     TrackBar2.Value = My.Settings.SC1 / 10
                     Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
-                    AxWindowsMediaPlayer1.Ctlcontrols.pause()
-                    AxWindowsMediaPlayer1.settings.rate = TrackBar2.Value * 0.1
-                    AxWindowsMediaPlayer1.Ctlcontrols.play()
+                    _player.Pause()
+                    _player.Rate = TrackBar2.Value * 0.1
+                    _player.Play()
                     'Button200.Text = "一時停止"
                     Button200.Image = My.Resources.Pause_16x
                 Case hotkeyID_SC2
                     TrackBar2.Value = My.Settings.SC2 / 10
                     Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
-                    AxWindowsMediaPlayer1.Ctlcontrols.pause()
-                    AxWindowsMediaPlayer1.settings.rate = TrackBar2.Value * 0.1
-                    AxWindowsMediaPlayer1.Ctlcontrols.play()
+                    _player.Pause()
+                    _player.Rate = TrackBar2.Value * 0.1
+                    _player.Play()
                     'Button200.Text = "一時停止"
                     Button200.Image = My.Resources.Pause_16x
                 Case hotkeyID_SC3
                     TrackBar2.Value = My.Settings.SC3 / 10
                     Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
-                    AxWindowsMediaPlayer1.Ctlcontrols.pause()
-                    AxWindowsMediaPlayer1.settings.rate = TrackBar2.Value * 0.1
-                    AxWindowsMediaPlayer1.Ctlcontrols.play()
+                    _player.Pause()
+                    _player.Rate = TrackBar2.Value * 0.1
+                    _player.Play()
                     'Button200.Text = "一時停止"
                     Button200.Image = My.Resources.Pause_16x
                 Case hotkeyID_SC4
                     TrackBar2.Value = My.Settings.SC4 / 10
                     Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
-                    AxWindowsMediaPlayer1.Ctlcontrols.pause()
-                    AxWindowsMediaPlayer1.settings.rate = TrackBar2.Value * 0.1
-                    AxWindowsMediaPlayer1.Ctlcontrols.play()
+                    _player.Pause()
+                    _player.Rate = TrackBar2.Value * 0.1
+                    _player.Play()
                     'Button200.Text = "一時停止"
                     Button200.Image = My.Resources.Pause_16x
                 Case hotkeyID_SC5
                     TrackBar2.Value = My.Settings.SC5 / 10
                     Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
-                    AxWindowsMediaPlayer1.Ctlcontrols.pause()
-                    AxWindowsMediaPlayer1.settings.rate = TrackBar2.Value * 0.1
-                    AxWindowsMediaPlayer1.Ctlcontrols.play()
+                    _player.Pause()
+                    _player.Rate = TrackBar2.Value * 0.1
+                    _player.Play()
                     'Button200.Text = "一時停止"
                     Button200.Image = My.Resources.Pause_16x
                 Case hotkeyID_SC6
                     TrackBar2.Value = My.Settings.SC6 / 10
                     Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
-                    AxWindowsMediaPlayer1.Ctlcontrols.pause()
-                    AxWindowsMediaPlayer1.settings.rate = TrackBar2.Value * 0.1
-                    AxWindowsMediaPlayer1.Ctlcontrols.play()
+                    _player.Pause()
+                    _player.Rate = TrackBar2.Value * 0.1
+                    _player.Play()
                     'Button200.Text = "一時停止"
                     Button200.Image = My.Resources.Pause_16x
                 Case hotkeyID_SC7
                     TrackBar2.Value = My.Settings.SC7 / 10
                     Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
-                    AxWindowsMediaPlayer1.Ctlcontrols.pause()
-                    AxWindowsMediaPlayer1.settings.rate = TrackBar2.Value * 0.1
-                    AxWindowsMediaPlayer1.Ctlcontrols.play()
+                    _player.Pause()
+                    _player.Rate = TrackBar2.Value * 0.1
+                    _player.Play()
                     'Button200.Text = "一時停止"
                     Button200.Image = My.Resources.Pause_16x
 
@@ -2321,10 +2324,13 @@ Public Class Form1
         End If
         'Kidou = False
         'On Error Resume Next 2022/07/03
-        Label1.Text = TimeSpan.FromSeconds(AxWindowsMediaPlayer1.Ctlcontrols.currentPosition).ToString("hh\:mm\:ss") & " / " & TimeSpan.FromSeconds(AxWindowsMediaPlayer1.currentMedia.duration).ToString("hh\:mm\:ss")
+        Label1.Text = TimeSpan.FromSeconds(_player.CurrentPosition).ToString("hh\:mm\:ss") & " / " & TimeSpan.FromSeconds(_player.Duration).ToString("hh\:mm\:ss")
         Me.Text = Label1.Text
 
-        TrackBar1.Value = AxWindowsMediaPlayer1.Ctlcontrols.currentPosition
+        Dim pos As Integer = CInt(_player.CurrentPosition)
+        If pos >= TrackBar1.Minimum AndAlso pos <= TrackBar1.Maximum Then
+            TrackBar1.Value = pos
+        End If
 
     End Sub
     '再生のシークバーを操作しているときはTimer1を止める
@@ -2333,7 +2339,7 @@ Public Class Form1
     End Sub
     '再生のシークバーの操作をやめたときにTimer1を再開
     Private Sub TrackBar1_MouseUp(sender As Object, e As MouseEventArgs) Handles TrackBar1.MouseUp
-        AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = TrackBar1.Value
+        _player.CurrentPosition = TrackBar1.Value
         Timer1.Enabled = True
     End Sub
     'Form1にメディアファイルがドラッグ＆ドロップされた場合の処理
@@ -2352,10 +2358,10 @@ Public Class Form1
                 'If files(0).EndsWith(".mp4") Then
                 '---get the media player to play the
                 ' first file---
-                AxWindowsMediaPlayer1.URL = files(0)
+                _player.URL = files(0)
                 My.Settings.LastOpenedFile = files(0)
 
-                TrackBar2.Value = AxWindowsMediaPlayer1.settings.rate * 10
+                TrackBar2.Value = CInt(_player.Rate * 10)
                 Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
 
                 'End If
@@ -2363,20 +2369,22 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub AxWindowsMediaPlayer1_MediaChange(sender As Object, e As _WMPOCXEvents_MediaChangeEvent) Handles AxWindowsMediaPlayer1.MediaChange
+    Private Sub Player_MediaChanged()
 
         If Kidou = True Then
-            AxWindowsMediaPlayer1.Ctlcontrols.pause()
+            _player.Pause()
             'Button200.Text = "再生"
             Button200.Image = My.Resources.Run_16x
             Kidou = False
         End If
 
-        Label1.Text = "00:00:00 / " & TimeSpan.FromSeconds(AxWindowsMediaPlayer1.currentMedia.duration).ToString("hh\:mm\:ss")
-        TrackBar1.Maximum = AxWindowsMediaPlayer1.currentMedia.duration + TrackBar1.LargeChange
-        TextBox1.Text = AxWindowsMediaPlayer1.currentMedia.name
-
-
+        ' mpvではfile-loaded直後にdurationが取得可能
+        Dim dur As Double = _player.Duration
+        If dur > 0 Then
+            Label1.Text = "00:00:00 / " & TimeSpan.FromSeconds(dur).ToString("hh\:mm\:ss")
+            TrackBar1.Maximum = CInt(dur) + TrackBar1.LargeChange
+        End If
+        TextBox1.Text = _player.MediaName
 
     End Sub
     'Form1にメディアファイルがドラッグ＆ドロップされた場合の処理
@@ -2433,33 +2441,33 @@ Public Class Form1
 
     Private Sub TrackBar2_Scroll(sender As Object, e As EventArgs) Handles TrackBar2.Scroll
         Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
-        AxWindowsMediaPlayer1.Ctlcontrols.pause()
-        AxWindowsMediaPlayer1.settings.rate = TrackBar2.Value * 0.1
-        AxWindowsMediaPlayer1.Ctlcontrols.play()
+        _player.Pause()
+        _player.Rate = TrackBar2.Value * 0.1
+        _player.Play()
         'Button200.Text = "一時停止"
         Button200.Image = My.Resources.Pause_16x
     End Sub
 
 
     Private Sub Button400_Click(sender As Object, e As EventArgs) Handles Button400.Click
-        AxWindowsMediaPlayer1.Ctlcontrols.stop()
+        _player.Stop()
     End Sub
 
 
     Private Sub Button200_Click(sender As Object, e As EventArgs) Handles Button200.Click
-        Select Case (AxWindowsMediaPlayer1.playState) 'Stop:1 Pause:2 Play:3
+        Select Case (_player.PlayState) 'Stop:1 Pause:2 Play:3
             Case 1
-                AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = AxWindowsMediaPlayer1.Ctlcontrols.currentPosition - (AutoB / 10)
-                AxWindowsMediaPlayer1.Ctlcontrols.play()
+                _player.CurrentPosition = _player.CurrentPosition - (AutoB / 10)
+                _player.Play()
                 'Button200.Text = "一時停止"
                 Button200.Image = My.Resources.Pause_16x
             Case 2
-                AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = AxWindowsMediaPlayer1.Ctlcontrols.currentPosition - (AutoB / 10)
-                AxWindowsMediaPlayer1.Ctlcontrols.play()
+                _player.CurrentPosition = _player.CurrentPosition - (AutoB / 10)
+                _player.Play()
                 'Button200.Text = "一時停止"
                 Button200.Image = My.Resources.Pause_16x
             Case 3
-                AxWindowsMediaPlayer1.Ctlcontrols.pause()
+                _player.Pause()
                 'Button200.Text = "再生"
                 Button200.Image = My.Resources.Run_16x
         End Select
@@ -2477,9 +2485,9 @@ Public Class Form1
         End If
 
         Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
-        AxWindowsMediaPlayer1.Ctlcontrols.pause()
-        AxWindowsMediaPlayer1.settings.rate = TrackBar2.Value * 0.1
-        AxWindowsMediaPlayer1.Ctlcontrols.play()
+        _player.Pause()
+        _player.Rate = TrackBar2.Value * 0.1
+        _player.Play()
         'Button200.Text = "一時停止"
         Button200.Image = My.Resources.Pause_16x
 
@@ -2487,87 +2495,87 @@ Public Class Form1
 
     '+1Sec
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = TrackBar1.Value + My.Settings.SK1
+        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK1
     End Sub
     '-1Sec
     Private Sub Button11_Click(sender As Object, e As EventArgs) Handles Button11.Click
-        AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = TrackBar1.Value + My.Settings.SK11
+        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK11
     End Sub
     '+3Sec
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-        AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = TrackBar1.Value + My.Settings.SK2
+        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK2
     End Sub
     '-3Sec
     Private Sub Button12_Click(sender As Object, e As EventArgs) Handles Button12.Click
-        AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = TrackBar1.Value + My.Settings.SK12
+        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK12
     End Sub
     '+5Sec
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
-        AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = TrackBar1.Value + My.Settings.SK3
+        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK3
     End Sub
     '-5Sec
     Private Sub Button13_Click(sender As Object, e As EventArgs) Handles Button13.Click
-        AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = TrackBar1.Value + My.Settings.SK13
+        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK13
     End Sub
     '+10Sec
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
-        AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = TrackBar1.Value + My.Settings.SK4
+        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK4
     End Sub
     '-10Sec
     Private Sub Button14_Click(sender As Object, e As EventArgs) Handles Button14.Click
-        AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = TrackBar1.Value + My.Settings.SK14
+        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK14
     End Sub
     '+15Sec
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
-        AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = TrackBar1.Value + My.Settings.SK5
+        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK5
     End Sub
     '-15Sec
     Private Sub Button15_Click(sender As Object, e As EventArgs) Handles Button15.Click
-        AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = TrackBar1.Value + My.Settings.SK15
+        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK15
     End Sub
     '+30Sec
     Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
-        AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = TrackBar1.Value + My.Settings.SK6
+        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK6
     End Sub
     '-30Sec
     Private Sub Button16_Click(sender As Object, e As EventArgs) Handles Button16.Click
-        AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = TrackBar1.Value + My.Settings.SK16
+        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK16
     End Sub
     '+1Min
     Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
-        AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = TrackBar1.Value + My.Settings.SK7
+        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK7
     End Sub
     '-1Min
     Private Sub Button17_Click(sender As Object, e As EventArgs) Handles Button17.Click
-        AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = TrackBar1.Value + My.Settings.SK17
+        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK17
     End Sub
     '+3Min
     Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
-        AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = TrackBar1.Value + My.Settings.SK8
+        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK8
     End Sub
     '-3Min
     Private Sub Button18_Click(sender As Object, e As EventArgs) Handles Button18.Click
-        AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = TrackBar1.Value + My.Settings.SK18
+        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK18
     End Sub
     '+5Min
     Private Sub Button9_Click(sender As Object, e As EventArgs) Handles Button9.Click
-        AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = TrackBar1.Value + My.Settings.SK9
+        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK9
     End Sub
     '-5Min
     Private Sub Button19_Click(sender As Object, e As EventArgs) Handles Button19.Click
-        AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = TrackBar1.Value + My.Settings.SK19
+        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK19
     End Sub
     '+10Min
     Private Sub Button10_Click(sender As Object, e As EventArgs) Handles Button10.Click
-        AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = TrackBar1.Value + My.Settings.SK10
+        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK10
     End Sub
     '-15Min
     Private Sub Button20_Click(sender As Object, e As EventArgs) Handles Button20.Click
-        AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = TrackBar1.Value + My.Settings.SK20
+        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK20
     End Sub
 
     Private Sub TrackBar3_Scroll(sender As Object, e As EventArgs) Handles TrackBar6.Scroll
-        AxWindowsMediaPlayer1.settings.volume = TrackBar6.Value
+        _player.Volume = TrackBar6.Value
         My.Settings.Onryou = TrackBar6.Value
         Label5.Text = TrackBar6.Value & "%"
     End Sub
@@ -3727,7 +3735,7 @@ Public Class Form1
 
 
         'Player本体のコントロールをすべて無効
-        AxWindowsMediaPlayer1.uiMode = "none"
+        ' mpvにはUIコントロールがないため不要
 
         'ジャンプボタン表示用
         PuraMai = ""
@@ -4114,13 +4122,13 @@ Public Class Form1
                 i = DataGridView1.SelectedCells(0).RowIndex
                 Timer1.Enabled = False
                 TrackBar1.Value = DataGridView1.Rows(i).Cells(2).Value
-                AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = TrackBar1.Value
+                _player.CurrentPosition = TrackBar1.Value
                 If My.Settings.shiori_PS = True Then
-                    AxWindowsMediaPlayer1.Ctlcontrols.play()
+                    _player.Play()
                     Button200.Image = My.Resources.Pause_16x
                 Else
-                    AxWindowsMediaPlayer1.Ctlcontrols.play()
-                    AxWindowsMediaPlayer1.Ctlcontrols.pause()
+                    _player.Play()
+                    _player.Pause()
                     Button200.Image = My.Resources.Run_16x
                 End If
 
@@ -4182,7 +4190,7 @@ Public Class Form1
                 cCounter = "0" & cCounter
         End Select
 
-        If (Integer.Parse(Strings.Mid(cCounter, 1, 2)) * 3600) + (Integer.Parse(Strings.Mid(cCounter, 3, 2)) * 60) + (Integer.Parse(Strings.Mid(cCounter, 5, 2))) > AxWindowsMediaPlayer1.currentMedia.duration Then
+        If (Integer.Parse(Strings.Mid(cCounter, 1, 2)) * 3600) + (Integer.Parse(Strings.Mid(cCounter, 3, 2)) * 60) + (Integer.Parse(Strings.Mid(cCounter, 5, 2))) > _player.Duration Then
             MsgBox("入力されたカウンタがファイルの長さを超えています")
             TextBox2.Clear()
             Exit Sub
@@ -4234,15 +4242,15 @@ Public Class Form1
                 cCounter = "0" & cCounter
         End Select
 
-        If (Integer.Parse(Strings.Mid(cCounter, 1, 2)) * 3600) + (Integer.Parse(Strings.Mid(cCounter, 3, 2)) * 60) + (Integer.Parse(Strings.Mid(cCounter, 5, 2))) > AxWindowsMediaPlayer1.currentMedia.duration Then
+        If (Integer.Parse(Strings.Mid(cCounter, 1, 2)) * 3600) + (Integer.Parse(Strings.Mid(cCounter, 3, 2)) * 60) + (Integer.Parse(Strings.Mid(cCounter, 5, 2))) > _player.Duration Then
             MsgBox("入力されたカウンタがファイルの長さを超えています")
             TextBox2.Clear()
             Exit Sub
         End If
 
         TrackBar1.Value = (Integer.Parse(Strings.Mid(cCounter, 1, 2)) * 3600) + (Integer.Parse(Strings.Mid(cCounter, 3, 2)) * 60) + (Integer.Parse(Strings.Mid(cCounter, 5, 2)))
-        AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = TrackBar1.Value
-        AxWindowsMediaPlayer1.Ctlcontrols.play()
+        _player.CurrentPosition = TrackBar1.Value
+        _player.Play()
         'Button200.Text = "一時停止"
         Button200.Image = My.Resources.Pause_16x
         Timer1.Enabled = True
@@ -4613,15 +4621,15 @@ Public Class Form1
                     cCounter = "0" & cCounter
             End Select
 
-            If (Integer.Parse(Strings.Mid(cCounter, 1, 2)) * 3600) + (Integer.Parse(Strings.Mid(cCounter, 3, 2)) * 60) + (Integer.Parse(Strings.Mid(cCounter, 5, 2))) > AxWindowsMediaPlayer1.currentMedia.duration Then
+            If (Integer.Parse(Strings.Mid(cCounter, 1, 2)) * 3600) + (Integer.Parse(Strings.Mid(cCounter, 3, 2)) * 60) + (Integer.Parse(Strings.Mid(cCounter, 5, 2))) > _player.Duration Then
                 MsgBox("入力されたカウンタがファイルの長さを超えています")
                 TextBox2.Clear()
                 Exit Sub
             End If
 
             TrackBar1.Value = (Integer.Parse(Strings.Mid(cCounter, 1, 2)) * 3600) + (Integer.Parse(Strings.Mid(cCounter, 3, 2)) * 60) + (Integer.Parse(Strings.Mid(cCounter, 5, 2)))
-                AxWindowsMediaPlayer1.Ctlcontrols.currentPosition = TrackBar1.Value
-                AxWindowsMediaPlayer1.Ctlcontrols.play()
+                _player.CurrentPosition = TrackBar1.Value
+                _player.Play()
                 'Button200.Text = "一時停止"
                 Button200.Image = My.Resources.Pause_16x
                 Timer1.Enabled = True
@@ -4710,7 +4718,7 @@ Public Class Form1
 
     Private Sub TrackBar1_Scroll(sender As Object, e As EventArgs) Handles TrackBar1.Scroll
         ToolTip1.SetToolTip(TrackBar1, TimeSpan.FromSeconds(TrackBar1.Value).ToString("hh\:mm\:ss"))
-        Label1.Text = TimeSpan.FromSeconds(TrackBar1.Value).ToString("hh\:mm\:ss") & " / " & TimeSpan.FromSeconds(AxWindowsMediaPlayer1.currentMedia.duration).ToString("hh\:mm\:ss")
+        Label1.Text = TimeSpan.FromSeconds(TrackBar1.Value).ToString("hh\:mm\:ss") & " / " & TimeSpan.FromSeconds(_player.Duration).ToString("hh\:mm\:ss")
     End Sub
 
 
@@ -4754,13 +4762,13 @@ Public Class Form1
 
     Private Sub Button39_Click(sender As Object, e As EventArgs) Handles Button39.Click
         If (OpenFileDialog1.ShowDialog = DialogResult.OK) Then
-            AxWindowsMediaPlayer1.URL = OpenFileDialog1.FileName
+            _player.URL = OpenFileDialog1.FileName
             My.Settings.LastOpenedFile = OpenFileDialog1.FileName
 
             'しおりのクリア
             DataGridView1.Rows.Clear()
 
-            TrackBar2.Value = AxWindowsMediaPlayer1.settings.rate * 10
+            TrackBar2.Value = CInt(_player.Rate * 10)
             Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
 
         End If
@@ -5045,7 +5053,7 @@ Public Class Form1
 
         Dim PuraMai As String
         'Player本体のコントロールをすべて無効
-        AxWindowsMediaPlayer1.uiMode = "none"
+        ' mpvにはUIコントロールがないため不要
 
         'ジャンプボタン表示用
         PuraMai = ""
@@ -5367,14 +5375,14 @@ Public Class Form1
                 'If files(0).EndsWith(".mp4") Then
                 '---get the media player to play the
                 ' first file---
-                AxWindowsMediaPlayer1.URL = files(0)
+                _player.URL = files(0)
                 My.Settings.LastOpenedFile = files(0)
 
 
                 'しおりのクリア
                 DataGridView1.Rows.Clear()
 
-                TrackBar2.Value = AxWindowsMediaPlayer1.settings.rate * 10
+                TrackBar2.Value = CInt(_player.Rate * 10)
                 Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
 
                 'End If
@@ -5382,7 +5390,7 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub AxWindowsMediaPlayer1_Enter(sender As Object, e As EventArgs) Handles AxWindowsMediaPlayer1.Enter
+    Private Sub MpvPanel_Enter(sender As Object, e As EventArgs) Handles MpvPanel.Enter
 
     End Sub
 
@@ -5402,14 +5410,14 @@ Public Class Form1
                 'If files(0).EndsWith(".mp4") Then
                 '---get the media player to play the
                 ' first file---
-                AxWindowsMediaPlayer1.URL = files(0)
+                _player.URL = files(0)
                 My.Settings.LastOpenedFile = files(0)
 
 
                 'しおりのクリア
                 DataGridView1.Rows.Clear()
 
-                TrackBar2.Value = AxWindowsMediaPlayer1.settings.rate * 10
+                TrackBar2.Value = CInt(_player.Rate * 10)
                 Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
 
                 'End If
@@ -5451,14 +5459,14 @@ Public Class Form1
                 'If files(0).EndsWith(".mp4") Then
                 '---get the media player to play the
                 ' first file---
-                AxWindowsMediaPlayer1.URL = files(0)
+                _player.URL = files(0)
                 My.Settings.LastOpenedFile = files(0)
 
 
                 'しおりのクリア
                 DataGridView1.Rows.Clear()
 
-                TrackBar2.Value = AxWindowsMediaPlayer1.settings.rate * 10
+                TrackBar2.Value = CInt(_player.Rate * 10)
                 Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
 
                 'End If

@@ -6,8 +6,13 @@ Partial Class Form1
     <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
-            If disposing AndAlso components IsNot Nothing Then
-                components.Dispose()
+            If disposing Then
+                If _player IsNot Nothing Then
+                    _player.Dispose()
+                End If
+                If components IsNot Nothing Then
+                    components.Dispose()
+                End If
             End If
         Finally
             MyBase.Dispose(disposing)
@@ -30,7 +35,7 @@ Partial Class Form1
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.SplitContainer2 = New System.Windows.Forms.SplitContainer()
-        Me.AxWindowsMediaPlayer1 = New AxWMPLib.AxWindowsMediaPlayer()
+        Me.MpvPanel = New System.Windows.Forms.Panel()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.CheckBox2 = New System.Windows.Forms.CheckBox()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -100,7 +105,7 @@ Partial Class Form1
         CType(Me.SplitContainer2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer2.Panel2.SuspendLayout()
         Me.SplitContainer2.SuspendLayout()
-        CType(Me.AxWindowsMediaPlayer1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.MpvPanel.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TrackBar2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -166,17 +171,16 @@ Partial Class Form1
         Me.SplitContainer2.SplitterDistance = 142
         Me.SplitContainer2.TabIndex = 0
         '
-        'AxWindowsMediaPlayer1
+        'MpvPanel
         '
-        Me.AxWindowsMediaPlayer1.AllowDrop = True
-        Me.AxWindowsMediaPlayer1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.AxWindowsMediaPlayer1.Enabled = True
-        Me.AxWindowsMediaPlayer1.Location = New System.Drawing.Point(0, 0)
-        Me.AxWindowsMediaPlayer1.Margin = New System.Windows.Forms.Padding(2)
-        Me.AxWindowsMediaPlayer1.Name = "AxWindowsMediaPlayer1"
-        Me.AxWindowsMediaPlayer1.OcxState = CType(resources.GetObject("AxWindowsMediaPlayer1.OcxState"), System.Windows.Forms.AxHost.State)
-        Me.AxWindowsMediaPlayer1.Size = New System.Drawing.Size(357, 200)
-        Me.AxWindowsMediaPlayer1.TabIndex = 193
+        Me.MpvPanel.AllowDrop = True
+        Me.MpvPanel.BackColor = System.Drawing.Color.Black
+        Me.MpvPanel.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.MpvPanel.Location = New System.Drawing.Point(0, 0)
+        Me.MpvPanel.Margin = New System.Windows.Forms.Padding(2)
+        Me.MpvPanel.Name = "MpvPanel"
+        Me.MpvPanel.Size = New System.Drawing.Size(357, 200)
+        Me.MpvPanel.TabIndex = 193
         '
         'TableLayoutPanel1
         '
@@ -1122,7 +1126,7 @@ Partial Class Form1
         '
         'SplitContainer3.Panel1
         '
-        Me.SplitContainer3.Panel1.Controls.Add(Me.AxWindowsMediaPlayer1)
+        Me.SplitContainer3.Panel1.Controls.Add(Me.MpvPanel)
         '
         'SplitContainer3.Panel2
         '
@@ -1153,7 +1157,7 @@ Partial Class Form1
         Me.SplitContainer2.Panel2.ResumeLayout(False)
         CType(Me.SplitContainer2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer2.ResumeLayout(False)
-        CType(Me.AxWindowsMediaPlayer1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.MpvPanel.ResumeLayout(False)
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.TableLayoutPanel1.PerformLayout()
         CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1175,7 +1179,7 @@ Partial Class Form1
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
     Friend WithEvents SplitContainer1 As SplitContainer
     Friend WithEvents SplitContainer2 As SplitContainer
-    Friend WithEvents AxWindowsMediaPlayer1 As AxWindowsMediaPlayer
+    Friend WithEvents MpvPanel As Panel
     Friend WithEvents Button34 As Button
     Friend WithEvents TextBox3 As TextBox
     Friend WithEvents Button32 As Button
