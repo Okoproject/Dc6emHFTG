@@ -84,6 +84,24 @@ Public Class MpvPlayerWrapper
 
 #End Region
 
+#Region "定数"
+
+    ' イベントタイムアウト（秒）
+    Private Const EventTimeoutSeconds As Double = 0.5
+
+    ' 再生速度の範囲
+    Private Const MinSpeed As Double = 0.1
+    Private Const MaxSpeed As Double = 10.0
+
+    ' 音量の範囲
+    Private Const MinVolume As Integer = 0
+    Private Const MaxVolume As Integer = 100
+
+    ' スレッド終了待機タイムアウト（ミリ秒）
+    Private Const ThreadJoinTimeoutMs As Integer = 2000
+
+#End Region
+
     Private ReadOnly _hostPanel As Panel
     Private _mpvHandle As IntPtr = IntPtr.Zero
     Private _filePath As String = String.Empty
@@ -142,7 +160,7 @@ Public Class MpvPlayerWrapper
 
     Private Sub EventLoop()
         While _running AndAlso _mpvHandle <> IntPtr.Zero
-            Dim evtPtr As IntPtr = mpv_wait_event(_mpvHandle, 0.5)
+            Dim evtPtr As IntPtr = mpv_wait_event(_mpvHandle, EventTimeoutSeconds)
             If evtPtr = IntPtr.Zero Then Continue While
 
             Dim evt As MpvEvent = Marshal.PtrToStructure(Of MpvEvent)(evtPtr)
@@ -170,7 +188,7 @@ Public Class MpvPlayerWrapper
     ''' <summary>
     ''' 現在の再生位置 (秒)。mpvの time-pos プロパティ。
     ''' </summary>
-    Public Property Position As Double
+    Public Overridable Property Position As Double
         Get
             If _mpvHandle = IntPtr.Zero Then Return 0
             Dim pos As Double = 0
@@ -188,7 +206,7 @@ Public Class MpvPlayerWrapper
     ''' <summary>
     ''' メディアの長さ (秒)。mpvの duration プロパティ。
     ''' </summary>
-    Public ReadOnly Property Duration As Double
+    Public Overridable ReadOnly Property Duration As Double
         Get
             If _mpvHandle = IntPtr.Zero Then Return 0
             Dim dur As Double = 0
@@ -201,7 +219,7 @@ Public Class MpvPlayerWrapper
     ''' <summary>
     ''' 再生速度。mpvの speed プロパティ。
     ''' </summary>
-    Public Property Speed As Double
+    Public Overridable Property Speed As Double
         Get
             If _mpvHandle = IntPtr.Zero Then Return 1.0
             Dim spd As Double = 1.0
@@ -210,8 +228,8 @@ Public Class MpvPlayerWrapper
         End Get
         Set(value As Double)
             If _mpvHandle = IntPtr.Zero Then Return
-            If value < 0.1 Then value = 0.1
-            If value > 10.0 Then value = 10.0
+            If value < MinSpeed Then value = MinSpeed
+            If value > MaxSpeed Then value = MaxSpeed
             mpv_set_property(_mpvHandle, "speed", MpvFormatDouble, value)
         End Set
     End Property
@@ -219,7 +237,7 @@ Public Class MpvPlayerWrapper
     ''' <summary>
     ''' 音量 (0-100)。mpvの volume プロパティ。
     ''' </summary>
-    Public Property Volume As Integer
+    Public Overridable Property Volume As Integer
         Get
             If _mpvHandle = IntPtr.Zero Then Return 0
             Dim vol As Double = 0
@@ -228,8 +246,8 @@ Public Class MpvPlayerWrapper
         End Get
         Set(value As Integer)
             If _mpvHandle = IntPtr.Zero Then Return
-            If value < 0 Then value = 0
-            If value > 100 Then value = 100
+            If value < MinVolume Then value = MinVolume
+            If value > MaxVolume Then value = MaxVolume
             Dim vol As Double = CDbl(value)
             mpv_set_property(_mpvHandle, "volume", MpvFormatDouble, vol)
         End Set
@@ -377,7 +395,7 @@ Public Class MpvPlayerWrapper
         _running = False
 
         If _eventThread IsNot Nothing AndAlso _eventThread.IsAlive Then
-            _eventThread.Join(2000)
+            _eventThread.Join(ThreadJoinTimeoutMs)
         End If
 
         If _mpvHandle <> IntPtr.Zero Then

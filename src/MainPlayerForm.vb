@@ -7,6 +7,37 @@ Imports System.Text
 ''' </summary>
 Public Class MainPlayerForm
 
+#Region "定数"
+
+    ' ウィンドウ位置の最小値
+    Private Const MinWindowPosition As Integer = 50
+
+    ' 速度調整の係数
+    Private Const SpeedMultiplier As Double = 0.1
+
+    ' 速度ボタンのオフセット (Button21 -> SC1)
+    Private Const SpeedButtonOffset As Integer = 20
+
+    ' タイムラベルの長さ
+    Private Const TimeLabelLength As Integer = 8
+
+    ' カウンタの最大桁数
+    Private Const MaxCounterDigits As Integer = 6
+
+    ' ドラッグ＆ドロップのCtrlキーマスク
+    Private Const CtrlMask As Integer = 8
+
+    ' ファイル解析用の文字列長
+    Private Const TimestampLength As Integer = 10
+    Private Const TimeDisplayLength As Integer = 8
+
+    ' カウンタ解析用の桁数
+    Private Const HourDigits As Integer = 2
+    Private Const MinuteDigits As Integer = 2
+    Private Const SecondDigits As Integer = 2
+
+#End Region
+
 #Region "メンバー変数"
 
     Private _mediaPlayer As MpvPlayerWrapper
@@ -45,10 +76,10 @@ Public Class MainPlayerForm
     ''' ウィンドウ位置の初期化
     ''' </summary>
     Private Sub InitializeWindowPosition()
-        If Left < 50 Then
+        If Left < MinWindowPosition Then
             Left = (Screen.PrimaryScreen.Bounds.Width - Width) \ 2
         End If
-        If Top < 50 Then
+        If Top < MinWindowPosition Then
             Top = (Screen.PrimaryScreen.Bounds.Height - Height) \ 2
         End If
     End Sub
@@ -78,8 +109,8 @@ Public Class MainPlayerForm
             Label1.Text = String.Format(My.Resources.TimeFormat, TimeSpan.FromSeconds(dur).ToString("hh\:mm\:ss"))
         End If
         TextBox1.Text = _mediaPlayer.FileName
-        TrackBar2.Value = CInt(_mediaPlayer.Speed * 10)
-        Label4.Text = String.Format(My.Resources.SpeedFormat, (TrackBar2.Value * 0.1).ToString("0.0"))
+        TrackBar2.Value = CInt(_mediaPlayer.Speed / SpeedMultiplier)
+        Label4.Text = String.Format(My.Resources.SpeedFormat, (TrackBar2.Value * SpeedMultiplier).ToString("0.0"))
     End Sub
 
     ''' <summary>
@@ -314,9 +345,9 @@ Public Class MainPlayerForm
             Case HotKeyType.PlayPauseWithBookmark
                 TogglePlayPauseWithBookmark()
             Case HotKeyType.SpeedUp
-                AdjustPlaybackSpeed(0.1)
+                AdjustPlaybackSpeed(SpeedMultiplier)
             Case HotKeyType.SpeedDown
-                AdjustPlaybackSpeed(-0.1)
+                AdjustPlaybackSpeed(-SpeedMultiplier)
             Case HotKeyType.SpeedResetTo1X
                 SetPlaybackSpeed(1.0)
             Case HotKeyType.SpeedSetToHalf
@@ -533,14 +564,14 @@ Public Class MainPlayerForm
         If btn Is Nothing Then Return
 
         ' ボタン名から番号を取得（例: "Button21" -> "1"）
-        ' Button21 は SC1, Button22 は SC2 ... なので 20 を引く
+        ' Button21 は SC1, Button22 は SC2 ...
         Dim buttonIndex As Integer
         If Integer.TryParse(btn.Name.Replace("Button", ""), buttonIndex) Then
-            Dim scIndex = buttonIndex - 20
+            Dim scIndex = buttonIndex - SpeedButtonOffset
             Dim settingName = "SC" & scIndex
 
             Try
-                TrackBar2.Value = CInt(My.Settings(settingName)) \ 10
+                TrackBar2.Value = CInt(CDbl(My.Settings(settingName)) * SpeedMultiplier)
                 UpdateSpeedFromTrackBar()
             Catch ex As Exception
                 ' 設定が見つからない場合などは何もしない
@@ -549,8 +580,8 @@ Public Class MainPlayerForm
     End Sub
 
     Private Sub UpdateSpeedFromTrackBar()
-        Label4.Text = String.Format(My.Resources.SpeedFormat, (TrackBar2.Value * 0.1).ToString("0.0"))
-        _mediaPlayer.Speed = TrackBar2.Value * 0.1
+        Label4.Text = String.Format(My.Resources.SpeedFormat, (TrackBar2.Value * SpeedMultiplier).ToString("0.0"))
+        _mediaPlayer.Speed = TrackBar2.Value * SpeedMultiplier
     End Sub
 
     Private Sub TrackBar2_Scroll(sender As Object, e As EventArgs) Handles TrackBar2.Scroll
@@ -660,17 +691,17 @@ Public Class MainPlayerForm
             End If
         Next
 
-        If cCounter.Length > 6 Then
+        If cCounter.Length > MaxCounterDigits Then
             MsgBox(My.Resources.DigitsExceeded, vbOKOnly)
             Return False
         End If
 
         ' 6桁にパディング
-        cCounter = cCounter.PadLeft(6, "0"c)
+        cCounter = cCounter.PadLeft(MaxCounterDigits, "0"c)
 
-        Dim hours = Integer.Parse(cCounter.Substring(0, 2))
-        Dim minutes = Integer.Parse(cCounter.Substring(2, 2))
-        Dim seconds = Integer.Parse(cCounter.Substring(4, 2))
+        Dim hours = Integer.Parse(cCounter.Substring(0, HourDigits))
+        Dim minutes = Integer.Parse(cCounter.Substring(HourDigits, MinuteDigits))
+        Dim seconds = Integer.Parse(cCounter.Substring(HourDigits + MinuteDigits, SecondDigits))
 
         resultSeconds = (hours * 3600) + (minutes * 60) + seconds
         formattedCounter = String.Format("{0:D2}:{1:D2}:{2:D2}", hours, minutes, seconds)
@@ -728,113 +759,170 @@ Public Class MainPlayerForm
         End Try
     End Sub
 
+#Region "ファイル解析ヘルパー"
+
+    ''' <summary>
+    ''' タイムスタンプ文字列から秒数を計算
+    ''' </summary>
+    Private Function ParseTimestampToSeconds(timestamp As String) As Integer
+        ' フォーマット: (HH:MM:SS) の10文字
+        Return (Integer.Parse(timestamp.Substring(1, 2)) * 3600) +
+               (Integer.Parse(timestamp.Substring(4, 2)) * 60) +
+               Integer.Parse(timestamp.Substring(7, 2))
+    End Function
+
+    ''' <summary>
+    ''' DataGridViewに行を追加
+    ''' </summary>
+    Private Sub AddBookmarkRow(timeDisplay As String, memo As String, seconds As Integer)
+        Dim row As String() = {timeDisplay, memo, seconds.ToString(), "削除"}
+        DataGridView1.Rows.Add(row)
+    End Sub
+
+    ''' <summary>
+    ''' テキスト内容を解析してしおりを追加
+    ''' </summary>
+    Private Sub ParseTextContentForBookmarks(content As String)
+        Dim fukaChar As String = My.Settings.Fuka
+        Dim fumeiChar As String = My.Settings.Fumei
+        Dim fumei2Char As String = My.Settings.Fumei2
+        Dim sonotaChar As String = My.Settings.Sonota
+
+        For n As Integer = 0 To content.Length - TimestampLength
+            Dim currentChar As String = content.Substring(n, 1)
+
+            If currentChar = fukaChar Then
+                ' 不可パターン
+                ParseFukaPattern(content, n)
+            ElseIf currentChar = fumeiChar Then
+                ' 不明パターン
+                ParseFumeiPattern(content, n, fumei2Char)
+            ElseIf currentChar = sonotaChar Then
+                ' その他パターン
+                ParseSonotaPattern(content, n)
+            End If
+        Next
+    End Sub
+
+    ''' <summary>
+    ''' 「不可」パターンを解析
+    ''' </summary>
+    Private Sub ParseFukaPattern(content As String, startIndex As Integer)
+        If startIndex + TimestampLength + 1 > content.Length Then Return
+
+        Dim timestamp As String = content.Substring(startIndex + 1, TimestampLength)
+        Dim seconds As Integer = ParseTimestampToSeconds(timestamp)
+        Dim timeDisplay As String = content.Substring(startIndex + 2, TimeDisplayLength)
+        AddBookmarkRow(timeDisplay, "聞き取り不可", seconds)
+    End Sub
+
+    ''' <summary>
+    ''' 「不明」パターンを解析
+    ''' </summary>
+    Private Sub ParseFumeiPattern(content As String, startIndex As Integer, endMarker As String)
+        For i As Integer = startIndex + 1 To content.Length - TimestampLength - 1
+            If content.Substring(i, 1) = endMarker Then
+                Dim memo As String = content.Substring(startIndex + 1, i - startIndex - 1)
+                Dim timestamp As String = content.Substring(i + 1, TimestampLength)
+                Dim seconds As Integer = ParseTimestampToSeconds(timestamp)
+                Dim timeDisplay As String = content.Substring(i + 2, TimeDisplayLength)
+                AddBookmarkRow(timeDisplay, memo & "？", seconds)
+                Exit For
+            End If
+        Next
+    End Sub
+
+    ''' <summary>
+    ''' 「その他」パターンを解析
+    ''' </summary>
+    Private Sub ParseSonotaPattern(content As String, startIndex As Integer)
+        For i As Integer = startIndex + 1 To content.Length - TimestampLength - 1
+            Dim checkChar As String = content.Substring(i, 1)
+            If checkChar = "(" OrElse checkChar = "（" Then
+                Dim memo As String = content.Substring(startIndex, i - startIndex)
+                Dim timestamp As String = content.Substring(i, TimestampLength)
+                Dim seconds As Integer = ParseTimestampToSeconds(timestamp)
+                Dim timeDisplay As String = content.Substring(i + 1, TimeDisplayLength)
+                AddBookmarkRow(timeDisplay, memo, seconds)
+                Exit For
+            End If
+        Next
+    End Sub
+
+    ''' <summary>
+    ''' Word文書からテキストを抽出
+    ''' </summary>
+    Private Function ExtractTextFromWord(filePath As String) As String
+        Dim objWord As Object = Nothing
+        Dim objDoc As Object = Nothing
+        Dim extractedText As String = String.Empty
+
+        Try
+            objWord = CreateObject("Word.Application")
+            objWord.Visible = False
+            objDoc = objWord.Documents.Open(filePath)
+            objDoc.Range.Copy()
+            extractedText = Clipboard.GetText()
+            Return extractedText
+        Finally
+            ' クリップボードのクリーンアップ
+            Try
+                Clipboard.Clear()
+            Catch
+                ' クリップボードのクリアに失敗しても無視
+            End Try
+
+            ' COMオブジェクトの解放
+            If objDoc IsNot Nothing Then
+                Try
+                    objDoc.Close(False)
+                Catch
+                End Try
+                Runtime.InteropServices.Marshal.ReleaseComObject(objDoc)
+                objDoc = Nothing
+            End If
+            If objWord IsNot Nothing Then
+                Try
+                    objWord.Quit()
+                Catch
+                End Try
+                Runtime.InteropServices.Marshal.ReleaseComObject(objWord)
+                objWord = Nothing
+            End If
+        End Try
+    End Function
+
+#End Region
+
     Private Sub Button32_Click(sender As Object, e As EventArgs) Handles Button32.Click
-        Dim nFile As String = Nothing
-        Dim strMemo As String
-        Dim n As Integer
-        Dim iLine As String
-        Dim cCounter As String
-
-        If OpenFileDialog1.ShowDialog() = DialogResult.OK Then
-            nFile = OpenFileDialog1.FileName
-            Select Case Path.GetExtension(nFile).ToLower()
-                Case ".csv"
-                    CsvReader()
-                Case ".doc", ".docx"
-                    Dim objWord As Object
-                    Dim objDoc As Object
-                    Dim txtNakami As String
-
-                    Try
-                        objWord = CreateObject("Word.Application")
-                        objWord.Visible = False
-                        objDoc = objWord.Documents.Open(OpenFileDialog1.FileName)
-
-                        objDoc.Range.Copy()
-                        txtNakami = Clipboard.GetText()
-                        For n = 0 To txtNakami.Length - 1
-                            Select Case txtNakami.Substring(n, 1)
-                                Case My.Settings.Fuka
-                                    cCounter = txtNakami.Substring(n + 1, 10)
-                                    cCounter = (Integer.Parse(cCounter.Substring(1, 2)) * 3600) + (Integer.Parse(cCounter.Substring(4, 2)) * 60) + (Integer.Parse(cCounter.Substring(7, 2)))
-                                    iLine = txtNakami.Substring(n + 2, 8) & "," & "聞き取り不可" & "," & cCounter & "," & "削除"
-                                    Dim rowPlus1() As String = iLine.Split(",")
-                                    DataGridView1.Rows.Add(rowPlus1)
-                                Case My.Settings.Fumei
-                                    For i = n + 1 To txtNakami.Length - 1
-                                        If txtNakami.Substring(i, 1) = My.Settings.Fumei2 Then
-                                            strMemo = txtNakami.Substring(n + 1, i - n - 1)
-                                            cCounter = txtNakami.Substring(i + 1, 10)
-                                            cCounter = (Integer.Parse(cCounter.Substring(1, 2)) * 3600) + (Integer.Parse(cCounter.Substring(4, 2)) * 60) + (Integer.Parse(cCounter.Substring(7, 2)))
-                                            iLine = txtNakami.Substring(i + 2, 8) & "," & strMemo & "？," & cCounter & "," & "削除"
-                                            Dim rowPlus2() As String = iLine.Split(",")
-                                            DataGridView1.Rows.Add(rowPlus2)
-                                            Exit For
-                                        End If
-                                    Next i
-                                Case My.Settings.Sonota
-                                    For i = n + 1 To txtNakami.Length - 1
-                                        If txtNakami.Substring(i, 1) = "(" OrElse txtNakami.Substring(i, 1) = "（" Then
-                                            strMemo = txtNakami.Substring(n, i - n)
-                                            cCounter = txtNakami.Substring(i, 10)
-                                            cCounter = (Integer.Parse(cCounter.Substring(1, 2)) * 3600) + (Integer.Parse(cCounter.Substring(4, 2)) * 60) + (Integer.Parse(cCounter.Substring(7, 2)))
-                                            iLine = txtNakami.Substring(i + 1, 8) & "," & strMemo & "," & cCounter & "," & "削除"
-                                            Dim rowPlus3() As String = iLine.Split(",")
-                                            DataGridView1.Rows.Add(rowPlus3)
-                                            Exit For
-                                        End If
-                                    Next i
-                            End Select
-                        Next n
-
-                        objDoc = Nothing
-                        objWord = Nothing
-                    Catch ex As Exception
-                        MsgBox(String.Format(My.Resources.WordFileLoadFailed, ex.Message), vbOKOnly)
-                    End Try
-                Case ".txt"
-                    Using reader = New StreamReader(nFile, Encoding.GetEncoding("Shift_JIS"))
-                        Dim txtNakami As String = reader.ReadToEnd()
-                        For n = 0 To txtNakami.Length - 1
-                            Select Case txtNakami.Substring(n, 1)
-                                Case My.Settings.Fuka
-                                    cCounter = txtNakami.Substring(n + 1, 10)
-                                    cCounter = (Integer.Parse(cCounter.Substring(1, 2)) * 3600) + (Integer.Parse(cCounter.Substring(4, 2)) * 60) + (Integer.Parse(cCounter.Substring(7, 2)))
-                                    iLine = txtNakami.Substring(n + 2, 8) & "," & "聞き取り不可" & "," & cCounter & "," & "削除"
-                                    Dim rowPlus4() As String = iLine.Split(",")
-                                    DataGridView1.Rows.Add(rowPlus4)
-                                Case My.Settings.Fumei
-                                    For i = n + 1 To txtNakami.Length - 1
-                                        If txtNakami.Substring(i, 1) = My.Settings.Fumei2 Then
-                                            strMemo = txtNakami.Substring(n + 1, i - n - 1)
-                                            cCounter = txtNakami.Substring(i + 1, 10)
-                                            cCounter = (Integer.Parse(cCounter.Substring(1, 2)) * 3600) + (Integer.Parse(cCounter.Substring(4, 2)) * 60) + (Integer.Parse(cCounter.Substring(7, 2)))
-                                            iLine = txtNakami.Substring(i + 2, 8) & "," & strMemo & "？," & cCounter & "," & "削除"
-                                            Dim rowPlus5() As String = iLine.Split(",")
-                                            DataGridView1.Rows.Add(rowPlus5)
-                                            Exit For
-                                        End If
-                                    Next i
-                                Case My.Settings.Sonota
-                                    For i = n + 1 To txtNakami.Length - 1
-                                        If txtNakami.Substring(i, 1) = "(" OrElse txtNakami.Substring(i, 1) = "（" Then
-                                            strMemo = txtNakami.Substring(n, i - n)
-                                            cCounter = txtNakami.Substring(i, 10)
-                                            cCounter = (Integer.Parse(cCounter.Substring(1, 2)) * 3600) + (Integer.Parse(cCounter.Substring(4, 2)) * 60) + (Integer.Parse(cCounter.Substring(7, 2)))
-                                            iLine = txtNakami.Substring(i + 1, 8) & "," & strMemo & "," & cCounter & "," & "削除"
-                                            Dim rowPlus6() As String = iLine.Split(",")
-                                            DataGridView1.Rows.Add(rowPlus6)
-                                            Exit For
-                                        End If
-                                    Next i
-                            End Select
-                        Next n
-                    End Using
-                Case Else
-                    MsgBox(My.Resources.FileFormatNotSupported, vbOKOnly)
-                    Exit Sub
-            End Select
+        If OpenFileDialog1.ShowDialog() <> DialogResult.OK Then
+            Return
         End If
+
+        Dim filePath As String = OpenFileDialog1.FileName
+        Dim extension As String = Path.GetExtension(filePath).ToLower()
+
+        Select Case extension
+            Case ".csv"
+                CsvReader()
+
+            Case ".doc", ".docx"
+                Try
+                    Dim content As String = ExtractTextFromWord(filePath)
+                    ParseTextContentForBookmarks(content)
+                Catch ex As Exception
+                    MsgBox(String.Format(My.Resources.WordFileLoadFailed, ex.Message), vbOKOnly)
+                End Try
+
+            Case ".txt"
+                Using reader As New StreamReader(filePath, Encoding.GetEncoding("Shift_JIS"))
+                    Dim content As String = reader.ReadToEnd()
+                    ParseTextContentForBookmarks(content)
+                End Using
+
+            Case Else
+                MsgBox(My.Resources.FileFormatNotSupported, vbOKOnly)
+        End Select
     End Sub
 
     Private Sub Button36_Click(sender As Object, e As EventArgs) Handles Button36.Click
@@ -896,87 +984,62 @@ Public Class MainPlayerForm
 
 #Region "ドラッグ＆ドロップ"
 
-    Private Const CtrlMask As Integer = 8
+    ''' <summary>
+    ''' ドラッグ＆ドロップでファイルを処理
+    ''' </summary>
+    Private Sub HandleFileDragDrop(e As DragEventArgs)
+        If Not e.Data.GetDataPresent(DataFormats.FileDrop) Then Return
+
+        Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
+        If files.Length = 0 Then Return
+
+        _mediaPlayer.LoadFile(files(0))
+        My.Settings.LastOpenedFile = files(0)
+    End Sub
+
+    ''' <summary>
+    ''' ドラッグ＆ドロップの効果を設定
+    ''' </summary>
+    Private Sub HandleFileDragEnter(e As DragEventArgs)
+        If Not e.Data.GetDataPresent(DataFormats.FileDrop) Then Return
+
+        If (e.KeyState And CtrlMask) = CtrlMask Then
+            e.Effect = DragDropEffects.Copy
+        Else
+            e.Effect = DragDropEffects.Move
+        End If
+    End Sub
 
     Private Sub MainPlayerForm_DragDrop(sender As Object, e As DragEventArgs) Handles MyBase.DragDrop
-        If e.Data.GetDataPresent(DataFormats.FileDrop) Then
-            Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
-            If files.Length > 0 Then
-                _mediaPlayer.LoadFile(files(0))
-                My.Settings.LastOpenedFile = files(0)
-            End If
-        End If
+        HandleFileDragDrop(e)
     End Sub
 
     Private Sub MainPlayerForm_DragEnter(sender As Object, e As DragEventArgs) Handles MyBase.DragEnter
-        If e.Data.GetDataPresent(DataFormats.FileDrop) Then
-            If (e.KeyState And CtrlMask) = CtrlMask Then
-                e.Effect = DragDropEffects.Copy
-            Else
-                e.Effect = DragDropEffects.Move
-            End If
-        End If
+        HandleFileDragEnter(e)
     End Sub
 
     Private Sub TableLayoutPanel1_DragDrop(sender As Object, e As DragEventArgs) Handles TableLayoutPanel1.DragDrop
-        If e.Data.GetDataPresent(DataFormats.FileDrop) Then
-            Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
-            If files.Length > 0 Then
-                _mediaPlayer.LoadFile(files(0))
-                My.Settings.LastOpenedFile = files(0)
-            End If
-        End If
+        HandleFileDragDrop(e)
     End Sub
 
     Private Sub TableLayoutPanel1_DragEnter(sender As Object, e As DragEventArgs) Handles TableLayoutPanel1.DragEnter
-        If e.Data.GetDataPresent(DataFormats.FileDrop) Then
-            If (e.KeyState And CtrlMask) = CtrlMask Then
-                e.Effect = DragDropEffects.Copy
-            Else
-                e.Effect = DragDropEffects.Move
-            End If
-        End If
+        HandleFileDragEnter(e)
     End Sub
 
     Private Sub TrackBar1_DragDrop(sender As Object, e As DragEventArgs) Handles TrackBar1.DragDrop
-        If e.Data.GetDataPresent(DataFormats.FileDrop) Then
-            Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
-            If files.Length > 0 Then
-                _mediaPlayer.LoadFile(files(0))
-                My.Settings.LastOpenedFile = files(0)
-            End If
-        End If
+        HandleFileDragDrop(e)
     End Sub
 
     Private Sub TrackBar1_DragEnter(sender As Object, e As DragEventArgs) Handles TrackBar1.DragEnter
-        If e.Data.GetDataPresent(DataFormats.FileDrop) Then
-            If (e.KeyState And CtrlMask) = CtrlMask Then
-                e.Effect = DragDropEffects.Copy
-            Else
-                e.Effect = DragDropEffects.Move
-            End If
-        End If
+        HandleFileDragEnter(e)
     End Sub
 
     Private Sub SplitContainer2_DragDrop(sender As Object, e As DragEventArgs) Handles SplitContainer2.DragDrop
-        If e.Data.GetDataPresent(DataFormats.FileDrop) Then
-            Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
-            If files.Length > 0 Then
-_mediaPlayer.LoadFile(files(0))
-
-                My.Settings.LastOpenedFile = files(0)
-            End If
-        End If
+        HandleFileDragDrop(e)
     End Sub
 
     Private Sub SplitContainer2_DragEnter(sender As Object, e As DragEventArgs) Handles SplitContainer2.DragEnter
-        If e.Data.GetDataPresent(DataFormats.FileDrop) Then
-            If (e.KeyState And CtrlMask) = CtrlMask Then
-                e.Effect = DragDropEffects.Copy
-            Else
-                e.Effect = DragDropEffects.Move
-            End If
-        End If
+        HandleFileDragEnter(e)
     End Sub
 
 #End Region
@@ -991,21 +1054,19 @@ _mediaPlayer.LoadFile(files(0))
 
         DataGridView1.Rows.Clear()
 
-        Dim sr As New StreamReader(csvFile, System.Text.Encoding.GetEncoding("shift_jis"))
-        Dim conStr As String
+        Using sr As New StreamReader(csvFile, System.Text.Encoding.GetEncoding("shift_jis"))
+            ' ヘッダー行をスキップ
+            If sr.ReadLine() Is Nothing Then Return
 
-        conStr = sr.ReadLine()
-        If conStr Is Nothing Then Exit Sub
-
-        Do
-            conStr = sr.ReadLine()
-            If conStr Is Nothing Then Exit Do
-            conStr = Replace(conStr, """", "")
-            Dim rowPlus() As String = conStr.Split(",")
-            DataGridView1.Rows.Add(rowPlus)
-        Loop
-
-        sr.Close()
+            Dim conStr As String
+            Do
+                conStr = sr.ReadLine()
+                If conStr Is Nothing Then Exit Do
+                conStr = Replace(conStr, """", "")
+                Dim rowPlus() As String = conStr.Split(",")
+                DataGridView1.Rows.Add(rowPlus)
+            Loop
+        End Using
     End Sub
 
     ''' <summary>
@@ -1102,47 +1163,25 @@ _mediaPlayer.LoadFile(files(0))
     ''' TextBox2でEnterキーが押されたときにジャンプ
     ''' </summary>
     Private Sub TextBox2_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBox2.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            Dim n As Integer
-            Dim a As Integer
-            Dim cCounter As String = String.Empty
+        ' 早期リターン: Enterキー以外は無視
+        If e.KeyCode <> Keys.Enter Then Return
 
-            If String.IsNullOrEmpty(TextBox2.Text) Then Exit Sub
+        ' 早期リターン: 空欄の場合は無視
+        If String.IsNullOrEmpty(TextBox2.Text) Then Return
 
-            n = TextBox2.Text.Length
+        Dim seconds As Integer
+        Dim formattedCounter As String = String.Empty
 
-            For a = 1 To n
-                Dim ch As String = Strings.Mid(TextBox2.Text, a, 1)
-                If ch = "0" OrElse ch = "1" OrElse ch = "2" OrElse ch = "3" OrElse ch = "4" OrElse ch = "5" OrElse ch = "6" OrElse ch = "7" OrElse ch = "8" OrElse ch = "9" Then
-                    cCounter &= ch
-                End If
-            Next a
-
-            If cCounter.Length > 6 OrElse cCounter.Length < 0 Then
-                MsgBox(My.Resources.InvalidDigits, vbOKOnly)
-                TextBox2.Clear()
-                Exit Sub
-            End If
-
-            Select Case cCounter.Length
-                Case 1 : cCounter = "00000" & cCounter
-                Case 2 : cCounter = "0000" & cCounter
-                Case 3 : cCounter = "000" & cCounter
-                Case 4 : cCounter = "00" & cCounter
-                Case 5 : cCounter = "0" & cCounter
-            End Select
-
-            If (Integer.Parse(Strings.Mid(cCounter, 1, 2)) * 3600) + (Integer.Parse(Strings.Mid(cCounter, 3, 2)) * 60) + (Integer.Parse(Strings.Mid(cCounter, 5, 2))) > _mediaPlayer.Duration Then
-                MsgBox(My.Resources.CounterExceedsDuration, vbOKOnly)
-                TextBox2.Clear()
-                Exit Sub
-            End If
-
-            TrackBar1.Value = (Integer.Parse(Strings.Mid(cCounter, 1, 2)) * 3600) + (Integer.Parse(Strings.Mid(cCounter, 3, 2)) * 60) + (Integer.Parse(Strings.Mid(cCounter, 5, 2)))
-            _mediaPlayer.Position = TrackBar1.Value
-            _mediaPlayer.Play()
+        ' ParseCounterToSecondsメソッドでパース処理を共通化
+        If Not ParseCounterToSeconds(TextBox2.Text, seconds, formattedCounter) Then
             TextBox2.Clear()
+            Return
         End If
+
+        TrackBar1.Value = seconds
+        _mediaPlayer.Position = seconds
+        _mediaPlayer.Play()
+        TextBox2.Clear()
     End Sub
 
     ''' <summary>

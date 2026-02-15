@@ -32,18 +32,31 @@ Public Class ClipboardImageViewer
                 Return
             End If
 
-            _clipboardImage = Clipboard.GetImage()
+            Dim newImage As Image = Clipboard.GetImage()
 
-            If _clipboardImage Is Nothing Then
+            If newImage Is Nothing Then
                 ShowNoImageMessage()
                 Return
             End If
 
+            ' 古い画像を解放してから新しい画像を設定
+            DisposeClipboardImage()
+            _clipboardImage = newImage
             DisplayImage(_clipboardImage)
 
         Catch ex As Exception
             ShowErrorMessage(String.Format(My.Resources.ImageLoadFailed, ex.Message))
         End Try
+    End Sub
+
+    ''' <summary>
+    ''' クリップボード画像を解放
+    ''' </summary>
+    Private Sub DisposeClipboardImage()
+        If _clipboardImage IsNot Nothing Then
+            _clipboardImage.Dispose()
+            _clipboardImage = Nothing
+        End If
     End Sub
 
     ''' <summary>
@@ -155,10 +168,7 @@ Public Class ClipboardImageViewer
     ''' テスト用にクリップボード画像をクリア
     ''' </summary>
     Friend Sub ClearClipboardImageForTest()
-        If _clipboardImage IsNot Nothing Then
-            _clipboardImage.Dispose()
-            _clipboardImage = Nothing
-        End If
+        DisposeClipboardImage()
     End Sub
 
     ''' <summary>
@@ -176,10 +186,7 @@ Public Class ClipboardImageViewer
     ''' フォーム終了時のリソース解放
     ''' </summary>
     Protected Overrides Sub OnFormClosing(e As FormClosingEventArgs)
-        If _clipboardImage IsNot Nothing Then
-            _clipboardImage.Dispose()
-            _clipboardImage = Nothing
-        End If
+        DisposeClipboardImage()
         MyBase.OnFormClosing(e)
     End Sub
 
