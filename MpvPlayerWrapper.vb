@@ -325,6 +325,7 @@ Public Class MpvPlayerWrapper
     ''' </summary>
     Public Sub [Stop]()
         If _mpvHandle = IntPtr.Zero Then Return
+        CurrentPosition = 0
         DoMpvCommand("stop")
     End Sub
 

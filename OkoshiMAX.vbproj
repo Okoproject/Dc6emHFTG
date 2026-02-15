@@ -115,24 +115,25 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
-    <Compile Include="Form1.vb">
+    <Compile Include="HotKeyManager.vb" />
+    <Compile Include="MainPlayerForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.vb">
-      <DependentUpon>Form1.vb</DependentUpon>
+    <Compile Include="MainPlayerForm.Designer.vb">
+      <DependentUpon>MainPlayerForm.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form2.Designer.vb">
-      <DependentUpon>Form2.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form2.vb">
+    <Compile Include="SettingsForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form3.Designer.vb">
-      <DependentUpon>Form3.vb</DependentUpon>
+    <Compile Include="SettingsForm.Designer.vb">
+      <DependentUpon>SettingsForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="Form3.vb">
+    <Compile Include="ClipboardImageViewer.vb">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClipboardImageViewer.Designer.vb">
+      <DependentUpon>ClipboardImageViewer.vb</DependentUpon>
     </Compile>
     <Compile Include="Module1.vb" />
     <Compile Include="MpvPlayerWrapper.vb" />
@@ -155,14 +156,14 @@
     <Compile Include="Settings.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.vb</DependentUpon>
+    <EmbeddedResource Include="MainPlayerForm.resx">
+      <DependentUpon>MainPlayerForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form2.resx">
-      <DependentUpon>Form2.vb</DependentUpon>
+    <EmbeddedResource Include="SettingsForm.resx">
+      <DependentUpon>SettingsForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form3.resx">
-      <DependentUpon>Form3.vb</DependentUpon>
+    <EmbeddedResource Include="ClipboardImageViewer.resx">
+      <DependentUpon>ClipboardImageViewer.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -223,12 +224,12 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Featured-playlist-01.jpg" />
     <Content Include="libmpv-2.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="okoshimax.ico" />
     <Content Include="OkoshiMAX1_4_1.ico" />
+    <None Include="Resources\Featured-playlist-01.jpg" />
     <None Include="Resources\OkoshiMAX1_5_0.ico" />
     <None Include="Resources\DownloadDocument_16x.png" />
     <None Include="Resources\DestinationAssistant_16x.png" />
