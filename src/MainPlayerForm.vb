@@ -208,7 +208,7 @@ Public Class MainPlayerForm
             If My.Settings.SC2_Distance > 0 Then
                 SplitContainer2.SplitterDistance = My.Settings.SC2_Distance
             Else
-                SplitContainer2.SplitterDistance = 149
+                SplitContainer2.SplitterDistance = SplitContainer2.Width \ 4
             End If
         Else
             CheckBox1.Checked = False
