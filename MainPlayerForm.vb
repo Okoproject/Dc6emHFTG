@@ -93,8 +93,8 @@ Public Class MainPlayerForm
             TrackBar1.Maximum = CInt(dur)
             Label1.Text = "00:00:00 / " & TimeSpan.FromSeconds(dur).ToString("hh\:mm\:ss")
         End If
-        TextBox1.Text = _mediaPlayer.MediaName
-        TrackBar2.Value = CInt(_mediaPlayer.Rate * 10)
+        TextBox1.Text = _mediaPlayer.FileName
+        TrackBar2.Value = CInt(_mediaPlayer.Speed * 10)
         Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
     End Sub
 
@@ -236,8 +236,8 @@ Public Class MainPlayerForm
     ''' </summary>
     Private Sub SaveCurrentSettings()
         ' 再生情報の保存
-        My.Settings.LastOpenedFile = _mediaPlayer.SourceURL
-        My.Settings.LastIchi = _mediaPlayer.CurrentPosition
+        My.Settings.LastOpenedFile = _mediaPlayer.FilePath
+        My.Settings.LastIchi = _mediaPlayer.Position
 
         ' UI状態の保存
         My.Settings.gamen = Not CheckBox2.Checked
@@ -354,7 +354,7 @@ Public Class MainPlayerForm
     ''' 再生/一時停止の切り替え
     ''' </summary>
     Private Sub TogglePlayPause()
-        If _mediaPlayer.PlayState = 3 Then ' 3 = Playing
+        If _mediaPlayer.IsPlaying Then
             _mediaPlayer.Pause()
         Else
             _mediaPlayer.Play()
@@ -392,7 +392,7 @@ Public Class MainPlayerForm
     ''' 現在のタイムコードを取得
     ''' </summary>
     Private Function GetCurrentTimeCode() As String
-        Dim position As Double = _mediaPlayer.CurrentPosition
+        Dim position As Double = _mediaPlayer.Position
         Dim hours As Integer = CInt(position) \ 3600
         Dim minutes As Integer = (CInt(position) Mod 3600) \ 60
         Dim seconds As Integer = CInt(position) Mod 60
@@ -444,7 +444,7 @@ Public Class MainPlayerForm
     ''' 再生速度の調整
     ''' </summary>
     Private Sub AdjustPlaybackSpeed(delta As Double)
-        _currentPlaybackSpeed += delta
+        _currentPlaybackSpeed = _mediaPlayer.Speed + delta
         SetPlaybackSpeed(_currentPlaybackSpeed)
     End Sub
 
@@ -453,7 +453,7 @@ Public Class MainPlayerForm
     ''' </summary>
     Private Sub SetPlaybackSpeed(speed As Double)
         _currentPlaybackSpeed = speed
-        _mediaPlayer.Rate = speed
+        _mediaPlayer.Speed = speed
         Label4.Text = $"x{speed:F1}"
     End Sub
 
@@ -480,7 +480,7 @@ Public Class MainPlayerForm
         End Select
 
         If jumpSeconds <> 0 Then
-            JumpToPosition(_mediaPlayer.CurrentPosition + jumpSeconds)
+            JumpToPosition(_mediaPlayer.Position + jumpSeconds)
         End If
     End Sub
 
@@ -507,7 +507,7 @@ Public Class MainPlayerForm
     ''' 指定位置にジャンプ
     ''' </summary>
     Private Sub JumpToPosition(position As Double)
-        _mediaPlayer.CurrentPosition = Math.Max(0, position)
+        _mediaPlayer.Position = Math.Max(0, position)
     End Sub
 
     ''' <summary>
@@ -543,145 +543,142 @@ Public Class MainPlayerForm
     Private Sub Button21_Click(sender As Object, e As EventArgs) Handles Button21.Click
         TrackBar2.Value = My.Settings.SC1 \ 10
         Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
-        _mediaPlayer.Rate = TrackBar2.Value * 0.1
+        _mediaPlayer.Speed = TrackBar2.Value * 0.1
     End Sub
 
     Private Sub Button22_Click(sender As Object, e As EventArgs) Handles Button22.Click
         TrackBar2.Value = My.Settings.SC2 \ 10
         Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
-        _mediaPlayer.Rate = TrackBar2.Value * 0.1
+        _mediaPlayer.Speed = TrackBar2.Value * 0.1
     End Sub
 
     Private Sub Button23_Click(sender As Object, e As EventArgs) Handles Button23.Click
         TrackBar2.Value = My.Settings.SC3 \ 10
         Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
-        _mediaPlayer.Rate = TrackBar2.Value * 0.1
+        _mediaPlayer.Speed = TrackBar2.Value * 0.1
     End Sub
 
     Private Sub Button24_Click(sender As Object, e As EventArgs) Handles Button24.Click
         TrackBar2.Value = My.Settings.SC4 \ 10
         Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
-        _mediaPlayer.Rate = TrackBar2.Value * 0.1
+        _mediaPlayer.Speed = TrackBar2.Value * 0.1
     End Sub
 
     Private Sub Button25_Click(sender As Object, e As EventArgs) Handles Button25.Click
         TrackBar2.Value = My.Settings.SC5 \ 10
         Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
-        _mediaPlayer.Rate = TrackBar2.Value * 0.1
+        _mediaPlayer.Speed = TrackBar2.Value * 0.1
     End Sub
 
     Private Sub Button26_Click(sender As Object, e As EventArgs) Handles Button26.Click
         TrackBar2.Value = My.Settings.SC6 \ 10
         Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
-        _mediaPlayer.Rate = TrackBar2.Value * 0.1
+        _mediaPlayer.Speed = TrackBar2.Value * 0.1
     End Sub
 
     Private Sub Button27_Click(sender As Object, e As EventArgs) Handles Button27.Click
         TrackBar2.Value = My.Settings.SC7 \ 10
         Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
-        _mediaPlayer.Rate = TrackBar2.Value * 0.1
+        _mediaPlayer.Speed = TrackBar2.Value * 0.1
     End Sub
 
     Private Sub TrackBar2_Scroll(sender As Object, e As EventArgs) Handles TrackBar2.Scroll
         Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
-        _mediaPlayer.Rate = TrackBar2.Value * 0.1
+        _mediaPlayer.Speed = TrackBar2.Value * 0.1
     End Sub
 
     Private Sub Button400_Click(sender As Object, e As EventArgs) Handles Button400.Click
         _mediaPlayer.Pause()
-        _mediaPlayer.CurrentPosition = 0
+        _mediaPlayer.Position = 0
     End Sub
 
     Private Sub Button200_Click(sender As Object, e As EventArgs) Handles Button200.Click
-        Select Case _mediaPlayer.PlayState
-            Case 1 ' Stop
-                _mediaPlayer.Play()
-            Case 2 ' Pause
-                _mediaPlayer.Play()
-            Case 3 ' Play
-                _mediaPlayer.Pause()
-        End Select
+        If _mediaPlayer.IsPlaying Then
+            _mediaPlayer.Pause()
+        Else
+            _mediaPlayer.Play()
+        End If
     End Sub
 
     ' ジャンプボタン
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        _mediaPlayer.CurrentPosition = TrackBar1.Value + My.Settings.SK1
+        _mediaPlayer.Position = TrackBar1.Value + My.Settings.SK1
     End Sub
 
     Private Sub Button11_Click(sender As Object, e As EventArgs) Handles Button11.Click
-        _mediaPlayer.CurrentPosition = TrackBar1.Value + My.Settings.SK11
+        _mediaPlayer.Position = TrackBar1.Value + My.Settings.SK11
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-        _mediaPlayer.CurrentPosition = TrackBar1.Value + My.Settings.SK2
+        _mediaPlayer.Position = TrackBar1.Value + My.Settings.SK2
     End Sub
 
     Private Sub Button12_Click(sender As Object, e As EventArgs) Handles Button12.Click
-        _mediaPlayer.CurrentPosition = TrackBar1.Value + My.Settings.SK12
+        _mediaPlayer.Position = TrackBar1.Value + My.Settings.SK12
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
-        _mediaPlayer.CurrentPosition = TrackBar1.Value + My.Settings.SK3
+        _mediaPlayer.Position = TrackBar1.Value + My.Settings.SK3
     End Sub
 
     Private Sub Button13_Click(sender As Object, e As EventArgs) Handles Button13.Click
-        _mediaPlayer.CurrentPosition = TrackBar1.Value + My.Settings.SK13
+        _mediaPlayer.Position = TrackBar1.Value + My.Settings.SK13
     End Sub
 
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
-        _mediaPlayer.CurrentPosition = TrackBar1.Value + My.Settings.SK4
+        _mediaPlayer.Position = TrackBar1.Value + My.Settings.SK4
     End Sub
 
     Private Sub Button14_Click(sender As Object, e As EventArgs) Handles Button14.Click
-        _mediaPlayer.CurrentPosition = TrackBar1.Value + My.Settings.SK14
+        _mediaPlayer.Position = TrackBar1.Value + My.Settings.SK14
     End Sub
 
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
-        _mediaPlayer.CurrentPosition = TrackBar1.Value + My.Settings.SK5
+        _mediaPlayer.Position = TrackBar1.Value + My.Settings.SK5
     End Sub
 
     Private Sub Button15_Click(sender As Object, e As EventArgs) Handles Button15.Click
-        _mediaPlayer.CurrentPosition = TrackBar1.Value + My.Settings.SK15
+        _mediaPlayer.Position = TrackBar1.Value + My.Settings.SK15
     End Sub
 
     Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
-        _mediaPlayer.CurrentPosition = TrackBar1.Value + My.Settings.SK6
+        _mediaPlayer.Position = TrackBar1.Value + My.Settings.SK6
     End Sub
 
     Private Sub Button16_Click(sender As Object, e As EventArgs) Handles Button16.Click
-        _mediaPlayer.CurrentPosition = TrackBar1.Value + My.Settings.SK16
+        _mediaPlayer.Position = TrackBar1.Value + My.Settings.SK16
     End Sub
 
     Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
-        _mediaPlayer.CurrentPosition = TrackBar1.Value + My.Settings.SK7
+        _mediaPlayer.Position = TrackBar1.Value + My.Settings.SK7
     End Sub
 
     Private Sub Button17_Click(sender As Object, e As EventArgs) Handles Button17.Click
-        _mediaPlayer.CurrentPosition = TrackBar1.Value + My.Settings.SK17
+        _mediaPlayer.Position = TrackBar1.Value + My.Settings.SK17
     End Sub
 
     Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
-        _mediaPlayer.CurrentPosition = TrackBar1.Value + My.Settings.SK8
+        _mediaPlayer.Position = TrackBar1.Value + My.Settings.SK8
     End Sub
 
     Private Sub Button18_Click(sender As Object, e As EventArgs) Handles Button18.Click
-        _mediaPlayer.CurrentPosition = TrackBar1.Value + My.Settings.SK18
+        _mediaPlayer.Position = TrackBar1.Value + My.Settings.SK18
     End Sub
 
     Private Sub Button9_Click(sender As Object, e As EventArgs) Handles Button9.Click
-        _mediaPlayer.CurrentPosition = TrackBar1.Value + My.Settings.SK9
+        _mediaPlayer.Position = TrackBar1.Value + My.Settings.SK9
     End Sub
 
     Private Sub Button19_Click(sender As Object, e As EventArgs) Handles Button19.Click
-        _mediaPlayer.CurrentPosition = TrackBar1.Value + My.Settings.SK19
+        _mediaPlayer.Position = TrackBar1.Value + My.Settings.SK19
     End Sub
 
     Private Sub Button10_Click(sender As Object, e As EventArgs) Handles Button10.Click
-        _mediaPlayer.CurrentPosition = TrackBar1.Value + My.Settings.SK10
+        _mediaPlayer.Position = TrackBar1.Value + My.Settings.SK10
     End Sub
 
     Private Sub Button20_Click(sender As Object, e As EventArgs) Handles Button20.Click
-        _mediaPlayer.CurrentPosition = TrackBar1.Value + My.Settings.SK20
+        _mediaPlayer.Position = TrackBar1.Value + My.Settings.SK20
     End Sub
 
     Private Sub TrackBar6_Scroll(sender As Object, e As EventArgs) Handles TrackBar6.Scroll
@@ -722,7 +719,7 @@ Public Class MainPlayerForm
             Case 0 ' ジャンプ
                 Dim i As Integer = DataGridView1.SelectedCells(0).RowIndex
                 TrackBar1.Value = DataGridView1.Rows(i).Cells(2).Value
-                _mediaPlayer.CurrentPosition = TrackBar1.Value
+                _mediaPlayer.Position = TrackBar1.Value
                 If My.Settings.shiori_PS Then
                     _mediaPlayer.Play()
                 Else
@@ -815,7 +812,7 @@ Public Class MainPlayerForm
         End If
 
         TrackBar1.Value = (Integer.Parse(Strings.Mid(cCounter, 1, 2)) * 3600) + (Integer.Parse(Strings.Mid(cCounter, 3, 2)) * 60) + (Integer.Parse(Strings.Mid(cCounter, 5, 2)))
-        _mediaPlayer.CurrentPosition = TrackBar1.Value
+        _mediaPlayer.Position = TrackBar1.Value
         _mediaPlayer.Play()
         TextBox2.Clear()
     End Sub
@@ -953,12 +950,12 @@ Public Class MainPlayerForm
     Private Sub TrackBar1_Scroll(sender As Object, e As EventArgs) Handles TrackBar1.Scroll
         ToolTip1.SetToolTip(TrackBar1, TimeSpan.FromSeconds(TrackBar1.Value).ToString("hh\:mm\:ss"))
         Label1.Text = TimeSpan.FromSeconds(TrackBar1.Value).ToString("hh\:mm\:ss") & " / " & TimeSpan.FromSeconds(_mediaPlayer.Duration).ToString("hh\:mm\:ss")
-        _mediaPlayer.CurrentPosition = TrackBar1.Value
+        _mediaPlayer.Position = TrackBar1.Value
     End Sub
 
     Private Sub Button39_Click(sender As Object, e As EventArgs) Handles Button39.Click
         If OpenFileDialog1.ShowDialog() = DialogResult.OK Then
-            _mediaPlayer.URL = OpenFileDialog1.FileName
+            _mediaPlayer.LoadFile(OpenFileDialog1.FileName)
             My.Settings.LastOpenedFile = OpenFileDialog1.FileName
             DataGridView1.Rows.Clear()
         End If
@@ -986,13 +983,13 @@ Public Class MainPlayerForm
 #Region "Timer"
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
-        If _mediaPlayer.PlayState = 3 Then
-            Dim pos As Integer = CInt(_mediaPlayer.CurrentPosition)
+        If _mediaPlayer.IsPlaying Then
+            Dim pos As Integer = CInt(_mediaPlayer.Position)
             If pos > TrackBar1.Maximum Then
                 pos = TrackBar1.Maximum
             End If
             TrackBar1.Value = pos
-            Label1.Text = TimeSpan.FromSeconds(_mediaPlayer.CurrentPosition).ToString("hh\:mm\:ss") & " / " & TimeSpan.FromSeconds(_mediaPlayer.Duration).ToString("hh\:mm\:ss")
+            Label1.Text = TimeSpan.FromSeconds(_mediaPlayer.Position).ToString("hh\:mm\:ss") & " / " & TimeSpan.FromSeconds(_mediaPlayer.Duration).ToString("hh\:mm\:ss")
         End If
     End Sub
 
@@ -1006,7 +1003,8 @@ Public Class MainPlayerForm
         If e.Data.GetDataPresent(DataFormats.FileDrop) Then
             Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
             If files.Length > 0 Then
-                _mediaPlayer.URL = files(0)
+_mediaPlayer.LoadFile(files(0))
+
                 My.Settings.LastOpenedFile = files(0)
             End If
         End If
@@ -1026,7 +1024,8 @@ Public Class MainPlayerForm
         If e.Data.GetDataPresent(DataFormats.FileDrop) Then
             Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
             If files.Length > 0 Then
-                _mediaPlayer.URL = files(0)
+_mediaPlayer.LoadFile(files(0))
+
                 My.Settings.LastOpenedFile = files(0)
             End If
         End If
@@ -1046,7 +1045,8 @@ Public Class MainPlayerForm
         If e.Data.GetDataPresent(DataFormats.FileDrop) Then
             Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
             If files.Length > 0 Then
-                _mediaPlayer.URL = files(0)
+_mediaPlayer.LoadFile(files(0))
+
                 My.Settings.LastOpenedFile = files(0)
             End If
         End If
@@ -1066,7 +1066,8 @@ Public Class MainPlayerForm
         If e.Data.GetDataPresent(DataFormats.FileDrop) Then
             Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
             If files.Length > 0 Then
-                _mediaPlayer.URL = files(0)
+_mediaPlayer.LoadFile(files(0))
+
                 My.Settings.LastOpenedFile = files(0)
             End If
         End If
@@ -1244,7 +1245,7 @@ Public Class MainPlayerForm
             End If
 
             TrackBar1.Value = (Integer.Parse(Strings.Mid(cCounter, 1, 2)) * 3600) + (Integer.Parse(Strings.Mid(cCounter, 3, 2)) * 60) + (Integer.Parse(Strings.Mid(cCounter, 5, 2)))
-            _mediaPlayer.CurrentPosition = TrackBar1.Value
+            _mediaPlayer.Position = TrackBar1.Value
             _mediaPlayer.Play()
             TextBox2.Clear()
         End If

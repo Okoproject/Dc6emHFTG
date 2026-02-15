@@ -3,7 +3,7 @@ Imports System.Runtime.InteropServices
 Imports System.Windows.Forms
 
 ''' <summary>
-''' WMP API互換のmpv (libmpv) ラッパークラス。
+''' mpv (libmpv) ラッパークラス。
 ''' P/Invoke経由でlibmpv-2.dllを直接呼び出す。
 ''' </summary>
 Public Class MpvPlayerWrapper
@@ -97,8 +97,8 @@ Public Class MpvPlayerWrapper
 
     Private _mpvHandle As IntPtr = IntPtr.Zero
     Private _hostPanel As Panel
-    Private _sourceURL As String = ""
-    Private _mediaName As String = ""
+    Private _filePath As String = ""
+    Private _fileName As String = ""
     Private _disposed As Boolean = False
     Private _eventThread As Threading.Thread
     Private _running As Boolean = False
@@ -123,14 +123,14 @@ Public Class MpvPlayerWrapper
         ' 高精度シーク有効化
         mpv_set_option_string(_mpvHandle, "hr-seek", "yes")
 
-        ' OSD無効化 (WMPのuiMode="none"相当)
+        ' OSD無効化
         mpv_set_option_string(_mpvHandle, "osd-level", "0")
 
-        ' キーバインド無効化 (入力はForm1が処理)
+        ' キーバインド無効化（入力はフォーム側が処理）
         mpv_set_option_string(_mpvHandle, "input-default-bindings", "no")
         mpv_set_option_string(_mpvHandle, "input-vo-keyboard", "no")
 
-        ' 自動再生しない (Kidou=Trueの初回paused動作と同等)
+        ' 自動再生しない（pause状態で開始）
         mpv_set_option_string(_mpvHandle, "pause", "yes")
 
         ' keep-open: ファイル終了時に自動で閉じない
@@ -176,12 +176,12 @@ Public Class MpvPlayerWrapper
         End While
     End Sub
 
-#Region "Properties (WMP互換)"
+#Region "プロパティ"
 
     ''' <summary>
-    ''' 現在の再生位置 (秒)。WMPのCtlcontrols.currentPosition相当。
+    ''' 現在の再生位置 (秒)。mpvの time-pos プロパティ。
     ''' </summary>
-    Public Property CurrentPosition As Double
+    Public Property Position As Double
         Get
             If _mpvHandle = IntPtr.Zero Then Return 0
             Dim pos As Double = 0
@@ -197,7 +197,7 @@ Public Class MpvPlayerWrapper
     End Property
 
     ''' <summary>
-    ''' メディアの長さ (秒)。WMPのcurrentMedia.duration相当。
+    ''' メディアの長さ (秒)。mpvの duration プロパティ。
     ''' </summary>
     Public ReadOnly Property Duration As Double
         Get
@@ -210,9 +210,9 @@ Public Class MpvPlayerWrapper
     End Property
 
     ''' <summary>
-    ''' 再生速度。WMPのsettings.rate相当。
+    ''' 再生速度。mpvの speed プロパティ。
     ''' </summary>
-    Public Property Rate As Double
+    Public Property Speed As Double
         Get
             If _mpvHandle = IntPtr.Zero Then Return 1.0
             Dim spd As Double = 1.0
@@ -228,7 +228,7 @@ Public Class MpvPlayerWrapper
     End Property
 
     ''' <summary>
-    ''' 音量 (0-100)。WMPのsettings.volume相当。
+    ''' 音量 (0-100)。mpvの volume プロパティ。
     ''' </summary>
     Public Property Volume As Integer
         Get
@@ -247,65 +247,75 @@ Public Class MpvPlayerWrapper
     End Property
 
     ''' <summary>
-    ''' 再生状態。WMPのplayState相当。1=Stop, 2=Pause, 3=Play。
+    ''' 再生中かどうか。mpvの pause プロパティが "no" かつアイドルでない場合 True。
     ''' </summary>
-    Public ReadOnly Property PlayState As Integer
+    Public ReadOnly Property IsPlaying As Boolean
         Get
-            If _mpvHandle = IntPtr.Zero Then Return 1
-
-            ' idle-activeチェック (ファイルが読み込まれていない場合)
-            Dim idleStr As String = GetPropertyString("idle-active")
-            If idleStr = "yes" Then Return 1 ' Stop
-
-            ' pauseチェック
-            Dim pauseStr As String = GetPropertyString("pause")
-            If pauseStr = "yes" Then Return 2 ' Pause
-
-            Return 3 ' Play
+            If _mpvHandle = IntPtr.Zero Then Return False
+            If GetPropertyString("idle-active") = "yes" Then Return False
+            Return GetPropertyString("pause") = "no"
         End Get
     End Property
 
     ''' <summary>
-    ''' メディアファイルのURL。WMPのcurrentMedia.sourceURL相当。
+    ''' 一時停止中かどうか。mpvの pause プロパティが "yes" かつアイドルでない場合 True。
     ''' </summary>
-    Public ReadOnly Property SourceURL As String
+    Public ReadOnly Property IsPaused As Boolean
         Get
-            Return _sourceURL
+            If _mpvHandle = IntPtr.Zero Then Return False
+            If GetPropertyString("idle-active") = "yes" Then Return False
+            Return GetPropertyString("pause") = "yes"
         End Get
     End Property
 
     ''' <summary>
-    ''' メディアファイルの名前。WMPのcurrentMedia.name相当。
+    ''' アイドル状態かどうか（ファイルが読み込まれていない）。mpvの idle-active プロパティ。
     ''' </summary>
-    Public ReadOnly Property MediaName As String
+    Public ReadOnly Property IsIdle As Boolean
         Get
-            Return _mediaName
+            If _mpvHandle = IntPtr.Zero Then Return True
+            Return GetPropertyString("idle-active") = "yes"
         End Get
     End Property
 
     ''' <summary>
-    ''' URLを設定してファイルを読み込む。WMPの.URL = path相当。
-    ''' loadfile コマンドで読み込み、pause状態で開始。
+    ''' メディアファイルのフルパス。
     ''' </summary>
-    Public WriteOnly Property URL As String
-        Set(value As String)
-            If _mpvHandle = IntPtr.Zero Then Return
-            If String.IsNullOrEmpty(value) Then Return
+    Public ReadOnly Property FilePath As String
+        Get
+            Return _filePath
+        End Get
+    End Property
 
-            _sourceURL = value
-            _mediaName = Path.GetFileName(value)
-
-            ' loadfileコマンドを実行
-            DoMpvCommand("loadfile", value)
-        End Set
+    ''' <summary>
+    ''' メディアファイルのファイル名。
+    ''' </summary>
+    Public ReadOnly Property FileName As String
+        Get
+            Return _fileName
+        End Get
     End Property
 
 #End Region
 
-#Region "Methods (WMP互換)"
+#Region "メソッド"
 
     ''' <summary>
-    ''' 再生。WMPのCtlcontrols.play()相当。
+    ''' ファイルを読み込む。loadfile コマンドで読み込み、pause状態で開始。
+    ''' </summary>
+    Public Sub LoadFile(path As String)
+        If _mpvHandle = IntPtr.Zero Then Return
+        If String.IsNullOrEmpty(path) Then Return
+
+        _filePath = path
+        _fileName = IO.Path.GetFileName(path)
+
+        ' loadfileコマンドを実行
+        DoMpvCommand("loadfile", path)
+    End Sub
+
+    ''' <summary>
+    ''' 再生。
     ''' </summary>
     Public Sub Play()
         If _mpvHandle = IntPtr.Zero Then Return
@@ -313,7 +323,7 @@ Public Class MpvPlayerWrapper
     End Sub
 
     ''' <summary>
-    ''' 一時停止。WMPのCtlcontrols.pause()相当。
+    ''' 一時停止。
     ''' </summary>
     Public Sub Pause()
         If _mpvHandle = IntPtr.Zero Then Return
@@ -321,11 +331,11 @@ Public Class MpvPlayerWrapper
     End Sub
 
     ''' <summary>
-    ''' 停止。WMPのCtlcontrols.stop()相当。先頭に戻してpause。
+    ''' 停止。先頭に戻してstopコマンドを実行。
     ''' </summary>
     Public Sub [Stop]()
         If _mpvHandle = IntPtr.Zero Then Return
-        CurrentPosition = 0
+        Position = 0
         DoMpvCommand("stop")
     End Sub
 

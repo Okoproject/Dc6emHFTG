@@ -1,4 +1,4 @@
-﻿Imports System.ComponentModel
+Imports System.ComponentModel
 Imports System.IO
 Imports System.Text
 Imports System.Drawing.Imaging
@@ -181,8 +181,8 @@ Public Class Form1
 
         'On Error Resume Next
 
-        My.Settings.LastOpenedFile = _player.SourceURL
-        My.Settings.LastIchi = _player.CurrentPosition
+        My.Settings.LastOpenedFile = _player.FilePath
+        My.Settings.LastIchi = _player.Position
 
         'しおりデータの保存
         'WriteCsvFromDGV(Me.DataGridView1, appPath & "\tmp.csv")
@@ -1819,8 +1819,8 @@ Public Class Form1
 
 
 
-        _player.URL = My.Settings.LastOpenedFile
-        _player.CurrentPosition = My.Settings.LastIchi
+        _player.LoadFile(My.Settings.LastOpenedFile)
+        _player.Position = My.Settings.LastIchi
 
         Dim boolFile_Exists As Boolean
         boolFile_Exists = System.IO.File.Exists(appPath & "om_tmp.csv")
@@ -1945,81 +1945,55 @@ Public Class Form1
                 'Play / Pause(0)
                 Case hotkeyID_A
                     'axWindowsMediaPlayer1.Ctlcontrols.stop()
-                    Select Case (_player.PlayState) 'Stop:1 Pause:2 Play:3
-                        Case 1
-                            _player.CurrentPosition = _player.CurrentPosition - (AutoB / 10)
-                            _player.Play()
-                            'Button200.Text = "一時停止"
-                            Button200.Image = My.Resources.Pause_16x
-                        Case 2
-                            _player.CurrentPosition = _player.CurrentPosition - (AutoB / 10)
-                            _player.Play()
-                            'Button200.Text = "一時停止"
-                            Button200.Image = My.Resources.Pause_16x
-                        Case 3
-                            _player.Pause()
-                            'Button200.Text = "再生"
-                            Button200.Image = My.Resources.Run_16x
-                            '_player.CurrentPosition = _player.CurrentPosition - (AutoB / 10)
-                    End Select
+                    If _player.IsPlaying Then
+                        _player.Pause()
+                        Button200.Image = My.Resources.Run_16x
+                    Else
+                        _player.Position = _player.Position - (AutoB / 10)
+                        _player.Play()
+                        Button200.Image = My.Resources.Pause_16x
+                    End If
                 'Play / Pause & Copying Counter1(1)
                 Case hotkeyID_B
-                    Select Case (_player.PlayState) 'Stop:1 Pause:2 Play:3
-                        Case 1
-                            _player.CurrentPosition = _player.CurrentPosition - (AutoB / 10)
-                            _player.Play()
-                            'Button200.Text = "一時停止"
-                            Button200.Image = My.Resources.Pause_16x
-                        Case 2
-                            _player.CurrentPosition = _player.CurrentPosition - (AutoB / 10)
-                            _player.Play()
-                            'Button200.Text = "一時停止"
-                            Button200.Image = My.Resources.Pause_16x
-                        Case 3
-                            _player.Pause()
-                            'Button200.Text = "再生"
-                            Button200.Image = My.Resources.Run_16x
-                            Select Case My.Settings.TimeCode
-                                Case 0
-                                    Clipboard.SetText(My.Settings.Atama & Strings.Left(Label1.Text, 8) & My.Settings.Oshiri)
-                                Case 1
-                                    timeCode = StrConv(Strings.Left(Label1.Text, 8), VbStrConv.Wide)
-                                    Clipboard.SetText(My.Settings.Atama & timeCode & My.Settings.Oshiri)
-                                Case 2
-                                    timeCode = Strings.Left(Strings.Left(Label1.Text, 8), 2) & StrConv(Strings.Mid(Strings.Left(Label1.Text, 8), 3, 1), VbStrConv.Wide) & Strings.Mid(Strings.Left(Label1.Text, 8), 4, 2) & StrConv(Strings.Mid(Strings.Left(Label1.Text, 8), 6, 1), VbStrConv.Wide) & Strings.Right(Strings.Left(Label1.Text, 8), 2)
-                                    Clipboard.SetText(My.Settings.Atama & timeCode & My.Settings.Oshiri)
-                            End Select
-                    End Select
+                    If _player.IsPlaying Then
+                        _player.Pause()
+                        Button200.Image = My.Resources.Run_16x
+                        Select Case My.Settings.TimeCode
+                            Case 0
+                                Clipboard.SetText(My.Settings.Atama & Strings.Left(Label1.Text, 8) & My.Settings.Oshiri)
+                            Case 1
+                                timeCode = StrConv(Strings.Left(Label1.Text, 8), VbStrConv.Wide)
+                                Clipboard.SetText(My.Settings.Atama & timeCode & My.Settings.Oshiri)
+                            Case 2
+                                timeCode = Strings.Left(Strings.Left(Label1.Text, 8), 2) & StrConv(Strings.Mid(Strings.Left(Label1.Text, 8), 3, 1), VbStrConv.Wide) & Strings.Mid(Strings.Left(Label1.Text, 8), 4, 2) & StrConv(Strings.Mid(Strings.Left(Label1.Text, 8), 6, 1), VbStrConv.Wide) & Strings.Right(Strings.Left(Label1.Text, 8), 2)
+                                Clipboard.SetText(My.Settings.Atama & timeCode & My.Settings.Oshiri)
+                        End Select
+                    Else
+                        _player.Position = _player.Position - (AutoB / 10)
+                        _player.Play()
+                        Button200.Image = My.Resources.Pause_16x
+                    End If
 
                 'Play / Pause & Copying Counter2(2)
                 Case hotkeyID_C
-                    Select Case (_player.PlayState) 'Stop:1 Pause:2 Play:3
-                        Case 1
-                            _player.CurrentPosition = _player.CurrentPosition - (AutoB / 10)
-                            _player.Play()
-                            'Button200.Text = "一時停止"
-                            Button200.Image = My.Resources.Pause_16x
-                        Case 2
-                            _player.CurrentPosition = _player.CurrentPosition - (AutoB / 10)
-                            _player.Play()
-                            'Button200.Text = "一時停止"
-                            Button200.Image = My.Resources.Pause_16x
-                        Case 3
-                            _player.Pause()
-                            'Button200.Text = "再生"
-                            Button200.Image = My.Resources.Run_16x
-                            Select Case My.Settings.TimeCode
-                                Case 0
-                                    Clipboard.SetText(My.Settings.Atama2 & Strings.Left(Label1.Text, 8) & My.Settings.Oshiri2)
-                                Case 1
-                                    timeCode = StrConv(Strings.Left(Label1.Text, 8), VbStrConv.Wide)
-                                    Clipboard.SetText(My.Settings.Atama2 & timeCode & My.Settings.Oshiri2)
-                                Case 2
-                                    timeCode = Strings.Left(Strings.Left(Label1.Text, 8), 2) & StrConv(Strings.Mid(Strings.Left(Label1.Text, 8), 3, 1), VbStrConv.Wide) & Strings.Mid(Strings.Left(Label1.Text, 8), 4, 2) & StrConv(Strings.Mid(Strings.Left(Label1.Text, 8), 6, 1), VbStrConv.Wide) & Strings.Right(Strings.Left(Label1.Text, 8), 2)
-                                    Clipboard.SetText(My.Settings.Atama2 & timeCode & My.Settings.Oshiri2)
-                            End Select
-
-                    End Select
+                    If _player.IsPlaying Then
+                        _player.Pause()
+                        Button200.Image = My.Resources.Run_16x
+                        Select Case My.Settings.TimeCode
+                            Case 0
+                                Clipboard.SetText(My.Settings.Atama2 & Strings.Left(Label1.Text, 8) & My.Settings.Oshiri2)
+                            Case 1
+                                timeCode = StrConv(Strings.Left(Label1.Text, 8), VbStrConv.Wide)
+                                Clipboard.SetText(My.Settings.Atama2 & timeCode & My.Settings.Oshiri2)
+                            Case 2
+                                timeCode = Strings.Left(Strings.Left(Label1.Text, 8), 2) & StrConv(Strings.Mid(Strings.Left(Label1.Text, 8), 3, 1), VbStrConv.Wide) & Strings.Mid(Strings.Left(Label1.Text, 8), 4, 2) & StrConv(Strings.Mid(Strings.Left(Label1.Text, 8), 6, 1), VbStrConv.Wide) & Strings.Right(Strings.Left(Label1.Text, 8), 2)
+                                Clipboard.SetText(My.Settings.Atama2 & timeCode & My.Settings.Oshiri2)
+                        End Select
+                    Else
+                        _player.Position = _player.Position - (AutoB / 10)
+                        _player.Play()
+                        Button200.Image = My.Resources.Pause_16x
+                    End If
 
                 'Stop(3)
                 Case hotkeyID_D
@@ -2029,32 +2003,24 @@ Public Class Form1
 
                 'Play / Pause & Copying counter3(4)
                 Case hotkeyID_E
-                    Select Case (_player.PlayState) 'Stop:1 Pause:2 Play:3
-                        Case 1
-                            _player.CurrentPosition = _player.CurrentPosition - (AutoB / 10)
-                            _player.Play()
-                            'Button200.Text = "一時停止"
-                            Button200.Image = My.Resources.Pause_16x
-                        Case 2
-                            _player.CurrentPosition = _player.CurrentPosition - (AutoB / 10)
-                            _player.Play()
-                            'Button200.Text = "一時停止"
-                            Button200.Image = My.Resources.Pause_16x
-                        Case 3
-                            _player.Pause()
-                            'Button200.Text = "再生"
-                            Button200.Image = My.Resources.Run_16x
-                            Select Case My.Settings.TimeCode
-                                Case 0
-                                    Clipboard.SetText(My.Settings.Atama3 & Strings.Left(Label1.Text, 8) & My.Settings.Oshiri3)
-                                Case 1
-                                    timeCode = StrConv(Strings.Left(Label1.Text, 8), VbStrConv.Wide)
-                                    Clipboard.SetText(My.Settings.Atama3 & timeCode & My.Settings.Oshiri3)
-                                Case 2
-                                    timeCode = Strings.Left(Strings.Left(Label1.Text, 8), 2) & StrConv(Strings.Mid(Strings.Left(Label1.Text, 8), 3, 1), VbStrConv.Wide) & Strings.Mid(Strings.Left(Label1.Text, 8), 4, 2) & StrConv(Strings.Mid(Strings.Left(Label1.Text, 8), 6, 1), VbStrConv.Wide) & Strings.Right(Strings.Left(Label1.Text, 8), 2)
-                                    Clipboard.SetText(My.Settings.Atama3 & timeCode & My.Settings.Oshiri3)
-                            End Select
-                    End Select
+                    If _player.IsPlaying Then
+                        _player.Pause()
+                        Button200.Image = My.Resources.Run_16x
+                        Select Case My.Settings.TimeCode
+                            Case 0
+                                Clipboard.SetText(My.Settings.Atama3 & Strings.Left(Label1.Text, 8) & My.Settings.Oshiri3)
+                            Case 1
+                                timeCode = StrConv(Strings.Left(Label1.Text, 8), VbStrConv.Wide)
+                                Clipboard.SetText(My.Settings.Atama3 & timeCode & My.Settings.Oshiri3)
+                            Case 2
+                                timeCode = Strings.Left(Strings.Left(Label1.Text, 8), 2) & StrConv(Strings.Mid(Strings.Left(Label1.Text, 8), 3, 1), VbStrConv.Wide) & Strings.Mid(Strings.Left(Label1.Text, 8), 4, 2) & StrConv(Strings.Mid(Strings.Left(Label1.Text, 8), 6, 1), VbStrConv.Wide) & Strings.Right(Strings.Left(Label1.Text, 8), 2)
+                                Clipboard.SetText(My.Settings.Atama3 & timeCode & My.Settings.Oshiri3)
+                        End Select
+                    Else
+                        _player.Position = _player.Position - (AutoB / 10)
+                        _player.Play()
+                        Button200.Image = My.Resources.Pause_16x
+                    End If
 
                 'Copying Counter1(5)
                 Case hotkeyID_T
@@ -2116,30 +2082,22 @@ Public Class Form1
 
                 'Play / Pause & Add Bookmark(9)
                 Case hotkeyID_I
-                    Select Case (_player.PlayState) 'Stop:1 Pause:2 Play:3
-                        Case 1
-                            _player.CurrentPosition = _player.CurrentPosition - (AutoB / 10)
-                            _player.Play()
-                            'Button200.Text = "一時停止"
-                            Button200.Image = My.Resources.Pause_16x
-                        Case 2
-                            _player.CurrentPosition = _player.CurrentPosition - (AutoB / 10)
-                            _player.Play()
-                            'Button200.Text = "一時停止"
-                            Button200.Image = My.Resources.Pause_16x
-                        Case 3
-                            _player.Pause()
-                            'Button200.Text = "再生"
-                            Button200.Image = My.Resources.Run_16x
-                            DataGridView1.Rows.Add()
-                            Dim i As Integer
-                            i = DataGridView1.Rows.Count - 1
+                    If _player.IsPlaying Then
+                        _player.Pause()
+                        Button200.Image = My.Resources.Run_16x
+                        DataGridView1.Rows.Add()
+                        Dim i As Integer
+                        i = DataGridView1.Rows.Count - 1
 
-                            DataGridView1.Rows(i).Cells(0).Value = Strings.Left(Label1.Text, 8)
-                            DataGridView1.Rows(i).Cells(2).Value = TrackBar1.Value
+                        DataGridView1.Rows(i).Cells(0).Value = Strings.Left(Label1.Text, 8)
+                        DataGridView1.Rows(i).Cells(2).Value = TrackBar1.Value
 
-                            DataGridView1.CurrentCell = DataGridView1(0, i)
-                    End Select
+                        DataGridView1.CurrentCell = DataGridView1(0, i)
+                    Else
+                        _player.Position = _player.Position - (AutoB / 10)
+                        _player.Play()
+                        Button200.Image = My.Resources.Pause_16x
+                    End If
                     If My.Settings.autoBM = True Then
                         WriteCsvFromDGV(Me.DataGridView1, My.Settings.autoBMDir & TextBox1.Text)
                     Else
@@ -2153,7 +2111,7 @@ Public Class Form1
                     TrackBar2.Value += 1
                     Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
                     _player.Pause()
-                    _player.Rate = TrackBar2.Value * 0.1
+                    _player.Speed = TrackBar2.Value * 0.1
                     _player.Play()
                     'Button200.Text = "一時停止"
                     Button200.Image = My.Resources.Pause_16x
@@ -2164,7 +2122,7 @@ Public Class Form1
                     TrackBar2.Value -= 1
                     Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
                     _player.Pause()
-                    _player.Rate = TrackBar2.Value * 0.1
+                    _player.Speed = TrackBar2.Value * 0.1
                     _player.Play()
                     'Button200.Text = "一時停止"
                     Button200.Image = My.Resources.Pause_16x
@@ -2174,7 +2132,7 @@ Public Class Form1
                     TrackBar2.Value = 10
                     Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
                     _player.Pause()
-                    _player.Rate = TrackBar2.Value * 0.1
+                    _player.Speed = TrackBar2.Value * 0.1
                     _player.Play()
                     'Button200.Text = "一時停止"
                     Button200.Image = My.Resources.Pause_16x
@@ -2184,7 +2142,7 @@ Public Class Form1
                     TrackBar2.Value = 5
                     Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
                     _player.Pause()
-                    _player.Rate = TrackBar2.Value * 0.1
+                    _player.Speed = TrackBar2.Value * 0.1
                     _player.Play()
                     'Button200.Text = "一時停止"
                     Button200.Image = My.Resources.Pause_16x
@@ -2194,7 +2152,7 @@ Public Class Form1
                     TrackBar2.Value = 20
                     Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
                     _player.Pause()
-                    _player.Rate = TrackBar2.Value * 0.1
+                    _player.Speed = TrackBar2.Value * 0.1
                     _player.Play()
                     'Button200.Text = "一時停止"
                     Button200.Image = My.Resources.Pause_16x
@@ -2250,7 +2208,7 @@ Public Class Form1
                     'On Error Resume Next 2022/07/03
 
                     TrackBar1.Value = (Integer.Parse(Strings.Mid(cCounter, 1, 2)) * 3600) + (Integer.Parse(Strings.Mid(cCounter, 3, 2)) * 60) + (Integer.Parse(Strings.Mid(cCounter, 5, 2)))
-                    _player.CurrentPosition = TrackBar1.Value
+                    _player.Position = TrackBar1.Value
                     _player.Play()
                     'Button200.Text = "一時停止"
                     Button200.Image = My.Resources.Pause_16x
@@ -2270,29 +2228,29 @@ Public Class Form1
 
                 'Jump1
                 Case hotkeyID_MM1
-                    _player.CurrentPosition = TrackBar1.Value + My.Settings.MM1
+                    _player.Position = TrackBar1.Value + My.Settings.MM1
                 'Jump2
                 Case hotkeyID_MM2
-                    _player.CurrentPosition = TrackBar1.Value + My.Settings.MM2
+                    _player.Position = TrackBar1.Value + My.Settings.MM2
                 'Jump3
                 Case hotkeyID_MM3
-                    _player.CurrentPosition = TrackBar1.Value + My.Settings.MM3
+                    _player.Position = TrackBar1.Value + My.Settings.MM3
                 'Jump4
                 Case hotkeyID_HO1
-                    _player.CurrentPosition = TrackBar1.Value + My.Settings.HO1
+                    _player.Position = TrackBar1.Value + My.Settings.HO1
                 'Jump5
                 Case hotkeyID_HO2
-                    _player.CurrentPosition = TrackBar1.Value + My.Settings.HO2
+                    _player.Position = TrackBar1.Value + My.Settings.HO2
                 'Jump6
                 Case hotkeyID_HO3
-                    _player.CurrentPosition = TrackBar1.Value + My.Settings.HO3
+                    _player.Position = TrackBar1.Value + My.Settings.HO3
 
 
                 Case hotkeyID_SC1
                     TrackBar2.Value = My.Settings.SC1 / 10
                     Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
                     _player.Pause()
-                    _player.Rate = TrackBar2.Value * 0.1
+                    _player.Speed = TrackBar2.Value * 0.1
                     _player.Play()
                     'Button200.Text = "一時停止"
                     Button200.Image = My.Resources.Pause_16x
@@ -2300,7 +2258,7 @@ Public Class Form1
                     TrackBar2.Value = My.Settings.SC2 / 10
                     Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
                     _player.Pause()
-                    _player.Rate = TrackBar2.Value * 0.1
+                    _player.Speed = TrackBar2.Value * 0.1
                     _player.Play()
                     'Button200.Text = "一時停止"
                     Button200.Image = My.Resources.Pause_16x
@@ -2308,7 +2266,7 @@ Public Class Form1
                     TrackBar2.Value = My.Settings.SC3 / 10
                     Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
                     _player.Pause()
-                    _player.Rate = TrackBar2.Value * 0.1
+                    _player.Speed = TrackBar2.Value * 0.1
                     _player.Play()
                     'Button200.Text = "一時停止"
                     Button200.Image = My.Resources.Pause_16x
@@ -2316,7 +2274,7 @@ Public Class Form1
                     TrackBar2.Value = My.Settings.SC4 / 10
                     Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
                     _player.Pause()
-                    _player.Rate = TrackBar2.Value * 0.1
+                    _player.Speed = TrackBar2.Value * 0.1
                     _player.Play()
                     'Button200.Text = "一時停止"
                     Button200.Image = My.Resources.Pause_16x
@@ -2324,7 +2282,7 @@ Public Class Form1
                     TrackBar2.Value = My.Settings.SC5 / 10
                     Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
                     _player.Pause()
-                    _player.Rate = TrackBar2.Value * 0.1
+                    _player.Speed = TrackBar2.Value * 0.1
                     _player.Play()
                     'Button200.Text = "一時停止"
                     Button200.Image = My.Resources.Pause_16x
@@ -2332,7 +2290,7 @@ Public Class Form1
                     TrackBar2.Value = My.Settings.SC6 / 10
                     Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
                     _player.Pause()
-                    _player.Rate = TrackBar2.Value * 0.1
+                    _player.Speed = TrackBar2.Value * 0.1
                     _player.Play()
                     'Button200.Text = "一時停止"
                     Button200.Image = My.Resources.Pause_16x
@@ -2340,7 +2298,7 @@ Public Class Form1
                     TrackBar2.Value = My.Settings.SC7 / 10
                     Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
                     _player.Pause()
-                    _player.Rate = TrackBar2.Value * 0.1
+                    _player.Speed = TrackBar2.Value * 0.1
                     _player.Play()
                     'Button200.Text = "一時停止"
                     Button200.Image = My.Resources.Pause_16x
@@ -2357,10 +2315,10 @@ Public Class Form1
         End If
         'Kidou = False
         'On Error Resume Next 2022/07/03
-        Label1.Text = TimeSpan.FromSeconds(_player.CurrentPosition).ToString("hh\:mm\:ss") & " / " & TimeSpan.FromSeconds(_player.Duration).ToString("hh\:mm\:ss")
+        Label1.Text = TimeSpan.FromSeconds(_player.Position).ToString("hh\:mm\:ss") & " / " & TimeSpan.FromSeconds(_player.Duration).ToString("hh\:mm\:ss")
         Me.Text = Label1.Text
 
-        Dim pos As Integer = CInt(_player.CurrentPosition)
+        Dim pos As Integer = CInt(_player.Position)
         If pos >= TrackBar1.Minimum AndAlso pos <= TrackBar1.Maximum Then
             TrackBar1.Value = pos
         End If
@@ -2372,7 +2330,7 @@ Public Class Form1
     End Sub
     '再生のシークバーの操作をやめたときにTimer1を再開
     Private Sub TrackBar1_MouseUp(sender As Object, e As MouseEventArgs) Handles TrackBar1.MouseUp
-        _player.CurrentPosition = TrackBar1.Value
+        _player.Position = TrackBar1.Value
         Timer1.Enabled = True
     End Sub
     'Form1にメディアファイルがドラッグ＆ドロップされた場合の処理
@@ -2391,10 +2349,10 @@ Public Class Form1
                 'If files(0).EndsWith(".mp4") Then
                 '---get the media player to play the
                 ' first file---
-                _player.URL = files(0)
+                _player.LoadFile(files(0))
                 My.Settings.LastOpenedFile = files(0)
 
-                TrackBar2.Value = CInt(_player.Rate * 10)
+                TrackBar2.Value = CInt(_player.Speed * 10)
                 Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
 
                 'End If
@@ -2417,7 +2375,7 @@ Public Class Form1
             Label1.Text = "00:00:00 / " & TimeSpan.FromSeconds(dur).ToString("hh\:mm\:ss")
             TrackBar1.Maximum = CInt(dur) + TrackBar1.LargeChange
         End If
-        TextBox1.Text = _player.MediaName
+        TextBox1.Text = _player.FileName
 
     End Sub
     'Form1にメディアファイルがドラッグ＆ドロップされた場合の処理
@@ -2475,7 +2433,7 @@ Public Class Form1
     Private Sub TrackBar2_Scroll(sender As Object, e As EventArgs) Handles TrackBar2.Scroll
         Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
         _player.Pause()
-        _player.Rate = TrackBar2.Value * 0.1
+        _player.Speed = TrackBar2.Value * 0.1
         _player.Play()
         'Button200.Text = "一時停止"
         Button200.Image = My.Resources.Pause_16x
@@ -2484,28 +2442,20 @@ Public Class Form1
 
     Private Sub Button400_Click(sender As Object, e As EventArgs) Handles Button400.Click
         _player.Pause()
-        _player.CurrentPosition = 0
+        _player.Position = 0
         Button200.Image = My.Resources.Run_16x
     End Sub
 
 
     Private Sub Button200_Click(sender As Object, e As EventArgs) Handles Button200.Click
-        Select Case (_player.PlayState) 'Stop:1 Pause:2 Play:3
-            Case 1
-                _player.CurrentPosition = _player.CurrentPosition - (AutoB / 10)
-                _player.Play()
-                'Button200.Text = "一時停止"
-                Button200.Image = My.Resources.Pause_16x
-            Case 2
-                _player.CurrentPosition = _player.CurrentPosition - (AutoB / 10)
-                _player.Play()
-                'Button200.Text = "一時停止"
-                Button200.Image = My.Resources.Pause_16x
-            Case 3
-                _player.Pause()
-                'Button200.Text = "再生"
-                Button200.Image = My.Resources.Run_16x
-        End Select
+        If _player.IsPlaying Then
+            _player.Pause()
+            Button200.Image = My.Resources.Run_16x
+        Else
+            _player.Position = _player.Position - (AutoB / 10)
+            _player.Play()
+            Button200.Image = My.Resources.Pause_16x
+        End If
 
         'axWindowsMediaPlayer1.Ctlcontrols.play()
         'AxWindowsMediaPlayer1.settings.autoStart = True
@@ -2521,7 +2471,7 @@ Public Class Form1
 
         Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
         _player.Pause()
-        _player.Rate = TrackBar2.Value * 0.1
+        _player.Speed = TrackBar2.Value * 0.1
         _player.Play()
         'Button200.Text = "一時停止"
         Button200.Image = My.Resources.Pause_16x
@@ -2530,83 +2480,83 @@ Public Class Form1
 
     '+1Sec
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK1
+        _player.Position = TrackBar1.Value + My.Settings.SK1
     End Sub
     '-1Sec
     Private Sub Button11_Click(sender As Object, e As EventArgs) Handles Button11.Click
-        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK11
+        _player.Position = TrackBar1.Value + My.Settings.SK11
     End Sub
     '+3Sec
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK2
+        _player.Position = TrackBar1.Value + My.Settings.SK2
     End Sub
     '-3Sec
     Private Sub Button12_Click(sender As Object, e As EventArgs) Handles Button12.Click
-        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK12
+        _player.Position = TrackBar1.Value + My.Settings.SK12
     End Sub
     '+5Sec
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
-        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK3
+        _player.Position = TrackBar1.Value + My.Settings.SK3
     End Sub
     '-5Sec
     Private Sub Button13_Click(sender As Object, e As EventArgs) Handles Button13.Click
-        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK13
+        _player.Position = TrackBar1.Value + My.Settings.SK13
     End Sub
     '+10Sec
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
-        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK4
+        _player.Position = TrackBar1.Value + My.Settings.SK4
     End Sub
     '-10Sec
     Private Sub Button14_Click(sender As Object, e As EventArgs) Handles Button14.Click
-        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK14
+        _player.Position = TrackBar1.Value + My.Settings.SK14
     End Sub
     '+15Sec
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
-        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK5
+        _player.Position = TrackBar1.Value + My.Settings.SK5
     End Sub
     '-15Sec
     Private Sub Button15_Click(sender As Object, e As EventArgs) Handles Button15.Click
-        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK15
+        _player.Position = TrackBar1.Value + My.Settings.SK15
     End Sub
     '+30Sec
     Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
-        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK6
+        _player.Position = TrackBar1.Value + My.Settings.SK6
     End Sub
     '-30Sec
     Private Sub Button16_Click(sender As Object, e As EventArgs) Handles Button16.Click
-        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK16
+        _player.Position = TrackBar1.Value + My.Settings.SK16
     End Sub
     '+1Min
     Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
-        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK7
+        _player.Position = TrackBar1.Value + My.Settings.SK7
     End Sub
     '-1Min
     Private Sub Button17_Click(sender As Object, e As EventArgs) Handles Button17.Click
-        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK17
+        _player.Position = TrackBar1.Value + My.Settings.SK17
     End Sub
     '+3Min
     Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
-        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK8
+        _player.Position = TrackBar1.Value + My.Settings.SK8
     End Sub
     '-3Min
     Private Sub Button18_Click(sender As Object, e As EventArgs) Handles Button18.Click
-        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK18
+        _player.Position = TrackBar1.Value + My.Settings.SK18
     End Sub
     '+5Min
     Private Sub Button9_Click(sender As Object, e As EventArgs) Handles Button9.Click
-        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK9
+        _player.Position = TrackBar1.Value + My.Settings.SK9
     End Sub
     '-5Min
     Private Sub Button19_Click(sender As Object, e As EventArgs) Handles Button19.Click
-        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK19
+        _player.Position = TrackBar1.Value + My.Settings.SK19
     End Sub
     '+10Min
     Private Sub Button10_Click(sender As Object, e As EventArgs) Handles Button10.Click
-        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK10
+        _player.Position = TrackBar1.Value + My.Settings.SK10
     End Sub
     '-15Min
     Private Sub Button20_Click(sender As Object, e As EventArgs) Handles Button20.Click
-        _player.CurrentPosition = TrackBar1.Value + My.Settings.SK20
+        _player.Position = TrackBar1.Value + My.Settings.SK20
     End Sub
 
     Private Sub TrackBar3_Scroll(sender As Object, e As EventArgs) Handles TrackBar6.Scroll
@@ -4104,7 +4054,7 @@ Public Class Form1
                 i = DataGridView1.SelectedCells(0).RowIndex
                 Timer1.Enabled = False
                 TrackBar1.Value = DataGridView1.Rows(i).Cells(2).Value
-                _player.CurrentPosition = TrackBar1.Value
+                _player.Position = TrackBar1.Value
                 If My.Settings.shiori_PS = True Then
                     _player.Play()
                     Button200.Image = My.Resources.Pause_16x
@@ -4231,7 +4181,7 @@ Public Class Form1
         End If
 
         TrackBar1.Value = (Integer.Parse(Strings.Mid(cCounter, 1, 2)) * 3600) + (Integer.Parse(Strings.Mid(cCounter, 3, 2)) * 60) + (Integer.Parse(Strings.Mid(cCounter, 5, 2)))
-        _player.CurrentPosition = TrackBar1.Value
+        _player.Position = TrackBar1.Value
         _player.Play()
         'Button200.Text = "一時停止"
         Button200.Image = My.Resources.Pause_16x
@@ -4610,7 +4560,7 @@ Public Class Form1
             End If
 
             TrackBar1.Value = (Integer.Parse(Strings.Mid(cCounter, 1, 2)) * 3600) + (Integer.Parse(Strings.Mid(cCounter, 3, 2)) * 60) + (Integer.Parse(Strings.Mid(cCounter, 5, 2)))
-                _player.CurrentPosition = TrackBar1.Value
+                _player.Position = TrackBar1.Value
                 _player.Play()
                 'Button200.Text = "一時停止"
                 Button200.Image = My.Resources.Pause_16x
@@ -4714,13 +4664,13 @@ Public Class Form1
 
     Private Sub Button39_Click(sender As Object, e As EventArgs) Handles Button39.Click
         If (OpenFileDialog1.ShowDialog = DialogResult.OK) Then
-            _player.URL = OpenFileDialog1.FileName
+            _player.LoadFile(OpenFileDialog1.FileName)
             My.Settings.LastOpenedFile = OpenFileDialog1.FileName
 
             'しおりのクリア
             DataGridView1.Rows.Clear()
 
-            TrackBar2.Value = CInt(_player.Rate * 10)
+            TrackBar2.Value = CInt(_player.Speed * 10)
             Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
 
         End If
@@ -5307,14 +5257,14 @@ Public Class Form1
                 'If files(0).EndsWith(".mp4") Then
                 '---get the media player to play the
                 ' first file---
-                _player.URL = files(0)
+                _player.LoadFile(files(0))
                 My.Settings.LastOpenedFile = files(0)
 
 
                 'しおりのクリア
                 DataGridView1.Rows.Clear()
 
-                TrackBar2.Value = CInt(_player.Rate * 10)
+                TrackBar2.Value = CInt(_player.Speed * 10)
                 Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
 
                 'End If
@@ -5342,14 +5292,14 @@ Public Class Form1
                 'If files(0).EndsWith(".mp4") Then
                 '---get the media player to play the
                 ' first file---
-                _player.URL = files(0)
+                _player.LoadFile(files(0))
                 My.Settings.LastOpenedFile = files(0)
 
 
                 'しおりのクリア
                 DataGridView1.Rows.Clear()
 
-                TrackBar2.Value = CInt(_player.Rate * 10)
+                TrackBar2.Value = CInt(_player.Speed * 10)
                 Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
 
                 'End If
@@ -5391,14 +5341,14 @@ Public Class Form1
                 'If files(0).EndsWith(".mp4") Then
                 '---get the media player to play the
                 ' first file---
-                _player.URL = files(0)
+                _player.LoadFile(files(0))
                 My.Settings.LastOpenedFile = files(0)
 
 
                 'しおりのクリア
                 DataGridView1.Rows.Clear()
 
-                TrackBar2.Value = CInt(_player.Rate * 10)
+                TrackBar2.Value = CInt(_player.Speed * 10)
                 Label4.Text = "x" & (TrackBar2.Value * 0.1).ToString("0.0")
 
                 'End If
