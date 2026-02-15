@@ -1,9 +1,11 @@
 Imports System.ComponentModel
 Imports System.IO
+Imports System.Reflection
+Imports System.Runtime.InteropServices
 Imports System.Text
 
 ''' <summary>
-''' メイン動画プレイヤーフォーム
+'''     メイン動画プレイヤーフォーム
 ''' </summary>
 Public Class MainPlayerForm
 
@@ -44,7 +46,7 @@ Public Class MainPlayerForm
     Private _currentPlaybackSpeed As Double = 1.0
 
     ''' <summary>
-    ''' メインフォームのインスタンス（シングルトン）
+    '''     メインフォームのインスタンス（シングルトン）
     ''' </summary>
     Public Shared Instance As MainPlayerForm
 
@@ -73,19 +75,19 @@ Public Class MainPlayerForm
 #Region "初期化処理"
 
     ''' <summary>
-    ''' ウィンドウ位置の初期化
+    '''     ウィンドウ位置の初期化
     ''' </summary>
     Private Sub InitializeWindowPosition()
         If Left < MinWindowPosition Then
-            Left = (Screen.PrimaryScreen.Bounds.Width - Width) \ 2
+            Left = (Screen.PrimaryScreen.Bounds.Width - Width)\2
         End If
         If Top < MinWindowPosition Then
-            Top = (Screen.PrimaryScreen.Bounds.Height - Height) \ 2
+            Top = (Screen.PrimaryScreen.Bounds.Height - Height)\2
         End If
     End Sub
 
     ''' <summary>
-    ''' メディアプレイヤーの初期化
+    '''     メディアプレイヤーの初期化
     ''' </summary>
     Private Sub InitializeMediaPlayer()
         AllowDrop = True
@@ -99,7 +101,7 @@ Public Class MainPlayerForm
     End Sub
 
     ''' <summary>
-    ''' メディア変更時の処理
+    '''     メディア変更時の処理
     ''' </summary>
     Private Sub OnMediaChanged()
         ' TrackBar1の最大値をメディアの長さに設定
@@ -109,12 +111,12 @@ Public Class MainPlayerForm
             Label1.Text = String.Format(My.Resources.TimeFormat, TimeSpan.FromSeconds(dur).ToString("hh\:mm\:ss"))
         End If
         TextBox1.Text = _mediaPlayer.FileName
-        TrackBar2.Value = CInt(_mediaPlayer.Speed / SpeedMultiplier)
-        Label4.Text = String.Format(My.Resources.SpeedFormat, (TrackBar2.Value * SpeedMultiplier).ToString("0.0"))
+        TrackBar2.Value = CInt(_mediaPlayer.Speed/SpeedMultiplier)
+        Label4.Text = String.Format(My.Resources.SpeedFormat, (TrackBar2.Value*SpeedMultiplier).ToString("0.0"))
     End Sub
 
     ''' <summary>
-    ''' ホットキーの初期化
+    '''     ホットキーの初期化
     ''' </summary>
     Private Sub InitializeHotKeys()
         CreateHotKeyAtoms(Me.Handle)
@@ -124,7 +126,7 @@ Public Class MainPlayerForm
     End Sub
 
     ''' <summary>
-    ''' 全ホットキーを登録
+    '''     全ホットキーを登録
     ''' </summary>
     Private Sub RegisterAllHotKeys()
         For Each hotkeyType As HotKeyType In [Enum].GetValues(GetType(HotKeyType))
@@ -135,15 +137,15 @@ Public Class MainPlayerForm
                 Continue For
             End If
 
-            Dim modifierValue As Integer = CInt(CallByName(My.Settings, modifierProp, CallType.Get))
-            Dim keyValue As Keys = CType(CallByName(My.Settings, keyProp, CallType.Get), Keys)
+            Dim modifierValue = CInt(CallByName(My.Settings, modifierProp, CallType.Get))
+            Dim keyValue = CType(CallByName(My.Settings, keyProp, CallType.Get), Keys)
 
             RegisterSingleHotKey(hotkeyType, modifierValue, keyValue)
         Next
     End Sub
 
     ''' <summary>
-    ''' 単一のホットキーを登録
+    '''     単一のホットキーを登録
     ''' </summary>
     Private Sub RegisterSingleHotKey(hotkeyType As HotKeyType, modifierSetting As Integer, key As Keys)
         Dim modifier As Integer = GetModifierValue(modifierSetting)
@@ -153,7 +155,7 @@ Public Class MainPlayerForm
     End Sub
 
     ''' <summary>
-    ''' デフォルト設定の読み込み
+    '''     デフォルト設定の読み込み
     ''' </summary>
     Private Sub LoadDefaultSettings()
         If My.Settings.shokai = 1 Then
@@ -170,36 +172,37 @@ Public Class MainPlayerForm
     End Sub
 
     ''' <summary>
-    ''' ジャンプボタン設定の初期化
+    '''     ジャンプボタン設定の初期化
     ''' </summary>
     Private Sub InitializeJumpButtonSettings()
-        Dim jumpValues As Integer() = {1, 3, 5, 10, 15, 30, 60, 180, 300, 600, -1, -3, -5, -10, -15, -30, -60, -180, -300, -600}
+        Dim jumpValues As Integer() =
+                {1, 3, 5, 10, 15, 30, 60, 180, 300, 600, - 1, - 3, - 5, - 10, - 15, - 30, - 60, - 180, - 300, - 600}
 
-        For i As Integer = 0 To jumpValues.Length - 1
+        For i = 0 To jumpValues.Length - 1
             CallByName(My.Settings, $"SK{i + 1}", CallType.Set, jumpValues(i))
         Next
     End Sub
 
     ''' <summary>
-    ''' 速度コントロールボタン設定の初期化
+    '''     速度コントロールボタン設定の初期化
     ''' </summary>
     Private Sub InitializeSpeedButtonSettings()
         Dim speedValues As Double() = {5, 8, 10, 12, 13, 14, 15, 20}
 
-        For i As Integer = 0 To speedValues.Length - 1
+        For i = 0 To speedValues.Length - 1
             CallByName(My.Settings, $"SC{i + 1}", CallType.Set, speedValues(i))
         Next
     End Sub
 
     ''' <summary>
-    ''' パネル高さの適用
+    '''     パネル高さの適用
     ''' </summary>
     Private Sub ApplyPanelHeights()
         MpvPanel.Height = My.Settings.p21_height
     End Sub
 
     ''' <summary>
-    ''' UI設定の復元
+    '''     UI設定の復元
     ''' </summary>
     Private Sub ApplyUiSettings()
         ' フォームサイズの復元
@@ -239,7 +242,7 @@ Public Class MainPlayerForm
             If My.Settings.SC2_Distance > 0 Then
                 SplitContainer2.SplitterDistance = My.Settings.SC2_Distance
             Else
-                SplitContainer2.SplitterDistance = SplitContainer2.Width \ 4
+                SplitContainer2.SplitterDistance = SplitContainer2.Width\4
             End If
         Else
             CheckBox1.Checked = False
@@ -252,7 +255,7 @@ Public Class MainPlayerForm
 #Region "終了処理"
 
     ''' <summary>
-    ''' 現在の設定を保存
+    '''     現在の設定を保存
     ''' </summary>
     Private Sub SaveCurrentSettings()
         ' 再生情報の保存
@@ -276,14 +279,14 @@ Public Class MainPlayerForm
     End Sub
 
     ''' <summary>
-    ''' ホットキーの解放
+    '''     ホットキーの解放
     ''' </summary>
     Private Sub DisposeHotKeys()
         HotKeyManager.DisposeHotKeys(Me.Handle)
     End Sub
 
     ''' <summary>
-    ''' メディアプレイヤーの解放
+    '''     メディアプレイヤーの解放
     ''' </summary>
     Private Sub DisposeMediaPlayer()
         If _mediaPlayer IsNot Nothing Then
@@ -297,7 +300,7 @@ Public Class MainPlayerForm
 #Region "イベントハンドラ"
 
     ''' <summary>
-    ''' ウィンドウプロシージャ（ホットキー処理用）
+    '''     ウィンドウプロシージャ（ホットキー処理用）
     ''' </summary>
     Protected Overrides Sub WndProc(ByRef m As Message)
         If m.Msg = WmHotkey Then
@@ -307,7 +310,7 @@ Public Class MainPlayerForm
     End Sub
 
     ''' <summary>
-    ''' ホットキー処理
+    '''     ホットキー処理
     ''' </summary>
     Private Sub HandleHotKey(hotkeyId As Integer)
         ' ホットキーIDに対応する処理を実行
@@ -320,7 +323,7 @@ Public Class MainPlayerForm
     End Sub
 
     ''' <summary>
-    ''' ホットキーアクションの実行
+    '''     ホットキーアクションの実行
     ''' </summary>
     Private Sub ExecuteHotKeyAction(hotkeyType As HotKeyType)
         Select Case hotkeyType
@@ -347,7 +350,7 @@ Public Class MainPlayerForm
             Case HotKeyType.SpeedUp
                 AdjustPlaybackSpeed(SpeedMultiplier)
             Case HotKeyType.SpeedDown
-                AdjustPlaybackSpeed(-SpeedMultiplier)
+                AdjustPlaybackSpeed(- SpeedMultiplier)
             Case HotKeyType.SpeedResetTo1X
                 SetPlaybackSpeed(1.0)
             Case HotKeyType.SpeedSetToHalf
@@ -370,7 +373,7 @@ Public Class MainPlayerForm
 #Region "再生制御"
 
     ''' <summary>
-    ''' 再生/一時停止の切り替え
+    '''     再生/一時停止の切り替え
     ''' </summary>
     Private Sub TogglePlayPause()
         If _mediaPlayer.IsPlaying Then
@@ -381,7 +384,7 @@ Public Class MainPlayerForm
     End Sub
 
     ''' <summary>
-    ''' 再生/一時停止とカウンタコピー
+    '''     再生/一時停止とカウンタコピー
     ''' </summary>
     Private Sub TogglePlayPauseWithCounterCopy(counterIndex As Integer)
         CopyCounterToClipboard(counterIndex)
@@ -389,14 +392,14 @@ Public Class MainPlayerForm
     End Sub
 
     ''' <summary>
-    ''' 停止
+    '''     停止
     ''' </summary>
     Private Sub StopPlayback()
         _mediaPlayer.Stop()
     End Sub
 
     ''' <summary>
-    ''' カウンタをクリップボードにコピー
+    '''     カウンタをクリップボードにコピー
     ''' </summary>
     Private Sub CopyCounterToClipboard(counterIndex As Integer)
         ' カウンタコピー処理
@@ -408,20 +411,20 @@ Public Class MainPlayerForm
     End Sub
 
     ''' <summary>
-    ''' 現在のタイムコードを取得
+    '''     現在のタイムコードを取得
     ''' </summary>
     Private Function GetCurrentTimeCode() As String
         Dim position As Double = _mediaPlayer.Position
-        Dim hours As Integer = CInt(position) \ 3600
-        Dim minutes As Integer = (CInt(position) Mod 3600) \ 60
+        Dim hours As Integer = CInt(position)\3600
+        Dim minutes As Integer = (CInt(position) Mod 3600)\60
         Dim seconds As Integer = CInt(position) Mod 60
-        Dim frames As Integer = CInt((position - Math.Floor(position)) * 30)
+        Dim frames = CInt((position - Math.Floor(position))*30)
 
         Return $"{hours:D2}:{minutes:D2}:{seconds:D2}.{frames:D2}"
     End Function
 
     ''' <summary>
-    ''' タイムコード修飾（頭）を取得
+    '''     タイムコード修飾（頭）を取得
     ''' </summary>
     Private Function GetTimeCodePrefix(index As Integer) As String
         Select Case index
@@ -433,7 +436,7 @@ Public Class MainPlayerForm
     End Function
 
     ''' <summary>
-    ''' タイムコード修飾（末尾）を取得
+    '''     タイムコード修飾（末尾）を取得
     ''' </summary>
     Private Function GetTimeCodeSuffix(index As Integer) As String
         Select Case index
@@ -445,14 +448,14 @@ Public Class MainPlayerForm
     End Function
 
     ''' <summary>
-    ''' しおりに追加
+    '''     しおりに追加
     ''' </summary>
     Private Sub AddBookmark()
         ' しおり追加処理
     End Sub
 
     ''' <summary>
-    ''' 再生/一時停止としおり追加
+    '''     再生/一時停止としおり追加
     ''' </summary>
     Private Sub TogglePlayPauseWithBookmark()
         AddBookmark()
@@ -460,7 +463,7 @@ Public Class MainPlayerForm
     End Sub
 
     ''' <summary>
-    ''' 再生速度の調整
+    '''     再生速度の調整
     ''' </summary>
     Private Sub AdjustPlaybackSpeed(delta As Double)
         _currentPlaybackSpeed = _mediaPlayer.Speed + delta
@@ -468,7 +471,7 @@ Public Class MainPlayerForm
     End Sub
 
     ''' <summary>
-    ''' 再生速度を設定
+    '''     再生速度を設定
     ''' </summary>
     Private Sub SetPlaybackSpeed(speed As Double)
         _currentPlaybackSpeed = speed
@@ -477,17 +480,17 @@ Public Class MainPlayerForm
     End Sub
 
     ''' <summary>
-    ''' ウィンドウを最前面に
+    '''     ウィンドウを最前面に
     ''' </summary>
     Private Sub BringWindowToFront()
         TopMost = Not TopMost
     End Sub
 
     ''' <summary>
-    ''' ジャンプホットキーの実行
+    '''     ジャンプホットキーの実行
     ''' </summary>
     Private Sub ExecuteJumpHotkey(hotkeyType As HotKeyType)
-        Dim jumpSeconds As Integer = 0
+        Dim jumpSeconds = 0
 
         Select Case hotkeyType
             Case HotKeyType.JumpHotkey1 : jumpSeconds = My.Settings.MM1
@@ -504,33 +507,33 @@ Public Class MainPlayerForm
     End Sub
 
     ''' <summary>
-    ''' 速度コントロールホットキーの実行
+    '''     速度コントロールホットキーの実行
     ''' </summary>
     Private Sub ExecuteSpeedControlHotkey(hotkeyType As HotKeyType)
-        Dim speed As Double = 1.0
+        Dim speed = 1.0
 
         Select Case hotkeyType
-            Case HotKeyType.SpeedControlButton1 : speed = My.Settings.SC1 / 10.0
-            Case HotKeyType.SpeedControlButton2 : speed = My.Settings.SC2 / 10.0
-            Case HotKeyType.SpeedControlButton3 : speed = My.Settings.SC3 / 10.0
-            Case HotKeyType.SpeedControlButton4 : speed = My.Settings.SC4 / 10.0
-            Case HotKeyType.SpeedControlButton5 : speed = My.Settings.SC5 / 10.0
-            Case HotKeyType.SpeedControlButton6 : speed = My.Settings.SC6 / 10.0
-            Case HotKeyType.SpeedControlButton7 : speed = My.Settings.SC7 / 10.0
+            Case HotKeyType.SpeedControlButton1 : speed = My.Settings.SC1/10.0
+            Case HotKeyType.SpeedControlButton2 : speed = My.Settings.SC2/10.0
+            Case HotKeyType.SpeedControlButton3 : speed = My.Settings.SC3/10.0
+            Case HotKeyType.SpeedControlButton4 : speed = My.Settings.SC4/10.0
+            Case HotKeyType.SpeedControlButton5 : speed = My.Settings.SC5/10.0
+            Case HotKeyType.SpeedControlButton6 : speed = My.Settings.SC6/10.0
+            Case HotKeyType.SpeedControlButton7 : speed = My.Settings.SC7/10.0
         End Select
 
         SetPlaybackSpeed(speed)
     End Sub
 
     ''' <summary>
-    ''' 指定位置にジャンプ
+    '''     指定位置にジャンプ
     ''' </summary>
     Private Sub JumpToPosition(position As Double)
         _mediaPlayer.Position = Math.Max(0, position)
     End Sub
 
     ''' <summary>
-    ''' クリップボードの位置にジャンプ
+    '''     クリップボードの位置にジャンプ
     ''' </summary>
     Private Sub JumpToClipboardPosition()
         ' クリップボードから位置を読み込んでジャンプ
@@ -541,14 +544,14 @@ Public Class MainPlayerForm
 #Region "UI制御"
 
     ''' <summary>
-    ''' 動画表示画面の表示/非表示切り替え
+    '''     動画表示画面の表示/非表示切り替え
     ''' </summary>
     Private Sub CheckBox2_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox2.CheckedChanged
         SplitContainer3.Panel1Collapsed = Not CheckBox2.Checked
     End Sub
 
     ''' <summary>
-    ''' プレイリストの表示/非表示切り替え
+    '''     プレイリストの表示/非表示切り替え
     ''' </summary>
     Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
         SplitContainer2.Panel1Collapsed = Not CheckBox1.Checked
@@ -559,7 +562,9 @@ Public Class MainPlayerForm
 #Region "ボタンイベントハンドラ"
 
     ' 速度ボタン
-    Private Sub SpeedButtons_Click(sender As Object, e As EventArgs) Handles Button21.Click, Button22.Click, Button23.Click, Button24.Click, Button25.Click, Button26.Click, Button27.Click
+    Private Sub SpeedButtons_Click(sender As Object, e As EventArgs) _
+        Handles Button21.Click, Button22.Click, Button23.Click, Button24.Click, Button25.Click, Button26.Click,
+                Button27.Click
         Dim btn = TryCast(sender, Button)
         If btn Is Nothing Then Return
 
@@ -571,7 +576,7 @@ Public Class MainPlayerForm
             Dim settingName = "SC" & scIndex
 
             Try
-                TrackBar2.Value = CInt(CDbl(My.Settings(settingName)) * SpeedMultiplier)
+                TrackBar2.Value = CInt(CDbl(My.Settings(settingName))*SpeedMultiplier)
                 UpdateSpeedFromTrackBar()
             Catch ex As Exception
                 ' 設定が見つからない場合などは何もしない
@@ -580,8 +585,8 @@ Public Class MainPlayerForm
     End Sub
 
     Private Sub UpdateSpeedFromTrackBar()
-        Label4.Text = String.Format(My.Resources.SpeedFormat, (TrackBar2.Value * SpeedMultiplier).ToString("0.0"))
-        _mediaPlayer.Speed = TrackBar2.Value * SpeedMultiplier
+        Label4.Text = String.Format(My.Resources.SpeedFormat, (TrackBar2.Value*SpeedMultiplier).ToString("0.0"))
+        _mediaPlayer.Speed = TrackBar2.Value*SpeedMultiplier
     End Sub
 
     Private Sub TrackBar2_Scroll(sender As Object, e As EventArgs) Handles TrackBar2.Scroll
@@ -602,7 +607,11 @@ Public Class MainPlayerForm
     End Sub
 
     ' ジャンプボタン
-    Private Sub JumpButtons_Click(sender As Object, e As EventArgs) Handles Button1.Click, Button11.Click, Button2.Click, Button12.Click, Button3.Click, Button13.Click, Button4.Click, Button14.Click, Button5.Click, Button15.Click, Button6.Click, Button16.Click, Button7.Click, Button17.Click, Button8.Click, Button18.Click, Button9.Click, Button19.Click, Button10.Click, Button20.Click
+    Private Sub JumpButtons_Click(sender As Object, e As EventArgs) _
+        Handles Button1.Click, Button11.Click, Button2.Click, Button12.Click, Button3.Click, Button13.Click,
+                Button4.Click, Button14.Click, Button5.Click, Button15.Click, Button6.Click, Button16.Click,
+                Button7.Click, Button17.Click, Button8.Click, Button18.Click, Button9.Click, Button19.Click,
+                Button10.Click, Button20.Click
         Dim btn = TryCast(sender, Button)
         If btn Is Nothing Then Return
 
@@ -629,10 +638,10 @@ Public Class MainPlayerForm
     Private Sub Button29_Click(sender As Object, e As EventArgs) Handles Button29.Click
         DataGridView1.Rows.Add()
         Dim i As Integer = DataGridView1.Rows.Count - 1
-        Dim appPath As String = System.Reflection.Assembly.GetExecutingAssembly().Location
+        Dim appPath As String = Assembly.GetExecutingAssembly().Location
 
         If String.IsNullOrEmpty(My.Settings.autoBMDir) Then
-            My.Settings.autoBMDir = IO.Path.GetDirectoryName(appPath)
+            My.Settings.autoBMDir = Path.GetDirectoryName(appPath)
         End If
 
         DataGridView1.Rows(i).Cells(0).Value = Strings.Left(Label1.Text, 8)
@@ -646,7 +655,8 @@ Public Class MainPlayerForm
         End If
     End Sub
 
-    Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellContentClick
+    Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) _
+        Handles DataGridView1.CellContentClick
         Dim colIndex As Integer = e.ColumnIndex
 
         ' 行インデックスが有効か確認
@@ -681,7 +691,8 @@ Public Class MainPlayerForm
         DataGridView1.Rows.RemoveAt(i)
     End Sub
 
-    Private Function ParseCounterToSeconds(inputText As String, ByRef resultSeconds As Integer, ByRef formattedCounter As String) As Boolean
+    Private Function ParseCounterToSeconds(inputText As String, ByRef resultSeconds As Integer,
+                                           ByRef formattedCounter As String) As Boolean
         Dim cCounter As String = String.Empty
 
         ' 数字のみ抽出
@@ -703,7 +714,7 @@ Public Class MainPlayerForm
         Dim minutes = Integer.Parse(cCounter.Substring(HourDigits, MinuteDigits))
         Dim seconds = Integer.Parse(cCounter.Substring(HourDigits + MinuteDigits, SecondDigits))
 
-        resultSeconds = (hours * 3600) + (minutes * 60) + seconds
+        resultSeconds = (hours*3600) + (minutes*60) + seconds
         formattedCounter = String.Format("{0:D2}:{1:D2}:{2:D2}", hours, minutes, seconds)
 
         If resultSeconds > _mediaPlayer.Duration Then
@@ -762,17 +773,17 @@ Public Class MainPlayerForm
 #Region "ファイル解析ヘルパー"
 
     ''' <summary>
-    ''' タイムスタンプ文字列から秒数を計算
+    '''     タイムスタンプ文字列から秒数を計算
     ''' </summary>
     Private Function ParseTimestampToSeconds(timestamp As String) As Integer
         ' フォーマット: (HH:MM:SS) の10文字
-        Return (Integer.Parse(timestamp.Substring(1, 2)) * 3600) +
-               (Integer.Parse(timestamp.Substring(4, 2)) * 60) +
+        Return (Integer.Parse(timestamp.Substring(1, 2))*3600) +
+               (Integer.Parse(timestamp.Substring(4, 2))*60) +
                Integer.Parse(timestamp.Substring(7, 2))
     End Function
 
     ''' <summary>
-    ''' DataGridViewに行を追加
+    '''     DataGridViewに行を追加
     ''' </summary>
     Private Sub AddBookmarkRow(timeDisplay As String, memo As String, seconds As Integer)
         Dim row As String() = {timeDisplay, memo, seconds.ToString(), "削除"}
@@ -780,7 +791,7 @@ Public Class MainPlayerForm
     End Sub
 
     ''' <summary>
-    ''' テキスト内容を解析してしおりを追加
+    '''     テキスト内容を解析してしおりを追加
     ''' </summary>
     Private Sub ParseTextContentForBookmarks(content As String)
         Dim fukaChar As String = My.Settings.Fuka
@@ -788,7 +799,7 @@ Public Class MainPlayerForm
         Dim fumei2Char As String = My.Settings.Fumei2
         Dim sonotaChar As String = My.Settings.Sonota
 
-        For n As Integer = 0 To content.Length - TimestampLength
+        For n = 0 To content.Length - TimestampLength
             Dim currentChar As String = content.Substring(n, 1)
 
             If currentChar = fukaChar Then
@@ -805,7 +816,7 @@ Public Class MainPlayerForm
     End Sub
 
     ''' <summary>
-    ''' 「不可」パターンを解析
+    '''     「不可」パターンを解析
     ''' </summary>
     Private Sub ParseFukaPattern(content As String, startIndex As Integer)
         If startIndex + TimestampLength + 1 > content.Length Then Return
@@ -817,7 +828,7 @@ Public Class MainPlayerForm
     End Sub
 
     ''' <summary>
-    ''' 「不明」パターンを解析
+    '''     「不明」パターンを解析
     ''' </summary>
     Private Sub ParseFumeiPattern(content As String, startIndex As Integer, endMarker As String)
         For i As Integer = startIndex + 1 To content.Length - TimestampLength - 1
@@ -833,7 +844,7 @@ Public Class MainPlayerForm
     End Sub
 
     ''' <summary>
-    ''' 「その他」パターンを解析
+    '''     「その他」パターンを解析
     ''' </summary>
     Private Sub ParseSonotaPattern(content As String, startIndex As Integer)
         For i As Integer = startIndex + 1 To content.Length - TimestampLength - 1
@@ -850,7 +861,7 @@ Public Class MainPlayerForm
     End Sub
 
     ''' <summary>
-    ''' Word文書からテキストを抽出
+    '''     Word文書からテキストを抽出
     ''' </summary>
     Private Function ExtractTextFromWord(filePath As String) As String
         Dim objWord As Object = Nothing
@@ -878,7 +889,7 @@ Public Class MainPlayerForm
                     objDoc.Close(False)
                 Catch
                 End Try
-                Runtime.InteropServices.Marshal.ReleaseComObject(objDoc)
+                Marshal.ReleaseComObject(objDoc)
                 objDoc = Nothing
             End If
             If objWord IsNot Nothing Then
@@ -886,7 +897,7 @@ Public Class MainPlayerForm
                     objWord.Quit()
                 Catch
                 End Try
-                Runtime.InteropServices.Marshal.ReleaseComObject(objWord)
+                Marshal.ReleaseComObject(objWord)
                 objWord = Nothing
             End If
         End Try
@@ -936,7 +947,8 @@ Public Class MainPlayerForm
 
     Private Sub TrackBar1_Scroll(sender As Object, e As EventArgs) Handles TrackBar1.Scroll
         ToolTip1.SetToolTip(TrackBar1, TimeSpan.FromSeconds(TrackBar1.Value).ToString("hh\:mm\:ss"))
-        Label1.Text = TimeSpan.FromSeconds(TrackBar1.Value).ToString("hh\:mm\:ss") & My.Resources.TimeSeparator & TimeSpan.FromSeconds(_mediaPlayer.Duration).ToString("hh\:mm\:ss")
+        Label1.Text = TimeSpan.FromSeconds(TrackBar1.Value).ToString("hh\:mm\:ss") & My.Resources.TimeSeparator &
+                      TimeSpan.FromSeconds(_mediaPlayer.Duration).ToString("hh\:mm\:ss")
         _mediaPlayer.Position = TrackBar1.Value
     End Sub
 
@@ -971,12 +983,14 @@ Public Class MainPlayerForm
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         If _mediaPlayer.IsPlaying Then
-            Dim pos As Integer = CInt(_mediaPlayer.Position)
+            Dim pos = CInt(_mediaPlayer.Position)
             If pos > TrackBar1.Maximum Then
                 pos = TrackBar1.Maximum
             End If
             TrackBar1.Value = pos
-            Label1.Text = TimeSpan.FromSeconds(_mediaPlayer.Position).ToString("hh\:mm\:ss") & My.Resources.TimeSeparator & TimeSpan.FromSeconds(_mediaPlayer.Duration).ToString("hh\:mm\:ss")
+            Label1.Text = TimeSpan.FromSeconds(_mediaPlayer.Position).ToString("hh\:mm\:ss") &
+                          My.Resources.TimeSeparator &
+                          TimeSpan.FromSeconds(_mediaPlayer.Duration).ToString("hh\:mm\:ss")
         End If
     End Sub
 
@@ -985,7 +999,7 @@ Public Class MainPlayerForm
 #Region "ドラッグ＆ドロップ"
 
     ''' <summary>
-    ''' ドラッグ＆ドロップでファイルを処理
+    '''     ドラッグ＆ドロップでファイルを処理
     ''' </summary>
     Private Sub HandleFileDragDrop(e As DragEventArgs)
         If Not e.Data.GetDataPresent(DataFormats.FileDrop) Then Return
@@ -998,7 +1012,7 @@ Public Class MainPlayerForm
     End Sub
 
     ''' <summary>
-    ''' ドラッグ＆ドロップの効果を設定
+    '''     ドラッグ＆ドロップの効果を設定
     ''' </summary>
     Private Sub HandleFileDragEnter(e As DragEventArgs)
         If Not e.Data.GetDataPresent(DataFormats.FileDrop) Then Return
@@ -1047,14 +1061,14 @@ Public Class MainPlayerForm
 #Region "CSV入出力"
 
     ''' <summary>
-    ''' CSVファイル読み込み
+    '''     CSVファイル読み込み
     ''' </summary>
     Private Sub CsvReader()
         Dim csvFile As String = OpenFileDialog1.FileName
 
         DataGridView1.Rows.Clear()
 
-        Using sr As New StreamReader(csvFile, System.Text.Encoding.GetEncoding("shift_jis"))
+        Using sr As New StreamReader(csvFile, Encoding.GetEncoding("shift_jis"))
             ' ヘッダー行をスキップ
             If sr.ReadLine() Is Nothing Then Return
 
@@ -1070,9 +1084,9 @@ Public Class MainPlayerForm
     End Sub
 
     ''' <summary>
-    ''' DataGridViewからCSVファイルへの書込処理
+    '''     DataGridViewからCSVファイルへの書込処理
     ''' </summary>
-    Private Function WriteCsvFromDgv(ByVal fileName As String) As Boolean
+    Private Function WriteCsvFromDgv(fileName As String) As Boolean
         Try
             Dim arrData()() As String = Nothing
             Dim arrHead As String() = Nothing
@@ -1091,20 +1105,20 @@ Public Class MainPlayerForm
                 End If
             End If
 
-            For col As Integer = 0 To DataGridView1.Columns.Count - 1
+            For col = 0 To DataGridView1.Columns.Count - 1
                 ReDim Preserve arrHead(col)
                 arrHead(col) = CStr(DataGridView1.Columns(col).HeaderCell.Value)
             Next
             ReDim Preserve arrData(0)
             arrData(0) = arrHead
 
-            For row As Integer = 0 To DataGridView1.Rows.Count - 1
+            For row = 0 To DataGridView1.Rows.Count - 1
                 If DataGridView1.Rows(row).IsNewRow Then
                     Continue For
                 End If
 
                 Dim arrLine As String() = Nothing
-                For col As Integer = 0 To DataGridView1.Columns.Count - 1
+                For col = 0 To DataGridView1.Columns.Count - 1
                     ReDim Preserve arrLine(col)
                     arrLine(col) = CStr(DataGridView1.Rows(row).Cells(col).Value)
                 Next
@@ -1122,17 +1136,17 @@ Public Class MainPlayerForm
     End Function
 
     ''' <summary>
-    ''' CSVファイルの書込処理
+    '''     CSVファイルの書込処理
     ''' </summary>
-    Private Function WriteCsv(ByVal csvPath As String, ByVal csvData As String()()) As Boolean
-        Dim sw As System.IO.StreamWriter = Nothing
+    Private Function WriteCsv(csvPath As String, csvData As String()()) As Boolean
+        Dim sw As StreamWriter = Nothing
 
         Try
-            Dim enc As System.Text.Encoding = System.Text.Encoding.GetEncoding("Shift_JIS")
-            sw = New System.IO.StreamWriter(csvPath, False, enc)
+            Dim enc As Encoding = Encoding.GetEncoding("Shift_JIS")
+            sw = New StreamWriter(csvPath, False, enc)
 
-            For Each arrLine() As String In csvData
-                Dim isFirst As Boolean = True
+            For Each arrLine () As String In csvData
+                Dim isFirst = True
                 For Each str As String In arrLine
                     If Not isFirst Then
                         sw.Write(",")
@@ -1160,7 +1174,7 @@ Public Class MainPlayerForm
 #Region "その他イベントハンドラ"
 
     ''' <summary>
-    ''' TextBox2でEnterキーが押されたときにジャンプ
+    '''     TextBox2でEnterキーが押されたときにジャンプ
     ''' </summary>
     Private Sub TextBox2_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBox2.KeyDown
         ' 早期リターン: Enterキー以外は無視
@@ -1185,9 +1199,10 @@ Public Class MainPlayerForm
     End Sub
 
     ''' <summary>
-    ''' SplitContainer1のスプリッター移動時
+    '''     SplitContainer1のスプリッター移動時
     ''' </summary>
-    Private Sub SplitContainer1_SplitterMoved(sender As Object, e As SplitterEventArgs) Handles SplitContainer1.SplitterMoved
+    Private Sub SplitContainer1_SplitterMoved(sender As Object, e As SplitterEventArgs) _
+        Handles SplitContainer1.SplitterMoved
         My.Settings.p11_height = SplitContainer1.Panel1.Height
         My.Settings.p11_width = SplitContainer1.Panel2.Width
         My.Settings.p12_height = SplitContainer1.Panel2.Height
@@ -1199,9 +1214,10 @@ Public Class MainPlayerForm
     End Sub
 
     ''' <summary>
-    ''' SplitContainer3のスプリッター移動時
+    '''     SplitContainer3のスプリッター移動時
     ''' </summary>
-    Private Sub SplitContainer3_SplitterMoved(sender As Object, e As SplitterEventArgs) Handles SplitContainer3.SplitterMoved
+    Private Sub SplitContainer3_SplitterMoved(sender As Object, e As SplitterEventArgs) _
+        Handles SplitContainer3.SplitterMoved
         My.Settings.p11_height = SplitContainer1.Panel1.Height
         My.Settings.p11_width = SplitContainer1.Panel2.Width
         My.Settings.p12_height = SplitContainer1.Panel2.Height
@@ -1213,20 +1229,21 @@ Public Class MainPlayerForm
     End Sub
 
     ''' <summary>
-    ''' TableLayoutPanel1のセル描画時（着色）
+    '''     TableLayoutPanel1のセル描画時（着色）
     ''' </summary>
-    Private Sub TableLayoutPanel1_CellPaint(sender As Object, e As TableLayoutCellPaintEventArgs) Handles TableLayoutPanel1.CellPaint
+    Private Sub TableLayoutPanel1_CellPaint(sender As Object, e As TableLayoutCellPaintEventArgs) _
+        Handles TableLayoutPanel1.CellPaint
         Dim darkBrush2 As New SolidBrush(Color.FromArgb(50, 50, 50))
 
         ' Row 0
-        For col As Integer = 0 To 16
+        For col = 0 To 16
             If e.Column = col AndAlso e.Row = 0 Then
                 e.Graphics.FillRectangle(darkBrush2, e.CellBounds)
             End If
         Next
 
         ' Row 1
-        For col As Integer = 0 To 20
+        For col = 0 To 20
             If e.Column = col AndAlso e.Row = 1 Then
                 e.Graphics.FillRectangle(darkBrush2, e.CellBounds)
             End If
@@ -1239,7 +1256,7 @@ Public Class MainPlayerForm
         End If
 
         ' 再生・停止部分
-        For col As Integer = 0 To 5
+        For col = 0 To 5
             If e.Column = col AndAlso (e.Row = 5 OrElse e.Row = 6) Then
                 e.Graphics.FillRectangle(darkBrush, e.CellBounds)
             End If
@@ -1256,19 +1273,19 @@ Public Class MainPlayerForm
 #Region "テスト用ヘルパー"
 
     ''' <summary>
-    ''' テスト用にメディアプレイヤーを設定
+    '''     テスト用にメディアプレイヤーを設定
     ''' </summary>
     Friend Sub SetMediaPlayerForTest(player As MpvPlayerWrapper)
         _mediaPlayer = player
     End Sub
 
     ''' <summary>
-    ''' テスト用にメディアプレイヤーを取得
+    '''     テスト用にメディアプレイヤーを取得
     ''' </summary>
     Friend Function GetMediaPlayerForTest() As MpvPlayerWrapper
         Return _mediaPlayer
     End Function
 
 #End Region
-
 End Class
+

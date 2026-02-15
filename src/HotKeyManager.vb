@@ -1,22 +1,22 @@
 ''' <summary>
-''' グローバルホットキーを管理するモジュール
+'''     グローバルホットキーを管理するモジュール
 ''' </summary>
 Public Module HotKeyManager
 
 #Region "Win32 API"
 
     Public Declare Function RegisterHotKey Lib "user32" _
-        (ByVal hwnd As IntPtr, ByVal id As Integer, _
-         ByVal fsModifiers As Integer, ByVal vk As Keys) As Integer
+        (hwnd As IntPtr, id As Integer,
+         fsModifiers As Integer, vk As Keys) As Integer
 
     Public Declare Function UnregisterHotKey Lib "user32" _
-        (ByVal hwnd As IntPtr, ByVal id As Integer) As Integer
+        (hwnd As IntPtr, id As Integer) As Integer
 
     Private Declare Function GlobalAddAtom Lib "kernel32" Alias "GlobalAddAtomA" _
-        (ByVal lpString As String) As Short
+        (lpString As String) As Short
 
     Private Declare Function GlobalDeleteAtom Lib "kernel32" _
-        (ByVal nAtom As Short) As Short
+        (nAtom As Short) As Short
 
     ' 修飾キー定数
     Public Const ModNone As Integer = 0
@@ -31,12 +31,12 @@ Public Module HotKeyManager
 #Region "ホットキーID辞書"
 
     ''' <summary>
-    ''' ホットキー種別とアトムIDの対応
+    '''     ホットキー種別とアトムIDの対応
     ''' </summary>
     Public ReadOnly HotKeyAtoms As New Dictionary(Of HotKeyType, Short)
 
     ''' <summary>
-    ''' ホットキー種別の列挙
+    '''     ホットキー種別の列挙
     ''' </summary>
     Public Enum HotKeyType
         PlayPause = 0
@@ -76,7 +76,7 @@ Public Module HotKeyManager
 #Region "修飾キー変換"
 
     ''' <summary>
-    ''' 修飾キー設定値とWin32修飾キーの対応
+    '''     修飾キー設定値とWin32修飾キーの対応
     ''' </summary>
     Private ReadOnly ModifierMapping As New Dictionary(Of Integer, Integer) From {
         {0, ModNone},
@@ -87,10 +87,10 @@ Public Module HotKeyManager
         {8, ModControl Or ModShift},
         {9, ModAlt Or ModShift},
         {12, ModControl Or ModShift Or ModAlt}
-    }
+        }
 
     ''' <summary>
-    ''' 設定値からWin32修飾キー値を取得
+    '''     設定値からWin32修飾キー値を取得
     ''' </summary>
     Public Function GetModifierValue(settingValue As Integer) As Integer
         If ModifierMapping.ContainsKey(settingValue) Then
@@ -100,7 +100,7 @@ Public Module HotKeyManager
     End Function
 
     ''' <summary>
-    ''' 修飾キー設定値から表示用文字列を取得
+    '''     修飾キー設定値から表示用文字列を取得
     ''' </summary>
     Public Function GetModifierDisplayText(settingValue As Integer) As String
         Select Case settingValue
@@ -121,7 +121,7 @@ Public Module HotKeyManager
 #Region "ホットキーアトム管理"
 
     ''' <summary>
-    ''' フォームハンドルに対して全ホットキーを生成
+    '''     フォームハンドルに対して全ホットキーを生成
     ''' </summary>
     Public Sub CreateHotKeyAtoms(formHandle As IntPtr)
         Dim hashCode As String = formHandle.GetHashCode().ToString()
@@ -133,7 +133,7 @@ Public Module HotKeyManager
     End Sub
 
     ''' <summary>
-    ''' 全ホットキーを解除してアトムを削除
+    '''     全ホットキーを解除してアトムを削除
     ''' </summary>
     Public Sub DisposeHotKeys(formHandle As IntPtr)
         For Each kvp As KeyValuePair(Of HotKeyType, Short) In HotKeyAtoms
@@ -148,7 +148,7 @@ Public Module HotKeyManager
 #Region "設定プロパティマッピング"
 
     ''' <summary>
-    ''' ホットキー種別と設定プロパティの対応
+    '''     ホットキー種別と設定プロパティの対応
     ''' </summary>
     Public Function GetSettingModifierProperty(hotkeyType As HotKeyType) As String
         Select Case hotkeyType
@@ -187,7 +187,7 @@ Public Module HotKeyManager
     End Function
 
     ''' <summary>
-    ''' ホットキー種別と設定キー値プロパティの対応
+    '''     ホットキー種別と設定キー値プロパティの対応
     ''' </summary>
     Public Function GetSettingKeyProperty(hotkeyType As HotKeyType) As String
         Select Case hotkeyType
@@ -226,5 +226,5 @@ Public Module HotKeyManager
     End Function
 
 #End Region
-
 End Module
+

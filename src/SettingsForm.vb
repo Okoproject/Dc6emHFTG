@@ -1,5 +1,5 @@
 ''' <summary>
-''' 設定フォーム
+'''     設定フォーム
 ''' </summary>
 Public Class SettingsForm
 
@@ -15,7 +15,7 @@ Public Class SettingsForm
 #Region "辞書"
 
     ''' <summary>
-    ''' キー表示名と仮想キーコードの対応
+    '''     キー表示名と仮想キーコードの対応
     ''' </summary>
     Private ReadOnly _keyCodeMapping As New Dictionary(Of String, Integer) From {
         {"F1", 112}, {"F2", 113}, {"F3", 114}, {"F4", 115},
@@ -28,15 +28,15 @@ Public Class SettingsForm
         {"8(テンキー)", 104}, {"9(テンキー)", 105},
         {"次のトラックキー", 176}, {"再生/一時停止キー", 179},
         {"前のトラックキー", 177}, {"停止キー", 178}
-    }
+        }
 
     ''' <summary>
-    ''' キーコードから表示名への逆引き辞書
+    '''     キーコードから表示名への逆引き辞書
     ''' </summary>
     Private ReadOnly _keyNameMapping As Dictionary(Of Integer, String)
 
     ''' <summary>
-    ''' ホットキー種別とコンボボックスインデックスの対応
+    '''     ホットキー種別とコンボボックスインデックスの対応
     ''' </summary>
     Private ReadOnly _hotKeyTypeComboIndexMapping As New Dictionary(Of Integer, HotKeyType) From {
         {0, HotKeyType.PlayPause},
@@ -69,7 +69,7 @@ Public Class SettingsForm
         {27, HotKeyType.SpeedControlButton6},
         {28, HotKeyType.SpeedControlButton7},
         {29, HotKeyType.ClipboardJump}
-    }
+        }
 
 #End Region
 
@@ -98,7 +98,7 @@ Public Class SettingsForm
 #Region "設定読み込み"
 
     ''' <summary>
-    ''' 全設定を読み込み
+    '''     全設定を読み込み
     ''' </summary>
     Private Sub LoadAllSettings()
         LoadTimeCodeSettings()
@@ -110,7 +110,7 @@ Public Class SettingsForm
     End Sub
 
     ''' <summary>
-    ''' タイムコード形式設定の読み込み
+    '''     タイムコード形式設定の読み込み
     ''' </summary>
     Private Sub LoadTimeCodeSettings()
         Select Case My.Settings.TimeCode
@@ -121,16 +121,16 @@ Public Class SettingsForm
     End Sub
 
     ''' <summary>
-    ''' 自動巻戻し設定の読み込み
+    '''     自動巻戻し設定の読み込み
     ''' </summary>
     Private Sub LoadAutoBackupSettings()
-        NumericUpDown1.Value = CDec(My.Settings.AutoBack / 10.0)
+        NumericUpDown1.Value = CDec(My.Settings.AutoBack/10.0)
         CheckBox1.Checked = My.Settings.autoBM
         TextBox10.Text = My.Settings.autoBMDir
     End Sub
 
     ''' <summary>
-    ''' タイムコード修飾設定の読み込み
+    '''     タイムコード修飾設定の読み込み
     ''' </summary>
     Private Sub LoadTimeCodeModifierSettings()
         TextBox1.Text = My.Settings.Atama
@@ -144,7 +144,7 @@ Public Class SettingsForm
     End Sub
 
     ''' <summary>
-    ''' ジャンプボタン設定の読み込み
+    '''     ジャンプボタン設定の読み込み
     ''' </summary>
     Private Sub LoadJumpButtonSettings()
         NumericUpDown2.Value = My.Settings.SK1
@@ -170,7 +170,7 @@ Public Class SettingsForm
     End Sub
 
     ''' <summary>
-    ''' ジャンプホットキー設定の読み込み
+    '''     ジャンプホットキー設定の読み込み
     ''' </summary>
     Private Sub LoadJumpHotkeySettings()
         NumericUpDown22.Value = My.Settings.MM1
@@ -184,16 +184,16 @@ Public Class SettingsForm
     End Sub
 
     ''' <summary>
-    ''' 速度コントロール設定の読み込み
+    '''     速度コントロール設定の読み込み
     ''' </summary>
     Private Sub LoadSpeedControlSettings()
-        NumericUpDown28.Value = CDec(My.Settings.SC1 / 10.0)
-        NumericUpDown29.Value = CDec(My.Settings.SC2 / 10.0)
-        NumericUpDown30.Value = CDec(My.Settings.SC3 / 10.0)
-        NumericUpDown31.Value = CDec(My.Settings.SC4 / 10.0)
-        NumericUpDown32.Value = CDec(My.Settings.SC5 / 10.0)
-        NumericUpDown33.Value = CDec(My.Settings.SC6 / 10.0)
-        NumericUpDown34.Value = CDec(My.Settings.SC7 / 10.0)
+        NumericUpDown28.Value = CDec(My.Settings.SC1/10.0)
+        NumericUpDown29.Value = CDec(My.Settings.SC2/10.0)
+        NumericUpDown30.Value = CDec(My.Settings.SC3/10.0)
+        NumericUpDown31.Value = CDec(My.Settings.SC4/10.0)
+        NumericUpDown32.Value = CDec(My.Settings.SC5/10.0)
+        NumericUpDown33.Value = CDec(My.Settings.SC6/10.0)
+        NumericUpDown34.Value = CDec(My.Settings.SC7/10.0)
 
         UpdateSpeedControlLabels()
     End Sub
@@ -203,11 +203,12 @@ Public Class SettingsForm
 #Region "ホットキー設定"
 
     ''' <summary>
-    ''' 設定ボタンクリック
+    '''     設定ボタンクリック
     ''' </summary>
     Friend Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         If String.IsNullOrEmpty(ComboBox2.Text) Then
-            MessageBox.Show(My.Resources.EnterShortcutKey, My.Resources.Error, MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show(My.Resources.EnterShortcutKey, My.Resources.Error, MessageBoxButtons.OK,
+                            MessageBoxIcon.Error)
             Exit Sub
         End If
 
@@ -224,11 +225,12 @@ Public Class SettingsForm
         ' 表示を更新
         UpdateHotKeyDisplay(modifierValue, keyCode)
 
-        MessageBox.Show(My.Resources.SettingsComplete, My.Resources.Confirm, MessageBoxButtons.OK, MessageBoxIcon.Information)
+        MessageBox.Show(My.Resources.SettingsComplete, My.Resources.Confirm, MessageBoxButtons.OK,
+                        MessageBoxIcon.Information)
     End Sub
 
     ''' <summary>
-    ''' 解除ボタンクリック
+    '''     解除ボタンクリック
     ''' </summary>
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         Dim hotkeyType As HotKeyType = GetSelectedHotKeyType()
@@ -240,11 +242,12 @@ Public Class SettingsForm
         ClearHotKeySetting(hotkeyType)
 
         Label3.Text = String.Empty
-        MessageBox.Show(My.Resources.KeySettingsDeleted, My.Resources.Confirm, MessageBoxButtons.OK, MessageBoxIcon.Information)
+        MessageBox.Show(My.Resources.KeySettingsDeleted, My.Resources.Confirm, MessageBoxButtons.OK,
+                        MessageBoxIcon.Information)
     End Sub
 
     ''' <summary>
-    ''' 選択されたホットキー種別を取得
+    '''     選択されたホットキー種別を取得
     ''' </summary>
     Friend Function GetSelectedHotKeyType() As HotKeyType
         If _hotKeyTypeComboIndexMapping.ContainsKey(ComboBox1.SelectedIndex) Then
@@ -254,10 +257,10 @@ Public Class SettingsForm
     End Function
 
     ''' <summary>
-    ''' 修飾キーの値を計算
+    '''     修飾キーの値を計算
     ''' </summary>
     Friend Function CalculateModifierValue() As Integer
-        Dim modifier As Integer = 0
+        Dim modifier = 0
         If CheckBox2.Checked Then modifier += ModifierCtrl
         If CheckBox3.Checked Then modifier += ModifierAlt
         If CheckBox4.Checked Then modifier += ModifierShift
@@ -265,7 +268,7 @@ Public Class SettingsForm
     End Function
 
     ''' <summary>
-    ''' 選択されたキーコードを取得
+    '''     選択されたキーコードを取得
     ''' </summary>
     Friend Function GetSelectedKeyCode() As Integer
         Dim selectedText As String = ComboBox2.Text
@@ -284,7 +287,7 @@ Public Class SettingsForm
     End Function
 
     ''' <summary>
-    ''' ホットキーを登録
+    '''     ホットキーを登録
     ''' </summary>
     Private Sub RegisterHotKeySetting(hotkeyType As HotKeyType, modifier As Integer, keyCode As Integer)
         Dim atomId As Short = HotKeyAtoms(hotkeyType)
@@ -297,7 +300,7 @@ Public Class SettingsForm
     End Sub
 
     ''' <summary>
-    ''' ホットキー設定を保存
+    '''     ホットキー設定を保存
     ''' </summary>
     Private Sub SaveHotKeySetting(hotkeyType As HotKeyType, modifier As Integer, keyCode As Integer)
         Dim modifierProp As String = GetSettingModifierProperty(hotkeyType)
@@ -314,7 +317,7 @@ Public Class SettingsForm
     End Sub
 
     ''' <summary>
-    ''' ホットキーを解除
+    '''     ホットキーを解除
     ''' </summary>
     Private Sub UnregisterHotKeySetting(hotkeyType As HotKeyType)
         If MainPlayerForm.Instance Is Nothing Then
@@ -325,24 +328,24 @@ Public Class SettingsForm
     End Sub
 
     ''' <summary>
-    ''' ホットキー設定をクリア
+    '''     ホットキー設定をクリア
     ''' </summary>
     Private Sub ClearHotKeySetting(hotkeyType As HotKeyType)
         Dim modifierProp As String = GetSettingModifierProperty(hotkeyType)
         Dim keyProp As String = GetSettingKeyProperty(hotkeyType)
 
         If Not String.IsNullOrEmpty(modifierProp) Then
-            CallByName(My.Settings, modifierProp, CallType.Set, -1)
+            CallByName(My.Settings, modifierProp, CallType.Set, - 1)
         End If
         If Not String.IsNullOrEmpty(keyProp) Then
-            CallByName(My.Settings, keyProp, CallType.Set, -1)
+            CallByName(My.Settings, keyProp, CallType.Set, - 1)
         End If
 
         My.Settings.Save()
     End Sub
 
     ''' <summary>
-    ''' ホットキー表示を更新
+    '''     ホットキー表示を更新
     ''' </summary>
     Friend Sub UpdateHotKeyDisplay(modifier As Integer, keyCode As Integer)
         Dim modifierText As String = GetModifierDisplayText(modifier)
@@ -356,7 +359,7 @@ Public Class SettingsForm
     End Sub
 
     ''' <summary>
-    ''' キーコードから表示テキストを取得
+    '''     キーコードから表示テキストを取得
     ''' </summary>
     Friend Function GetKeyDisplayText(keyCode As Integer) As String
         ' 定義済みキーを検索
@@ -380,7 +383,7 @@ Public Class SettingsForm
 #Region "ラベル更新"
 
     ''' <summary>
-    ''' ジャンプホットキーラベルを更新
+    '''     ジャンプホットキーラベルを更新
     ''' </summary>
     Private Sub UpdateJumpHotkeyLabels()
         UpdateJumpLabel(Label14, My.Settings.SKM1A, My.Settings.SKM1)
@@ -392,7 +395,7 @@ Public Class SettingsForm
     End Sub
 
     ''' <summary>
-    ''' 単一のジャンプラベルを更新
+    '''     単一のジャンプラベルを更新
     ''' </summary>
     Private Sub UpdateJumpLabel(label As Label, modifier As Integer, keyCode As Integer)
         Dim modifierText As String = GetModifierDisplayText(modifier)
@@ -402,7 +405,7 @@ Public Class SettingsForm
     End Sub
 
     ''' <summary>
-    ''' 速度コントロールラベルを更新
+    '''     速度コントロールラベルを更新
     ''' </summary>
     Private Sub UpdateSpeedControlLabels()
         UpdateSpeedLabel(Label25, My.Settings.SC1A, My.Settings.SKSC1)
@@ -415,7 +418,7 @@ Public Class SettingsForm
     End Sub
 
     ''' <summary>
-    ''' 単一の速度ラベルを更新
+    '''     単一の速度ラベルを更新
     ''' </summary>
     Private Sub UpdateSpeedLabel(label As Label, modifier As Integer, keyCode As Integer)
         Dim modifierText As String = GetModifierDisplayText(modifier)
@@ -437,8 +440,8 @@ Public Class SettingsForm
             Return
         End If
 
-        Dim modifier As Integer = CInt(CallByName(My.Settings, modifierProp, CallType.Get))
-        Dim keyCode As Integer = CInt(CallByName(My.Settings, keyProp, CallType.Get))
+        Dim modifier = CInt(CallByName(My.Settings, modifierProp, CallType.Get))
+        Dim keyCode = CInt(CallByName(My.Settings, keyProp, CallType.Get))
 
         UpdateHotKeyDisplay(modifier, keyCode)
     End Sub
@@ -502,5 +505,5 @@ Public Class SettingsForm
     End Sub
 
 #End Region
-
 End Class
+

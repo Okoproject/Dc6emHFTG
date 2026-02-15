@@ -1,5 +1,8 @@
+Imports System.Drawing.Imaging
+Imports System.IO
+
 ''' <summary>
-''' クリップボード画像表示フォーム
+'''     クリップボード画像表示フォーム
 ''' </summary>
 Public Class ClipboardImageViewer
 
@@ -12,7 +15,7 @@ Public Class ClipboardImageViewer
 #Region "フォームイベント"
 
     ''' <summary>
-    ''' フォーム読み込み時の処理
+    '''     フォーム読み込み時の処理
     ''' </summary>
     Private Sub ClipboardImageViewer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadClipboardImage()
@@ -23,7 +26,7 @@ Public Class ClipboardImageViewer
 #Region "クリップボード処理"
 
     ''' <summary>
-    ''' クリップボードから画像を読み込み
+    '''     クリップボードから画像を読み込み
     ''' </summary>
     Private Sub LoadClipboardImage()
         Try
@@ -50,7 +53,7 @@ Public Class ClipboardImageViewer
     End Sub
 
     ''' <summary>
-    ''' クリップボード画像を解放
+    '''     クリップボード画像を解放
     ''' </summary>
     Private Sub DisposeClipboardImage()
         If _clipboardImage IsNot Nothing Then
@@ -60,7 +63,7 @@ Public Class ClipboardImageViewer
     End Sub
 
     ''' <summary>
-    ''' 画像を表示
+    '''     画像を表示
     ''' </summary>
     Public Sub DisplayImage(image As Image)
         PictureBox1.Image = image
@@ -71,7 +74,7 @@ Public Class ClipboardImageViewer
     End Sub
 
     ''' <summary>
-    ''' 画像がない場合のメッセージ表示
+    '''     画像がない場合のメッセージ表示
     ''' </summary>
     Private Sub ShowNoImageMessage()
         Text = My.Resources.NoClipboardImage
@@ -79,7 +82,7 @@ Public Class ClipboardImageViewer
     End Sub
 
     ''' <summary>
-    ''' エラーメッセージの表示
+    '''     エラーメッセージの表示
     ''' </summary>
     Private Sub ShowErrorMessage(message As String)
         MessageBox.Show(message, My.Resources.Error, MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -90,14 +93,14 @@ Public Class ClipboardImageViewer
 #Region "ボタンイベント"
 
     ''' <summary>
-    ''' 保存ボタンクリック
+    '''     保存ボタンクリック
     ''' </summary>
     Private Sub SaveButton_Click(sender As Object, e As EventArgs) Handles Button1.Click
         SaveImage()
     End Sub
 
     ''' <summary>
-    ''' 閉じるボタンクリック
+    '''     閉じるボタンクリック
     ''' </summary>
     Private Sub CloseButton_Click(sender As Object, e As EventArgs) Handles Button33.Click
         Close()
@@ -108,11 +111,12 @@ Public Class ClipboardImageViewer
 #Region "画像保存"
 
     ''' <summary>
-    ''' 画像を保存
+    '''     画像を保存
     ''' </summary>
     Private Sub SaveImage()
         If _clipboardImage Is Nothing Then
-            MessageBox.Show(My.Resources.NoImageToSave, My.Resources.Confirm, MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            MessageBox.Show(My.Resources.NoImageToSave, My.Resources.Confirm, MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning)
             Return
         End If
 
@@ -123,9 +127,10 @@ Public Class ClipboardImageViewer
 
             If saveDialog.ShowDialog() = DialogResult.OK Then
                 Try
-                    Dim format As Imaging.ImageFormat = GetImageFormat(saveDialog.FileName)
+                    Dim format As ImageFormat = GetImageFormat(saveDialog.FileName)
                     _clipboardImage.Save(saveDialog.FileName, format)
-                    MessageBox.Show(My.Resources.ImageSaved, My.Resources.Confirm, MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    MessageBox.Show(My.Resources.ImageSaved, My.Resources.Confirm, MessageBoxButtons.OK,
+                                    MessageBoxIcon.Information)
                 Catch ex As Exception
                     ShowErrorMessage(String.Format(My.Resources.SaveFailed, ex.Message))
                 End Try
@@ -134,22 +139,22 @@ Public Class ClipboardImageViewer
     End Sub
 
     ''' <summary>
-    ''' ファイル拡張子から画像フォーマットを取得
+    '''     ファイル拡張子から画像フォーマットを取得
     ''' </summary>
-    Private Function GetImageFormat(fileName As String) As Imaging.ImageFormat
-        Dim extension As String = IO.Path.GetExtension(fileName).ToLower()
+    Private Function GetImageFormat(fileName As String) As ImageFormat
+        Dim extension As String = Path.GetExtension(fileName).ToLower()
 
         Select Case extension
             Case ".jpg", ".jpeg"
-                Return Imaging.ImageFormat.Jpeg
+                Return ImageFormat.Jpeg
             Case ".png"
-                Return Imaging.ImageFormat.Png
+                Return ImageFormat.Png
             Case ".bmp"
-                Return Imaging.ImageFormat.Bmp
+                Return ImageFormat.Bmp
             Case ".gif"
-                Return Imaging.ImageFormat.Gif
+                Return ImageFormat.Gif
             Case Else
-                Return Imaging.ImageFormat.Png
+                Return ImageFormat.Png
         End Select
     End Function
 
@@ -158,23 +163,23 @@ Public Class ClipboardImageViewer
 #Region "テスト用ヘルパー"
 
     ''' <summary>
-    ''' テスト用にクリップボード画像を設定
+    '''     テスト用にクリップボード画像を設定
     ''' </summary>
     Friend Sub SetClipboardImageForTest(image As Image)
         _clipboardImage = image
     End Sub
 
     ''' <summary>
-    ''' テスト用にクリップボード画像をクリア
+    '''     テスト用にクリップボード画像をクリア
     ''' </summary>
     Friend Sub ClearClipboardImageForTest()
         DisposeClipboardImage()
     End Sub
 
     ''' <summary>
-    ''' テスト用に画像フォーマットを取得
+    '''     テスト用に画像フォーマットを取得
     ''' </summary>
-    Friend Function GetImageFormatForTest(fileName As String) As Imaging.ImageFormat
+    Friend Function GetImageFormatForTest(fileName As String) As ImageFormat
         Return GetImageFormat(fileName)
     End Function
 
@@ -183,7 +188,7 @@ Public Class ClipboardImageViewer
 #Region "リソース解放"
 
     ''' <summary>
-    ''' フォーム終了時のリソース解放
+    '''     フォーム終了時のリソース解放
     ''' </summary>
     Protected Overrides Sub OnFormClosing(e As FormClosingEventArgs)
         DisposeClipboardImage()
@@ -191,5 +196,5 @@ Public Class ClipboardImageViewer
     End Sub
 
 #End Region
-
 End Class
+

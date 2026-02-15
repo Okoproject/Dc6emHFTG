@@ -1,8 +1,9 @@
 Imports System.Runtime.InteropServices
-Imports System.Windows.Forms
+Imports System.Text
+Imports System.Threading
 
 ''' <summary>
-''' mpv (libmpv) プレーヤーのラッパークラス
+'''     mpv (libmpv) プレーヤーのラッパークラス
 ''' </summary>
 Public Class MpvPlayerWrapper
     Implements IDisposable
@@ -12,40 +13,40 @@ Public Class MpvPlayerWrapper
     Private Const MpvDll As String = "libmpv-2.dll"
 
     ' mpv_create / mpv_initialize / mpv_destroy / mpv_terminate_destroy
-    <DllImport(MpvDll, CallingConvention:=CallingConvention.Cdecl)>
+    <DllImport(MpvDll, CallingConvention := CallingConvention.Cdecl)>
     Private Shared Function mpv_create() As IntPtr
     End Function
 
-    <DllImport(MpvDll, CallingConvention:=CallingConvention.Cdecl)>
+    <DllImport(MpvDll, CallingConvention := CallingConvention.Cdecl)>
     Private Shared Function mpv_initialize(handle As IntPtr) As Integer
     End Function
 
-    <DllImport(MpvDll, CallingConvention:=CallingConvention.Cdecl)>
+    <DllImport(MpvDll, CallingConvention := CallingConvention.Cdecl)>
     Private Shared Sub mpv_terminate_destroy(handle As IntPtr)
     End Sub
 
     ' mpv_command / mpv_command_string
-    <DllImport(MpvDll, CallingConvention:=CallingConvention.Cdecl)>
+    <DllImport(MpvDll, CallingConvention := CallingConvention.Cdecl)>
     Private Shared Function mpv_command(handle As IntPtr, args() As IntPtr) As Integer
     End Function
 
     ' mpv_set_option_string
-    <DllImport(MpvDll, CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
+    <DllImport(MpvDll, CallingConvention := CallingConvention.Cdecl, CharSet := CharSet.Ansi)>
     Private Shared Function mpv_set_option_string(handle As IntPtr, name As String, data As String) As Integer
     End Function
 
     ' mpv_set_property_string
-    <DllImport(MpvDll, CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
+    <DllImport(MpvDll, CallingConvention := CallingConvention.Cdecl, CharSet := CharSet.Ansi)>
     Private Shared Function mpv_set_property_string(handle As IntPtr, name As String, data As String) As Integer
     End Function
 
     ' mpv_get_property_string (returns a pointer to a string that must be freed with mpv_free)
-    <DllImport(MpvDll, CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
+    <DllImport(MpvDll, CallingConvention := CallingConvention.Cdecl, CharSet := CharSet.Ansi)>
     Private Shared Function mpv_get_property_string(handle As IntPtr, name As String) As IntPtr
     End Function
 
     ' mpv_free
-    <DllImport(MpvDll, CallingConvention:=CallingConvention.Cdecl)>
+    <DllImport(MpvDll, CallingConvention := CallingConvention.Cdecl)>
     Private Shared Sub mpv_free(data As IntPtr)
     End Sub
 
@@ -53,20 +54,23 @@ Public Class MpvPlayerWrapper
     Private Const MpvFormatInt64 As Integer = 4
     Private Const MpvFormatDouble As Integer = 5
 
-    <DllImport(MpvDll, CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
-    Private Shared Function mpv_set_option(handle As IntPtr, name As String, format As Integer, ByRef data As Long) As Integer
+    <DllImport(MpvDll, CallingConvention := CallingConvention.Cdecl, CharSet := CharSet.Ansi)>
+    Private Shared Function mpv_set_option(handle As IntPtr, name As String, format As Integer, ByRef data As Long) _
+        As Integer
     End Function
 
-    <DllImport(MpvDll, CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
-    Private Shared Function mpv_get_property(handle As IntPtr, name As String, format As Integer, ByRef data As Double) As Integer
+    <DllImport(MpvDll, CallingConvention := CallingConvention.Cdecl, CharSet := CharSet.Ansi)>
+    Private Shared Function mpv_get_property(handle As IntPtr, name As String, format As Integer, ByRef data As Double) _
+        As Integer
     End Function
 
-    <DllImport(MpvDll, CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
-    Private Shared Function mpv_set_property(handle As IntPtr, name As String, format As Integer, ByRef data As Double) As Integer
+    <DllImport(MpvDll, CallingConvention := CallingConvention.Cdecl, CharSet := CharSet.Ansi)>
+    Private Shared Function mpv_set_property(handle As IntPtr, name As String, format As Integer, ByRef data As Double) _
+        As Integer
     End Function
 
     ' mpv_wait_event
-    <DllImport(MpvDll, CallingConvention:=CallingConvention.Cdecl)>
+    <DllImport(MpvDll, CallingConvention := CallingConvention.Cdecl)>
     Private Shared Function mpv_wait_event(handle As IntPtr, timeout As Double) As IntPtr
     End Function
 
@@ -107,13 +111,13 @@ Public Class MpvPlayerWrapper
     Private _filePath As String = String.Empty
     Private _fileName As String = String.Empty
     Private _disposed As Boolean = False
-    Private ReadOnly _eventThread As Threading.Thread
+    Private ReadOnly _eventThread As Thread
     Private _running As Boolean = False
 
     Public Event MediaChanged()
 
     ''' <summary>
-    ''' mpv プレーヤーを初期化し、指定された Panel に映像を埋め込む。
+    '''     mpv プレーヤーを初期化し、指定された Panel に映像を埋め込む。
     ''' </summary>
     Public Sub New(hostPanel As Panel)
         _hostPanel = hostPanel
@@ -152,7 +156,7 @@ Public Class MpvPlayerWrapper
 
         ' イベントループスレッド開始
         _running = True
-        _eventThread = New Threading.Thread(AddressOf EventLoop)
+        _eventThread = New Thread(AddressOf EventLoop)
         _eventThread.IsBackground = True
         _eventThread.Name = "mpv-event-loop"
         _eventThread.Start()
@@ -163,7 +167,7 @@ Public Class MpvPlayerWrapper
             Dim evtPtr As IntPtr = mpv_wait_event(_mpvHandle, EventTimeoutSeconds)
             If evtPtr = IntPtr.Zero Then Continue While
 
-            Dim evt As MpvEvent = Marshal.PtrToStructure(Of MpvEvent)(evtPtr)
+            Dim evt = Marshal.PtrToStructure (Of MpvEvent)(evtPtr)
 
             Select Case evt.EventId
                 Case MpvEventFileLoaded
@@ -186,7 +190,7 @@ Public Class MpvPlayerWrapper
 #Region "プロパティ"
 
     ''' <summary>
-    ''' 現在の再生位置 (秒)。mpvの time-pos プロパティ。
+    '''     現在の再生位置 (秒)。mpvの time-pos プロパティ。
     ''' </summary>
     Public Overridable Property Position As Double
         Get
@@ -196,7 +200,7 @@ Public Class MpvPlayerWrapper
             If err < 0 Then Return 0
             Return pos
         End Get
-        Set(value As Double)
+        Set
             If _mpvHandle = IntPtr.Zero Then Return
             If value < 0 Then value = 0
             mpv_set_property(_mpvHandle, "time-pos", MpvFormatDouble, value)
@@ -204,7 +208,7 @@ Public Class MpvPlayerWrapper
     End Property
 
     ''' <summary>
-    ''' メディアの長さ (秒)。mpvの duration プロパティ。
+    '''     メディアの長さ (秒)。mpvの duration プロパティ。
     ''' </summary>
     Public Overridable ReadOnly Property Duration As Double
         Get
@@ -217,16 +221,16 @@ Public Class MpvPlayerWrapper
     End Property
 
     ''' <summary>
-    ''' 再生速度。mpvの speed プロパティ。
+    '''     再生速度。mpvの speed プロパティ。
     ''' </summary>
     Public Overridable Property Speed As Double
         Get
             If _mpvHandle = IntPtr.Zero Then Return 1.0
-            Dim spd As Double = 1.0
+            Dim spd = 1.0
             Dim err = mpv_get_property(_mpvHandle, "speed", MpvFormatDouble, spd)
             Return If(err < 0, 1.0, spd)
         End Get
-        Set(value As Double)
+        Set
             If _mpvHandle = IntPtr.Zero Then Return
             If value < MinSpeed Then value = MinSpeed
             If value > MaxSpeed Then value = MaxSpeed
@@ -235,7 +239,7 @@ Public Class MpvPlayerWrapper
     End Property
 
     ''' <summary>
-    ''' 音量 (0-100)。mpvの volume プロパティ。
+    '''     音量 (0-100)。mpvの volume プロパティ。
     ''' </summary>
     Public Overridable Property Volume As Integer
         Get
@@ -244,17 +248,17 @@ Public Class MpvPlayerWrapper
             Dim err = mpv_get_property(_mpvHandle, "volume", MpvFormatDouble, vol)
             Return If(err < 0, 0, CInt(vol))
         End Get
-        Set(value As Integer)
+        Set
             If _mpvHandle = IntPtr.Zero Then Return
             If value < MinVolume Then value = MinVolume
             If value > MaxVolume Then value = MaxVolume
-            Dim vol As Double = CDbl(value)
+            Dim vol = CDbl(value)
             mpv_set_property(_mpvHandle, "volume", MpvFormatDouble, vol)
         End Set
     End Property
 
     ''' <summary>
-    ''' 再生中かどうか。mpvの pause プロパティが "no" かつアイドルでない場合 True。
+    '''     再生中かどうか。mpvの pause プロパティが "no" かつアイドルでない場合 True。
     ''' </summary>
     Public ReadOnly Property IsPlaying As Boolean
         Get
@@ -265,7 +269,7 @@ Public Class MpvPlayerWrapper
     End Property
 
     ''' <summary>
-    ''' 一時停止中かどうか。mpvの pause プロパティが "yes" かつアイドルでない場合 True。
+    '''     一時停止中かどうか。mpvの pause プロパティが "yes" かつアイドルでない場合 True。
     ''' </summary>
     Public ReadOnly Property IsPaused As Boolean
         Get
@@ -276,7 +280,7 @@ Public Class MpvPlayerWrapper
     End Property
 
     ''' <summary>
-    ''' アイドル状態かどうか（ファイルが読み込まれていない）。mpvの idle-active プロパティ。
+    '''     アイドル状態かどうか（ファイルが読み込まれていない）。mpvの idle-active プロパティ。
     ''' </summary>
     Public ReadOnly Property IsIdle As Boolean
         Get
@@ -286,7 +290,7 @@ Public Class MpvPlayerWrapper
     End Property
 
     ''' <summary>
-    ''' メディアファイルのフルパス。
+    '''     メディアファイルのフルパス。
     ''' </summary>
     Public ReadOnly Property FilePath As String
         Get
@@ -295,7 +299,7 @@ Public Class MpvPlayerWrapper
     End Property
 
     ''' <summary>
-    ''' メディアファイルのファイル名。
+    '''     メディアファイルのファイル名。
     ''' </summary>
     Public ReadOnly Property FileName As String
         Get
@@ -308,7 +312,7 @@ Public Class MpvPlayerWrapper
 #Region "メソッド"
 
     ''' <summary>
-    ''' ファイルを読み込む。mpv の loadfile コマンドで読み込み、pause 状態で開始。
+    '''     ファイルを読み込む。mpv の loadfile コマンドで読み込み、pause 状態で開始。
     ''' </summary>
     Public Sub LoadFile(path As String)
         If _mpvHandle = IntPtr.Zero Then Return
@@ -322,7 +326,7 @@ Public Class MpvPlayerWrapper
     End Sub
 
     ''' <summary>
-    ''' 再生。
+    '''     再生。
     ''' </summary>
     Public Sub Play()
         If _mpvHandle = IntPtr.Zero Then Return
@@ -330,7 +334,7 @@ Public Class MpvPlayerWrapper
     End Sub
 
     ''' <summary>
-    ''' 一時停止。
+    '''     一時停止。
     ''' </summary>
     Public Sub Pause()
         If _mpvHandle = IntPtr.Zero Then Return
@@ -338,7 +342,7 @@ Public Class MpvPlayerWrapper
     End Sub
 
     ''' <summary>
-    ''' 停止。先頭に戻してstopコマンドを実行。
+    '''     停止。先頭に戻してstopコマンドを実行。
     ''' </summary>
     Public Sub [Stop]()
         If _mpvHandle = IntPtr.Zero Then Return
@@ -357,7 +361,7 @@ Public Class MpvPlayerWrapper
         Dim pointers(args.Length) As IntPtr ' +1 for null terminator
         Try
             For i = 0 To args.Length - 1
-                Dim bytes = System.Text.Encoding.UTF8.GetBytes(args(i) & Chr(0))
+                Dim bytes = Encoding.UTF8.GetBytes(args(i) & Chr(0))
                 pointers(i) = Marshal.AllocHGlobal(bytes.Length)
                 Marshal.Copy(bytes, 0, pointers(i), bytes.Length)
             Next
@@ -409,5 +413,5 @@ Public Class MpvPlayerWrapper
     End Sub
 
 #End Region
-
 End Class
+
