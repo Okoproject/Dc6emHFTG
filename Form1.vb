@@ -187,22 +187,18 @@ Public Class Form1
         'しおりデータの保存
         'WriteCsvFromDGV(Me.DataGridView1, appPath & "\tmp.csv")
 
-        If CheckBox2.Checked = True Then
-            My.Settings.gamen = True
-        End If
-
-        My.Settings.MyClientSize = Me.ClientSize
-
-        If SplitContainer1.Panel2Collapsed = True Then
-            My.Settings.shiori = False
-        Else
-            My.Settings.shiori = True
-        End If
-
+        '動画表示画面（プレイリスト）が表示されていたら、それを記憶する
         If SplitContainer2.Panel1Collapsed = True Then
             My.Settings.gamen = False
         Else
             My.Settings.gamen = True
+        End If
+
+        'しおり一覧が表示されていたら、それを記憶する
+        If SplitContainer1.Panel2Collapsed = True Then
+            My.Settings.shiori = False
+        Else
+            My.Settings.shiori = True
         End If
 
         'SplitContainerの分割位置を保存
@@ -210,12 +206,15 @@ Public Class Form1
         My.Settings.SC2_Distance = SplitContainer2.SplitterDistance
         My.Settings.SC3_Distance = SplitContainer3.SplitterDistance
 
-        'PlayList表示状態を保存
+        'PlayList表示状態を保存（CheckBox1 = しおり一覧）
         If CheckBox1.Checked = True Then
             My.Settings.PL = True
         Else
             My.Settings.PL = False
         End If
+
+
+        My.Settings.MyClientSize = Me.ClientSize
 
     End Sub
 
@@ -1778,10 +1777,24 @@ Public Class Form1
         Me.StartPosition = FormStartPosition.CenterScreen
         '自動巻戻時間の設定
         AutoB = My.Settings.AutoBack
-        '動画再生画面の表示・非表示
-        If My.Settings.gamen = True Then
+
+        'いらないかも
+        Me.ClientSize = My.Settings.MyClientSize
+
+        'プレイリストの表示・非表示
+        If My.Settings.gamen = False Then
             CheckBox2.Checked = True
             SplitContainer2.Panel1Collapsed = False
+            ' SplitterDistanceの範囲チェック
+            Dim sc2Dist As Integer = My.Settings.SC2_Distance
+            Dim sc2Max As Integer = If(SplitContainer2.Orientation = Orientation.Vertical,
+                SplitContainer2.Width - SplitContainer2.Panel2MinSize - SplitContainer2.SplitterWidth,
+                SplitContainer2.Height - SplitContainer2.Panel2MinSize - SplitContainer2.SplitterWidth)
+            If sc2Dist < SplitContainer2.Panel1MinSize Then sc2Dist = SplitContainer2.Panel1MinSize
+            If sc2Dist > sc2Max Then sc2Dist = sc2Max
+            If sc2Max > SplitContainer2.Panel1MinSize Then
+                SplitContainer2.SplitterDistance = sc2Dist
+            End If
         Else
             CheckBox2.Checked = False
             SplitContainer2.Panel1Collapsed = True
@@ -1790,28 +1803,46 @@ Public Class Form1
         'しおり一覧の表示・非表示
         If My.Settings.shiori = True Then
             SplitContainer1.Panel2Collapsed = False
+            CheckBox1.Checked = True
         Else
             SplitContainer1.Panel2Collapsed = True
+            CheckBox1.Checked = False
         End If
 
         'SplitContainerの分割位置を復元
         If My.Settings.SC1_Distance > 0 Then
-            SplitContainer1.SplitterDistance = CInt(My.Settings.SC1_Distance)
-        End If
-        If My.Settings.SC2_Distance > 0 Then
-            SplitContainer2.SplitterDistance = CInt(My.Settings.SC2_Distance)
+            Dim sc1Dist As Integer = CInt(My.Settings.SC1_Distance)
+            Dim sc1Max As Integer = If(SplitContainer1.Orientation = Orientation.Vertical,
+                SplitContainer1.Width - SplitContainer1.Panel2MinSize - SplitContainer1.SplitterWidth,
+                SplitContainer1.Height - SplitContainer1.Panel2MinSize - SplitContainer1.SplitterWidth)
+            If sc1Dist < SplitContainer1.Panel1MinSize Then sc1Dist = SplitContainer1.Panel1MinSize
+            If sc1Dist > sc1Max Then sc1Dist = sc1Max
+            If sc1Max > SplitContainer1.Panel1MinSize Then
+                SplitContainer1.SplitterDistance = sc1Dist
+            End If
         End If
         If My.Settings.SC3_Distance > 0 Then
-            SplitContainer3.SplitterDistance = CInt(My.Settings.SC3_Distance)
+            Dim sc3Dist As Integer = CInt(My.Settings.SC3_Distance)
+            Dim sc3Max As Integer = If(SplitContainer3.Orientation = Orientation.Vertical,
+                SplitContainer3.Width - SplitContainer3.Panel2MinSize - SplitContainer3.SplitterWidth,
+                SplitContainer3.Height - SplitContainer3.Panel2MinSize - SplitContainer3.SplitterWidth)
+            If sc3Dist < SplitContainer3.Panel1MinSize Then sc3Dist = SplitContainer3.Panel1MinSize
+            If sc3Dist > sc3Max Then sc3Dist = sc3Max
+            If sc3Max > SplitContainer3.Panel1MinSize Then
+                SplitContainer3.SplitterDistance = sc3Dist
+            End If
         End If
 
-        'PlayList表示状態を復元
+        'PlayList表示状態を復元（しおり一覧と連動）
         If My.Settings.PL = True Then
             CheckBox1.Checked = True
         Else
             CheckBox1.Checked = False
         End If
 
+        'メイン画面前回終了時のサイズの取得
+        'SplitContainer3.SplitterDistance = My.Settings.Main_Width
+        'SplitContainer3.Panel2.Height = My.Settings.Main_Height
 
         'On Error Resume Next
 
@@ -1881,7 +1912,6 @@ Public Class Form1
 
 
 
-        Me.ClientSize = My.Settings.MyClientSize
 
 
         'If Kidou = True Then
@@ -1894,30 +1924,38 @@ Public Class Form1
     End Sub
 
     Private Sub Form1_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
-        My.Settings.p11_height = SplitContainer1.Panel1.Height
-        My.Settings.p11_width = SplitContainer1.Panel2.Width
-        My.Settings.p12_height = SplitContainer1.Panel2.Height
-        My.Settings.p12_width = SplitContainer1.Panel2.Width
-        My.Settings.p21_height = SplitContainer2.Panel1.Height
-        My.Settings.p21_width = SplitContainer2.Panel1.Width
-        My.Settings.p22_height = SplitContainer2.Panel2.Height
-        My.Settings.p22_width = SplitContainer2.Panel2.Width
+        My.Settings.Shiori_Width = SplitContainer1.Panel2.Width
+        My.Settings.PL_Width = SplitContainer2.Panel1.Width
+        My.Settings.Gamen_Height = SplitContainer3.Panel1.Height
+        My.Settings.Main_Width = SplitContainer2.Panel2.Width
+        My.Settings.Main_Height = SplitContainer2.Panel2.Height
+
+        My.Settings.Save()
+
+    End Sub
+
+    '要修正
+    Private Sub SplitContainer1_Resize(sender As Object, e As EventArgs) Handles SplitContainer1.Resize
+        My.Settings.Shiori_Width = SplitContainer1.Panel2.Width
+        My.Settings.Main_Width = SplitContainer1.Panel1.Width
         My.Settings.Save()
 
     End Sub
 
 
     Private Sub SplitContainer2_Resize(sender As Object, e As EventArgs) Handles SplitContainer2.Resize
-        My.Settings.p11_height = SplitContainer1.Panel1.Height
-        My.Settings.p11_width = SplitContainer1.Panel2.Width
-        My.Settings.p12_height = SplitContainer1.Panel2.Height
-        My.Settings.p12_width = SplitContainer1.Panel2.Width
-        My.Settings.p21_height = SplitContainer2.Panel1.Height
-        My.Settings.p21_width = SplitContainer2.Panel1.Width
-        My.Settings.p22_height = SplitContainer2.Panel2.Height
-        My.Settings.p22_width = SplitContainer2.Panel2.Width
+        My.Settings.PL_Width = SplitContainer2.Panel1.Width
+        My.Settings.Main_Width = SplitContainer2.Panel2.Width
         My.Settings.Save()
     End Sub
+
+
+    Private Sub SplitContainer3_Resize(sender As Object, e As EventArgs) Handles SplitContainer3.Resize
+        My.Settings.Gamen_Height = SplitContainer3.Panel1.Height
+        My.Settings.Main_Height = SplitContainer3.Panel2.Height
+        My.Settings.Save()
+    End Sub
+
     'ホットキーが押された時の処理
     Protected Overrides Sub WndProc(ByRef m As Message)
 
@@ -2476,7 +2514,9 @@ Public Class Form1
 
 
     Private Sub Button400_Click(sender As Object, e As EventArgs) Handles Button400.Click
-        _player.Stop()
+        _player.Pause()
+        _player.CurrentPosition = 0
+        Button200.Image = My.Resources.Run_16x
     End Sub
 
 
@@ -4038,67 +4078,14 @@ Public Class Form1
 
     End Sub
 
-    '要修正
-    Private Sub SplitContainer1_Resize(sender As Object, e As EventArgs) Handles SplitContainer1.Resize
-        My.Settings.p11_height = SplitContainer1.Panel1.Height
-        My.Settings.p11_width = SplitContainer1.Panel2.Width
-        My.Settings.p12_height = SplitContainer1.Panel2.Height
-        My.Settings.p12_width = SplitContainer1.Panel2.Width
-        My.Settings.p21_height = SplitContainer2.Panel1.Height
-        My.Settings.p21_width = SplitContainer2.Panel1.Width
-        My.Settings.p22_height = SplitContainer2.Panel2.Height
-        My.Settings.p22_width = SplitContainer2.Panel2.Width
-        My.Settings.Save()
 
-    End Sub
 
     Private Sub SplitContainer2_Panel2_Paint(sender As Object, e As PaintEventArgs) Handles SplitContainer2.Panel2.Paint
 
     End Sub
 
 
-    '要修正
-    Private Sub Button30_Click(sender As Object, e As EventArgs) Handles Button30.Click
-        Dim f_b_width As Integer = Me.Width
 
-        If SplitContainer1.Panel2Collapsed = True Then
-
-            Me.Width += My.Settings.p22_width
-            SplitContainer1.Panel2Collapsed = False
-            SplitContainer1.SplitterDistance = f_b_width
-
-
-            'Button30.Text = "＜＜しおり"
-
-            My.Settings.p11_height = SplitContainer1.Panel1.Height
-            My.Settings.p11_width = SplitContainer1.Panel2.Width
-            My.Settings.p12_height = SplitContainer1.Panel2.Height
-            My.Settings.p12_width = SplitContainer1.Panel2.Width
-            My.Settings.p21_height = SplitContainer2.Panel1.Height
-            My.Settings.p21_width = SplitContainer2.Panel1.Width
-            My.Settings.p22_height = SplitContainer2.Panel2.Height
-            My.Settings.p22_width = SplitContainer2.Panel2.Width
-            My.Settings.Save()
-
-        Else
-            Me.Width -= SplitContainer2.Panel2.Width
-            SplitContainer1.Panel2Collapsed = True
-            'Me.Width = 520
-
-            'Button30.Text = "しおり＞＞"
-
-            My.Settings.p11_height = SplitContainer1.Panel1.Height
-            My.Settings.p11_width = SplitContainer1.Panel2.Width
-            My.Settings.p12_height = SplitContainer1.Panel2.Height
-            My.Settings.p12_width = SplitContainer1.Panel2.Width
-            My.Settings.p21_height = SplitContainer2.Panel1.Height
-            My.Settings.p21_width = SplitContainer2.Panel1.Width
-            My.Settings.p22_height = SplitContainer2.Panel2.Height
-            My.Settings.p22_width = SplitContainer2.Panel2.Width
-            My.Settings.Save()
-        End If
-
-    End Sub
 
     '要修正
     Private Sub Form1_ResizeEnd(sender As Object, e As EventArgs) Handles MyBase.ResizeEnd
@@ -4669,7 +4656,7 @@ Public Class Form1
         SendKeys.Send("%{PRTSC}")
 
         'クリップボードにあるデータの取得
-        Dim d As IDataObject = Clipboard.GetDataObject()
+        'Dim d As IDataObject = Clipboard.GetDataObject()
         'ビットマップデータ形式に関連付けられているデータを取得
         'If Not d Is nothign Then
         'Dim img As Image - DirectCast(d.getdataformats.bitmap), image)
@@ -4694,6 +4681,14 @@ Public Class Form1
         'g.Dispose()
         'End If
         'Form3.Show()
+
+        If SplitContainer3.Panel1Collapsed = True Then
+            MsgBox("動画再生画面を表示してください")
+            Exit Sub
+        Else
+            '画面キャプチャの処理
+
+        End If
 
 
 
@@ -4721,13 +4716,13 @@ Public Class Form1
         My.Settings.p11_width = SplitContainer1.Panel2.Width
         My.Settings.p12_height = SplitContainer1.Panel2.Height
         My.Settings.p12_width = SplitContainer1.Panel2.Width
-        My.Settings.p21_height = SplitContainer2.Panel1.Height
-        My.Settings.p21_width = SplitContainer2.Panel1.Width
-        My.Settings.p22_height = SplitContainer2.Panel2.Height
-        My.Settings.p22_width = SplitContainer2.Panel2.Width
+        My.Settings.p21_height = SplitContainer3.Panel1.Height
+        My.Settings.p21_width = SplitContainer3.Panel1.Width
+        My.Settings.p22_height = SplitContainer3.Panel2.Height
+        My.Settings.p22_width = SplitContainer3.Panel2.Width
     End Sub
 
-    Private Sub SplitContainer2_SplitterMoved(sender As Object, e As SplitterEventArgs) Handles SplitContainer2.SplitterMoved
+    Private Sub SplitContainer3_SplitterMoved(sender As Object, e As SplitterEventArgs) Handles SplitContainer3.SplitterMoved
 
 
 
@@ -4735,10 +4730,10 @@ Public Class Form1
         My.Settings.p11_width = SplitContainer1.Panel2.Width
         My.Settings.p12_height = SplitContainer1.Panel2.Height
         My.Settings.p12_width = SplitContainer1.Panel2.Width
-        My.Settings.p21_height = SplitContainer2.Panel1.Height
-        My.Settings.p21_width = SplitContainer2.Panel1.Width
-        My.Settings.p22_height = SplitContainer2.Panel2.Height
-        My.Settings.p22_width = SplitContainer2.Panel2.Width
+        My.Settings.p21_height = SplitContainer3.Panel1.Height
+        My.Settings.p21_width = SplitContainer3.Panel1.Width
+        My.Settings.p22_height = SplitContainer3.Panel2.Height
+        My.Settings.p22_width = SplitContainer3.Panel2.Width
 
     End Sub
 
@@ -4747,44 +4742,6 @@ Public Class Form1
         Label1.Text = TimeSpan.FromSeconds(TrackBar1.Value).ToString("hh\:mm\:ss") & " / " & TimeSpan.FromSeconds(_player.Duration).ToString("hh\:mm\:ss")
     End Sub
 
-
-    Private Sub CheckBox2_Click(sender As Object, e As EventArgs) Handles CheckBox2.Click
-        Dim motoSize As Integer = Me.Height
-        If SplitContainer2.Panel1Collapsed = True Then
-            Me.Height += My.Settings.p22_height
-            SplitContainer2.Panel1Collapsed = False
-            SplitContainer2.SplitterDistance = Me.Height - 240
-
-            My.Settings.p11_height = SplitContainer1.Panel1.Height
-            My.Settings.p11_width = SplitContainer1.Panel2.Width
-            My.Settings.p12_height = SplitContainer1.Panel2.Height
-            My.Settings.p12_width = SplitContainer1.Panel2.Width
-            My.Settings.p21_height = SplitContainer2.Panel1.Height
-            My.Settings.p21_width = SplitContainer2.Panel1.Width
-            My.Settings.p22_height = SplitContainer2.Panel2.Height
-            My.Settings.p22_width = SplitContainer2.Panel2.Width
-            My.Settings.Save()
-
-            CheckBox2.Checked = True
-        Else
-            SplitContainer2.Panel1Collapsed = True
-            Me.Height = 240
-            'me.width = 
-            CheckBox2.Checked = False
-
-            My.Settings.p11_height = SplitContainer1.Panel1.Height
-            My.Settings.p11_width = SplitContainer1.Panel2.Width
-            My.Settings.p12_height = SplitContainer1.Panel2.Height
-            My.Settings.p12_width = SplitContainer1.Panel2.Width
-            My.Settings.p21_height = SplitContainer2.Panel1.Height
-            My.Settings.p21_width = SplitContainer2.Panel1.Width
-            My.Settings.p22_height = SplitContainer2.Panel2.Height
-            My.Settings.p22_width = SplitContainer2.Panel2.Width
-            My.Settings.Save()
-
-
-        End If
-    End Sub
 
     Private Sub Button39_Click(sender As Object, e As EventArgs) Handles Button39.Click
         If (OpenFileDialog1.ShowDialog = DialogResult.OK) Then
@@ -5352,26 +5309,6 @@ Public Class Form1
         Button27.Text = (My.Settings.SC7 / 100).ToString("0.0")
     End Sub
 
-    Private Sub CheckBox2_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox2.CheckedChanged
-
-    End Sub
-
-    Private Sub Form1_MinimumSizeChanged(sender As Object, e As EventArgs) Handles Me.MinimumSizeChanged
-
-    End Sub
-
-    Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles TextBox1.TextChanged
-
-    End Sub
-
-    Private Sub DataGridView1_RowsAdded(sender As Object, e As DataGridViewRowsAddedEventArgs) Handles DataGridView1.RowsAdded
-
-    End Sub
-
-    Private Sub TableLayoutPanel1_Paint(sender As Object, e As PaintEventArgs) Handles TableLayoutPanel1.Paint
-
-    End Sub
-
     Private Sub TableLayoutPanel1_DragEnter(sender As Object, e As DragEventArgs) Handles TableLayoutPanel1.DragEnter
         '---if the data to be dropped is
         ' an filedrop format---
@@ -5514,13 +5451,60 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub Button38_Click(sender As Object, e As EventArgs) 
-
-    End Sub
-
     Protected Overrides Sub Finalize()
         MyBase.Finalize()
     End Sub
+
+    Private Sub CheckBox1_Click(sender As Object, e As EventArgs) Handles CheckBox1.Click
+        ' しおり一覧の表示・非表示
+        If SplitContainer1.Panel2Collapsed = True Then
+            SplitContainer1.Panel2Collapsed = False
+            CheckBox1.Checked = True
+        Else
+            SplitContainer1.Panel2Collapsed = True
+            CheckBox1.Checked = False
+        End If
+    End Sub
+
+
+
+    Private Sub CheckBox2_Click(sender As Object, e As EventArgs) Handles CheckBox2.Click
+        ' プレイリストの表示・非表示
+        If SplitContainer2.Panel1Collapsed = True Then
+            Me.Width += My.Settings.SC2_Distance
+            Me.Left -= My.Settings.SC2_Distance
+            SplitContainer2.Panel1Collapsed = False
+            CheckBox2.Checked = True
+        Else
+            SplitContainer2.Panel1Collapsed = True
+            Me.Width -= My.Settings.SC2_Distance
+            Me.Left += My.Settings.SC2_Distance
+            CheckBox2.Checked = False
+        End If
+    End Sub
+
+    'Bookmarkの表示・非表示ボタン
+    Private Sub Button30_Click(sender As Object, e As EventArgs) Handles Button30.Click
+        Dim f_b_width As Integer = Me.Width
+
+        If SplitContainer1.Panel2Collapsed = True Then
+            Me.Width += My.Settings.SC1_Distance
+            SplitContainer1.Panel2Collapsed = False
+            SplitContainer1.SplitterDistance = f_b_width
+            My.Settings.SC1_Distance = SplitContainer1.SplitterDistance
+            My.Settings.Save()
+
+        Else
+            SplitContainer1.Panel2Collapsed = True
+            Me.Width -= SplitContainer1.Panel1.Width
+            'SplitContainer1.SplitterDistance = My.Settings.SC1_Distance
+            'My.Settings.SC1_Distance = SplitContainer1.SplitterDistance
+
+            'My.Settings.Save()
+        End If
+
+    End Sub
+
 End Class
 
 

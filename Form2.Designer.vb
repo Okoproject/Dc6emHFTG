@@ -124,6 +124,8 @@ Partial Class Form2
         Me.NumericUpDown28 = New System.Windows.Forms.NumericUpDown()
         Me.Label24 = New System.Windows.Forms.Label()
         Me.GroupBox7 = New System.Windows.Forms.GroupBox()
+        Me.TextBox11 = New System.Windows.Forms.TextBox()
+        Me.Label42 = New System.Windows.Forms.Label()
         Me.TextBox9 = New System.Windows.Forms.TextBox()
         Me.Label40 = New System.Windows.Forms.Label()
         Me.TextBox8 = New System.Windows.Forms.TextBox()
@@ -135,8 +137,6 @@ Partial Class Form2
         Me.GroupBox9 = New System.Windows.Forms.GroupBox()
         Me.RadioButton5 = New System.Windows.Forms.RadioButton()
         Me.RadioButton4 = New System.Windows.Forms.RadioButton()
-        Me.Label42 = New System.Windows.Forms.Label()
-        Me.TextBox11 = New System.Windows.Forms.TextBox()
         Me.GroupBox1.SuspendLayout()
         CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox2.SuspendLayout()
@@ -196,9 +196,9 @@ Partial Class Form2
         Me.GroupBox1.Controls.Add(Me.CheckBox2)
         Me.GroupBox1.Controls.Add(Me.ComboBox1)
         Me.GroupBox1.Location = New System.Drawing.Point(16, 15)
-        Me.GroupBox1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.GroupBox1.Margin = New System.Windows.Forms.Padding(4)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Padding = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.GroupBox1.Padding = New System.Windows.Forms.Padding(4)
         Me.GroupBox1.Size = New System.Drawing.Size(503, 129)
         Me.GroupBox1.TabIndex = 1
         Me.GroupBox1.TabStop = False
@@ -207,7 +207,7 @@ Partial Class Form2
         'Button5
         '
         Me.Button5.Location = New System.Drawing.Point(281, 96)
-        Me.Button5.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Button5.Margin = New System.Windows.Forms.Padding(4)
         Me.Button5.Name = "Button5"
         Me.Button5.Size = New System.Drawing.Size(139, 28)
         Me.Button5.TabIndex = 13
@@ -217,7 +217,7 @@ Partial Class Form2
         'Button4
         '
         Me.Button4.Location = New System.Drawing.Point(427, 96)
-        Me.Button4.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Button4.Margin = New System.Windows.Forms.Padding(4)
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(68, 28)
         Me.Button4.TabIndex = 7
@@ -247,7 +247,7 @@ Partial Class Form2
         'Button2
         '
         Me.Button2.Location = New System.Drawing.Point(375, 52)
-        Me.Button2.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Button2.Margin = New System.Windows.Forms.Padding(4)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(120, 28)
         Me.Button2.TabIndex = 6
@@ -257,7 +257,7 @@ Partial Class Form2
         'Button1
         '
         Me.Button1.Location = New System.Drawing.Point(375, 22)
-        Me.Button1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Button1.Margin = New System.Windows.Forms.Padding(4)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(119, 28)
         Me.Button1.TabIndex = 5
@@ -279,7 +279,7 @@ Partial Class Form2
         Me.ComboBox2.FormattingEnabled = True
         Me.ComboBox2.Items.AddRange(New Object() {"F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12", "F13", "F14", "F15", "F16", "↑", "↓", "←", "→", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "0(テンキー)", "1(テンキー)", "2(テンキー)", "3(テンキー)", "4(テンキー)", "5(テンキー)", "6(テンキー)", "7(テンキー)", "8(テンキー)", "9(テンキー)", "次のトラックキー", "再生/一時停止キー", "前のトラックキー", "停止キー"})
         Me.ComboBox2.Location = New System.Drawing.Point(208, 55)
-        Me.ComboBox2.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.ComboBox2.Margin = New System.Windows.Forms.Padding(4)
         Me.ComboBox2.Name = "ComboBox2"
         Me.ComboBox2.Size = New System.Drawing.Size(159, 23)
         Me.ComboBox2.TabIndex = 4
@@ -288,7 +288,7 @@ Partial Class Form2
         '
         Me.CheckBox4.AutoSize = True
         Me.CheckBox4.Location = New System.Drawing.Point(116, 59)
-        Me.CheckBox4.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.CheckBox4.Margin = New System.Windows.Forms.Padding(4)
         Me.CheckBox4.Name = "CheckBox4"
         Me.CheckBox4.Size = New System.Drawing.Size(59, 19)
         Me.CheckBox4.TabIndex = 3
@@ -299,7 +299,7 @@ Partial Class Form2
         '
         Me.CheckBox3.AutoSize = True
         Me.CheckBox3.Location = New System.Drawing.Point(67, 59)
-        Me.CheckBox3.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.CheckBox3.Margin = New System.Windows.Forms.Padding(4)
         Me.CheckBox3.Name = "CheckBox3"
         Me.CheckBox3.Size = New System.Drawing.Size(46, 19)
         Me.CheckBox3.TabIndex = 2
@@ -310,7 +310,7 @@ Partial Class Form2
         '
         Me.CheckBox2.AutoSize = True
         Me.CheckBox2.Location = New System.Drawing.Point(12, 59)
-        Me.CheckBox2.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.CheckBox2.Margin = New System.Windows.Forms.Padding(4)
         Me.CheckBox2.Name = "CheckBox2"
         Me.CheckBox2.Size = New System.Drawing.Size(52, 19)
         Me.CheckBox2.TabIndex = 1
@@ -322,7 +322,7 @@ Partial Class Form2
         Me.ComboBox1.FormattingEnabled = True
         Me.ComboBox1.Items.AddRange(New Object() {"再生・一時停止", "再生・一時停止＆カウンタコピー", "再生・一時停止＆カウンタコピー2", "再生・一時停止＆カウンタコピー3", "停止", "カウンタコピー", "カウンタコピー2", "カウンタコピー3", "しおりに追加", "再生・一時停止＆しおりに追加", "ジャンプ1", "ジャンプ2", "ジャンプ3", "ジャンプ4", "ジャンプ5", "ジャンプ6", "再生速度を上げる（+0.1）", "再生速度を下げる（-0.1）", "再生速度を1.0倍にする", "再生速度を0.5倍にする", "再生速度を2.0倍にする", "OkoshiMAXの画面を前面に持ってくる", "速度調整1", "速度調整2", "速度調整3", "速度調整4", "速度調整5", "速度調整6", "速度調整7", "クリップボードを読み込んで、その位置にジャンプ"})
         Me.ComboBox1.Location = New System.Drawing.Point(8, 22)
-        Me.ComboBox1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.ComboBox1.Margin = New System.Windows.Forms.Padding(4)
         Me.ComboBox1.Name = "ComboBox1"
         Me.ComboBox1.Size = New System.Drawing.Size(357, 23)
         Me.ComboBox1.TabIndex = 0
@@ -330,7 +330,7 @@ Partial Class Form2
         'Button3
         '
         Me.Button3.Location = New System.Drawing.Point(667, 862)
-        Me.Button3.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Button3.Margin = New System.Windows.Forms.Padding(4)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(120, 35)
         Me.Button3.TabIndex = 2
@@ -352,7 +352,7 @@ Partial Class Form2
         Me.NumericUpDown1.DecimalPlaces = 1
         Me.NumericUpDown1.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
         Me.NumericUpDown1.Location = New System.Drawing.Point(637, 35)
-        Me.NumericUpDown1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NumericUpDown1.Margin = New System.Windows.Forms.Padding(4)
         Me.NumericUpDown1.Maximum = New Decimal(New Integer() {30, 0, 0, 0})
         Me.NumericUpDown1.Name = "NumericUpDown1"
         Me.NumericUpDown1.Size = New System.Drawing.Size(64, 22)
@@ -372,7 +372,7 @@ Partial Class Form2
         'TextBox1
         '
         Me.TextBox1.Location = New System.Drawing.Point(191, 158)
-        Me.TextBox1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.TextBox1.Margin = New System.Windows.Forms.Padding(4)
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Size = New System.Drawing.Size(65, 22)
         Me.TextBox1.TabIndex = 12
@@ -381,7 +381,7 @@ Partial Class Form2
         'TextBox2
         '
         Me.TextBox2.Location = New System.Drawing.Point(191, 189)
-        Me.TextBox2.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.TextBox2.Margin = New System.Windows.Forms.Padding(4)
         Me.TextBox2.Name = "TextBox2"
         Me.TextBox2.Size = New System.Drawing.Size(65, 22)
         Me.TextBox2.TabIndex = 13
@@ -420,9 +420,9 @@ Partial Class Form2
         Me.GroupBox2.Controls.Add(Me.NumericUpDown3)
         Me.GroupBox2.Controls.Add(Me.NumericUpDown2)
         Me.GroupBox2.Location = New System.Drawing.Point(16, 221)
-        Me.GroupBox2.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.GroupBox2.Margin = New System.Windows.Forms.Padding(4)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Padding = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.GroupBox2.Padding = New System.Windows.Forms.Padding(4)
         Me.GroupBox2.Size = New System.Drawing.Size(771, 86)
         Me.GroupBox2.TabIndex = 54
         Me.GroupBox2.TabStop = False
@@ -431,7 +431,7 @@ Partial Class Form2
         'NumericUpDown12
         '
         Me.NumericUpDown12.Location = New System.Drawing.Point(8, 54)
-        Me.NumericUpDown12.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NumericUpDown12.Margin = New System.Windows.Forms.Padding(4)
         Me.NumericUpDown12.Maximum = New Decimal(New Integer() {3600, 0, 0, 0})
         Me.NumericUpDown12.Minimum = New Decimal(New Integer() {3600, 0, 0, -2147483648})
         Me.NumericUpDown12.Name = "NumericUpDown12"
@@ -442,7 +442,7 @@ Partial Class Form2
         'NumericUpDown13
         '
         Me.NumericUpDown13.Location = New System.Drawing.Point(84, 54)
-        Me.NumericUpDown13.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NumericUpDown13.Margin = New System.Windows.Forms.Padding(4)
         Me.NumericUpDown13.Maximum = New Decimal(New Integer() {3600, 0, 0, 0})
         Me.NumericUpDown13.Minimum = New Decimal(New Integer() {3600, 0, 0, -2147483648})
         Me.NumericUpDown13.Name = "NumericUpDown13"
@@ -453,7 +453,7 @@ Partial Class Form2
         'NumericUpDown14
         '
         Me.NumericUpDown14.Location = New System.Drawing.Point(160, 54)
-        Me.NumericUpDown14.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NumericUpDown14.Margin = New System.Windows.Forms.Padding(4)
         Me.NumericUpDown14.Maximum = New Decimal(New Integer() {3600, 0, 0, 0})
         Me.NumericUpDown14.Minimum = New Decimal(New Integer() {3600, 0, 0, -2147483648})
         Me.NumericUpDown14.Name = "NumericUpDown14"
@@ -464,7 +464,7 @@ Partial Class Form2
         'NumericUpDown15
         '
         Me.NumericUpDown15.Location = New System.Drawing.Point(236, 54)
-        Me.NumericUpDown15.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NumericUpDown15.Margin = New System.Windows.Forms.Padding(4)
         Me.NumericUpDown15.Maximum = New Decimal(New Integer() {3600, 0, 0, 0})
         Me.NumericUpDown15.Minimum = New Decimal(New Integer() {3600, 0, 0, -2147483648})
         Me.NumericUpDown15.Name = "NumericUpDown15"
@@ -475,7 +475,7 @@ Partial Class Form2
         'NumericUpDown16
         '
         Me.NumericUpDown16.Location = New System.Drawing.Point(312, 54)
-        Me.NumericUpDown16.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NumericUpDown16.Margin = New System.Windows.Forms.Padding(4)
         Me.NumericUpDown16.Maximum = New Decimal(New Integer() {3600, 0, 0, 0})
         Me.NumericUpDown16.Minimum = New Decimal(New Integer() {3600, 0, 0, -2147483648})
         Me.NumericUpDown16.Name = "NumericUpDown16"
@@ -486,7 +486,7 @@ Partial Class Form2
         'NumericUpDown17
         '
         Me.NumericUpDown17.Location = New System.Drawing.Point(388, 54)
-        Me.NumericUpDown17.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NumericUpDown17.Margin = New System.Windows.Forms.Padding(4)
         Me.NumericUpDown17.Maximum = New Decimal(New Integer() {3600, 0, 0, 0})
         Me.NumericUpDown17.Minimum = New Decimal(New Integer() {3600, 0, 0, -2147483648})
         Me.NumericUpDown17.Name = "NumericUpDown17"
@@ -497,7 +497,7 @@ Partial Class Form2
         'NumericUpDown18
         '
         Me.NumericUpDown18.Location = New System.Drawing.Point(464, 54)
-        Me.NumericUpDown18.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NumericUpDown18.Margin = New System.Windows.Forms.Padding(4)
         Me.NumericUpDown18.Maximum = New Decimal(New Integer() {3600, 0, 0, 0})
         Me.NumericUpDown18.Minimum = New Decimal(New Integer() {3600, 0, 0, -2147483648})
         Me.NumericUpDown18.Name = "NumericUpDown18"
@@ -508,7 +508,7 @@ Partial Class Form2
         'NumericUpDown19
         '
         Me.NumericUpDown19.Location = New System.Drawing.Point(540, 54)
-        Me.NumericUpDown19.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NumericUpDown19.Margin = New System.Windows.Forms.Padding(4)
         Me.NumericUpDown19.Maximum = New Decimal(New Integer() {3600, 0, 0, 0})
         Me.NumericUpDown19.Minimum = New Decimal(New Integer() {3600, 0, 0, -2147483648})
         Me.NumericUpDown19.Name = "NumericUpDown19"
@@ -519,7 +519,7 @@ Partial Class Form2
         'NumericUpDown20
         '
         Me.NumericUpDown20.Location = New System.Drawing.Point(616, 54)
-        Me.NumericUpDown20.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NumericUpDown20.Margin = New System.Windows.Forms.Padding(4)
         Me.NumericUpDown20.Maximum = New Decimal(New Integer() {3600, 0, 0, 0})
         Me.NumericUpDown20.Minimum = New Decimal(New Integer() {3600, 0, 0, -2147483648})
         Me.NumericUpDown20.Name = "NumericUpDown20"
@@ -530,7 +530,7 @@ Partial Class Form2
         'NumericUpDown21
         '
         Me.NumericUpDown21.Location = New System.Drawing.Point(692, 54)
-        Me.NumericUpDown21.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NumericUpDown21.Margin = New System.Windows.Forms.Padding(4)
         Me.NumericUpDown21.Maximum = New Decimal(New Integer() {3600, 0, 0, 0})
         Me.NumericUpDown21.Minimum = New Decimal(New Integer() {3600, 0, 0, -2147483648})
         Me.NumericUpDown21.Name = "NumericUpDown21"
@@ -541,7 +541,7 @@ Partial Class Form2
         'NumericUpDown11
         '
         Me.NumericUpDown11.Location = New System.Drawing.Point(692, 22)
-        Me.NumericUpDown11.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NumericUpDown11.Margin = New System.Windows.Forms.Padding(4)
         Me.NumericUpDown11.Maximum = New Decimal(New Integer() {3600, 0, 0, 0})
         Me.NumericUpDown11.Minimum = New Decimal(New Integer() {3600, 0, 0, -2147483648})
         Me.NumericUpDown11.Name = "NumericUpDown11"
@@ -552,7 +552,7 @@ Partial Class Form2
         'NumericUpDown10
         '
         Me.NumericUpDown10.Location = New System.Drawing.Point(616, 22)
-        Me.NumericUpDown10.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NumericUpDown10.Margin = New System.Windows.Forms.Padding(4)
         Me.NumericUpDown10.Maximum = New Decimal(New Integer() {3600, 0, 0, 0})
         Me.NumericUpDown10.Minimum = New Decimal(New Integer() {3600, 0, 0, -2147483648})
         Me.NumericUpDown10.Name = "NumericUpDown10"
@@ -563,7 +563,7 @@ Partial Class Form2
         'NumericUpDown9
         '
         Me.NumericUpDown9.Location = New System.Drawing.Point(540, 22)
-        Me.NumericUpDown9.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NumericUpDown9.Margin = New System.Windows.Forms.Padding(4)
         Me.NumericUpDown9.Maximum = New Decimal(New Integer() {3600, 0, 0, 0})
         Me.NumericUpDown9.Minimum = New Decimal(New Integer() {3600, 0, 0, -2147483648})
         Me.NumericUpDown9.Name = "NumericUpDown9"
@@ -574,7 +574,7 @@ Partial Class Form2
         'NumericUpDown8
         '
         Me.NumericUpDown8.Location = New System.Drawing.Point(464, 22)
-        Me.NumericUpDown8.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NumericUpDown8.Margin = New System.Windows.Forms.Padding(4)
         Me.NumericUpDown8.Maximum = New Decimal(New Integer() {3600, 0, 0, 0})
         Me.NumericUpDown8.Minimum = New Decimal(New Integer() {3600, 0, 0, -2147483648})
         Me.NumericUpDown8.Name = "NumericUpDown8"
@@ -585,7 +585,7 @@ Partial Class Form2
         'NumericUpDown5
         '
         Me.NumericUpDown5.Location = New System.Drawing.Point(236, 22)
-        Me.NumericUpDown5.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NumericUpDown5.Margin = New System.Windows.Forms.Padding(4)
         Me.NumericUpDown5.Maximum = New Decimal(New Integer() {3600, 0, 0, 0})
         Me.NumericUpDown5.Minimum = New Decimal(New Integer() {3600, 0, 0, -2147483648})
         Me.NumericUpDown5.Name = "NumericUpDown5"
@@ -596,7 +596,7 @@ Partial Class Form2
         'NumericUpDown6
         '
         Me.NumericUpDown6.Location = New System.Drawing.Point(312, 22)
-        Me.NumericUpDown6.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NumericUpDown6.Margin = New System.Windows.Forms.Padding(4)
         Me.NumericUpDown6.Maximum = New Decimal(New Integer() {3600, 0, 0, 0})
         Me.NumericUpDown6.Minimum = New Decimal(New Integer() {3600, 0, 0, -2147483648})
         Me.NumericUpDown6.Name = "NumericUpDown6"
@@ -607,7 +607,7 @@ Partial Class Form2
         'NumericUpDown7
         '
         Me.NumericUpDown7.Location = New System.Drawing.Point(388, 22)
-        Me.NumericUpDown7.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NumericUpDown7.Margin = New System.Windows.Forms.Padding(4)
         Me.NumericUpDown7.Maximum = New Decimal(New Integer() {3600, 0, 0, 0})
         Me.NumericUpDown7.Minimum = New Decimal(New Integer() {3600, 0, 0, -2147483648})
         Me.NumericUpDown7.Name = "NumericUpDown7"
@@ -618,7 +618,7 @@ Partial Class Form2
         'NumericUpDown4
         '
         Me.NumericUpDown4.Location = New System.Drawing.Point(160, 22)
-        Me.NumericUpDown4.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NumericUpDown4.Margin = New System.Windows.Forms.Padding(4)
         Me.NumericUpDown4.Maximum = New Decimal(New Integer() {3600, 0, 0, 0})
         Me.NumericUpDown4.Minimum = New Decimal(New Integer() {3600, 0, 0, -2147483648})
         Me.NumericUpDown4.Name = "NumericUpDown4"
@@ -629,7 +629,7 @@ Partial Class Form2
         'NumericUpDown3
         '
         Me.NumericUpDown3.Location = New System.Drawing.Point(84, 22)
-        Me.NumericUpDown3.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NumericUpDown3.Margin = New System.Windows.Forms.Padding(4)
         Me.NumericUpDown3.Maximum = New Decimal(New Integer() {3600, 0, 0, 0})
         Me.NumericUpDown3.Minimum = New Decimal(New Integer() {3600, 0, 0, -2147483648})
         Me.NumericUpDown3.Name = "NumericUpDown3"
@@ -640,7 +640,7 @@ Partial Class Form2
         'NumericUpDown2
         '
         Me.NumericUpDown2.Location = New System.Drawing.Point(8, 22)
-        Me.NumericUpDown2.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NumericUpDown2.Margin = New System.Windows.Forms.Padding(4)
         Me.NumericUpDown2.Maximum = New Decimal(New Integer() {3600, 0, 0, 0})
         Me.NumericUpDown2.Minimum = New Decimal(New Integer() {3600, 0, 0, -2147483648})
         Me.NumericUpDown2.Name = "NumericUpDown2"
@@ -656,7 +656,7 @@ Partial Class Form2
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(287, 15)
         Me.Label13.TabIndex = 55
-        Me.Label13.Text = "OkoshiMAX Ver.1.5.4 (C) Teruhisa Yoshioka"
+        Me.Label13.Text = "OkoshiMAX Ver.2.0.0 (C) Teruhisa Yoshioka"
         '
         'GroupBox3
         '
@@ -680,9 +680,9 @@ Partial Class Form2
         Me.GroupBox3.Controls.Add(Me.Label7)
         Me.GroupBox3.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.GroupBox3.Location = New System.Drawing.Point(16, 315)
-        Me.GroupBox3.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.GroupBox3.Margin = New System.Windows.Forms.Padding(4)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Padding = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.GroupBox3.Padding = New System.Windows.Forms.Padding(4)
         Me.GroupBox3.Size = New System.Drawing.Size(771, 89)
         Me.GroupBox3.TabIndex = 56
         Me.GroupBox3.TabStop = False
@@ -751,7 +751,7 @@ Partial Class Form2
         'NumericUpDown27
         '
         Me.NumericUpDown27.Location = New System.Drawing.Point(537, 54)
-        Me.NumericUpDown27.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NumericUpDown27.Margin = New System.Windows.Forms.Padding(4)
         Me.NumericUpDown27.Maximum = New Decimal(New Integer() {3600, 0, 0, 0})
         Me.NumericUpDown27.Minimum = New Decimal(New Integer() {3600, 0, 0, -2147483648})
         Me.NumericUpDown27.Name = "NumericUpDown27"
@@ -762,7 +762,7 @@ Partial Class Form2
         'NumericUpDown26
         '
         Me.NumericUpDown26.Location = New System.Drawing.Point(283, 49)
-        Me.NumericUpDown26.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NumericUpDown26.Margin = New System.Windows.Forms.Padding(4)
         Me.NumericUpDown26.Maximum = New Decimal(New Integer() {3600, 0, 0, 0})
         Me.NumericUpDown26.Minimum = New Decimal(New Integer() {3600, 0, 0, -2147483648})
         Me.NumericUpDown26.Name = "NumericUpDown26"
@@ -773,7 +773,7 @@ Partial Class Form2
         'NumericUpDown25
         '
         Me.NumericUpDown25.Location = New System.Drawing.Point(31, 54)
-        Me.NumericUpDown25.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NumericUpDown25.Margin = New System.Windows.Forms.Padding(4)
         Me.NumericUpDown25.Maximum = New Decimal(New Integer() {3600, 0, 0, 0})
         Me.NumericUpDown25.Minimum = New Decimal(New Integer() {3600, 0, 0, -2147483648})
         Me.NumericUpDown25.Name = "NumericUpDown25"
@@ -784,7 +784,7 @@ Partial Class Form2
         'NumericUpDown24
         '
         Me.NumericUpDown24.Location = New System.Drawing.Point(537, 22)
-        Me.NumericUpDown24.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NumericUpDown24.Margin = New System.Windows.Forms.Padding(4)
         Me.NumericUpDown24.Maximum = New Decimal(New Integer() {3600, 0, 0, 0})
         Me.NumericUpDown24.Minimum = New Decimal(New Integer() {3600, 0, 0, -2147483648})
         Me.NumericUpDown24.Name = "NumericUpDown24"
@@ -795,7 +795,7 @@ Partial Class Form2
         'NumericUpDown23
         '
         Me.NumericUpDown23.Location = New System.Drawing.Point(283, 22)
-        Me.NumericUpDown23.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NumericUpDown23.Margin = New System.Windows.Forms.Padding(4)
         Me.NumericUpDown23.Maximum = New Decimal(New Integer() {3600, 0, 0, 0})
         Me.NumericUpDown23.Minimum = New Decimal(New Integer() {3600, 0, 0, -2147483648})
         Me.NumericUpDown23.Name = "NumericUpDown23"
@@ -806,7 +806,7 @@ Partial Class Form2
         'NumericUpDown22
         '
         Me.NumericUpDown22.Location = New System.Drawing.Point(31, 22)
-        Me.NumericUpDown22.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NumericUpDown22.Margin = New System.Windows.Forms.Padding(4)
         Me.NumericUpDown22.Maximum = New Decimal(New Integer() {3600, 0, 0, 0})
         Me.NumericUpDown22.Minimum = New Decimal(New Integer() {3600, 0, 0, -2147483648})
         Me.NumericUpDown22.Name = "NumericUpDown22"
@@ -893,7 +893,7 @@ Partial Class Form2
         'TextBox3
         '
         Me.TextBox3.Location = New System.Drawing.Point(443, 189)
-        Me.TextBox3.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.TextBox3.Margin = New System.Windows.Forms.Padding(4)
         Me.TextBox3.Name = "TextBox3"
         Me.TextBox3.Size = New System.Drawing.Size(65, 22)
         Me.TextBox3.TabIndex = 15
@@ -902,7 +902,7 @@ Partial Class Form2
         'TextBox4
         '
         Me.TextBox4.Location = New System.Drawing.Point(443, 158)
-        Me.TextBox4.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.TextBox4.Margin = New System.Windows.Forms.Padding(4)
         Me.TextBox4.Name = "TextBox4"
         Me.TextBox4.Size = New System.Drawing.Size(65, 22)
         Me.TextBox4.TabIndex = 14
@@ -978,7 +978,7 @@ Partial Class Form2
         'TextBox5
         '
         Me.TextBox5.Location = New System.Drawing.Point(707, 189)
-        Me.TextBox5.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.TextBox5.Margin = New System.Windows.Forms.Padding(4)
         Me.TextBox5.Name = "TextBox5"
         Me.TextBox5.Size = New System.Drawing.Size(65, 22)
         Me.TextBox5.TabIndex = 17
@@ -987,7 +987,7 @@ Partial Class Form2
         'TextBox6
         '
         Me.TextBox6.Location = New System.Drawing.Point(707, 158)
-        Me.TextBox6.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.TextBox6.Margin = New System.Windows.Forms.Padding(4)
         Me.TextBox6.Name = "TextBox6"
         Me.TextBox6.Size = New System.Drawing.Size(65, 22)
         Me.TextBox6.TabIndex = 16
@@ -1044,7 +1044,7 @@ Partial Class Form2
         'TextBox10
         '
         Me.TextBox10.Location = New System.Drawing.Point(85, 49)
-        Me.TextBox10.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.TextBox10.Margin = New System.Windows.Forms.Padding(4)
         Me.TextBox10.Name = "TextBox10"
         Me.TextBox10.Size = New System.Drawing.Size(635, 22)
         Me.TextBox10.TabIndex = 55
@@ -1084,9 +1084,9 @@ Partial Class Form2
         Me.GroupBox6.Controls.Add(Me.NumericUpDown28)
         Me.GroupBox6.Controls.Add(Me.Label24)
         Me.GroupBox6.Location = New System.Drawing.Point(16, 414)
-        Me.GroupBox6.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.GroupBox6.Margin = New System.Windows.Forms.Padding(4)
         Me.GroupBox6.Name = "GroupBox6"
-        Me.GroupBox6.Padding = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.GroupBox6.Padding = New System.Windows.Forms.Padding(4)
         Me.GroupBox6.Size = New System.Drawing.Size(769, 122)
         Me.GroupBox6.TabIndex = 68
         Me.GroupBox6.TabStop = False
@@ -1107,7 +1107,7 @@ Partial Class Form2
         Me.NumericUpDown34.DecimalPlaces = 1
         Me.NumericUpDown34.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
         Me.NumericUpDown34.Location = New System.Drawing.Point(28, 91)
-        Me.NumericUpDown34.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NumericUpDown34.Margin = New System.Windows.Forms.Padding(4)
         Me.NumericUpDown34.Maximum = New Decimal(New Integer() {2, 0, 0, 0})
         Me.NumericUpDown34.Minimum = New Decimal(New Integer() {5, 0, 0, 65536})
         Me.NumericUpDown34.Name = "NumericUpDown34"
@@ -1141,7 +1141,7 @@ Partial Class Form2
         Me.NumericUpDown33.DecimalPlaces = 1
         Me.NumericUpDown33.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
         Me.NumericUpDown33.Location = New System.Drawing.Point(535, 55)
-        Me.NumericUpDown33.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NumericUpDown33.Margin = New System.Windows.Forms.Padding(4)
         Me.NumericUpDown33.Maximum = New Decimal(New Integer() {2, 0, 0, 0})
         Me.NumericUpDown33.Minimum = New Decimal(New Integer() {5, 0, 0, 65536})
         Me.NumericUpDown33.Name = "NumericUpDown33"
@@ -1175,7 +1175,7 @@ Partial Class Form2
         Me.NumericUpDown32.DecimalPlaces = 1
         Me.NumericUpDown32.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
         Me.NumericUpDown32.Location = New System.Drawing.Point(279, 55)
-        Me.NumericUpDown32.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NumericUpDown32.Margin = New System.Windows.Forms.Padding(4)
         Me.NumericUpDown32.Maximum = New Decimal(New Integer() {2, 0, 0, 0})
         Me.NumericUpDown32.Minimum = New Decimal(New Integer() {5, 0, 0, 65536})
         Me.NumericUpDown32.Name = "NumericUpDown32"
@@ -1209,7 +1209,7 @@ Partial Class Form2
         Me.NumericUpDown31.DecimalPlaces = 1
         Me.NumericUpDown31.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
         Me.NumericUpDown31.Location = New System.Drawing.Point(28, 58)
-        Me.NumericUpDown31.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NumericUpDown31.Margin = New System.Windows.Forms.Padding(4)
         Me.NumericUpDown31.Maximum = New Decimal(New Integer() {2, 0, 0, 0})
         Me.NumericUpDown31.Minimum = New Decimal(New Integer() {5, 0, 0, 65536})
         Me.NumericUpDown31.Name = "NumericUpDown31"
@@ -1243,7 +1243,7 @@ Partial Class Form2
         Me.NumericUpDown30.DecimalPlaces = 1
         Me.NumericUpDown30.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
         Me.NumericUpDown30.Location = New System.Drawing.Point(535, 21)
-        Me.NumericUpDown30.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NumericUpDown30.Margin = New System.Windows.Forms.Padding(4)
         Me.NumericUpDown30.Maximum = New Decimal(New Integer() {2, 0, 0, 0})
         Me.NumericUpDown30.Minimum = New Decimal(New Integer() {5, 0, 0, 65536})
         Me.NumericUpDown30.Name = "NumericUpDown30"
@@ -1277,7 +1277,7 @@ Partial Class Form2
         Me.NumericUpDown29.DecimalPlaces = 1
         Me.NumericUpDown29.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
         Me.NumericUpDown29.Location = New System.Drawing.Point(279, 21)
-        Me.NumericUpDown29.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NumericUpDown29.Margin = New System.Windows.Forms.Padding(4)
         Me.NumericUpDown29.Maximum = New Decimal(New Integer() {2, 0, 0, 0})
         Me.NumericUpDown29.Minimum = New Decimal(New Integer() {5, 0, 0, 65536})
         Me.NumericUpDown29.Name = "NumericUpDown29"
@@ -1311,7 +1311,7 @@ Partial Class Form2
         Me.NumericUpDown28.DecimalPlaces = 1
         Me.NumericUpDown28.Increment = New Decimal(New Integer() {1, 0, 0, 65536})
         Me.NumericUpDown28.Location = New System.Drawing.Point(28, 24)
-        Me.NumericUpDown28.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NumericUpDown28.Margin = New System.Windows.Forms.Padding(4)
         Me.NumericUpDown28.Maximum = New Decimal(New Integer() {2, 0, 0, 0})
         Me.NumericUpDown28.Minimum = New Decimal(New Integer() {5, 0, 0, 65536})
         Me.NumericUpDown28.Name = "NumericUpDown28"
@@ -1349,10 +1349,27 @@ Partial Class Form2
         Me.GroupBox7.TabStop = False
         Me.GroupBox7.Text = "Wordファイル、txtファイル読み込み時の設定"
         '
+        'TextBox11
+        '
+        Me.TextBox11.Location = New System.Drawing.Point(440, 56)
+        Me.TextBox11.Name = "TextBox11"
+        Me.TextBox11.Size = New System.Drawing.Size(65, 22)
+        Me.TextBox11.TabIndex = 58
+        '
+        'Label42
+        '
+        Me.Label42.AutoSize = True
+        Me.Label42.Location = New System.Drawing.Point(269, 60)
+        Me.Label42.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label42.Name = "Label42"
+        Me.Label42.Size = New System.Drawing.Size(167, 15)
+        Me.Label42.TabIndex = 57
+        Me.Label42.Text = "不明瞭箇所のマーク(末尾)"
+        '
         'TextBox9
         '
         Me.TextBox9.Location = New System.Drawing.Point(440, 25)
-        Me.TextBox9.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.TextBox9.Margin = New System.Windows.Forms.Padding(4)
         Me.TextBox9.Name = "TextBox9"
         Me.TextBox9.Size = New System.Drawing.Size(65, 22)
         Me.TextBox9.TabIndex = 53
@@ -1371,7 +1388,7 @@ Partial Class Form2
         'TextBox8
         '
         Me.TextBox8.Location = New System.Drawing.Point(188, 56)
-        Me.TextBox8.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.TextBox8.Margin = New System.Windows.Forms.Padding(4)
         Me.TextBox8.Name = "TextBox8"
         Me.TextBox8.Size = New System.Drawing.Size(65, 22)
         Me.TextBox8.TabIndex = 52
@@ -1390,7 +1407,7 @@ Partial Class Form2
         'TextBox7
         '
         Me.TextBox7.Location = New System.Drawing.Point(188, 25)
-        Me.TextBox7.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.TextBox7.Margin = New System.Windows.Forms.Padding(4)
         Me.TextBox7.Name = "TextBox7"
         Me.TextBox7.Size = New System.Drawing.Size(65, 22)
         Me.TextBox7.TabIndex = 51
@@ -1435,7 +1452,7 @@ Partial Class Form2
         Me.RadioButton5.AutoSize = True
         Me.RadioButton5.Checked = True
         Me.RadioButton5.Location = New System.Drawing.Point(120, 21)
-        Me.RadioButton5.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.RadioButton5.Margin = New System.Windows.Forms.Padding(4)
         Me.RadioButton5.Name = "RadioButton5"
         Me.RadioButton5.Size = New System.Drawing.Size(58, 19)
         Me.RadioButton5.TabIndex = 1
@@ -1447,29 +1464,12 @@ Partial Class Form2
         '
         Me.RadioButton4.AutoSize = True
         Me.RadioButton4.Location = New System.Drawing.Point(12, 21)
-        Me.RadioButton4.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.RadioButton4.Margin = New System.Windows.Forms.Padding(4)
         Me.RadioButton4.Name = "RadioButton4"
         Me.RadioButton4.Size = New System.Drawing.Size(88, 19)
         Me.RadioButton4.TabIndex = 0
         Me.RadioButton4.Text = "一時停止"
         Me.RadioButton4.UseVisualStyleBackColor = True
-        '
-        'Label42
-        '
-        Me.Label42.AutoSize = True
-        Me.Label42.Location = New System.Drawing.Point(269, 60)
-        Me.Label42.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label42.Name = "Label42"
-        Me.Label42.Size = New System.Drawing.Size(167, 15)
-        Me.Label42.TabIndex = 57
-        Me.Label42.Text = "不明瞭箇所のマーク(末尾)"
-        '
-        'TextBox11
-        '
-        Me.TextBox11.Location = New System.Drawing.Point(440, 56)
-        Me.TextBox11.Name = "TextBox11"
-        Me.TextBox11.Size = New System.Drawing.Size(65, 22)
-        Me.TextBox11.TabIndex = 58
         '
         'Form2
         '
@@ -1504,7 +1504,7 @@ Partial Class Form2
         Me.Controls.Add(Me.GroupBox1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Margin = New System.Windows.Forms.Padding(4)
         Me.MaximizeBox = False
         Me.Name = "Form2"
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
