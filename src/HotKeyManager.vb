@@ -1,6 +1,3 @@
-Imports System.Windows.Forms
-Imports System.Collections.Generic
-
 ''' <summary>
 ''' グローバルホットキーを管理するモジュール
 ''' </summary>
@@ -15,20 +12,19 @@ Public Module HotKeyManager
     Public Declare Function UnregisterHotKey Lib "user32" _
         (ByVal hwnd As IntPtr, ByVal id As Integer) As Integer
 
-    Public Declare Function GlobalAddAtom Lib "kernel32" Alias "GlobalAddAtomA" _
+    Private Declare Function GlobalAddAtom Lib "kernel32" Alias "GlobalAddAtomA" _
         (ByVal lpString As String) As Short
 
-    Public Declare Function GlobalDeleteAtom Lib "kernel32" _
+    Private Declare Function GlobalDeleteAtom Lib "kernel32" _
         (ByVal nAtom As Short) As Short
 
     ' 修飾キー定数
-    Public Const MOD_NONE As Integer = 0
-    Public Const MOD_ALT As Integer = &H1
-    Public Const MOD_CONTROL As Integer = &H2
-    Public Const MOD_SHIFT As Integer = &H4
-    Public Const MOD_WIN As Integer = &H8
+    Public Const ModNone As Integer = 0
+    Public Const ModAlt As Integer = &H1
+    Public Const ModControl As Integer = &H2
+    Public Const ModShift As Integer = &H4
 
-    Public Const WM_HOTKEY As Integer = &H312
+    Public Const WmHotkey As Integer = &H312
 
 #End Region
 
@@ -37,7 +33,7 @@ Public Module HotKeyManager
     ''' <summary>
     ''' ホットキー種別とアトムIDの対応
     ''' </summary>
-    Public HotKeyAtoms As New Dictionary(Of HotKeyType, Short)
+    Public ReadOnly HotKeyAtoms As New Dictionary(Of HotKeyType, Short)
 
     ''' <summary>
     ''' ホットキー種別の列挙
@@ -55,7 +51,7 @@ Public Module HotKeyManager
         PlayPauseWithBookmark
         SpeedUp
         SpeedDown
-        SpeedResetTo1x
+        SpeedResetTo1X
         SpeedSetToHalf
         SpeedSetToDouble
         BringWindowToFront
@@ -83,14 +79,14 @@ Public Module HotKeyManager
     ''' 修飾キー設定値とWin32修飾キーの対応
     ''' </summary>
     Private ReadOnly ModifierMapping As New Dictionary(Of Integer, Integer) From {
-        {0, MOD_NONE},
-        {3, MOD_CONTROL},
-        {4, MOD_ALT},
-        {5, MOD_SHIFT},
-        {7, MOD_CONTROL Or MOD_ALT},
-        {8, MOD_CONTROL Or MOD_SHIFT},
-        {9, MOD_ALT Or MOD_SHIFT},
-        {12, MOD_CONTROL Or MOD_SHIFT Or MOD_ALT}
+        {0, ModNone},
+        {3, ModControl},
+        {4, ModAlt},
+        {5, ModShift},
+        {7, ModControl Or ModAlt},
+        {8, ModControl Or ModShift},
+        {9, ModAlt Or ModShift},
+        {12, ModControl Or ModShift Or ModAlt}
     }
 
     ''' <summary>
@@ -100,7 +96,7 @@ Public Module HotKeyManager
         If ModifierMapping.ContainsKey(settingValue) Then
             Return ModifierMapping(settingValue)
         End If
-        Return MOD_NONE
+        Return ModNone
     End Function
 
     ''' <summary>
@@ -108,7 +104,7 @@ Public Module HotKeyManager
     ''' </summary>
     Public Function GetModifierDisplayText(settingValue As Integer) As String
         Select Case settingValue
-            Case 0 : Return ""
+            Case 0 : Return String.Empty
             Case 3 : Return "Ctrl"
             Case 4 : Return "Alt"
             Case 5 : Return "Shift"
@@ -116,7 +112,7 @@ Public Module HotKeyManager
             Case 8 : Return "Ctrl + Shift"
             Case 9 : Return "Alt + Shift"
             Case 12 : Return "Ctrl + Alt + Shift"
-            Case Else : Return ""
+            Case Else : Return String.Empty
         End Select
     End Function
 
@@ -168,7 +164,7 @@ Public Module HotKeyManager
             Case HotKeyType.PlayPauseWithBookmark : Return "SKIA"
             Case HotKeyType.SpeedUp : Return "SKJA"
             Case HotKeyType.SpeedDown : Return "SKKA"
-            Case HotKeyType.SpeedResetTo1x : Return "SKLA"
+            Case HotKeyType.SpeedResetTo1X : Return "SKLA"
             Case HotKeyType.SpeedSetToHalf : Return "SKMA"
             Case HotKeyType.SpeedSetToDouble : Return "SKNA"
             Case HotKeyType.BringWindowToFront : Return "SKOA"
@@ -186,7 +182,7 @@ Public Module HotKeyManager
             Case HotKeyType.SpeedControlButton6 : Return "SC6A"
             Case HotKeyType.SpeedControlButton7 : Return "SC7A"
             Case HotKeyType.ClipboardJump : Return "SKPA"
-            Case Else : Return ""
+            Case Else : Return String.Empty
         End Select
     End Function
 
@@ -207,7 +203,7 @@ Public Module HotKeyManager
             Case HotKeyType.PlayPauseWithBookmark : Return "SKI"
             Case HotKeyType.SpeedUp : Return "SKJ"
             Case HotKeyType.SpeedDown : Return "SKK"
-            Case HotKeyType.SpeedResetTo1x : Return "SKL"
+            Case HotKeyType.SpeedResetTo1X : Return "SKL"
             Case HotKeyType.SpeedSetToHalf : Return "SKM"
             Case HotKeyType.SpeedSetToDouble : Return "SKN"
             Case HotKeyType.BringWindowToFront : Return "SKO"
@@ -225,7 +221,7 @@ Public Module HotKeyManager
             Case HotKeyType.SpeedControlButton6 : Return "SKSC6"
             Case HotKeyType.SpeedControlButton7 : Return "SKSC7"
             Case HotKeyType.ClipboardJump : Return "SKP"
-            Case Else : Return ""
+            Case Else : Return String.Empty
         End Select
     End Function
 

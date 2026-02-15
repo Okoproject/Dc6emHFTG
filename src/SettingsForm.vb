@@ -1,6 +1,3 @@
-Imports System.ComponentModel
-Imports System.Collections.Generic
-
 ''' <summary>
 ''' 設定フォーム
 ''' </summary>
@@ -9,14 +6,9 @@ Public Class SettingsForm
 #Region "定数"
 
     ' 修飾キーの値
-    Private Const MODIFIER_NONE As Integer = 0
-    Private Const MODIFIER_CTRL As Integer = 3
-    Private Const MODIFIER_ALT As Integer = 4
-    Private Const MODIFIER_SHIFT As Integer = 5
-    Private Const MODIFIER_CTRL_ALT As Integer = 7
-    Private Const MODIFIER_CTRL_SHIFT As Integer = 8
-    Private Const MODIFIER_ALT_SHIFT As Integer = 9
-    Private Const MODIFIER_CTRL_ALT_SHIFT As Integer = 12
+    Private Const ModifierCtrl As Integer = 3
+    Private Const ModifierAlt As Integer = 4
+    Private Const ModifierShift As Integer = 5
 
 #End Region
 
@@ -25,7 +17,7 @@ Public Class SettingsForm
     ''' <summary>
     ''' キー表示名と仮想キーコードの対応
     ''' </summary>
-    Private ReadOnly KeyCodeMapping As New Dictionary(Of String, Integer) From {
+    Private ReadOnly _keyCodeMapping As New Dictionary(Of String, Integer) From {
         {"F1", 112}, {"F2", 113}, {"F3", 114}, {"F4", 115},
         {"F5", 116}, {"F6", 117}, {"F7", 118}, {"F8", 119},
         {"F9", 120}, {"F10", 121}, {"F11", 122}, {"F12", 123},
@@ -41,12 +33,12 @@ Public Class SettingsForm
     ''' <summary>
     ''' キーコードから表示名への逆引き辞書
     ''' </summary>
-    Private ReadOnly KeyNameMapping As Dictionary(Of Integer, String)
+    Private ReadOnly _keyNameMapping As Dictionary(Of Integer, String)
 
     ''' <summary>
     ''' ホットキー種別とコンボボックスインデックスの対応
     ''' </summary>
-    Private ReadOnly HotKeyTypeComboIndexMapping As New Dictionary(Of Integer, HotKeyType) From {
+    Private ReadOnly _hotKeyTypeComboIndexMapping As New Dictionary(Of Integer, HotKeyType) From {
         {0, HotKeyType.PlayPause},
         {1, HotKeyType.PlayPauseWithCounterCopy1},
         {2, HotKeyType.PlayPauseWithCounterCopy2},
@@ -87,9 +79,9 @@ Public Class SettingsForm
         InitializeComponent()
 
         ' 逆引き辞書の構築
-        KeyNameMapping = New Dictionary(Of Integer, String)
-        For Each kvp As KeyValuePair(Of String, Integer) In KeyCodeMapping
-            KeyNameMapping(kvp.Value) = kvp.Key
+        _keyNameMapping = New Dictionary(Of Integer, String)
+        For Each kvp As KeyValuePair(Of String, Integer) In _keyCodeMapping
+            _keyNameMapping(kvp.Value) = kvp.Key
         Next
     End Sub
 
@@ -213,9 +205,9 @@ Public Class SettingsForm
     ''' <summary>
     ''' 設定ボタンクリック
     ''' </summary>
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        If ComboBox2.Text = "" Then
-            MessageBox.Show("Please enter shortcut key.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+    Friend Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        If String.IsNullOrEmpty(ComboBox2.Text) Then
+            MessageBox.Show(My.Resources.EnterShortcutKey, My.Resources.Error, MessageBoxButtons.OK, MessageBoxIcon.Error)
             Exit Sub
         End If
 
@@ -230,9 +222,9 @@ Public Class SettingsForm
         SaveHotKeySetting(hotkeyType, modifierValue, keyCode)
 
         ' 表示を更新
-        UpdateHotKeyDisplay(hotkeyType, modifierValue, keyCode)
+        UpdateHotKeyDisplay(modifierValue, keyCode)
 
-        MessageBox.Show("設定完了", "確認", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        MessageBox.Show(My.Resources.SettingsComplete, My.Resources.Confirm, MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
 
     ''' <summary>
@@ -247,16 +239,16 @@ Public Class SettingsForm
         ' 設定をクリア
         ClearHotKeySetting(hotkeyType)
 
-        Label3.Text = "　"
-        MessageBox.Show("キー設定を削除しました", "確認", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Label3.Text = String.Empty
+        MessageBox.Show(My.Resources.KeySettingsDeleted, My.Resources.Confirm, MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
 
     ''' <summary>
     ''' 選択されたホットキー種別を取得
     ''' </summary>
-    Private Function GetSelectedHotKeyType() As HotKeyType
-        If HotKeyTypeComboIndexMapping.ContainsKey(ComboBox1.SelectedIndex) Then
-            Return HotKeyTypeComboIndexMapping(ComboBox1.SelectedIndex)
+    Friend Function GetSelectedHotKeyType() As HotKeyType
+        If _hotKeyTypeComboIndexMapping.ContainsKey(ComboBox1.SelectedIndex) Then
+            Return _hotKeyTypeComboIndexMapping(ComboBox1.SelectedIndex)
         End If
         Return HotKeyType.PlayPause
     End Function
@@ -264,23 +256,23 @@ Public Class SettingsForm
     ''' <summary>
     ''' 修飾キーの値を計算
     ''' </summary>
-    Private Function CalculateModifierValue() As Integer
+    Friend Function CalculateModifierValue() As Integer
         Dim modifier As Integer = 0
-        If CheckBox2.Checked Then modifier += MODIFIER_CTRL
-        If CheckBox3.Checked Then modifier += MODIFIER_ALT
-        If CheckBox4.Checked Then modifier += MODIFIER_SHIFT
+        If CheckBox2.Checked Then modifier += ModifierCtrl
+        If CheckBox3.Checked Then modifier += ModifierAlt
+        If CheckBox4.Checked Then modifier += ModifierShift
         Return modifier
     End Function
 
     ''' <summary>
     ''' 選択されたキーコードを取得
     ''' </summary>
-    Private Function GetSelectedKeyCode() As Integer
+    Friend Function GetSelectedKeyCode() As Integer
         Dim selectedText As String = ComboBox2.Text
 
         ' 定義済みキーを検索
-        If KeyCodeMapping.ContainsKey(selectedText) Then
-            Return KeyCodeMapping(selectedText)
+        If _keyCodeMapping.ContainsKey(selectedText) Then
+            Return _keyCodeMapping(selectedText)
         End If
 
         ' 単一文字の場合はASCIIコード
@@ -295,12 +287,12 @@ Public Class SettingsForm
     ''' ホットキーを登録
     ''' </summary>
     Private Sub RegisterHotKeySetting(hotkeyType As HotKeyType, modifier As Integer, keyCode As Integer)
-        Dim atomId As Short = HotKeyManager.HotKeyAtoms(hotkeyType)
-        Dim win32Modifier As Integer = HotKeyManager.GetModifierValue(modifier)
+        Dim atomId As Short = HotKeyAtoms(hotkeyType)
+        Dim win32Modifier As Integer = GetModifierValue(modifier)
 
         If MainPlayerForm.Instance IsNot Nothing Then
-            HotKeyManager.UnregisterHotKey(MainPlayerForm.Instance.Handle, atomId)
-            HotKeyManager.RegisterHotKey(MainPlayerForm.Instance.Handle, atomId, win32Modifier, CType(keyCode, Keys))
+            UnregisterHotKey(MainPlayerForm.Instance.Handle, atomId)
+            RegisterHotKey(MainPlayerForm.Instance.Handle, atomId, win32Modifier, CType(keyCode, Keys))
         End If
     End Sub
 
@@ -308,8 +300,8 @@ Public Class SettingsForm
     ''' ホットキー設定を保存
     ''' </summary>
     Private Sub SaveHotKeySetting(hotkeyType As HotKeyType, modifier As Integer, keyCode As Integer)
-        Dim modifierProp As String = HotKeyManager.GetSettingModifierProperty(hotkeyType)
-        Dim keyProp As String = HotKeyManager.GetSettingKeyProperty(hotkeyType)
+        Dim modifierProp As String = GetSettingModifierProperty(hotkeyType)
+        Dim keyProp As String = GetSettingKeyProperty(hotkeyType)
 
         If Not String.IsNullOrEmpty(modifierProp) Then
             CallByName(My.Settings, modifierProp, CallType.Set, modifier)
@@ -322,22 +314,22 @@ Public Class SettingsForm
     End Sub
 
     ''' <summary>
-    ''' ホットキー設定を解除
+    ''' ホットキーを解除
     ''' </summary>
     Private Sub UnregisterHotKeySetting(hotkeyType As HotKeyType)
         If MainPlayerForm.Instance Is Nothing Then
             Return
         End If
-        Dim atomId As Short = HotKeyManager.HotKeyAtoms(hotkeyType)
-        HotKeyManager.UnregisterHotKey(MainPlayerForm.Instance.Handle, atomId)
+        Dim atomId As Short = HotKeyAtoms(hotkeyType)
+        UnregisterHotKey(MainPlayerForm.Instance.Handle, atomId)
     End Sub
 
     ''' <summary>
     ''' ホットキー設定をクリア
     ''' </summary>
     Private Sub ClearHotKeySetting(hotkeyType As HotKeyType)
-        Dim modifierProp As String = HotKeyManager.GetSettingModifierProperty(hotkeyType)
-        Dim keyProp As String = HotKeyManager.GetSettingKeyProperty(hotkeyType)
+        Dim modifierProp As String = GetSettingModifierProperty(hotkeyType)
+        Dim keyProp As String = GetSettingKeyProperty(hotkeyType)
 
         If Not String.IsNullOrEmpty(modifierProp) Then
             CallByName(My.Settings, modifierProp, CallType.Set, -1)
@@ -352,8 +344,8 @@ Public Class SettingsForm
     ''' <summary>
     ''' ホットキー表示を更新
     ''' </summary>
-    Private Sub UpdateHotKeyDisplay(hotkeyType As HotKeyType, modifier As Integer, keyCode As Integer)
-        Dim modifierText As String = HotKeyManager.GetModifierDisplayText(modifier)
+    Friend Sub UpdateHotKeyDisplay(modifier As Integer, keyCode As Integer)
+        Dim modifierText As String = GetModifierDisplayText(modifier)
         Dim keyText As String = GetKeyDisplayText(keyCode)
 
         If String.IsNullOrEmpty(modifierText) Then
@@ -366,10 +358,10 @@ Public Class SettingsForm
     ''' <summary>
     ''' キーコードから表示テキストを取得
     ''' </summary>
-    Private Function GetKeyDisplayText(keyCode As Integer) As String
+    Friend Function GetKeyDisplayText(keyCode As Integer) As String
         ' 定義済みキーを検索
-        If KeyNameMapping.ContainsKey(keyCode) Then
-            Return KeyNameMapping(keyCode)
+        If _keyNameMapping.ContainsKey(keyCode) Then
+            Return _keyNameMapping(keyCode)
         End If
 
         ' 範囲チェック
@@ -403,7 +395,7 @@ Public Class SettingsForm
     ''' 単一のジャンプラベルを更新
     ''' </summary>
     Private Sub UpdateJumpLabel(label As Label, modifier As Integer, keyCode As Integer)
-        Dim modifierText As String = HotKeyManager.GetModifierDisplayText(modifier)
+        Dim modifierText As String = GetModifierDisplayText(modifier)
         Dim keyText As String = GetKeyDisplayText(keyCode)
         Dim displayText As String = $"秒({modifierText} + {keyText})"
         label.Text = displayText.Replace("秒( + ", "秒(")
@@ -426,7 +418,7 @@ Public Class SettingsForm
     ''' 単一の速度ラベルを更新
     ''' </summary>
     Private Sub UpdateSpeedLabel(label As Label, modifier As Integer, keyCode As Integer)
-        Dim modifierText As String = HotKeyManager.GetModifierDisplayText(modifier)
+        Dim modifierText As String = GetModifierDisplayText(modifier)
         Dim keyText As String = GetKeyDisplayText(keyCode)
         Dim displayText As String = $"({modifierText} + {keyText})"
         label.Text = displayText.Replace("( + ", "(")
@@ -438,8 +430,8 @@ Public Class SettingsForm
 
     Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
         Dim hotkeyType As HotKeyType = GetSelectedHotKeyType()
-        Dim modifierProp As String = HotKeyManager.GetSettingModifierProperty(hotkeyType)
-        Dim keyProp As String = HotKeyManager.GetSettingKeyProperty(hotkeyType)
+        Dim modifierProp As String = GetSettingModifierProperty(hotkeyType)
+        Dim keyProp As String = GetSettingKeyProperty(hotkeyType)
 
         If String.IsNullOrEmpty(modifierProp) OrElse String.IsNullOrEmpty(keyProp) Then
             Return
@@ -448,7 +440,7 @@ Public Class SettingsForm
         Dim modifier As Integer = CInt(CallByName(My.Settings, modifierProp, CallType.Get))
         Dim keyCode As Integer = CInt(CallByName(My.Settings, keyProp, CallType.Get))
 
-        UpdateHotKeyDisplay(hotkeyType, modifier, keyCode)
+        UpdateHotKeyDisplay(modifier, keyCode)
     End Sub
 
 #End Region
@@ -456,7 +448,7 @@ Public Class SettingsForm
 #Region "ボタンイベント"
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
-        Me.Close()
+        Close()
     End Sub
 
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
@@ -465,6 +457,48 @@ Public Class SettingsForm
 
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
         ' 現在の設定一覧表示
+    End Sub
+
+#End Region
+
+#Region "テスト用ヘルパー"
+
+    Friend Sub SetCheckBoxStatesForTest(ctrl As Boolean, alt As Boolean, shift As Boolean)
+        CheckBox2.Checked = ctrl
+        CheckBox3.Checked = alt
+        CheckBox4.Checked = shift
+    End Sub
+
+    Friend Sub SetComboBox2TextForTest(text As String)
+        ComboBox2.Text = text
+    End Sub
+
+    Friend Sub SetComboBox1SelectedIndexForTest(index As Integer)
+        ComboBox1.SelectedIndex = index
+    End Sub
+
+    Friend Function CalculateModifierValueForTest() As Integer
+        Return CalculateModifierValue()
+    End Function
+
+    Friend Function GetSelectedKeyCodeForTest() As Integer
+        Return GetSelectedKeyCode()
+    End Function
+
+    Friend Function GetKeyDisplayTextForTest(keyCode As Integer) As String
+        Return GetKeyDisplayText(keyCode)
+    End Function
+
+    Friend Function GetSelectedHotKeyTypeForTest() As HotKeyType
+        Return GetSelectedHotKeyType()
+    End Function
+
+    Friend Sub UpdateHotKeyDisplayForTest(modifier As Integer, keyCode As Integer)
+        UpdateHotKeyDisplay(modifier, keyCode)
+    End Sub
+
+    Friend Sub Button1_ClickForTest()
+        Button1_Click(Nothing, EventArgs.Empty)
     End Sub
 
 #End Region

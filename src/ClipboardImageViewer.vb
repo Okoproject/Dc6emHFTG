@@ -1,5 +1,3 @@
-Imports System.Drawing
-
 ''' <summary>
 ''' クリップボード画像表示フォーム
 ''' </summary>
@@ -44,26 +42,26 @@ Public Class ClipboardImageViewer
             DisplayImage(_clipboardImage)
 
         Catch ex As Exception
-            ShowErrorMessage($"画像の読み込みに失敗しました: {ex.Message}")
+            ShowErrorMessage(String.Format(My.Resources.ImageLoadFailed, ex.Message))
         End Try
     End Sub
 
     ''' <summary>
     ''' 画像を表示
     ''' </summary>
-    Private Sub DisplayImage(image As Image)
+    Public Sub DisplayImage(image As Image)
         PictureBox1.Image = image
         PictureBox1.SizeMode = PictureBoxSizeMode.Zoom
 
         ' ウィンドウタイトルに画像情報を表示
-        Me.Text = $"クリップボード画像 - {image.Width}x{image.Height}"
+        Text = String.Format(My.Resources.ClipboardImageTitle, image.Width, image.Height)
     End Sub
 
     ''' <summary>
     ''' 画像がない場合のメッセージ表示
     ''' </summary>
     Private Sub ShowNoImageMessage()
-        Me.Text = "クリップボードに画像がありません"
+        Text = My.Resources.NoClipboardImage
         PictureBox1.Image = Nothing
     End Sub
 
@@ -71,7 +69,7 @@ Public Class ClipboardImageViewer
     ''' エラーメッセージの表示
     ''' </summary>
     Private Sub ShowErrorMessage(message As String)
-        MessageBox.Show(message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        MessageBox.Show(message, My.Resources.Error, MessageBoxButtons.OK, MessageBoxIcon.Error)
     End Sub
 
 #End Region
@@ -89,7 +87,7 @@ Public Class ClipboardImageViewer
     ''' 閉じるボタンクリック
     ''' </summary>
     Private Sub CloseButton_Click(sender As Object, e As EventArgs) Handles Button33.Click
-        Me.Close()
+        Close()
     End Sub
 
 #End Region
@@ -101,22 +99,22 @@ Public Class ClipboardImageViewer
     ''' </summary>
     Private Sub SaveImage()
         If _clipboardImage Is Nothing Then
-            MessageBox.Show("保存する画像がありません。", "確認", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            MessageBox.Show(My.Resources.NoImageToSave, My.Resources.Confirm, MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
         End If
 
         Using saveDialog As New SaveFileDialog()
-            saveDialog.Filter = "PNG画像|*.png|JPEG画像|*.jpg|Bitmap画像|*.bmp|すべてのファイル|*.*"
-            saveDialog.Title = "画像を保存"
+            saveDialog.Filter = My.Resources.ImageSaveFilter
+            saveDialog.Title = My.Resources.SaveImage
             saveDialog.FileName = $"ClipboardImage_{DateTime.Now:yyyyMMdd_HHmmss}.png"
 
             If saveDialog.ShowDialog() = DialogResult.OK Then
                 Try
                     Dim format As Imaging.ImageFormat = GetImageFormat(saveDialog.FileName)
                     _clipboardImage.Save(saveDialog.FileName, format)
-                    MessageBox.Show("画像を保存しました。", "確認", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    MessageBox.Show(My.Resources.ImageSaved, My.Resources.Confirm, MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Catch ex As Exception
-                    ShowErrorMessage($"保存に失敗しました: {ex.Message}")
+                    ShowErrorMessage(String.Format(My.Resources.SaveFailed, ex.Message))
                 End Try
             End If
         End Using
@@ -126,7 +124,7 @@ Public Class ClipboardImageViewer
     ''' ファイル拡張子から画像フォーマットを取得
     ''' </summary>
     Private Function GetImageFormat(fileName As String) As Imaging.ImageFormat
-        Dim extension As String = System.IO.Path.GetExtension(fileName).ToLower()
+        Dim extension As String = IO.Path.GetExtension(fileName).ToLower()
 
         Select Case extension
             Case ".jpg", ".jpeg"
@@ -140,6 +138,34 @@ Public Class ClipboardImageViewer
             Case Else
                 Return Imaging.ImageFormat.Png
         End Select
+    End Function
+
+#End Region
+
+#Region "テスト用ヘルパー"
+
+    ''' <summary>
+    ''' テスト用にクリップボード画像を設定
+    ''' </summary>
+    Friend Sub SetClipboardImageForTest(image As Image)
+        _clipboardImage = image
+    End Sub
+
+    ''' <summary>
+    ''' テスト用にクリップボード画像をクリア
+    ''' </summary>
+    Friend Sub ClearClipboardImageForTest()
+        If _clipboardImage IsNot Nothing Then
+            _clipboardImage.Dispose()
+            _clipboardImage = Nothing
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' テスト用に画像フォーマットを取得
+    ''' </summary>
+    Friend Function GetImageFormatForTest(fileName As String) As Imaging.ImageFormat
+        Return GetImageFormat(fileName)
     End Function
 
 #End Region

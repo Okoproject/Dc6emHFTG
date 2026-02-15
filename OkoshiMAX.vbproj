@@ -114,29 +114,29 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationEvents.vb" />
-    <Compile Include="HotKeyManager.vb" />
-    <Compile Include="MainPlayerForm.vb">
+    <Compile Include="src\ApplicationEvents.vb" />
+    <Compile Include="src\HotKeyManager.vb" />
+    <Compile Include="src\MainPlayerForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainPlayerForm.Designer.vb">
+    <Compile Include="src\MainPlayerForm.Designer.vb">
       <DependentUpon>MainPlayerForm.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SettingsForm.vb">
+    <Compile Include="src\SettingsForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SettingsForm.Designer.vb">
+    <Compile Include="src\SettingsForm.Designer.vb">
       <DependentUpon>SettingsForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="ClipboardImageViewer.vb">
+    <Compile Include="src\ClipboardImageViewer.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ClipboardImageViewer.Designer.vb">
+    <Compile Include="src\ClipboardImageViewer.Designer.vb">
       <DependentUpon>ClipboardImageViewer.vb</DependentUpon>
     </Compile>
-    <Compile Include="Module1.vb" />
-    <Compile Include="MpvPlayerWrapper.vb" />
+
+    <Compile Include="src\MpvPlayerWrapper.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -153,16 +153,16 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Settings.vb" />
+    <Compile Include="src\Settings.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="MainPlayerForm.resx">
+    <EmbeddedResource Include="src\MainPlayerForm.resx">
       <DependentUpon>MainPlayerForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SettingsForm.resx">
+    <EmbeddedResource Include="src\SettingsForm.resx">
       <DependentUpon>SettingsForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ClipboardImageViewer.resx">
+    <EmbeddedResource Include="src\ClipboardImageViewer.resx">
       <DependentUpon>ClipboardImageViewer.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -170,6 +170,9 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.ja.resx">
+      <DependentUpon>Resources.resx</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -224,8 +227,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="libmpv-2.dll">
+    <Content Include="dll\libmpv-2.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>libmpv-2.dll</Link>
     </Content>
     <Content Include="okoshimax.ico" />
     <Content Include="OkoshiMAX1_4_1.ico" />

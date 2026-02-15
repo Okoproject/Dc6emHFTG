@@ -269,5 +269,230 @@ Namespace My.Resources
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
+
+        '''<summary>
+        '''  {0}x{1} のような形式のクリップボード画像タイトル文字列を検索します。
+        '''</summary>
+        Friend ReadOnly Property ClipboardImageTitle() As String
+            Get
+                Return ResourceManager.GetString("ClipboardImageTitle", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  クリップボードに画像がない場合のメッセージを検索します。
+        '''</summary>
+        Friend ReadOnly Property NoClipboardImage() As String
+            Get
+                Return ResourceManager.GetString("NoClipboardImage", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  エラーダイアログのタイトルを検索します。
+        '''</summary>
+        Friend ReadOnly Property [Error]() As String
+            Get
+                Return ResourceManager.GetString("Error", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  保存する画像がない場合のメッセージを検索します。
+        '''</summary>
+        Friend ReadOnly Property NoImageToSave() As String
+            Get
+                Return ResourceManager.GetString("NoImageToSave", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  確認ダイアログのタイトルを検索します。
+        '''</summary>
+        Friend ReadOnly Property Confirm() As String
+            Get
+                Return ResourceManager.GetString("Confirm", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  画像保存ダイアログのフィルタ文字列を検索します。
+        '''</summary>
+        Friend ReadOnly Property ImageSaveFilter() As String
+            Get
+                Return ResourceManager.GetString("ImageSaveFilter", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  画像保存ダイアログのタイトルを検索します。
+        '''</summary>
+        Friend ReadOnly Property SaveImage() As String
+            Get
+                Return ResourceManager.GetString("SaveImage", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  画像保存完了メッセージを検索します。
+        '''</summary>
+        Friend ReadOnly Property ImageSaved() As String
+            Get
+                Return ResourceManager.GetString("ImageSaved", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  画像読み込み失敗メッセージを検索します。
+        '''</summary>
+        Friend ReadOnly Property ImageLoadFailed() As String
+            Get
+                Return ResourceManager.GetString("ImageLoadFailed", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  保存失敗メッセージを検索します。
+        '''</summary>
+        Friend ReadOnly Property SaveFailed() As String
+            Get
+                Return ResourceManager.GetString("SaveFailed", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  ショートカットキー入力要求メッセージを検索します。
+        '''</summary>
+        Friend ReadOnly Property EnterShortcutKey() As String
+            Get
+                Return ResourceManager.GetString("EnterShortcutKey", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  設定完了メッセージを検索します。
+        '''</summary>
+        Friend ReadOnly Property SettingsComplete() As String
+            Get
+                Return ResourceManager.GetString("SettingsComplete", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  キー設定削除メッセージを検索します。
+        '''</summary>
+        Friend ReadOnly Property KeySettingsDeleted() As String
+            Get
+                Return ResourceManager.GetString("KeySettingsDeleted", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  エクスポート完了メッセージを検索します。
+        '''</summary>
+        Friend ReadOnly Property ExportComplete() As String
+            Get
+                Return ResourceManager.GetString("ExportComplete", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  エクスポート失敗メッセージを検索します。
+        '''</summary>
+        Friend ReadOnly Property ExportFailed() As String
+            Get
+                Return ResourceManager.GetString("ExportFailed", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  桁数超過エラーメッセージを検索します。
+        '''</summary>
+        Friend ReadOnly Property DigitsExceeded() As String
+            Get
+                Return ResourceManager.GetString("DigitsExceeded", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  カウンタ超過エラーメッセージを検索します。
+        '''</summary>
+        Friend ReadOnly Property CounterExceedsDuration() As String
+            Get
+                Return ResourceManager.GetString("CounterExceedsDuration", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  Word ファイル読み込み失敗メッセージを検索します。
+        '''</summary>
+        Friend ReadOnly Property WordFileLoadFailed() As String
+            Get
+                Return ResourceManager.GetString("WordFileLoadFailed", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  非対応ファイル形式エラーメッセージを検索します。
+        '''</summary>
+        Friend ReadOnly Property FileFormatNotSupported() As String
+            Get
+                Return ResourceManager.GetString("FileFormatNotSupported", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  画面キャプチャ未実装メッセージを検索します。
+        '''</summary>
+        Friend ReadOnly Property ScreenCaptureNotImplemented() As String
+            Get
+                Return ResourceManager.GetString("ScreenCaptureNotImplemented", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  無効な数字入力エラーメッセージを検索します。
+        '''</summary>
+        Friend ReadOnly Property InvalidDigits() As String
+            Get
+                Return ResourceManager.GetString("InvalidDigits", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  時間フォーマット文字列を検索します。
+        '''</summary>
+        Friend ReadOnly Property TimeFormat() As String
+            Get
+                Return ResourceManager.GetString("TimeFormat", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  速度フォーマット文字列を検索します。
+        '''</summary>
+        Friend ReadOnly Property SpeedFormat() As String
+            Get
+                Return ResourceManager.GetString("SpeedFormat", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  音量フォーマット文字列を検索します。
+        '''</summary>
+        Friend ReadOnly Property VolumeFormat() As String
+            Get
+                Return ResourceManager.GetString("VolumeFormat", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  時間区切り文字列を検索します。
+        '''</summary>
+        Friend ReadOnly Property TimeSeparator() As String
+            Get
+                Return ResourceManager.GetString("TimeSeparator", resourceCulture)
+            End Get
+        End Property
     End Module
 End Namespace

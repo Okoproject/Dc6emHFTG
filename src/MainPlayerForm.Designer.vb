@@ -23,7 +23,7 @@ Partial Class MainPlayerForm
     Private components As System.ComponentModel.IContainer
 
     'メモ: 以下のプロシージャは Windows フォーム デザイナーで必要です。
-    'Windows フォーム デザイナーを使用して変更できます。  
+    'Windows フォーム デザイナーを使用して変更できます。
     'コード エディターを使って変更しないでください。
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
@@ -388,7 +388,7 @@ Partial Class MainPlayerForm
         Me.CheckBox2.CheckState = System.Windows.Forms.CheckState.Checked
         Me.TableLayoutPanel1.SetColumnSpan(Me.CheckBox2, 2)
         Me.CheckBox2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CheckBox2.Image = Global.OkoshiMAX.My.Resources.Resources.Monitor_16x
+        Me.CheckBox2.Image = My.Resources.Monitor_16x
         Me.CheckBox2.Location = New System.Drawing.Point(2, 2)
         Me.CheckBox2.Margin = New System.Windows.Forms.Padding(2)
         Me.CheckBox2.Name = "CheckBox2"
@@ -857,7 +857,7 @@ Partial Class MainPlayerForm
         Me.Button39.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button39, 2)
         Me.Button39.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button39.Image = Global.OkoshiMAX.My.Resources.Resources.OpenFolder_16x
+        Me.Button39.Image = My.Resources.OpenFolder_16x
         Me.Button39.Location = New System.Drawing.Point(639, 75)
         Me.Button39.Margin = New System.Windows.Forms.Padding(2)
         Me.Button39.Name = "Button39"
@@ -873,7 +873,7 @@ Partial Class MainPlayerForm
         Me.Button37.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button37, 2)
         Me.Button37.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button37.Image = Global.OkoshiMAX.My.Resources.Resources.SettingsOutline_16x
+        Me.Button37.Image = My.Resources.SettingsOutline_16x
         Me.Button37.Location = New System.Drawing.Point(933, 75)
         Me.Button37.Margin = New System.Windows.Forms.Padding(2)
         Me.Button37.Name = "Button37"
@@ -888,7 +888,7 @@ Partial Class MainPlayerForm
         Me.Label2.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.Label2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Label2.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label2.Image = Global.OkoshiMAX.My.Resources.Resources.Volume_16x
+        Me.Label2.Image = My.Resources.Volume_16x
         Me.Label2.Location = New System.Drawing.Point(980, 146)
         Me.Label2.Margin = New System.Windows.Forms.Padding(0)
         Me.Label2.Name = "Label2"
@@ -922,7 +922,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button36, 2)
         Me.Button36.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button36.Enabled = False
-        Me.Button36.Image = Global.OkoshiMAX.My.Resources.Resources.CaptureFrame_16x
+        Me.Button36.Image = My.Resources.CaptureFrame_16x
         Me.Button36.Location = New System.Drawing.Point(100, 2)
         Me.Button36.Margin = New System.Windows.Forms.Padding(2)
         Me.Button36.Name = "Button36"
@@ -941,7 +941,7 @@ Partial Class MainPlayerForm
         Me.Button200.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button200, 3)
         Me.Button200.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Button200.Image = Global.OkoshiMAX.My.Resources.Resources.Run_16x
+        Me.Button200.Image = My.Resources.Run_16x
         Me.Button200.Location = New System.Drawing.Point(2, 367)
         Me.Button200.Margin = New System.Windows.Forms.Padding(2)
         Me.Button200.Name = "Button200"
@@ -960,7 +960,7 @@ Partial Class MainPlayerForm
         Me.Button400.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button400.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button400, 3)
-        Me.Button400.Image = Global.OkoshiMAX.My.Resources.Resources.Stop_grey_16x
+        Me.Button400.Image = My.Resources.Stop_grey_16x
         Me.Button400.Location = New System.Drawing.Point(149, 367)
         Me.Button400.Margin = New System.Windows.Forms.Padding(2)
         Me.Button400.Name = "Button400"
@@ -992,7 +992,7 @@ Partial Class MainPlayerForm
         Me.Button30.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button30, 2)
         Me.Button30.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button30.Image = Global.OkoshiMAX.My.Resources.Resources.Bookmark_16x
+        Me.Button30.Image = My.Resources.Bookmark_16x
         Me.Button30.Location = New System.Drawing.Point(835, 75)
         Me.Button30.Margin = New System.Windows.Forms.Padding(2)
         Me.Button30.Name = "Button30"
@@ -1006,7 +1006,7 @@ Partial Class MainPlayerForm
         Me.Button35.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button35, 2)
         Me.Button35.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button35.Image = Global.OkoshiMAX.My.Resources.Resources.PinnedItem_16x
+        Me.Button35.Image = My.Resources.PinnedItem_16x
         Me.Button35.Location = New System.Drawing.Point(737, 75)
         Me.Button35.Margin = New System.Windows.Forms.Padding(2)
         Me.Button35.Name = "Button35"
@@ -1143,7 +1143,7 @@ Partial Class MainPlayerForm
         Me.Button28.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button28.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.Button28.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button28.Image = Global.OkoshiMAX.My.Resources.Resources.Cancel_16x
+        Me.Button28.Image = My.Resources.Cancel_16x
         Me.Button28.Location = New System.Drawing.Point(185, 798)
         Me.Button28.Margin = New System.Windows.Forms.Padding(2)
         Me.Button28.MinimumSize = New System.Drawing.Size(0, 22)
@@ -1158,7 +1158,7 @@ Partial Class MainPlayerForm
         Me.Button29.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button29.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.Button29.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button29.Image = Global.OkoshiMAX.My.Resources.Resources.Add_16x
+        Me.Button29.Image = My.Resources.Add_16x
         Me.Button29.Location = New System.Drawing.Point(124, 798)
         Me.Button29.Margin = New System.Windows.Forms.Padding(2)
         Me.Button29.MinimumSize = New System.Drawing.Size(0, 22)
@@ -1173,7 +1173,7 @@ Partial Class MainPlayerForm
         Me.Button32.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button32.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.Button32.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button32.Image = Global.OkoshiMAX.My.Resources.Resources.DestinationAssistant_16x
+        Me.Button32.Image = My.Resources.DestinationAssistant_16x
         Me.Button32.Location = New System.Drawing.Point(63, 798)
         Me.Button32.Margin = New System.Windows.Forms.Padding(2)
         Me.Button32.MinimumSize = New System.Drawing.Size(0, 22)
@@ -1188,7 +1188,7 @@ Partial Class MainPlayerForm
         Me.Button31.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button31.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.Button31.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button31.Image = Global.OkoshiMAX.My.Resources.Resources.DownloadDocument_16x
+        Me.Button31.Image = My.Resources.DownloadDocument_16x
         Me.Button31.Location = New System.Drawing.Point(2, 798)
         Me.Button31.Margin = New System.Windows.Forms.Padding(2)
         Me.Button31.MinimumSize = New System.Drawing.Size(0, 22)

@@ -181,4 +181,86 @@
   <data name="Featured-playlist-01" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Featured-playlist-01.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <!-- String Resources (Default: English) -->
+  <data name="ClipboardImageTitle" xml:space="preserve">
+    <value>Clipboard Image - {0}x{1}</value>
+  </data>
+  <data name="NoClipboardImage" xml:space="preserve">
+    <value>No image in clipboard</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="NoImageToSave" xml:space="preserve">
+    <value>No image to save.</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="ImageSaveFilter" xml:space="preserve">
+    <value>PNG Image|*.png|JPEG Image|*.jpg|Bitmap Image|*.bmp|All Files|*.*</value>
+  </data>
+  <data name="SaveImage" xml:space="preserve">
+    <value>Save Image</value>
+  </data>
+  <data name="ImageSaved" xml:space="preserve">
+    <value>Image saved successfully.</value>
+  </data>
+  <data name="ImageLoadFailed" xml:space="preserve">
+    <value>Failed to load image: {0}</value>
+  </data>
+  <data name="SaveFailed" xml:space="preserve">
+    <value>Failed to save: {0}</value>
+  </data>
+  <data name="EnterShortcutKey" xml:space="preserve">
+    <value>Please enter shortcut key.</value>
+  </data>
+  <data name="SettingsComplete" xml:space="preserve">
+    <value>Settings complete</value>
+  </data>
+  <data name="KeySettingsDeleted" xml:space="preserve">
+    <value>Key settings deleted</value>
+  </data>
+  <data name="ExportComplete" xml:space="preserve">
+    <value>Export complete</value>
+  </data>
+  <data name="ExportFailed" xml:space="preserve">
+    <value>Export failed</value>
+  </data>
+  <data name="DigitsExceeded" xml:space="preserve">
+    <value>Number has 7 or more digits</value>
+  </data>
+  <data name="CounterExceedsDuration" xml:space="preserve">
+    <value>Entered counter exceeds file duration</value>
+  </data>
+  <data name="WordFileLoadFailed" xml:space="preserve">
+    <value>Failed to load Word file: {0}</value>
+  </data>
+  <data name="FileFormatNotSupported" xml:space="preserve">
+    <value>Only CSV, TXT, DOC, and DOCX files are supported</value>
+  </data>
+  <data name="ScreenCaptureNotImplemented" xml:space="preserve">
+    <value>Screen capture feature is not implemented</value>
+  </data>
+  <data name="InvalidDigits" xml:space="preserve">
+    <value>No digits found or 7+ digits entered</value>
+  </data>
+  <data name="Inaudible" xml:space="preserve">
+    <value>Inaudible</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="TimeFormat" xml:space="preserve">
+    <value>00:00:00 / {0}</value>
+  </data>
+  <data name="SpeedFormat" xml:space="preserve">
+    <value>x{0}</value>
+  </data>
+  <data name="VolumeFormat" xml:space="preserve">
+    <value>{0}%</value>
+  </data>
+  <data name="TimeSeparator" xml:space="preserve">
+    <value> / </value>
+  </data>
 </root>

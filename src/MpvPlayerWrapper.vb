@@ -1,10 +1,8 @@
-Imports System.IO
 Imports System.Runtime.InteropServices
 Imports System.Windows.Forms
 
 ''' <summary>
-''' mpv (libmpv) ラッパークラス。
-''' P/Invoke経由でlibmpv-2.dllを直接呼び出す。
+''' mpv (libmpv) プレーヤーのラッパークラス
 ''' </summary>
 Public Class MpvPlayerWrapper
     Implements IDisposable
@@ -41,7 +39,7 @@ Public Class MpvPlayerWrapper
     Private Shared Function mpv_set_property_string(handle As IntPtr, name As String, data As String) As Integer
     End Function
 
-    ' mpv_get_property_string (returns pointer to string that must be freed with mpv_free)
+    ' mpv_get_property_string (returns a pointer to a string that must be freed with mpv_free)
     <DllImport(MpvDll, CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
     Private Shared Function mpv_get_property_string(handle As IntPtr, name As String) As IntPtr
     End Function
@@ -52,9 +50,8 @@ Public Class MpvPlayerWrapper
     End Sub
 
     ' mpv_set_option (for wid - int64)
-    Private Const MPV_FORMAT_INT64 As Integer = 4
-    Private Const MPV_FORMAT_DOUBLE As Integer = 5
-    Private Const MPV_FORMAT_FLAG As Integer = 3
+    Private Const MpvFormatInt64 As Integer = 4
+    Private Const MpvFormatDouble As Integer = 5
 
     <DllImport(MpvDll, CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
     Private Shared Function mpv_set_option(handle As IntPtr, name As String, format As Integer, ByRef data As Long) As Integer
@@ -68,13 +65,7 @@ Public Class MpvPlayerWrapper
     Private Shared Function mpv_set_property(handle As IntPtr, name As String, format As Integer, ByRef data As Double) As Integer
     End Function
 
-    ' mpv_observe_property / mpv_wait_event
-    <DllImport(MpvDll, CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
-    Private Shared Function mpv_observe_property(handle As IntPtr, reply_userdata As ULong, name As String, format As Integer) As Integer
-    End Function
-
-    Private Const MPV_FORMAT_NONE As Integer = 0
-
+    ' mpv_wait_event
     <DllImport(MpvDll, CallingConvention:=CallingConvention.Cdecl)>
     Private Shared Function mpv_wait_event(handle As IntPtr, timeout As Double) As IntPtr
     End Function
@@ -82,55 +73,53 @@ Public Class MpvPlayerWrapper
     ' mpv_event structure (simplified)
     <StructLayout(LayoutKind.Sequential)>
     Private Structure MpvEvent
-        Public event_id As Integer
-        Public [error] As Integer
-        Public reply_userdata As ULong
-        Public data As IntPtr
+        Public EventId As Integer
+        Public [Error] As Integer
+        Public ReplyUserdata As ULong
+        Public Data As IntPtr
     End Structure
 
-    Private Const MPV_EVENT_NONE As Integer = 0
-    Private Const MPV_EVENT_FILE_LOADED As Integer = 8
-    Private Const MPV_EVENT_SHUTDOWN As Integer = 1
-    Private Const MPV_EVENT_PROPERTY_CHANGE As Integer = 22
+    Private Const MpvEventFileLoaded As Integer = 8
+    Private Const MpvEventShutdown As Integer = 1
 
 #End Region
 
+    Private ReadOnly _hostPanel As Panel
     Private _mpvHandle As IntPtr = IntPtr.Zero
-    Private _hostPanel As Panel
-    Private _filePath As String = ""
-    Private _fileName As String = ""
+    Private _filePath As String = String.Empty
+    Private _fileName As String = String.Empty
     Private _disposed As Boolean = False
-    Private _eventThread As Threading.Thread
+    Private ReadOnly _eventThread As Threading.Thread
     Private _running As Boolean = False
 
     Public Event MediaChanged()
 
     ''' <summary>
-    ''' mpvプレーヤーを初期化し、指定されたPanelに映像を埋め込む。
+    ''' mpv プレーヤーを初期化し、指定された Panel に映像を埋め込む。
     ''' </summary>
     Public Sub New(hostPanel As Panel)
         _hostPanel = hostPanel
 
         _mpvHandle = mpv_create()
         If _mpvHandle = IntPtr.Zero Then
-            Throw New InvalidOperationException("mpv_create failed. libmpv-2.dll が見つからないか、初期化に失敗しました。")
+            Throw New InvalidOperationException("mpv_create 失敗。 libmpv-2.dll が見つからないか、初期化に失敗しました。")
         End If
 
-        ' パネルのウィンドウハンドルをmpvのwid (window ID)に設定
+        ' パネルのウィンドウハンドルを mpv の wid (window ID) に設定
         Dim wid As Long = _hostPanel.Handle.ToInt64()
-        mpv_set_option(_mpvHandle, "wid", MPV_FORMAT_INT64, wid)
+        mpv_set_option(_mpvHandle, "wid", MpvFormatInt64, wid)
 
         ' 高精度シーク有効化
         mpv_set_option_string(_mpvHandle, "hr-seek", "yes")
 
-        ' OSD無効化
+        ' OSD 無効化
         mpv_set_option_string(_mpvHandle, "osd-level", "0")
 
         ' キーバインド無効化（入力はフォーム側が処理）
         mpv_set_option_string(_mpvHandle, "input-default-bindings", "no")
         mpv_set_option_string(_mpvHandle, "input-vo-keyboard", "no")
 
-        ' 自動再生しない（pause状態で開始）
+        ' 自動再生しない（pause 状態で開始）
         mpv_set_option_string(_mpvHandle, "pause", "yes")
 
         ' keep-open: ファイル終了時に自動で閉じない
@@ -140,7 +129,7 @@ Public Class MpvPlayerWrapper
         If err < 0 Then
             mpv_terminate_destroy(_mpvHandle)
             _mpvHandle = IntPtr.Zero
-            Throw New InvalidOperationException("mpv_initialize failed with error code: " & err)
+            Throw New InvalidOperationException("mpv_initialize 失敗。 error code: " & err)
         End If
 
         ' イベントループスレッド開始
@@ -158,8 +147,8 @@ Public Class MpvPlayerWrapper
 
             Dim evt As MpvEvent = Marshal.PtrToStructure(Of MpvEvent)(evtPtr)
 
-            Select Case evt.event_id
-                Case MPV_EVENT_FILE_LOADED
+            Select Case evt.EventId
+                Case MpvEventFileLoaded
                     ' UIスレッドでMediaChangedイベント発火
                     If _hostPanel IsNot Nothing AndAlso _hostPanel.IsHandleCreated Then
                         Try
@@ -169,7 +158,7 @@ Public Class MpvPlayerWrapper
                         End Try
                     End If
 
-                Case MPV_EVENT_SHUTDOWN
+                Case MpvEventShutdown
                     _running = False
                     Exit While
             End Select
@@ -185,14 +174,14 @@ Public Class MpvPlayerWrapper
         Get
             If _mpvHandle = IntPtr.Zero Then Return 0
             Dim pos As Double = 0
-            Dim err = mpv_get_property(_mpvHandle, "time-pos", MPV_FORMAT_DOUBLE, pos)
+            Dim err = mpv_get_property(_mpvHandle, "time-pos", MpvFormatDouble, pos)
             If err < 0 Then Return 0
             Return pos
         End Get
         Set(value As Double)
             If _mpvHandle = IntPtr.Zero Then Return
             If value < 0 Then value = 0
-            mpv_set_property(_mpvHandle, "time-pos", MPV_FORMAT_DOUBLE, value)
+            mpv_set_property(_mpvHandle, "time-pos", MpvFormatDouble, value)
         End Set
     End Property
 
@@ -203,7 +192,7 @@ Public Class MpvPlayerWrapper
         Get
             If _mpvHandle = IntPtr.Zero Then Return 0
             Dim dur As Double = 0
-            Dim err = mpv_get_property(_mpvHandle, "duration", MPV_FORMAT_DOUBLE, dur)
+            Dim err = mpv_get_property(_mpvHandle, "duration", MpvFormatDouble, dur)
             If err < 0 Then Return 0
             Return dur
         End Get
@@ -216,14 +205,14 @@ Public Class MpvPlayerWrapper
         Get
             If _mpvHandle = IntPtr.Zero Then Return 1.0
             Dim spd As Double = 1.0
-            mpv_get_property(_mpvHandle, "speed", MPV_FORMAT_DOUBLE, spd)
-            Return spd
+            Dim err = mpv_get_property(_mpvHandle, "speed", MpvFormatDouble, spd)
+            Return If(err < 0, 1.0, spd)
         End Get
         Set(value As Double)
             If _mpvHandle = IntPtr.Zero Then Return
             If value < 0.1 Then value = 0.1
             If value > 10.0 Then value = 10.0
-            mpv_set_property(_mpvHandle, "speed", MPV_FORMAT_DOUBLE, value)
+            mpv_set_property(_mpvHandle, "speed", MpvFormatDouble, value)
         End Set
     End Property
 
@@ -234,15 +223,15 @@ Public Class MpvPlayerWrapper
         Get
             If _mpvHandle = IntPtr.Zero Then Return 0
             Dim vol As Double = 0
-            mpv_get_property(_mpvHandle, "volume", MPV_FORMAT_DOUBLE, vol)
-            Return CInt(vol)
+            Dim err = mpv_get_property(_mpvHandle, "volume", MpvFormatDouble, vol)
+            Return If(err < 0, 0, CInt(vol))
         End Get
         Set(value As Integer)
             If _mpvHandle = IntPtr.Zero Then Return
             If value < 0 Then value = 0
             If value > 100 Then value = 100
             Dim vol As Double = CDbl(value)
-            mpv_set_property(_mpvHandle, "volume", MPV_FORMAT_DOUBLE, vol)
+            mpv_set_property(_mpvHandle, "volume", MpvFormatDouble, vol)
         End Set
     End Property
 
@@ -301,7 +290,7 @@ Public Class MpvPlayerWrapper
 #Region "メソッド"
 
     ''' <summary>
-    ''' ファイルを読み込む。loadfile コマンドで読み込み、pause状態で開始。
+    ''' ファイルを読み込む。mpv の loadfile コマンドで読み込み、pause 状態で開始。
     ''' </summary>
     Public Sub LoadFile(path As String)
         If _mpvHandle = IntPtr.Zero Then Return
@@ -310,7 +299,7 @@ Public Class MpvPlayerWrapper
         _filePath = path
         _fileName = IO.Path.GetFileName(path)
 
-        ' loadfileコマンドを実行
+        ' loadfile コマンドを実行
         DoMpvCommand("loadfile", path)
     End Sub
 
@@ -347,29 +336,29 @@ Public Class MpvPlayerWrapper
         If _mpvHandle = IntPtr.Zero Then Return
 
         ' null-terminated array of UTF-8 strings
-        Dim ptrs(args.Length) As IntPtr ' +1 for null terminator
+        Dim pointers(args.Length) As IntPtr ' +1 for null terminator
         Try
             For i = 0 To args.Length - 1
                 Dim bytes = System.Text.Encoding.UTF8.GetBytes(args(i) & Chr(0))
-                ptrs(i) = Marshal.AllocHGlobal(bytes.Length)
-                Marshal.Copy(bytes, 0, ptrs(i), bytes.Length)
+                pointers(i) = Marshal.AllocHGlobal(bytes.Length)
+                Marshal.Copy(bytes, 0, pointers(i), bytes.Length)
             Next
-            ptrs(args.Length) = IntPtr.Zero ' null terminator
+            pointers(args.Length) = IntPtr.Zero ' null terminator
 
-            mpv_command(_mpvHandle, ptrs)
+            mpv_command(_mpvHandle, pointers)
         Finally
             For i = 0 To args.Length - 1
-                If ptrs(i) <> IntPtr.Zero Then
-                    Marshal.FreeHGlobal(ptrs(i))
+                If pointers(i) <> IntPtr.Zero Then
+                    Marshal.FreeHGlobal(pointers(i))
                 End If
             Next
         End Try
     End Sub
 
     Private Function GetPropertyString(name As String) As String
-        If _mpvHandle = IntPtr.Zero Then Return ""
+        If _mpvHandle = IntPtr.Zero Then Return String.Empty
         Dim ptr As IntPtr = mpv_get_property_string(_mpvHandle, name)
-        If ptr = IntPtr.Zero Then Return ""
+        If ptr = IntPtr.Zero Then Return String.Empty
         Try
             Return Marshal.PtrToStringAnsi(ptr)
         Finally
