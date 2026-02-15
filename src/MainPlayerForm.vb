@@ -171,6 +171,11 @@ Public Class MainPlayerForm
     ''' UI設定の復元
     ''' </summary>
     Private Sub ApplyUiSettings()
+        ' フォームサイズの復元
+        If My.Settings.MyClientSize.Width > 0 Then
+            Me.ClientSize = My.Settings.MyClientSize
+        End If
+
         ' 動画表示画面の復元
         ' gamen = False のとき動画画面を表示（CheckBox2.Checked = True）
         If My.Settings.gamen = False Then
@@ -188,7 +193,7 @@ Public Class MainPlayerForm
             If My.Settings.SC1_Distance > 0 Then
                 SplitContainer1.SplitterDistance = My.Settings.SC1_Distance
             Else
-                SplitContainer1.SplitterDistance = SplitContainer1.Width - 250
+                SplitContainer1.SplitterDistance = SplitContainer1.Width - 125
             End If
         Else
             SplitContainer1.Panel2Collapsed = True
@@ -203,7 +208,7 @@ Public Class MainPlayerForm
             If My.Settings.SC2_Distance > 0 Then
                 SplitContainer2.SplitterDistance = My.Settings.SC2_Distance
             Else
-                SplitContainer2.SplitterDistance = 298
+                SplitContainer2.SplitterDistance = 149
             End If
         Else
             CheckBox1.Checked = False
@@ -227,9 +232,15 @@ Public Class MainPlayerForm
         My.Settings.gamen = Not CheckBox2.Checked
         My.Settings.SC3_Distance = SplitContainer3.SplitterDistance
         My.Settings.shiori = Not SplitContainer1.Panel2Collapsed
-        My.Settings.SC1_Distance = SplitContainer1.SplitterDistance
-        My.Settings.PL = Not CheckBox1.Checked
-        My.Settings.SC2_Distance = SplitContainer2.SplitterDistance
+        ' しおりが表示されている場合のみSplitterDistanceを保存
+        If Not SplitContainer1.Panel2Collapsed Then
+            My.Settings.SC1_Distance = SplitContainer1.SplitterDistance
+        End If
+        My.Settings.PL = CheckBox1.Checked
+        ' プレイリストが表示されている場合のみSplitterDistanceを保存
+        If Not SplitContainer2.Panel1Collapsed Then
+            My.Settings.SC2_Distance = SplitContainer2.SplitterDistance
+        End If
         My.Settings.MyClientSize = ClientSize
     End Sub
 
@@ -607,13 +618,18 @@ Public Class MainPlayerForm
     Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellContentClick
         Dim colIndex As Integer = e.ColumnIndex
 
+        ' 行インデックスが有効か確認
+        If e.RowIndex < 0 OrElse e.RowIndex >= DataGridView1.Rows.Count Then
+            Exit Sub
+        End If
+
         If colIndex <> 0 And colIndex <> 3 Then
             Exit Sub
         End If
 
         Select Case colIndex
             Case 0 ' ジャンプ
-                Dim i As Integer = DataGridView1.SelectedCells(0).RowIndex
+                Dim i As Integer = e.RowIndex
                 TrackBar1.Value = DataGridView1.Rows(i).Cells(2).Value
                 _mediaPlayer.Position = TrackBar1.Value
                 If My.Settings.shiori_PS Then
@@ -623,13 +639,13 @@ Public Class MainPlayerForm
                     _mediaPlayer.Pause()
                 End If
             Case 3 ' 削除
-                Dim i As Integer = DataGridView1.SelectedCells(0).RowIndex
+                Dim i As Integer = e.RowIndex
                 DataGridView1.Rows.RemoveAt(i)
         End Select
     End Sub
 
     Private Sub Button28_Click(sender As Object, e As EventArgs) Handles Button28.Click
-        If DataGridView1.RowCount = 0 Then Exit Sub
+        If DataGridView1.RowCount = 0 OrElse DataGridView1.SelectedCells.Count = 0 Then Exit Sub
         Dim i As Integer = DataGridView1.SelectedCells(0).RowIndex
         DataGridView1.Rows.RemoveAt(i)
     End Sub

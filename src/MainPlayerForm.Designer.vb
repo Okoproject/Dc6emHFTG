@@ -140,7 +140,7 @@ Partial Class MainPlayerForm
         '
         Me.SplitContainer1.AllowDrop = True
         Me.SplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SplitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel2
+        Me.SplitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.None
         Me.SplitContainer1.Location = New System.Drawing.Point(0, 0)
         Me.SplitContainer1.Margin = New System.Windows.Forms.Padding(2)
         Me.SplitContainer1.Name = "SplitContainer1"
@@ -148,7 +148,7 @@ Partial Class MainPlayerForm
         'SplitContainer1.Panel1
         '
         Me.SplitContainer1.Panel1.Controls.Add(Me.SplitContainer2)
-        Me.SplitContainer1.Panel1MinSize = 0
+        Me.SplitContainer1.Panel1MinSize = 300
         '
         'SplitContainer1.Panel2
         '
@@ -162,7 +162,7 @@ Partial Class MainPlayerForm
         'SplitContainer2
         '
         Me.SplitContainer2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SplitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel2
+        Me.SplitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.None
         Me.SplitContainer2.Location = New System.Drawing.Point(0, 0)
         Me.SplitContainer2.Margin = New System.Windows.Forms.Padding(2)
         Me.SplitContainer2.Name = "SplitContainer2"
@@ -171,13 +171,13 @@ Partial Class MainPlayerForm
         '
         Me.SplitContainer2.Panel1.AllowDrop = True
         Me.SplitContainer2.Panel1.Controls.Add(Me.DataGridView2)
-        Me.SplitContainer2.Panel1MinSize = 100
+        Me.SplitContainer2.Panel1MinSize = 150
         '
         'SplitContainer2.Panel2
         '
         Me.SplitContainer2.Panel2.AllowDrop = True
         Me.SplitContainer2.Panel2.Controls.Add(Me.SplitContainer3)
-        Me.SplitContainer2.Panel2MinSize = 0
+        Me.SplitContainer2.Panel2MinSize = 400
         Me.SplitContainer2.Size = New System.Drawing.Size(1355, 838)
         Me.SplitContainer2.SplitterDistance = 298
         Me.SplitContainer2.SplitterWidth = 5
@@ -186,6 +186,7 @@ Partial Class MainPlayerForm
         'DataGridView2
         '
         Me.DataGridView2.AllowUserToOrderColumns = True
+        Me.DataGridView2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView2.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.File_Namae, Me.File_Length, Me.File_Memo, Me.File_Delete, Me.File_Position, Me.File_Progress})
         Me.DataGridView2.Dock = System.Windows.Forms.DockStyle.Fill
@@ -199,44 +200,44 @@ Partial Class MainPlayerForm
         'File_Namae
         '
         Me.File_Namae.HeaderText = "ファイル名"
-        Me.File_Namae.MinimumWidth = 6
+        Me.File_Namae.FillWeight = 100.0!
+        Me.File_Namae.MinimumWidth = 50
         Me.File_Namae.Name = "File_Namae"
-        Me.File_Namae.Width = 125
         '
         'File_Length
         '
+        Me.File_Length.FillWeight = 100.0!
         Me.File_Length.HeaderText = "長さ"
-        Me.File_Length.MinimumWidth = 6
+        Me.File_Length.MinimumWidth = 50
         Me.File_Length.Name = "File_Length"
-        Me.File_Length.Width = 125
         '
         'File_Memo
         '
+        Me.File_Memo.FillWeight = 100.0!
         Me.File_Memo.HeaderText = "メモ"
-        Me.File_Memo.MinimumWidth = 6
+        Me.File_Memo.MinimumWidth = 50
         Me.File_Memo.Name = "File_Memo"
-        Me.File_Memo.Width = 125
         '
         'File_Delete
         '
+        Me.File_Delete.FillWeight = 100.0!
         Me.File_Delete.HeaderText = "削除"
-        Me.File_Delete.MinimumWidth = 6
+        Me.File_Delete.MinimumWidth = 40
         Me.File_Delete.Name = "File_Delete"
-        Me.File_Delete.Width = 125
         '
         'File_Position
         '
+        Me.File_Position.FillWeight = 100.0!
         Me.File_Position.HeaderText = "Position"
-        Me.File_Position.MinimumWidth = 6
+        Me.File_Position.MinimumWidth = 50
         Me.File_Position.Name = "File_Position"
-        Me.File_Position.Width = 125
         '
         'File_Progress
         '
+        Me.File_Progress.FillWeight = 100.0!
         Me.File_Progress.HeaderText = "進捗"
-        Me.File_Progress.MinimumWidth = 6
+        Me.File_Progress.MinimumWidth = 50
         Me.File_Progress.Name = "File_Progress"
-        Me.File_Progress.Width = 125
         '
         'SplitContainer3
         '
@@ -249,10 +250,12 @@ Partial Class MainPlayerForm
         'SplitContainer3.Panel1
         '
         Me.SplitContainer3.Panel1.Controls.Add(Me.MpvPanel)
+        Me.SplitContainer3.Panel1MinSize = 200
         '
         'SplitContainer3.Panel2
         '
         Me.SplitContainer3.Panel2.Controls.Add(Me.TableLayoutPanel1)
+        Me.SplitContainer3.Panel2MinSize = 250
         Me.SplitContainer3.Size = New System.Drawing.Size(1052, 838)
         Me.SplitContainer3.SplitterDistance = 322
         Me.SplitContainer3.SplitterWidth = 5
@@ -1078,21 +1081,22 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
         Me.TableLayoutPanel2.RowCount = 3
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
         Me.TableLayoutPanel2.Size = New System.Drawing.Size(245, 838)
         Me.TableLayoutPanel2.TabIndex = 158
         '
         'DataGridView1
         '
         Me.DataGridView1.AllowUserToAddRows = False
+        Me.DataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colCounter, Me.colMemo, Me.colPosition, Me.colDelete})
         Me.TableLayoutPanel2.SetColumnSpan(Me.DataGridView1, 4)
         Me.DataGridView1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DataGridView1.Location = New System.Drawing.Point(2, 2)
         Me.DataGridView1.Margin = New System.Windows.Forms.Padding(2)
-        Me.DataGridView1.MinimumSize = New System.Drawing.Size(245, 0)
+        Me.DataGridView1.MinimumSize = New System.Drawing.Size(200, 100)
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.RowHeadersWidth = 25
         Me.DataGridView1.RowTemplate.Height = 24
@@ -1106,37 +1110,37 @@ Partial Class MainPlayerForm
         DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
         Me.colCounter.DefaultCellStyle = DataGridViewCellStyle1
         Me.colCounter.HeaderText = "カウンタ"
+        Me.colCounter.FillWeight = 80.0!
         Me.colCounter.MinimumWidth = 6
         Me.colCounter.Name = "colCounter"
         Me.colCounter.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.colCounter.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
         Me.colCounter.Text = "カウンタ"
         Me.colCounter.ToolTipText = "カウンタ"
-        Me.colCounter.Width = 75
         '
         'colMemo
         '
+        Me.colMemo.FillWeight = 150.0!
         Me.colMemo.HeaderText = "メモ"
-        Me.colMemo.MinimumWidth = 6
+        Me.colMemo.MinimumWidth = 50
         Me.colMemo.Name = "colMemo"
-        Me.colMemo.Width = 150
         '
         'colPosition
         '
+        Me.colPosition.FillWeight = 80.0!
         Me.colPosition.HeaderText = "Position"
-        Me.colPosition.MinimumWidth = 6
+        Me.colPosition.MinimumWidth = 50
         Me.colPosition.Name = "colPosition"
-        Me.colPosition.Width = 125
         '
         'colDelete
         '
+        Me.colDelete.FillWeight = 50.0!
         Me.colDelete.HeaderText = "削除"
-        Me.colDelete.MinimumWidth = 6
+        Me.colDelete.MinimumWidth = 40
         Me.colDelete.Name = "colDelete"
         Me.colDelete.Text = "削除"
         Me.colDelete.ToolTipText = "削除"
         Me.colDelete.UseColumnTextForButtonValue = True
-        Me.colDelete.Width = 50
         '
         'Button28
         '
@@ -1236,7 +1240,7 @@ Partial Class MainPlayerForm
         Me.Location = Global.OkoshiMAX.My.MySettings.Default.MyLocation
         Me.Margin = New System.Windows.Forms.Padding(2)
         Me.MaximizeBox = False
-        Me.MinimumSize = New System.Drawing.Size(644, 262)
+        Me.MinimumSize = New System.Drawing.Size(800, 500)
         Me.Name = "MainPlayerForm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "OkoshiMAX"
