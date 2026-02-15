@@ -1,4 +1,4 @@
-﻿Imports System.ComponentModel
+Imports System.ComponentModel
 Imports System.IO
 Imports System.Text
 Imports System.Drawing.Imaging
@@ -205,9 +205,17 @@ Public Class Form1
             My.Settings.gamen = True
         End If
 
+        'SplitContainerの分割位置を保存
+        My.Settings.SC1_Distance = SplitContainer1.SplitterDistance
+        My.Settings.SC2_Distance = SplitContainer2.SplitterDistance
+        My.Settings.SC3_Distance = SplitContainer3.SplitterDistance
 
-
-
+        'PlayList表示状態を保存
+        If CheckBox1.Checked = True Then
+            My.Settings.PL = True
+        Else
+            My.Settings.PL = False
+        End If
 
     End Sub
 
@@ -1784,6 +1792,24 @@ Public Class Form1
             SplitContainer1.Panel2Collapsed = False
         Else
             SplitContainer1.Panel2Collapsed = True
+        End If
+
+        'SplitContainerの分割位置を復元
+        If My.Settings.SC1_Distance > 0 Then
+            SplitContainer1.SplitterDistance = CInt(My.Settings.SC1_Distance)
+        End If
+        If My.Settings.SC2_Distance > 0 Then
+            SplitContainer2.SplitterDistance = CInt(My.Settings.SC2_Distance)
+        End If
+        If My.Settings.SC3_Distance > 0 Then
+            SplitContainer3.SplitterDistance = CInt(My.Settings.SC3_Distance)
+        End If
+
+        'PlayList表示状態を復元
+        If My.Settings.PL = True Then
+            CheckBox1.Checked = True
+        Else
+            CheckBox1.Checked = False
         End If
 
 
