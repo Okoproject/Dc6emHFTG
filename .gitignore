@@ -31,3 +31,5 @@ bld/
 # Upgrade logs
 UpgradeLog*.htm
 UpgradeLog*.XML
+
+.idea
