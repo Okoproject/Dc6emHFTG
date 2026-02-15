@@ -3,7 +3,9 @@
     "allow": [
       "WebFetch(domain:code.videolan.org)",
       "WebFetch(domain:www.fuget.org)",
-      "Bash(git diff:*)"
+      "Bash(git diff:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ]
   }
 }
