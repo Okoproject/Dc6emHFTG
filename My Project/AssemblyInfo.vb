@@ -27,9 +27,9 @@ Imports System.Runtime.InteropServices
 '      ビルド番号
 '      Revision
 '
-' すべての値を指定するか、下のように '*' を使ってビルドおよびリビジョン番号を 
+' すべての値を指定するか、下のように '*' を使ってビルドおよびリビジョン番号を
 ' 既定値にすることができます:
-' <Assembly: AssemblyVersion("1.0.*")> 
+' <Assembly: AssemblyVersion("1.0.*")>
 
 <Assembly: AssemblyVersion("1.0.0.0")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
