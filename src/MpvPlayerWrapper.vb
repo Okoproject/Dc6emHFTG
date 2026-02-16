@@ -120,6 +120,10 @@ Public Class MpvPlayerWrapper
     '''     mpv プレーヤーを初期化し、指定された Panel に映像を埋め込む。
     ''' </summary>
     Public Sub New(hostPanel As Panel)
+        If hostPanel Is Nothing Then
+            Throw New ArgumentNullException(NameOf(hostPanel))
+        End If
+
         _hostPanel = hostPanel
 
         _mpvHandle = mpv_create()
@@ -128,7 +132,14 @@ Public Class MpvPlayerWrapper
         End If
 
         ' パネルのウィンドウハンドルを mpv の wid (window ID) に設定
+        ' Handle プロパティへのアクセスでネイティブウィンドウハンドルの作成を強制する
         Dim wid As Long = _hostPanel.Handle.ToInt64()
+
+        If wid = 0 Then
+            ' ハンドルが0の場合は初期化に失敗する可能性がある
+            Throw New InvalidOperationException("Panel のウィンドウハンドルが作成されていません。")
+        End If
+
         mpv_set_option(_mpvHandle, "wid", MpvFormatInt64, wid)
 
         ' 高精度シーク有効化

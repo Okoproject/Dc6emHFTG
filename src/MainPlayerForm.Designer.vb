@@ -142,7 +142,7 @@ Partial Class MainPlayerForm
         Me.SplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SplitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.None
         Me.SplitContainer1.Location = New System.Drawing.Point(0, 0)
-        Me.SplitContainer1.Margin = New System.Windows.Forms.Padding(2)
+        Me.SplitContainer1.Margin = New System.Windows.Forms.Padding(1)
         Me.SplitContainer1.Name = "SplitContainer1"
         '
         'SplitContainer1.Panel1
@@ -153,9 +153,9 @@ Partial Class MainPlayerForm
         'SplitContainer1.Panel2
         '
         Me.SplitContainer1.Panel2.Controls.Add(Me.TableLayoutPanel2)
-        Me.SplitContainer1.Panel2MinSize = 200
+        Me.SplitContainer1.Panel2MinSize = 250
         Me.SplitContainer1.Size = New System.Drawing.Size(1605, 838)
-        Me.SplitContainer1.SplitterDistance = 1355
+        Me.SplitContainer1.SplitterDistance = 1350
         Me.SplitContainer1.SplitterWidth = 5
         Me.SplitContainer1.TabIndex = 0
         '
@@ -164,7 +164,7 @@ Partial Class MainPlayerForm
         Me.SplitContainer2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SplitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.None
         Me.SplitContainer2.Location = New System.Drawing.Point(0, 0)
-        Me.SplitContainer2.Margin = New System.Windows.Forms.Padding(2)
+        Me.SplitContainer2.Margin = New System.Windows.Forms.Padding(1)
         Me.SplitContainer2.Name = "SplitContainer2"
         '
         'SplitContainer2.Panel1
@@ -177,7 +177,7 @@ Partial Class MainPlayerForm
         '
         Me.SplitContainer2.Panel2.AllowDrop = True
         Me.SplitContainer2.Panel2.Controls.Add(Me.SplitContainer3)
-        Me.SplitContainer2.Panel2MinSize = 400
+        Me.SplitContainer2.Panel2MinSize = 500
         Me.SplitContainer2.Size = New System.Drawing.Size(1355, 838)
         Me.SplitContainer2.SplitterDistance = 298
         Me.SplitContainer2.SplitterWidth = 5
@@ -255,7 +255,7 @@ Partial Class MainPlayerForm
         'SplitContainer3.Panel2
         '
         Me.SplitContainer3.Panel2.Controls.Add(Me.TableLayoutPanel1)
-        Me.SplitContainer3.Panel2MinSize = 250
+        Me.SplitContainer3.Panel2MinSize = 200
         Me.SplitContainer3.Size = New System.Drawing.Size(1052, 838)
         Me.SplitContainer3.SplitterDistance = 322
         Me.SplitContainer3.SplitterWidth = 5
@@ -267,7 +267,7 @@ Partial Class MainPlayerForm
         Me.MpvPanel.BackColor = System.Drawing.Color.Black
         Me.MpvPanel.Dock = System.Windows.Forms.DockStyle.Fill
         Me.MpvPanel.Location = New System.Drawing.Point(0, 0)
-        Me.MpvPanel.Margin = New System.Windows.Forms.Padding(2)
+        Me.MpvPanel.Margin = New System.Windows.Forms.Padding(1)
         Me.MpvPanel.Name = "MpvPanel"
         Me.MpvPanel.Size = New System.Drawing.Size(1052, 322)
         Me.MpvPanel.TabIndex = 193
@@ -349,7 +349,8 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.Controls.Add(Me.Button12, 2, 4)
         Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 0)
-        Me.TableLayoutPanel1.Margin = New System.Windows.Forms.Padding(2)
+        Me.TableLayoutPanel1.Margin = New System.Windows.Forms.Padding(1)
+        Me.TableLayoutPanel1.MinimumSize = New System.Drawing.Size(500, 200)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 7
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
@@ -373,7 +374,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.CheckBox1, 2)
         Me.CheckBox1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.CheckBox1.Location = New System.Drawing.Point(2, 75)
-        Me.CheckBox1.Margin = New System.Windows.Forms.Padding(2)
+        Me.CheckBox1.Margin = New System.Windows.Forms.Padding(1)
         Me.CheckBox1.Name = "CheckBox1"
         Me.CheckBox1.Size = New System.Drawing.Size(94, 69)
         Me.CheckBox1.TabIndex = 972
@@ -393,7 +394,7 @@ Partial Class MainPlayerForm
         Me.CheckBox2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.CheckBox2.Image = My.Resources.Monitor_16x
         Me.CheckBox2.Location = New System.Drawing.Point(2, 2)
-        Me.CheckBox2.Margin = New System.Windows.Forms.Padding(2)
+        Me.CheckBox2.Margin = New System.Windows.Forms.Padding(1)
         Me.CheckBox2.Name = "CheckBox2"
         Me.CheckBox2.Size = New System.Drawing.Size(94, 69)
         Me.CheckBox2.TabIndex = 919
@@ -425,7 +426,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button33, 2)
         Me.Button33.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button33.Location = New System.Drawing.Point(492, 2)
-        Me.Button33.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button33.Margin = New System.Windows.Forms.Padding(1)
         Me.Button33.Name = "Button33"
         Me.Button33.Size = New System.Drawing.Size(94, 69)
         Me.Button33.TabIndex = 921
@@ -438,7 +439,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.TextBox2, 6)
         Me.TextBox2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TextBox2.Location = New System.Drawing.Point(198, 2)
-        Me.TextBox2.Margin = New System.Windows.Forms.Padding(2)
+        Me.TextBox2.Margin = New System.Windows.Forms.Padding(1)
         Me.TextBox2.Name = "TextBox2"
         Me.TextBox2.Size = New System.Drawing.Size(290, 22)
         Me.TextBox2.TabIndex = 922
@@ -450,7 +451,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.TextBox1, 10)
         Me.TextBox1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TextBox1.Location = New System.Drawing.Point(100, 75)
-        Me.TextBox1.Margin = New System.Windows.Forms.Padding(2)
+        Me.TextBox1.Margin = New System.Windows.Forms.Padding(1)
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Size = New System.Drawing.Size(486, 22)
         Me.TextBox1.TabIndex = 923
@@ -462,7 +463,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button3, 2)
         Me.Button3.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button3.Location = New System.Drawing.Point(198, 148)
-        Me.Button3.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button3.Margin = New System.Windows.Forms.Padding(1)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(94, 69)
         Me.Button3.TabIndex = 930
@@ -476,7 +477,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button4, 2)
         Me.Button4.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button4.Location = New System.Drawing.Point(296, 148)
-        Me.Button4.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button4.Margin = New System.Windows.Forms.Padding(1)
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(94, 69)
         Me.Button4.TabIndex = 931
@@ -490,7 +491,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button5, 2)
         Me.Button5.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button5.Location = New System.Drawing.Point(394, 148)
-        Me.Button5.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button5.Margin = New System.Windows.Forms.Padding(1)
         Me.Button5.Name = "Button5"
         Me.Button5.Size = New System.Drawing.Size(94, 69)
         Me.Button5.TabIndex = 932
@@ -504,7 +505,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button6, 2)
         Me.Button6.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button6.Location = New System.Drawing.Point(492, 148)
-        Me.Button6.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button6.Margin = New System.Windows.Forms.Padding(1)
         Me.Button6.Name = "Button6"
         Me.Button6.Size = New System.Drawing.Size(94, 69)
         Me.Button6.TabIndex = 933
@@ -518,7 +519,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button7, 2)
         Me.Button7.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button7.Location = New System.Drawing.Point(590, 148)
-        Me.Button7.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button7.Margin = New System.Windows.Forms.Padding(1)
         Me.Button7.Name = "Button7"
         Me.Button7.Size = New System.Drawing.Size(94, 69)
         Me.Button7.TabIndex = 934
@@ -532,7 +533,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button8, 2)
         Me.Button8.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button8.Location = New System.Drawing.Point(688, 148)
-        Me.Button8.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button8.Margin = New System.Windows.Forms.Padding(1)
         Me.Button8.Name = "Button8"
         Me.Button8.Size = New System.Drawing.Size(94, 69)
         Me.Button8.TabIndex = 935
@@ -546,7 +547,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button9, 2)
         Me.Button9.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button9.Location = New System.Drawing.Point(786, 148)
-        Me.Button9.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button9.Margin = New System.Windows.Forms.Padding(1)
         Me.Button9.Name = "Button9"
         Me.Button9.Size = New System.Drawing.Size(94, 69)
         Me.Button9.TabIndex = 936
@@ -560,7 +561,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button10, 2)
         Me.Button10.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button10.Location = New System.Drawing.Point(884, 148)
-        Me.Button10.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button10.Margin = New System.Windows.Forms.Padding(1)
         Me.Button10.Name = "Button10"
         Me.Button10.Size = New System.Drawing.Size(94, 69)
         Me.Button10.TabIndex = 937
@@ -574,7 +575,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.TrackBar1, 20)
         Me.TrackBar1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TrackBar1.Location = New System.Drawing.Point(2, 221)
-        Me.TrackBar1.Margin = New System.Windows.Forms.Padding(2)
+        Me.TrackBar1.Margin = New System.Windows.Forms.Padding(1)
         Me.TrackBar1.Maximum = 10000
         Me.TrackBar1.Name = "TrackBar1"
         Me.TrackBar1.Size = New System.Drawing.Size(976, 69)
@@ -589,7 +590,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button11, 2)
         Me.Button11.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button11.Location = New System.Drawing.Point(2, 294)
-        Me.Button11.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button11.Margin = New System.Windows.Forms.Padding(1)
         Me.Button11.Name = "Button11"
         Me.Button11.Size = New System.Drawing.Size(94, 69)
         Me.Button11.TabIndex = 939
@@ -603,7 +604,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button13, 2)
         Me.Button13.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button13.Location = New System.Drawing.Point(198, 294)
-        Me.Button13.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button13.Margin = New System.Windows.Forms.Padding(1)
         Me.Button13.Name = "Button13"
         Me.Button13.Size = New System.Drawing.Size(94, 69)
         Me.Button13.TabIndex = 941
@@ -617,7 +618,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button14, 2)
         Me.Button14.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button14.Location = New System.Drawing.Point(296, 294)
-        Me.Button14.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button14.Margin = New System.Windows.Forms.Padding(1)
         Me.Button14.Name = "Button14"
         Me.Button14.Size = New System.Drawing.Size(94, 69)
         Me.Button14.TabIndex = 942
@@ -631,7 +632,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button15, 2)
         Me.Button15.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button15.Location = New System.Drawing.Point(394, 294)
-        Me.Button15.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button15.Margin = New System.Windows.Forms.Padding(1)
         Me.Button15.Name = "Button15"
         Me.Button15.Size = New System.Drawing.Size(94, 69)
         Me.Button15.TabIndex = 943
@@ -645,7 +646,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button16, 2)
         Me.Button16.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button16.Location = New System.Drawing.Point(492, 294)
-        Me.Button16.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button16.Margin = New System.Windows.Forms.Padding(1)
         Me.Button16.Name = "Button16"
         Me.Button16.Size = New System.Drawing.Size(94, 69)
         Me.Button16.TabIndex = 944
@@ -659,7 +660,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button17, 2)
         Me.Button17.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button17.Location = New System.Drawing.Point(590, 294)
-        Me.Button17.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button17.Margin = New System.Windows.Forms.Padding(1)
         Me.Button17.Name = "Button17"
         Me.Button17.Size = New System.Drawing.Size(94, 69)
         Me.Button17.TabIndex = 945
@@ -673,7 +674,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button18, 2)
         Me.Button18.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button18.Location = New System.Drawing.Point(688, 294)
-        Me.Button18.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button18.Margin = New System.Windows.Forms.Padding(1)
         Me.Button18.Name = "Button18"
         Me.Button18.Size = New System.Drawing.Size(94, 69)
         Me.Button18.TabIndex = 946
@@ -687,7 +688,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button19, 2)
         Me.Button19.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button19.Location = New System.Drawing.Point(786, 294)
-        Me.Button19.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button19.Margin = New System.Windows.Forms.Padding(1)
         Me.Button19.Name = "Button19"
         Me.Button19.Size = New System.Drawing.Size(94, 69)
         Me.Button19.TabIndex = 947
@@ -701,7 +702,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button20, 2)
         Me.Button20.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button20.Location = New System.Drawing.Point(884, 294)
-        Me.Button20.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button20.Margin = New System.Windows.Forms.Padding(1)
         Me.Button20.Name = "Button20"
         Me.Button20.Size = New System.Drawing.Size(94, 69)
         Me.Button20.TabIndex = 948
@@ -715,7 +716,7 @@ Partial Class MainPlayerForm
         Me.TrackBar2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TrackBar2.LargeChange = 1
         Me.TrackBar2.Location = New System.Drawing.Point(394, 367)
-        Me.TrackBar2.Margin = New System.Windows.Forms.Padding(2)
+        Me.TrackBar2.Margin = New System.Windows.Forms.Padding(1)
         Me.TrackBar2.Maximum = 40
         Me.TrackBar2.Minimum = 5
         Me.TrackBar2.Name = "TrackBar2"
@@ -747,7 +748,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button21, 2)
         Me.Button21.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button21.Location = New System.Drawing.Point(296, 440)
-        Me.Button21.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button21.Margin = New System.Windows.Forms.Padding(1)
         Me.Button21.Name = "Button21"
         Me.Button21.Size = New System.Drawing.Size(94, 69)
         Me.Button21.TabIndex = 956
@@ -761,7 +762,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button22, 2)
         Me.Button22.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button22.Location = New System.Drawing.Point(394, 440)
-        Me.Button22.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button22.Margin = New System.Windows.Forms.Padding(1)
         Me.Button22.Name = "Button22"
         Me.Button22.Size = New System.Drawing.Size(94, 69)
         Me.Button22.TabIndex = 957
@@ -775,7 +776,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button23, 2)
         Me.Button23.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button23.Location = New System.Drawing.Point(492, 440)
-        Me.Button23.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button23.Margin = New System.Windows.Forms.Padding(1)
         Me.Button23.Name = "Button23"
         Me.Button23.Size = New System.Drawing.Size(94, 69)
         Me.Button23.TabIndex = 958
@@ -789,7 +790,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button24, 2)
         Me.Button24.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button24.Location = New System.Drawing.Point(590, 440)
-        Me.Button24.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button24.Margin = New System.Windows.Forms.Padding(1)
         Me.Button24.Name = "Button24"
         Me.Button24.Size = New System.Drawing.Size(94, 69)
         Me.Button24.TabIndex = 959
@@ -803,7 +804,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button25, 2)
         Me.Button25.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button25.Location = New System.Drawing.Point(688, 440)
-        Me.Button25.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button25.Margin = New System.Windows.Forms.Padding(1)
         Me.Button25.Name = "Button25"
         Me.Button25.Size = New System.Drawing.Size(94, 69)
         Me.Button25.TabIndex = 960
@@ -817,7 +818,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button26, 2)
         Me.Button26.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button26.Location = New System.Drawing.Point(786, 440)
-        Me.Button26.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button26.Margin = New System.Windows.Forms.Padding(1)
         Me.Button26.Name = "Button26"
         Me.Button26.Size = New System.Drawing.Size(94, 69)
         Me.Button26.TabIndex = 961
@@ -831,7 +832,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button27, 2)
         Me.Button27.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button27.Location = New System.Drawing.Point(884, 440)
-        Me.Button27.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button27.Margin = New System.Windows.Forms.Padding(1)
         Me.Button27.Name = "Button27"
         Me.Button27.Size = New System.Drawing.Size(94, 69)
         Me.Button27.TabIndex = 962
@@ -862,7 +863,7 @@ Partial Class MainPlayerForm
         Me.Button39.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button39.Image = My.Resources.OpenFolder_16x
         Me.Button39.Location = New System.Drawing.Point(639, 75)
-        Me.Button39.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button39.Margin = New System.Windows.Forms.Padding(1)
         Me.Button39.Name = "Button39"
         Me.Button39.Size = New System.Drawing.Size(94, 69)
         Me.Button39.TabIndex = 927
@@ -878,7 +879,7 @@ Partial Class MainPlayerForm
         Me.Button37.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button37.Image = My.Resources.SettingsOutline_16x
         Me.Button37.Location = New System.Drawing.Point(933, 75)
-        Me.Button37.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button37.Margin = New System.Windows.Forms.Padding(1)
         Me.Button37.Name = "Button37"
         Me.Button37.Size = New System.Drawing.Size(117, 69)
         Me.Button37.TabIndex = 924
@@ -927,7 +928,7 @@ Partial Class MainPlayerForm
         Me.Button36.Enabled = False
         Me.Button36.Image = My.Resources.CaptureFrame_16x
         Me.Button36.Location = New System.Drawing.Point(100, 2)
-        Me.Button36.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button36.Margin = New System.Windows.Forms.Padding(1)
         Me.Button36.Name = "Button36"
         Me.Button36.Size = New System.Drawing.Size(94, 69)
         Me.Button36.TabIndex = 925
@@ -946,7 +947,7 @@ Partial Class MainPlayerForm
         Me.Button200.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button200.Image = My.Resources.Run_16x
         Me.Button200.Location = New System.Drawing.Point(2, 367)
-        Me.Button200.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button200.Margin = New System.Windows.Forms.Padding(1)
         Me.Button200.Name = "Button200"
         Me.TableLayoutPanel1.SetRowSpan(Me.Button200, 2)
         Me.Button200.Size = New System.Drawing.Size(143, 142)
@@ -965,7 +966,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button400, 3)
         Me.Button400.Image = My.Resources.Stop_grey_16x
         Me.Button400.Location = New System.Drawing.Point(149, 367)
-        Me.Button400.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button400.Margin = New System.Windows.Forms.Padding(1)
         Me.Button400.Name = "Button400"
         Me.TableLayoutPanel1.SetRowSpan(Me.Button400, 2)
         Me.Button400.Size = New System.Drawing.Size(143, 142)
@@ -997,7 +998,7 @@ Partial Class MainPlayerForm
         Me.Button30.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button30.Image = My.Resources.Bookmark_16x
         Me.Button30.Location = New System.Drawing.Point(835, 75)
-        Me.Button30.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button30.Margin = New System.Windows.Forms.Padding(1)
         Me.Button30.Name = "Button30"
         Me.Button30.Size = New System.Drawing.Size(94, 69)
         Me.Button30.TabIndex = 967
@@ -1011,7 +1012,7 @@ Partial Class MainPlayerForm
         Me.Button35.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button35.Image = My.Resources.PinnedItem_16x
         Me.Button35.Location = New System.Drawing.Point(737, 75)
-        Me.Button35.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button35.Margin = New System.Windows.Forms.Padding(1)
         Me.Button35.Name = "Button35"
         Me.Button35.Size = New System.Drawing.Size(94, 69)
         Me.Button35.TabIndex = 971
@@ -1024,7 +1025,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button1, 2)
         Me.Button1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button1.Location = New System.Drawing.Point(2, 148)
-        Me.Button1.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button1.Margin = New System.Windows.Forms.Padding(1)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(94, 69)
         Me.Button1.TabIndex = 940
@@ -1038,7 +1039,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button2, 2)
         Me.Button2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button2.Location = New System.Drawing.Point(100, 148)
-        Me.Button2.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button2.Margin = New System.Windows.Forms.Padding(1)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(94, 69)
         Me.Button2.TabIndex = 928
@@ -1052,7 +1053,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button12, 2)
         Me.Button12.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button12.Location = New System.Drawing.Point(100, 294)
-        Me.Button12.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button12.Margin = New System.Windows.Forms.Padding(1)
         Me.Button12.Name = "Button12"
         Me.Button12.Size = New System.Drawing.Size(94, 69)
         Me.Button12.TabIndex = 929
@@ -1077,7 +1078,8 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel2.Controls.Add(Me.Button34, 0, 1)
         Me.TableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel2.Location = New System.Drawing.Point(0, 0)
-        Me.TableLayoutPanel2.Margin = New System.Windows.Forms.Padding(2)
+        Me.TableLayoutPanel2.Margin = New System.Windows.Forms.Padding(1)
+        Me.TableLayoutPanel2.MinimumSize = New System.Drawing.Size(250, 400)
         Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
         Me.TableLayoutPanel2.RowCount = 3
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
@@ -1095,7 +1097,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel2.SetColumnSpan(Me.DataGridView1, 4)
         Me.DataGridView1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DataGridView1.Location = New System.Drawing.Point(2, 2)
-        Me.DataGridView1.Margin = New System.Windows.Forms.Padding(2)
+        Me.DataGridView1.Margin = New System.Windows.Forms.Padding(1)
         Me.DataGridView1.MinimumSize = New System.Drawing.Size(200, 100)
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.RowHeadersWidth = 25
@@ -1149,7 +1151,7 @@ Partial Class MainPlayerForm
         Me.Button28.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button28.Image = My.Resources.Cancel_16x
         Me.Button28.Location = New System.Drawing.Point(185, 798)
-        Me.Button28.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button28.Margin = New System.Windows.Forms.Padding(1)
         Me.Button28.MinimumSize = New System.Drawing.Size(0, 22)
         Me.Button28.Name = "Button28"
         Me.Button28.Size = New System.Drawing.Size(58, 38)
@@ -1164,7 +1166,7 @@ Partial Class MainPlayerForm
         Me.Button29.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button29.Image = My.Resources.Add_16x
         Me.Button29.Location = New System.Drawing.Point(124, 798)
-        Me.Button29.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button29.Margin = New System.Windows.Forms.Padding(1)
         Me.Button29.MinimumSize = New System.Drawing.Size(0, 22)
         Me.Button29.Name = "Button29"
         Me.Button29.Size = New System.Drawing.Size(57, 38)
@@ -1179,7 +1181,7 @@ Partial Class MainPlayerForm
         Me.Button32.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button32.Image = My.Resources.DestinationAssistant_16x
         Me.Button32.Location = New System.Drawing.Point(63, 798)
-        Me.Button32.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button32.Margin = New System.Windows.Forms.Padding(1)
         Me.Button32.MinimumSize = New System.Drawing.Size(0, 22)
         Me.Button32.Name = "Button32"
         Me.Button32.Size = New System.Drawing.Size(57, 38)
@@ -1194,7 +1196,7 @@ Partial Class MainPlayerForm
         Me.Button31.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button31.Image = My.Resources.DownloadDocument_16x
         Me.Button31.Location = New System.Drawing.Point(2, 798)
-        Me.Button31.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button31.Margin = New System.Windows.Forms.Padding(1)
         Me.Button31.MinimumSize = New System.Drawing.Size(0, 22)
         Me.Button31.Name = "Button31"
         Me.Button31.Size = New System.Drawing.Size(57, 38)
@@ -1209,7 +1211,7 @@ Partial Class MainPlayerForm
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TableLayoutPanel2.SetColumnSpan(Me.TextBox3, 3)
         Me.TextBox3.Location = New System.Drawing.Point(63, 758)
-        Me.TextBox3.Margin = New System.Windows.Forms.Padding(2)
+        Me.TextBox3.Margin = New System.Windows.Forms.Padding(1)
         Me.TextBox3.Name = "TextBox3"
         Me.TextBox3.Size = New System.Drawing.Size(180, 22)
         Me.TextBox3.TabIndex = 156
@@ -1220,7 +1222,7 @@ Partial Class MainPlayerForm
         Me.Button34.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.Button34.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button34.Location = New System.Drawing.Point(2, 758)
-        Me.Button34.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button34.Margin = New System.Windows.Forms.Padding(1)
         Me.Button34.MinimumSize = New System.Drawing.Size(45, 22)
         Me.Button34.Name = "Button34"
         Me.Button34.Size = New System.Drawing.Size(57, 36)
@@ -1238,9 +1240,8 @@ Partial Class MainPlayerForm
         Me.DataBindings.Add(New System.Windows.Forms.Binding("Location", Global.OkoshiMAX.My.MySettings.Default, "MyLocation", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Location = Global.OkoshiMAX.My.MySettings.Default.MyLocation
-        Me.Margin = New System.Windows.Forms.Padding(2)
+        Me.Margin = New System.Windows.Forms.Padding(1)
         Me.MaximizeBox = False
-        Me.MinimumSize = New System.Drawing.Size(800, 500)
         Me.Name = "MainPlayerForm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "OkoshiMAX"

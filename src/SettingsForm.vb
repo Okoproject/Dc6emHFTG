@@ -91,6 +91,47 @@ Public Class SettingsForm
 
     Private Sub SettingsForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadAllSettings()
+        PositionRelativeToMainForm()
+    End Sub
+
+    ''' <summary>
+    '''     メインフォームの右側に配置
+    ''' </summary>
+    Private Sub PositionRelativeToMainForm()
+        If MainPlayerForm.Instance IsNot Nothing Then
+            Dim mainForm = MainPlayerForm.Instance
+            ' メインフォームの右側に配置
+            Left = mainForm.Right + 10
+            Top = mainForm.Top
+
+            ' 画面外に出る場合は左側に配置
+            If Right > Screen.PrimaryScreen.WorkingArea.Right Then
+                Left = Math.Max(10, mainForm.Left - Width - 10)
+            End If
+
+            ' 画面外に出る場合は上に調整
+            If Bottom > Screen.PrimaryScreen.WorkingArea.Bottom Then
+                Top = Math.Max(10, Screen.PrimaryScreen.WorkingArea.Bottom - Height - 10)
+            End If
+        End If
+    End Sub
+
+    ''' <summary>
+    '''     アクティブ時にメインフォームの下に行かないようにする
+    ''' </summary>
+    Private Sub SettingsForm_Activated(sender As Object, e As EventArgs) Handles MyBase.Activated
+        If MainPlayerForm.Instance IsNot Nothing Then
+            ' メインフォームより手前に表示
+            BringToFront()
+        End If
+    End Sub
+
+    ''' <summary>
+    '''     メインフォームがアクティブになった場合も設定フォームを手前に
+    ''' </summary>
+    Private Sub SettingsForm_Deactivate(sender As Object, e As EventArgs) Handles MyBase.Deactivate
+        ' 設定フォームからフォーカスが外れた場合でも、メインフォームがアクティブなら
+        ' 設定フォームを手前に保持（モーダル表示中はこの処理は不要ですが、安全策として）
     End Sub
 
 #End Region
