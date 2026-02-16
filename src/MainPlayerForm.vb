@@ -62,6 +62,7 @@ Public Class MainPlayerForm
         LoadDefaultSettings()
         ApplyPanelHeights()
         ApplyUiSettings()
+        UpdateControllerMinSize()
     End Sub
 
     Private Sub MainPlayerForm_Closing(sender As Object, e As CancelEventArgs) Handles MyBase.Closing
@@ -123,6 +124,16 @@ Public Class MainPlayerForm
         TextBox1.Text = _mediaPlayer.FileName
         TrackBar2.Value = CInt(_mediaPlayer.Speed/SpeedMultiplier)
         Label4.Text = String.Format(My.Resources.SpeedFormat, (TrackBar2.Value*SpeedMultiplier).ToString("0.0"))
+
+        UpdateControllerMinSize()
+    End Sub
+
+    ''' <summary>
+    '''     コントローラー部の最小サイズを更新
+    ''' </summary>
+    Private Sub UpdateControllerMinSize()
+        TableLayoutPanel1.MinimumSize = New Size(500, 75)
+        SplitContainer3.Panel2MinSize = 75
     End Sub
 
     ''' <summary>
@@ -592,6 +603,8 @@ Public Class MainPlayerForm
 
             SplitContainer3.Panel1Collapsed = True
         End If
+
+        UpdateControllerMinSize()
     End Sub
 
     ''' <summary>

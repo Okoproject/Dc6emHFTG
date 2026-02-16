@@ -255,7 +255,7 @@ Partial Class MainPlayerForm
         'SplitContainer3.Panel2
         '
         Me.SplitContainer3.Panel2.Controls.Add(Me.TableLayoutPanel1)
-        Me.SplitContainer3.Panel2MinSize = 200
+            Me.SplitContainer3.Panel2MinSize = 75
         Me.SplitContainer3.Size = New System.Drawing.Size(1052, 838)
         Me.SplitContainer3.SplitterDistance = 322
         Me.SplitContainer3.SplitterWidth = 5
@@ -350,7 +350,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 0)
         Me.TableLayoutPanel1.Margin = New System.Windows.Forms.Padding(1)
-        Me.TableLayoutPanel1.MinimumSize = New System.Drawing.Size(500, 200)
+        Me.TableLayoutPanel1.MinimumSize = New System.Drawing.Size(500, 75)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 7
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
@@ -1152,12 +1152,7 @@ Partial Class MainPlayerForm
         Me.Button28.Image = My.Resources.Cancel_16x
         Me.Button28.Location = New System.Drawing.Point(185, 798)
         Me.Button28.Margin = New System.Windows.Forms.Padding(1)
-        Me.Button28.MinimumSize = New System.Drawing.Size(0, 22)
-        Me.Button28.Name = "Button28"
-        Me.Button28.Size = New System.Drawing.Size(58, 38)
-        Me.Button28.TabIndex = 150
-        Me.ToolTip1.SetToolTip(Me.Button28, "しおりを削除")
-        Me.Button28.UseVisualStyleBackColor = False
+        Me.Button28.MinimumSize = New System.Drawing.Size(0, 0)
         '
         'Button29
         '
@@ -1167,12 +1162,7 @@ Partial Class MainPlayerForm
         Me.Button29.Image = My.Resources.Add_16x
         Me.Button29.Location = New System.Drawing.Point(124, 798)
         Me.Button29.Margin = New System.Windows.Forms.Padding(1)
-        Me.Button29.MinimumSize = New System.Drawing.Size(0, 22)
-        Me.Button29.Name = "Button29"
-        Me.Button29.Size = New System.Drawing.Size(57, 38)
-        Me.Button29.TabIndex = 152
-        Me.ToolTip1.SetToolTip(Me.Button29, "しおりを追加")
-        Me.Button29.UseVisualStyleBackColor = False
+        Me.Button29.MinimumSize = New System.Drawing.Size(0, 0)
         '
         'Button32
         '
@@ -1182,12 +1172,7 @@ Partial Class MainPlayerForm
         Me.Button32.Image = My.Resources.DestinationAssistant_16x
         Me.Button32.Location = New System.Drawing.Point(63, 798)
         Me.Button32.Margin = New System.Windows.Forms.Padding(1)
-        Me.Button32.MinimumSize = New System.Drawing.Size(0, 22)
-        Me.Button32.Name = "Button32"
-        Me.Button32.Size = New System.Drawing.Size(57, 38)
-        Me.Button32.TabIndex = 154
-        Me.ToolTip1.SetToolTip(Me.Button32, "CSV、TXT、WORDファイル読み込み")
-        Me.Button32.UseVisualStyleBackColor = False
+        Me.Button32.MinimumSize = New System.Drawing.Size(0, 0)
         '
         'Button31
         '
@@ -1197,7 +1182,7 @@ Partial Class MainPlayerForm
         Me.Button31.Image = My.Resources.DownloadDocument_16x
         Me.Button31.Location = New System.Drawing.Point(2, 798)
         Me.Button31.Margin = New System.Windows.Forms.Padding(1)
-        Me.Button31.MinimumSize = New System.Drawing.Size(0, 22)
+        Me.Button31.MinimumSize = New System.Drawing.Size(0, 0)
         Me.Button31.Name = "Button31"
         Me.Button31.Size = New System.Drawing.Size(57, 38)
         Me.Button31.TabIndex = 153
@@ -1223,7 +1208,7 @@ Partial Class MainPlayerForm
         Me.Button34.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button34.Location = New System.Drawing.Point(2, 758)
         Me.Button34.Margin = New System.Windows.Forms.Padding(1)
-        Me.Button34.MinimumSize = New System.Drawing.Size(45, 22)
+        Me.Button34.MinimumSize = New System.Drawing.Size(0, 0)
         Me.Button34.Name = "Button34"
         Me.Button34.Size = New System.Drawing.Size(57, 36)
         Me.Button34.TabIndex = 157
