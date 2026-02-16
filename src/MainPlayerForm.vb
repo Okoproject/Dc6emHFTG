@@ -293,6 +293,11 @@ Public Class MainPlayerForm
         My.Settings.SC2_Distance = SplitContainer2.SplitterDistance
         My.Settings.SC3_Distance = SplitContainer3.SplitterDistance
 
+        ' しおりパネルが表示中ならPanel2の実幅を保存
+        If Not SplitContainer1.Panel2Collapsed Then
+            My.Settings.Shiori_Width = SplitContainer1.Panel2.Width
+        End If
+
         My.Settings.MyClientSize = ClientSize
     End Sub
 
@@ -1044,28 +1049,35 @@ Public Class MainPlayerForm
     Private Sub Button30_Click(sender As Object, e As EventArgs) Handles Button30.Click
         If SplitContainer1.Panel2Collapsed Then
             ' しおりパネルを開く
+            ' Panel2（しおり）の幅を使ってフォームを拡張する
             Dim panelWidth As Integer
-            If My.Settings.SC1_Distance > 0 Then
-                panelWidth = My.Settings.SC1_Distance
+            If My.Settings.Shiori_Width > 0 Then
+                panelWidth = CInt(My.Settings.Shiori_Width)
             Else
-                ' デフォルトサイズを設定
-                panelWidth = SplitContainer1.Width - 125
+                ' デフォルトのしおりパネル幅
+                panelWidth = 125
             End If
 
-            ' まずフォームサイズを拡張（Panel1のサイズを変えないように）
-            Me.ClientSize = New Size(Me.ClientSize.Width + panelWidth, Me.ClientSize.Height)
+            ' Panel2 + スプリッター幅の合計分だけフォームを拡張
+            Dim expandWidth As Integer = panelWidth + SplitContainer1.SplitterWidth
+            Me.ClientSize = New Size(Me.ClientSize.Width + expandWidth, Me.ClientSize.Height)
 
             SplitContainer1.Panel2Collapsed = False
-            SplitContainer1.SplitterDistance = panelWidth
+            ' SC1_Distance（Panel1の幅）が保存されていれば復元
+            If My.Settings.SC1_Distance > 0 Then
+                SplitContainer1.SplitterDistance = CInt(My.Settings.SC1_Distance)
+            End If
         Else
             ' しおりパネルを閉じる
-            ' 非表示にする前にパネルの実際のサイズを保存
+            ' 非表示にする前にパネルの実際のサイズを保存（Panel2幅 + スプリッター幅）
             Dim actualPanelWidth As Integer = SplitContainer1.Panel2.Width
+            Dim shrinkWidth As Integer = actualPanelWidth + SplitContainer1.SplitterWidth
+            My.Settings.Shiori_Width = actualPanelWidth
             My.Settings.SC1_Distance = SplitContainer1.SplitterDistance
             My.Settings.Save()
 
-            ' フォームサイズをパネルの実際の幅分縮小（Panel1のサイズを変えないように）
-            Me.ClientSize = New Size(Math.Max(100, Me.ClientSize.Width - actualPanelWidth), Me.ClientSize.Height)
+            ' フォームサイズをPanel2+スプリッター幅分縮小（Panel1のサイズを変えないように）
+            Me.ClientSize = New Size(Math.Max(100, Me.ClientSize.Width - shrinkWidth), Me.ClientSize.Height)
 
             SplitContainer1.Panel2Collapsed = True
         End If
