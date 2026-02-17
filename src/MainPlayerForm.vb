@@ -208,7 +208,7 @@ Public Class MainPlayerForm
     '''     速度コントロールボタン設定の初期化
     ''' </summary>
     Private Sub InitializeSpeedButtonSettings()
-        Dim speedValues As Double() = {5, 8, 12, 13, 14, 15, 20}
+        Dim speedValues As Double() = {5, 10, 12, 13, 14, 15, 20}
 
         For i = 0 To speedValues.Length - 1
             CallByName(My.Settings, $"SC{i + 1}", CallType.Set, speedValues(i))

@@ -130,7 +130,6 @@ Partial Class MainPlayerForm
         'Timer1
         '
         Me.Timer1.Enabled = True
-        Me.Timer1.Interval = 100
         '
         'OpenFileDialog1
         '
@@ -140,7 +139,6 @@ Partial Class MainPlayerForm
         '
         Me.SplitContainer1.AllowDrop = True
         Me.SplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SplitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.None
         Me.SplitContainer1.Location = New System.Drawing.Point(0, 0)
         Me.SplitContainer1.Margin = New System.Windows.Forms.Padding(1)
         Me.SplitContainer1.Name = "SplitContainer1"
@@ -162,7 +160,6 @@ Partial Class MainPlayerForm
         'SplitContainer2
         '
         Me.SplitContainer2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SplitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.None
         Me.SplitContainer2.Location = New System.Drawing.Point(0, 0)
         Me.SplitContainer2.Margin = New System.Windows.Forms.Padding(1)
         Me.SplitContainer2.Name = "SplitContainer2"
@@ -178,8 +175,8 @@ Partial Class MainPlayerForm
         Me.SplitContainer2.Panel2.AllowDrop = True
         Me.SplitContainer2.Panel2.Controls.Add(Me.SplitContainer3)
         Me.SplitContainer2.Panel2MinSize = 500
-        Me.SplitContainer2.Size = New System.Drawing.Size(1355, 838)
-        Me.SplitContainer2.SplitterDistance = 298
+        Me.SplitContainer2.Size = New System.Drawing.Size(1350, 838)
+        Me.SplitContainer2.SplitterDistance = 296
         Me.SplitContainer2.SplitterWidth = 5
         Me.SplitContainer2.TabIndex = 0
         '
@@ -194,47 +191,41 @@ Partial Class MainPlayerForm
         Me.DataGridView2.Name = "DataGridView2"
         Me.DataGridView2.RowHeadersWidth = 51
         Me.DataGridView2.RowTemplate.Height = 24
-        Me.DataGridView2.Size = New System.Drawing.Size(298, 838)
+        Me.DataGridView2.Size = New System.Drawing.Size(296, 838)
         Me.DataGridView2.TabIndex = 0
         '
         'File_Namae
         '
         Me.File_Namae.HeaderText = "ファイル名"
-        Me.File_Namae.FillWeight = 100.0!
         Me.File_Namae.MinimumWidth = 50
         Me.File_Namae.Name = "File_Namae"
         '
         'File_Length
         '
-        Me.File_Length.FillWeight = 100.0!
         Me.File_Length.HeaderText = "長さ"
         Me.File_Length.MinimumWidth = 50
         Me.File_Length.Name = "File_Length"
         '
         'File_Memo
         '
-        Me.File_Memo.FillWeight = 100.0!
         Me.File_Memo.HeaderText = "メモ"
         Me.File_Memo.MinimumWidth = 50
         Me.File_Memo.Name = "File_Memo"
         '
         'File_Delete
         '
-        Me.File_Delete.FillWeight = 100.0!
         Me.File_Delete.HeaderText = "削除"
         Me.File_Delete.MinimumWidth = 40
         Me.File_Delete.Name = "File_Delete"
         '
         'File_Position
         '
-        Me.File_Position.FillWeight = 100.0!
         Me.File_Position.HeaderText = "Position"
         Me.File_Position.MinimumWidth = 50
         Me.File_Position.Name = "File_Position"
         '
         'File_Progress
         '
-        Me.File_Progress.FillWeight = 100.0!
         Me.File_Progress.HeaderText = "進捗"
         Me.File_Progress.MinimumWidth = 50
         Me.File_Progress.Name = "File_Progress"
@@ -255,8 +246,8 @@ Partial Class MainPlayerForm
         'SplitContainer3.Panel2
         '
         Me.SplitContainer3.Panel2.Controls.Add(Me.TableLayoutPanel1)
-            Me.SplitContainer3.Panel2MinSize = 75
-        Me.SplitContainer3.Size = New System.Drawing.Size(1052, 838)
+        Me.SplitContainer3.Panel2MinSize = 75
+        Me.SplitContainer3.Size = New System.Drawing.Size(1049, 838)
         Me.SplitContainer3.SplitterDistance = 322
         Me.SplitContainer3.SplitterWidth = 5
         Me.SplitContainer3.TabIndex = 1
@@ -269,7 +260,7 @@ Partial Class MainPlayerForm
         Me.MpvPanel.Location = New System.Drawing.Point(0, 0)
         Me.MpvPanel.Margin = New System.Windows.Forms.Padding(1)
         Me.MpvPanel.Name = "MpvPanel"
-        Me.MpvPanel.Size = New System.Drawing.Size(1052, 322)
+        Me.MpvPanel.Size = New System.Drawing.Size(1049, 322)
         Me.MpvPanel.TabIndex = 193
         '
         'TableLayoutPanel1
@@ -361,7 +352,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(1052, 511)
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(1049, 511)
         Me.TableLayoutPanel1.TabIndex = 0
         '
         'CheckBox1
@@ -373,10 +364,10 @@ Partial Class MainPlayerForm
         Me.CheckBox1.CheckState = System.Windows.Forms.CheckState.Checked
         Me.TableLayoutPanel1.SetColumnSpan(Me.CheckBox1, 2)
         Me.CheckBox1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CheckBox1.Location = New System.Drawing.Point(2, 75)
+        Me.CheckBox1.Location = New System.Drawing.Point(1, 74)
         Me.CheckBox1.Margin = New System.Windows.Forms.Padding(1)
         Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(94, 69)
+        Me.CheckBox1.Size = New System.Drawing.Size(96, 71)
         Me.CheckBox1.TabIndex = 972
         Me.CheckBox1.Text = "PL"
         Me.CheckBox1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -392,11 +383,11 @@ Partial Class MainPlayerForm
         Me.CheckBox2.CheckState = System.Windows.Forms.CheckState.Checked
         Me.TableLayoutPanel1.SetColumnSpan(Me.CheckBox2, 2)
         Me.CheckBox2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CheckBox2.Image = My.Resources.Monitor_16x
-        Me.CheckBox2.Location = New System.Drawing.Point(2, 2)
+        Me.CheckBox2.Image = Global.OkoshiMAX.My.Resources.Resources.Monitor_16x
+        Me.CheckBox2.Location = New System.Drawing.Point(1, 1)
         Me.CheckBox2.Margin = New System.Windows.Forms.Padding(1)
         Me.CheckBox2.Name = "CheckBox2"
-        Me.CheckBox2.Size = New System.Drawing.Size(94, 69)
+        Me.CheckBox2.Size = New System.Drawing.Size(96, 71)
         Me.CheckBox2.TabIndex = 919
         Me.ToolTip1.SetToolTip(Me.CheckBox2, "動画再生画面の表示・非表示")
         Me.CheckBox2.UseVisualStyleBackColor = False
@@ -414,7 +405,7 @@ Partial Class MainPlayerForm
         Me.Label1.Location = New System.Drawing.Point(637, 0)
         Me.Label1.Margin = New System.Windows.Forms.Padding(0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(415, 73)
+        Me.Label1.Size = New System.Drawing.Size(412, 73)
         Me.Label1.TabIndex = 920
         Me.Label1.Text = "00:00:00"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -425,10 +416,10 @@ Partial Class MainPlayerForm
         Me.Button33.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button33, 2)
         Me.Button33.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button33.Location = New System.Drawing.Point(492, 2)
+        Me.Button33.Location = New System.Drawing.Point(491, 1)
         Me.Button33.Margin = New System.Windows.Forms.Padding(1)
         Me.Button33.Name = "Button33"
-        Me.Button33.Size = New System.Drawing.Size(94, 69)
+        Me.Button33.Size = New System.Drawing.Size(96, 71)
         Me.Button33.TabIndex = 921
         Me.Button33.Text = ">>"
         Me.ToolTip1.SetToolTip(Me.Button33, "指定位置にジャンプ")
@@ -438,10 +429,10 @@ Partial Class MainPlayerForm
         '
         Me.TableLayoutPanel1.SetColumnSpan(Me.TextBox2, 6)
         Me.TextBox2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TextBox2.Location = New System.Drawing.Point(198, 2)
+        Me.TextBox2.Location = New System.Drawing.Point(197, 1)
         Me.TextBox2.Margin = New System.Windows.Forms.Padding(1)
         Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(290, 22)
+        Me.TextBox2.Size = New System.Drawing.Size(292, 22)
         Me.TextBox2.TabIndex = 922
         Me.TextBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.ToolTip1.SetToolTip(Me.TextBox2, "カウンタ入力欄")
@@ -450,10 +441,10 @@ Partial Class MainPlayerForm
         '
         Me.TableLayoutPanel1.SetColumnSpan(Me.TextBox1, 10)
         Me.TextBox1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TextBox1.Location = New System.Drawing.Point(100, 75)
+        Me.TextBox1.Location = New System.Drawing.Point(99, 74)
         Me.TextBox1.Margin = New System.Windows.Forms.Padding(1)
         Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(486, 22)
+        Me.TextBox1.Size = New System.Drawing.Size(488, 22)
         Me.TextBox1.TabIndex = 923
         '
         'Button3
@@ -462,10 +453,10 @@ Partial Class MainPlayerForm
         Me.Button3.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button3, 2)
         Me.Button3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button3.Location = New System.Drawing.Point(198, 148)
+        Me.Button3.Location = New System.Drawing.Point(197, 147)
         Me.Button3.Margin = New System.Windows.Forms.Padding(1)
         Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(94, 69)
+        Me.Button3.Size = New System.Drawing.Size(96, 71)
         Me.Button3.TabIndex = 930
         Me.Button3.Text = "+5S"
         Me.Button3.UseVisualStyleBackColor = False
@@ -476,10 +467,10 @@ Partial Class MainPlayerForm
         Me.Button4.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button4, 2)
         Me.Button4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button4.Location = New System.Drawing.Point(296, 148)
+        Me.Button4.Location = New System.Drawing.Point(295, 147)
         Me.Button4.Margin = New System.Windows.Forms.Padding(1)
         Me.Button4.Name = "Button4"
-        Me.Button4.Size = New System.Drawing.Size(94, 69)
+        Me.Button4.Size = New System.Drawing.Size(96, 71)
         Me.Button4.TabIndex = 931
         Me.Button4.Text = "+10S"
         Me.Button4.UseVisualStyleBackColor = False
@@ -490,10 +481,10 @@ Partial Class MainPlayerForm
         Me.Button5.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button5, 2)
         Me.Button5.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button5.Location = New System.Drawing.Point(394, 148)
+        Me.Button5.Location = New System.Drawing.Point(393, 147)
         Me.Button5.Margin = New System.Windows.Forms.Padding(1)
         Me.Button5.Name = "Button5"
-        Me.Button5.Size = New System.Drawing.Size(94, 69)
+        Me.Button5.Size = New System.Drawing.Size(96, 71)
         Me.Button5.TabIndex = 932
         Me.Button5.Text = "+15S"
         Me.Button5.UseVisualStyleBackColor = False
@@ -504,10 +495,10 @@ Partial Class MainPlayerForm
         Me.Button6.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button6, 2)
         Me.Button6.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button6.Location = New System.Drawing.Point(492, 148)
+        Me.Button6.Location = New System.Drawing.Point(491, 147)
         Me.Button6.Margin = New System.Windows.Forms.Padding(1)
         Me.Button6.Name = "Button6"
-        Me.Button6.Size = New System.Drawing.Size(94, 69)
+        Me.Button6.Size = New System.Drawing.Size(96, 71)
         Me.Button6.TabIndex = 933
         Me.Button6.Text = "+30S"
         Me.Button6.UseVisualStyleBackColor = False
@@ -518,10 +509,10 @@ Partial Class MainPlayerForm
         Me.Button7.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button7, 2)
         Me.Button7.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button7.Location = New System.Drawing.Point(590, 148)
+        Me.Button7.Location = New System.Drawing.Point(589, 147)
         Me.Button7.Margin = New System.Windows.Forms.Padding(1)
         Me.Button7.Name = "Button7"
-        Me.Button7.Size = New System.Drawing.Size(94, 69)
+        Me.Button7.Size = New System.Drawing.Size(96, 71)
         Me.Button7.TabIndex = 934
         Me.Button7.Text = "+1M"
         Me.Button7.UseVisualStyleBackColor = False
@@ -532,10 +523,10 @@ Partial Class MainPlayerForm
         Me.Button8.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button8, 2)
         Me.Button8.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button8.Location = New System.Drawing.Point(688, 148)
+        Me.Button8.Location = New System.Drawing.Point(687, 147)
         Me.Button8.Margin = New System.Windows.Forms.Padding(1)
         Me.Button8.Name = "Button8"
-        Me.Button8.Size = New System.Drawing.Size(94, 69)
+        Me.Button8.Size = New System.Drawing.Size(96, 71)
         Me.Button8.TabIndex = 935
         Me.Button8.Text = "+3M"
         Me.Button8.UseVisualStyleBackColor = False
@@ -546,10 +537,10 @@ Partial Class MainPlayerForm
         Me.Button9.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button9, 2)
         Me.Button9.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button9.Location = New System.Drawing.Point(786, 148)
+        Me.Button9.Location = New System.Drawing.Point(785, 147)
         Me.Button9.Margin = New System.Windows.Forms.Padding(1)
         Me.Button9.Name = "Button9"
-        Me.Button9.Size = New System.Drawing.Size(94, 69)
+        Me.Button9.Size = New System.Drawing.Size(96, 71)
         Me.Button9.TabIndex = 936
         Me.Button9.Text = "+5M"
         Me.Button9.UseVisualStyleBackColor = False
@@ -560,10 +551,10 @@ Partial Class MainPlayerForm
         Me.Button10.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button10, 2)
         Me.Button10.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button10.Location = New System.Drawing.Point(884, 148)
+        Me.Button10.Location = New System.Drawing.Point(883, 147)
         Me.Button10.Margin = New System.Windows.Forms.Padding(1)
         Me.Button10.Name = "Button10"
-        Me.Button10.Size = New System.Drawing.Size(94, 69)
+        Me.Button10.Size = New System.Drawing.Size(96, 71)
         Me.Button10.TabIndex = 937
         Me.Button10.Text = "+10M"
         Me.Button10.UseVisualStyleBackColor = False
@@ -574,11 +565,11 @@ Partial Class MainPlayerForm
         Me.TrackBar1.BackColor = System.Drawing.SystemColors.ControlDarkDark
         Me.TableLayoutPanel1.SetColumnSpan(Me.TrackBar1, 20)
         Me.TrackBar1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TrackBar1.Location = New System.Drawing.Point(2, 221)
+        Me.TrackBar1.Location = New System.Drawing.Point(1, 220)
         Me.TrackBar1.Margin = New System.Windows.Forms.Padding(1)
         Me.TrackBar1.Maximum = 10000
         Me.TrackBar1.Name = "TrackBar1"
-        Me.TrackBar1.Size = New System.Drawing.Size(976, 69)
+        Me.TrackBar1.Size = New System.Drawing.Size(978, 71)
         Me.TrackBar1.TabIndex = 938
         Me.TrackBar1.TickFrequency = 100
         Me.TrackBar1.TickStyle = System.Windows.Forms.TickStyle.None
@@ -589,10 +580,10 @@ Partial Class MainPlayerForm
         Me.Button11.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button11, 2)
         Me.Button11.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button11.Location = New System.Drawing.Point(2, 294)
+        Me.Button11.Location = New System.Drawing.Point(1, 293)
         Me.Button11.Margin = New System.Windows.Forms.Padding(1)
         Me.Button11.Name = "Button11"
-        Me.Button11.Size = New System.Drawing.Size(94, 69)
+        Me.Button11.Size = New System.Drawing.Size(96, 71)
         Me.Button11.TabIndex = 939
         Me.Button11.Text = "-1S"
         Me.Button11.UseVisualStyleBackColor = False
@@ -603,10 +594,10 @@ Partial Class MainPlayerForm
         Me.Button13.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button13, 2)
         Me.Button13.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button13.Location = New System.Drawing.Point(198, 294)
+        Me.Button13.Location = New System.Drawing.Point(197, 293)
         Me.Button13.Margin = New System.Windows.Forms.Padding(1)
         Me.Button13.Name = "Button13"
-        Me.Button13.Size = New System.Drawing.Size(94, 69)
+        Me.Button13.Size = New System.Drawing.Size(96, 71)
         Me.Button13.TabIndex = 941
         Me.Button13.Text = "-5S"
         Me.Button13.UseVisualStyleBackColor = False
@@ -617,10 +608,10 @@ Partial Class MainPlayerForm
         Me.Button14.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button14, 2)
         Me.Button14.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button14.Location = New System.Drawing.Point(296, 294)
+        Me.Button14.Location = New System.Drawing.Point(295, 293)
         Me.Button14.Margin = New System.Windows.Forms.Padding(1)
         Me.Button14.Name = "Button14"
-        Me.Button14.Size = New System.Drawing.Size(94, 69)
+        Me.Button14.Size = New System.Drawing.Size(96, 71)
         Me.Button14.TabIndex = 942
         Me.Button14.Text = "-10S"
         Me.Button14.UseVisualStyleBackColor = False
@@ -631,10 +622,10 @@ Partial Class MainPlayerForm
         Me.Button15.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button15, 2)
         Me.Button15.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button15.Location = New System.Drawing.Point(394, 294)
+        Me.Button15.Location = New System.Drawing.Point(393, 293)
         Me.Button15.Margin = New System.Windows.Forms.Padding(1)
         Me.Button15.Name = "Button15"
-        Me.Button15.Size = New System.Drawing.Size(94, 69)
+        Me.Button15.Size = New System.Drawing.Size(96, 71)
         Me.Button15.TabIndex = 943
         Me.Button15.Text = "-15S"
         Me.Button15.UseVisualStyleBackColor = False
@@ -645,10 +636,10 @@ Partial Class MainPlayerForm
         Me.Button16.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button16, 2)
         Me.Button16.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button16.Location = New System.Drawing.Point(492, 294)
+        Me.Button16.Location = New System.Drawing.Point(491, 293)
         Me.Button16.Margin = New System.Windows.Forms.Padding(1)
         Me.Button16.Name = "Button16"
-        Me.Button16.Size = New System.Drawing.Size(94, 69)
+        Me.Button16.Size = New System.Drawing.Size(96, 71)
         Me.Button16.TabIndex = 944
         Me.Button16.Text = "-30S"
         Me.Button16.UseVisualStyleBackColor = False
@@ -659,10 +650,10 @@ Partial Class MainPlayerForm
         Me.Button17.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button17, 2)
         Me.Button17.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button17.Location = New System.Drawing.Point(590, 294)
+        Me.Button17.Location = New System.Drawing.Point(589, 293)
         Me.Button17.Margin = New System.Windows.Forms.Padding(1)
         Me.Button17.Name = "Button17"
-        Me.Button17.Size = New System.Drawing.Size(94, 69)
+        Me.Button17.Size = New System.Drawing.Size(96, 71)
         Me.Button17.TabIndex = 945
         Me.Button17.Text = "-1M"
         Me.Button17.UseVisualStyleBackColor = False
@@ -673,10 +664,10 @@ Partial Class MainPlayerForm
         Me.Button18.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button18, 2)
         Me.Button18.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button18.Location = New System.Drawing.Point(688, 294)
+        Me.Button18.Location = New System.Drawing.Point(687, 293)
         Me.Button18.Margin = New System.Windows.Forms.Padding(1)
         Me.Button18.Name = "Button18"
-        Me.Button18.Size = New System.Drawing.Size(94, 69)
+        Me.Button18.Size = New System.Drawing.Size(96, 71)
         Me.Button18.TabIndex = 946
         Me.Button18.Text = "-3M"
         Me.Button18.UseVisualStyleBackColor = False
@@ -687,10 +678,10 @@ Partial Class MainPlayerForm
         Me.Button19.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button19, 2)
         Me.Button19.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button19.Location = New System.Drawing.Point(786, 294)
+        Me.Button19.Location = New System.Drawing.Point(785, 293)
         Me.Button19.Margin = New System.Windows.Forms.Padding(1)
         Me.Button19.Name = "Button19"
-        Me.Button19.Size = New System.Drawing.Size(94, 69)
+        Me.Button19.Size = New System.Drawing.Size(96, 71)
         Me.Button19.TabIndex = 947
         Me.Button19.Text = "-5M"
         Me.Button19.UseVisualStyleBackColor = False
@@ -701,10 +692,10 @@ Partial Class MainPlayerForm
         Me.Button20.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button20, 2)
         Me.Button20.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button20.Location = New System.Drawing.Point(884, 294)
+        Me.Button20.Location = New System.Drawing.Point(883, 293)
         Me.Button20.Margin = New System.Windows.Forms.Padding(1)
         Me.Button20.Name = "Button20"
-        Me.Button20.Size = New System.Drawing.Size(94, 69)
+        Me.Button20.Size = New System.Drawing.Size(96, 71)
         Me.Button20.TabIndex = 948
         Me.Button20.Text = "-10M"
         Me.Button20.UseVisualStyleBackColor = False
@@ -715,12 +706,12 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.TrackBar2, 9)
         Me.TrackBar2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TrackBar2.LargeChange = 1
-        Me.TrackBar2.Location = New System.Drawing.Point(394, 367)
+        Me.TrackBar2.Location = New System.Drawing.Point(393, 366)
         Me.TrackBar2.Margin = New System.Windows.Forms.Padding(1)
         Me.TrackBar2.Maximum = 40
         Me.TrackBar2.Minimum = 5
         Me.TrackBar2.Name = "TrackBar2"
-        Me.TrackBar2.Size = New System.Drawing.Size(437, 69)
+        Me.TrackBar2.Size = New System.Drawing.Size(439, 71)
         Me.TrackBar2.TabIndex = 952
         Me.ToolTip1.SetToolTip(Me.TrackBar2, "再生速度")
         Me.TrackBar2.Value = 10
@@ -747,10 +738,10 @@ Partial Class MainPlayerForm
         Me.Button21.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button21, 2)
         Me.Button21.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button21.Location = New System.Drawing.Point(296, 440)
+        Me.Button21.Location = New System.Drawing.Point(295, 439)
         Me.Button21.Margin = New System.Windows.Forms.Padding(1)
         Me.Button21.Name = "Button21"
-        Me.Button21.Size = New System.Drawing.Size(94, 69)
+        Me.Button21.Size = New System.Drawing.Size(96, 71)
         Me.Button21.TabIndex = 956
         Me.Button21.Text = "0.5"
         Me.Button21.UseVisualStyleBackColor = False
@@ -761,10 +752,10 @@ Partial Class MainPlayerForm
         Me.Button22.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button22, 2)
         Me.Button22.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button22.Location = New System.Drawing.Point(394, 440)
+        Me.Button22.Location = New System.Drawing.Point(393, 439)
         Me.Button22.Margin = New System.Windows.Forms.Padding(1)
         Me.Button22.Name = "Button22"
-        Me.Button22.Size = New System.Drawing.Size(94, 69)
+        Me.Button22.Size = New System.Drawing.Size(96, 71)
         Me.Button22.TabIndex = 957
         Me.Button22.Text = "1.0"
         Me.Button22.UseVisualStyleBackColor = False
@@ -775,10 +766,10 @@ Partial Class MainPlayerForm
         Me.Button23.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button23, 2)
         Me.Button23.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button23.Location = New System.Drawing.Point(492, 440)
+        Me.Button23.Location = New System.Drawing.Point(491, 439)
         Me.Button23.Margin = New System.Windows.Forms.Padding(1)
         Me.Button23.Name = "Button23"
-        Me.Button23.Size = New System.Drawing.Size(94, 69)
+        Me.Button23.Size = New System.Drawing.Size(96, 71)
         Me.Button23.TabIndex = 958
         Me.Button23.Text = "1.1"
         Me.Button23.UseVisualStyleBackColor = False
@@ -789,10 +780,10 @@ Partial Class MainPlayerForm
         Me.Button24.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button24, 2)
         Me.Button24.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button24.Location = New System.Drawing.Point(590, 440)
+        Me.Button24.Location = New System.Drawing.Point(589, 439)
         Me.Button24.Margin = New System.Windows.Forms.Padding(1)
         Me.Button24.Name = "Button24"
-        Me.Button24.Size = New System.Drawing.Size(94, 69)
+        Me.Button24.Size = New System.Drawing.Size(96, 71)
         Me.Button24.TabIndex = 959
         Me.Button24.Text = "1.2"
         Me.Button24.UseVisualStyleBackColor = False
@@ -803,10 +794,10 @@ Partial Class MainPlayerForm
         Me.Button25.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button25, 2)
         Me.Button25.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button25.Location = New System.Drawing.Point(688, 440)
+        Me.Button25.Location = New System.Drawing.Point(687, 439)
         Me.Button25.Margin = New System.Windows.Forms.Padding(1)
         Me.Button25.Name = "Button25"
-        Me.Button25.Size = New System.Drawing.Size(94, 69)
+        Me.Button25.Size = New System.Drawing.Size(96, 71)
         Me.Button25.TabIndex = 960
         Me.Button25.Text = "1.3"
         Me.Button25.UseVisualStyleBackColor = False
@@ -817,10 +808,10 @@ Partial Class MainPlayerForm
         Me.Button26.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button26, 2)
         Me.Button26.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button26.Location = New System.Drawing.Point(786, 440)
+        Me.Button26.Location = New System.Drawing.Point(785, 439)
         Me.Button26.Margin = New System.Windows.Forms.Padding(1)
         Me.Button26.Name = "Button26"
-        Me.Button26.Size = New System.Drawing.Size(94, 69)
+        Me.Button26.Size = New System.Drawing.Size(96, 71)
         Me.Button26.TabIndex = 961
         Me.Button26.Text = "1.4"
         Me.Button26.UseVisualStyleBackColor = False
@@ -831,10 +822,10 @@ Partial Class MainPlayerForm
         Me.Button27.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button27, 2)
         Me.Button27.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button27.Location = New System.Drawing.Point(884, 440)
+        Me.Button27.Location = New System.Drawing.Point(883, 439)
         Me.Button27.Margin = New System.Windows.Forms.Padding(1)
         Me.Button27.Name = "Button27"
-        Me.Button27.Size = New System.Drawing.Size(94, 69)
+        Me.Button27.Size = New System.Drawing.Size(96, 71)
         Me.Button27.TabIndex = 962
         Me.Button27.Text = "1.5"
         Me.Button27.UseVisualStyleBackColor = False
@@ -861,11 +852,11 @@ Partial Class MainPlayerForm
         Me.Button39.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button39, 2)
         Me.Button39.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button39.Image = My.Resources.OpenFolder_16x
-        Me.Button39.Location = New System.Drawing.Point(639, 75)
+        Me.Button39.Image = Global.OkoshiMAX.My.Resources.Resources.OpenFolder_16x
+        Me.Button39.Location = New System.Drawing.Point(638, 74)
         Me.Button39.Margin = New System.Windows.Forms.Padding(1)
         Me.Button39.Name = "Button39"
-        Me.Button39.Size = New System.Drawing.Size(94, 69)
+        Me.Button39.Size = New System.Drawing.Size(96, 71)
         Me.Button39.TabIndex = 927
         Me.ToolTip1.SetToolTip(Me.Button39, "ファイルを開く")
         Me.Button39.UseVisualStyleBackColor = False
@@ -877,11 +868,11 @@ Partial Class MainPlayerForm
         Me.Button37.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button37, 2)
         Me.Button37.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button37.Image = My.Resources.SettingsOutline_16x
-        Me.Button37.Location = New System.Drawing.Point(933, 75)
+        Me.Button37.Image = Global.OkoshiMAX.My.Resources.Resources.SettingsOutline_16x
+        Me.Button37.Location = New System.Drawing.Point(932, 74)
         Me.Button37.Margin = New System.Windows.Forms.Padding(1)
         Me.Button37.Name = "Button37"
-        Me.Button37.Size = New System.Drawing.Size(117, 69)
+        Me.Button37.Size = New System.Drawing.Size(116, 71)
         Me.Button37.TabIndex = 924
         Me.ToolTip1.SetToolTip(Me.Button37, "設定")
         Me.Button37.UseVisualStyleBackColor = False
@@ -892,11 +883,11 @@ Partial Class MainPlayerForm
         Me.Label2.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.Label2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Label2.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label2.Image = My.Resources.Volume_16x
+        Me.Label2.Image = Global.OkoshiMAX.My.Resources.Resources.Volume_16x
         Me.Label2.Location = New System.Drawing.Point(980, 146)
         Me.Label2.Margin = New System.Windows.Forms.Padding(0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(72, 73)
+        Me.Label2.Size = New System.Drawing.Size(69, 73)
         Me.Label2.TabIndex = 969
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
@@ -905,7 +896,7 @@ Partial Class MainPlayerForm
         Me.TrackBar6.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom), System.Windows.Forms.AnchorStyles)
         Me.TrackBar6.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.TrackBar6.LargeChange = 1
-        Me.TrackBar6.Location = New System.Drawing.Point(988, 219)
+        Me.TrackBar6.Location = New System.Drawing.Point(986, 219)
         Me.TrackBar6.Margin = New System.Windows.Forms.Padding(0)
         Me.TrackBar6.Maximum = 100
         Me.TrackBar6.Name = "TrackBar6"
@@ -926,11 +917,11 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button36, 2)
         Me.Button36.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button36.Enabled = False
-        Me.Button36.Image = My.Resources.CaptureFrame_16x
-        Me.Button36.Location = New System.Drawing.Point(100, 2)
+        Me.Button36.Image = Global.OkoshiMAX.My.Resources.Resources.CaptureFrame_16x
+        Me.Button36.Location = New System.Drawing.Point(99, 1)
         Me.Button36.Margin = New System.Windows.Forms.Padding(1)
         Me.Button36.Name = "Button36"
-        Me.Button36.Size = New System.Drawing.Size(94, 69)
+        Me.Button36.Size = New System.Drawing.Size(96, 71)
         Me.Button36.TabIndex = 925
         Me.ToolTip1.SetToolTip(Me.Button36, "画面キャプチャ")
         Me.Button36.UseVisualStyleBackColor = False
@@ -945,12 +936,12 @@ Partial Class MainPlayerForm
         Me.Button200.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button200, 3)
         Me.Button200.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Button200.Image = My.Resources.Run_16x
-        Me.Button200.Location = New System.Drawing.Point(2, 367)
+        Me.Button200.Image = Global.OkoshiMAX.My.Resources.Resources.Run_16x
+        Me.Button200.Location = New System.Drawing.Point(1, 366)
         Me.Button200.Margin = New System.Windows.Forms.Padding(1)
         Me.Button200.Name = "Button200"
         Me.TableLayoutPanel1.SetRowSpan(Me.Button200, 2)
-        Me.Button200.Size = New System.Drawing.Size(143, 142)
+        Me.Button200.Size = New System.Drawing.Size(145, 144)
         Me.Button200.TabIndex = 963
         Me.ToolTip1.SetToolTip(Me.Button200, "再生・一時停止")
         Me.Button200.UseVisualStyleBackColor = False
@@ -964,12 +955,12 @@ Partial Class MainPlayerForm
         Me.Button400.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button400.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button400, 3)
-        Me.Button400.Image = My.Resources.Stop_grey_16x
-        Me.Button400.Location = New System.Drawing.Point(149, 367)
+        Me.Button400.Image = Global.OkoshiMAX.My.Resources.Resources.Stop_grey_16x
+        Me.Button400.Location = New System.Drawing.Point(148, 366)
         Me.Button400.Margin = New System.Windows.Forms.Padding(1)
         Me.Button400.Name = "Button400"
         Me.TableLayoutPanel1.SetRowSpan(Me.Button400, 2)
-        Me.Button400.Size = New System.Drawing.Size(143, 142)
+        Me.Button400.Size = New System.Drawing.Size(145, 144)
         Me.Button400.TabIndex = 964
         Me.ToolTip1.SetToolTip(Me.Button400, "停止")
         Me.Button400.UseVisualStyleBackColor = False
@@ -984,7 +975,7 @@ Partial Class MainPlayerForm
         Me.Label5.Location = New System.Drawing.Point(980, 438)
         Me.Label5.Margin = New System.Windows.Forms.Padding(0)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(72, 73)
+        Me.Label5.Size = New System.Drawing.Size(69, 73)
         Me.Label5.TabIndex = 955
         Me.Label5.Text = "100"
         Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -996,11 +987,11 @@ Partial Class MainPlayerForm
         Me.Button30.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button30, 2)
         Me.Button30.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button30.Image = My.Resources.Bookmark_16x
-        Me.Button30.Location = New System.Drawing.Point(835, 75)
+        Me.Button30.Image = Global.OkoshiMAX.My.Resources.Resources.Bookmark_16x
+        Me.Button30.Location = New System.Drawing.Point(834, 74)
         Me.Button30.Margin = New System.Windows.Forms.Padding(1)
         Me.Button30.Name = "Button30"
-        Me.Button30.Size = New System.Drawing.Size(94, 69)
+        Me.Button30.Size = New System.Drawing.Size(96, 71)
         Me.Button30.TabIndex = 967
         Me.ToolTip1.SetToolTip(Me.Button30, "しおり一覧")
         Me.Button30.UseVisualStyleBackColor = False
@@ -1010,11 +1001,11 @@ Partial Class MainPlayerForm
         Me.Button35.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button35, 2)
         Me.Button35.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button35.Image = My.Resources.PinnedItem_16x
-        Me.Button35.Location = New System.Drawing.Point(737, 75)
+        Me.Button35.Image = Global.OkoshiMAX.My.Resources.Resources.PinnedItem_16x
+        Me.Button35.Location = New System.Drawing.Point(736, 74)
         Me.Button35.Margin = New System.Windows.Forms.Padding(1)
         Me.Button35.Name = "Button35"
-        Me.Button35.Size = New System.Drawing.Size(94, 69)
+        Me.Button35.Size = New System.Drawing.Size(96, 71)
         Me.Button35.TabIndex = 971
         Me.Button35.UseVisualStyleBackColor = False
         '
@@ -1024,10 +1015,10 @@ Partial Class MainPlayerForm
         Me.Button1.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button1, 2)
         Me.Button1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button1.Location = New System.Drawing.Point(2, 148)
+        Me.Button1.Location = New System.Drawing.Point(1, 147)
         Me.Button1.Margin = New System.Windows.Forms.Padding(1)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(94, 69)
+        Me.Button1.Size = New System.Drawing.Size(96, 71)
         Me.Button1.TabIndex = 940
         Me.Button1.Text = "-3S"
         Me.Button1.UseVisualStyleBackColor = False
@@ -1038,10 +1029,10 @@ Partial Class MainPlayerForm
         Me.Button2.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button2, 2)
         Me.Button2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button2.Location = New System.Drawing.Point(100, 148)
+        Me.Button2.Location = New System.Drawing.Point(99, 147)
         Me.Button2.Margin = New System.Windows.Forms.Padding(1)
         Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(94, 69)
+        Me.Button2.Size = New System.Drawing.Size(96, 71)
         Me.Button2.TabIndex = 928
         Me.Button2.Text = "+1S"
         Me.Button2.UseVisualStyleBackColor = False
@@ -1052,10 +1043,10 @@ Partial Class MainPlayerForm
         Me.Button12.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button12, 2)
         Me.Button12.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button12.Location = New System.Drawing.Point(100, 294)
+        Me.Button12.Location = New System.Drawing.Point(99, 293)
         Me.Button12.Margin = New System.Windows.Forms.Padding(1)
         Me.Button12.Name = "Button12"
-        Me.Button12.Size = New System.Drawing.Size(94, 69)
+        Me.Button12.Size = New System.Drawing.Size(96, 71)
         Me.Button12.TabIndex = 929
         Me.Button12.Text = "+3S"
         Me.Button12.UseVisualStyleBackColor = False
@@ -1085,7 +1076,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
-        Me.TableLayoutPanel2.Size = New System.Drawing.Size(245, 838)
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(250, 838)
         Me.TableLayoutPanel2.TabIndex = 158
         '
         'DataGridView1
@@ -1096,13 +1087,13 @@ Partial Class MainPlayerForm
         Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colCounter, Me.colMemo, Me.colPosition, Me.colDelete})
         Me.TableLayoutPanel2.SetColumnSpan(Me.DataGridView1, 4)
         Me.DataGridView1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DataGridView1.Location = New System.Drawing.Point(2, 2)
+        Me.DataGridView1.Location = New System.Drawing.Point(1, 1)
         Me.DataGridView1.Margin = New System.Windows.Forms.Padding(1)
         Me.DataGridView1.MinimumSize = New System.Drawing.Size(200, 100)
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.RowHeadersWidth = 25
         Me.DataGridView1.RowTemplate.Height = 24
-        Me.DataGridView1.Size = New System.Drawing.Size(245, 752)
+        Me.DataGridView1.Size = New System.Drawing.Size(248, 756)
         Me.DataGridView1.TabIndex = 149
         '
         'colCounter
@@ -1111,8 +1102,8 @@ Partial Class MainPlayerForm
         DataGridViewCellStyle1.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
         Me.colCounter.DefaultCellStyle = DataGridViewCellStyle1
-        Me.colCounter.HeaderText = "カウンタ"
         Me.colCounter.FillWeight = 80.0!
+        Me.colCounter.HeaderText = "カウンタ"
         Me.colCounter.MinimumWidth = 6
         Me.colCounter.Name = "colCounter"
         Me.colCounter.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
@@ -1149,42 +1140,50 @@ Partial Class MainPlayerForm
         Me.Button28.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button28.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.Button28.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button28.Image = My.Resources.Cancel_16x
-        Me.Button28.Location = New System.Drawing.Point(185, 798)
+        Me.Button28.Image = Global.OkoshiMAX.My.Resources.Resources.Cancel_16x
+        Me.Button28.Location = New System.Drawing.Point(187, 799)
         Me.Button28.Margin = New System.Windows.Forms.Padding(1)
-        Me.Button28.MinimumSize = New System.Drawing.Size(0, 0)
+        Me.Button28.Name = "Button28"
+        Me.Button28.Size = New System.Drawing.Size(62, 38)
+        Me.Button28.TabIndex = 150
+        Me.Button28.UseVisualStyleBackColor = False
         '
         'Button29
         '
         Me.Button29.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button29.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.Button29.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button29.Image = My.Resources.Add_16x
-        Me.Button29.Location = New System.Drawing.Point(124, 798)
+        Me.Button29.Image = Global.OkoshiMAX.My.Resources.Resources.Add_16x
+        Me.Button29.Location = New System.Drawing.Point(125, 799)
         Me.Button29.Margin = New System.Windows.Forms.Padding(1)
-        Me.Button29.MinimumSize = New System.Drawing.Size(0, 0)
+        Me.Button29.Name = "Button29"
+        Me.Button29.Size = New System.Drawing.Size(60, 38)
+        Me.Button29.TabIndex = 151
+        Me.Button29.UseVisualStyleBackColor = False
         '
         'Button32
         '
         Me.Button32.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button32.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.Button32.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button32.Image = My.Resources.DestinationAssistant_16x
-        Me.Button32.Location = New System.Drawing.Point(63, 798)
+        Me.Button32.Image = Global.OkoshiMAX.My.Resources.Resources.DestinationAssistant_16x
+        Me.Button32.Location = New System.Drawing.Point(63, 799)
         Me.Button32.Margin = New System.Windows.Forms.Padding(1)
-        Me.Button32.MinimumSize = New System.Drawing.Size(0, 0)
+        Me.Button32.Name = "Button32"
+        Me.Button32.Size = New System.Drawing.Size(60, 38)
+        Me.Button32.TabIndex = 152
+        Me.Button32.UseVisualStyleBackColor = False
         '
         'Button31
         '
         Me.Button31.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button31.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.Button31.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button31.Image = My.Resources.DownloadDocument_16x
-        Me.Button31.Location = New System.Drawing.Point(2, 798)
+        Me.Button31.Image = Global.OkoshiMAX.My.Resources.Resources.DownloadDocument_16x
+        Me.Button31.Location = New System.Drawing.Point(1, 799)
         Me.Button31.Margin = New System.Windows.Forms.Padding(1)
-        Me.Button31.MinimumSize = New System.Drawing.Size(0, 0)
         Me.Button31.Name = "Button31"
-        Me.Button31.Size = New System.Drawing.Size(57, 38)
+        Me.Button31.Size = New System.Drawing.Size(60, 38)
         Me.Button31.TabIndex = 153
         Me.ToolTip1.SetToolTip(Me.Button31, "CSVファイル書き出し")
         Me.Button31.UseVisualStyleBackColor = False
@@ -1195,10 +1194,10 @@ Partial Class MainPlayerForm
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TableLayoutPanel2.SetColumnSpan(Me.TextBox3, 3)
-        Me.TextBox3.Location = New System.Drawing.Point(63, 758)
+        Me.TextBox3.Location = New System.Drawing.Point(63, 759)
         Me.TextBox3.Margin = New System.Windows.Forms.Padding(1)
         Me.TextBox3.Name = "TextBox3"
-        Me.TextBox3.Size = New System.Drawing.Size(180, 22)
+        Me.TextBox3.Size = New System.Drawing.Size(186, 22)
         Me.TextBox3.TabIndex = 156
         Me.TextBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -1206,11 +1205,10 @@ Partial Class MainPlayerForm
         '
         Me.Button34.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.Button34.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button34.Location = New System.Drawing.Point(2, 758)
+        Me.Button34.Location = New System.Drawing.Point(1, 759)
         Me.Button34.Margin = New System.Windows.Forms.Padding(1)
-        Me.Button34.MinimumSize = New System.Drawing.Size(0, 0)
         Me.Button34.Name = "Button34"
-        Me.Button34.Size = New System.Drawing.Size(57, 36)
+        Me.Button34.Size = New System.Drawing.Size(60, 38)
         Me.Button34.TabIndex = 157
         Me.Button34.Text = ">>"
         Me.ToolTip1.SetToolTip(Me.Button34, "カウンタを手動入力して追加")
