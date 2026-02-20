@@ -86,10 +86,10 @@ Public Class MainPlayerForm
     ''' </summary>
     Private Sub InitializeWindowPosition()
         If Left < MinWindowPosition Then
-            Left = (Screen.PrimaryScreen.Bounds.Width - Width)\2
+            Left = (Screen.PrimaryScreen.Bounds.Width - Width) \ 2
         End If
         If Top < MinWindowPosition Then
-            Top = (Screen.PrimaryScreen.Bounds.Height - Height)\2
+            Top = (Screen.PrimaryScreen.Bounds.Height - Height) \ 2
         End If
     End Sub
 
@@ -128,8 +128,8 @@ Public Class MainPlayerForm
             TrackBar1.Enabled = False
         End If
         TextBox1.Text = _mediaPlayer.FileName
-        TrackBar2.Value = CInt(_mediaPlayer.Speed/SpeedMultiplier)
-        Label4.Text = String.Format(My.Resources.SpeedFormat, (TrackBar2.Value*SpeedMultiplier).ToString("0.0"))
+        TrackBar2.Value = CInt(_mediaPlayer.Speed / SpeedMultiplier)
+        Label4.Text = String.Format(My.Resources.SpeedFormat, (TrackBar2.Value * SpeedMultiplier).ToString("0.0"))
 
         UpdateControllerMinSize()
     End Sub
@@ -203,7 +203,7 @@ Public Class MainPlayerForm
     ''' </summary>
     Private Sub InitializeJumpButtonSettings()
         Dim jumpValues As Integer() =
-                {1, 3, 5, 10, 15, 30, 60, 180, 300, 600, - 1, - 3, - 5, - 10, - 15, - 30, - 60, - 180, - 300, - 600}
+                {1, 3, 5, 10, 15, 30, 60, 180, 300, 600, -1, -3, -5, -10, -15, -30, -60, -180, -300, -600}
 
         For i = 0 To jumpValues.Length - 1
             CallByName(My.Settings, $"SK{i + 1}", CallType.Set, jumpValues(i))
@@ -666,7 +666,7 @@ Public Class MainPlayerForm
             Dim settingName = "SC" & scIndex
 
             Try
-                TrackBar2.Value = CInt(CDbl(My.Settings(settingName))*SpeedMultiplier)
+                TrackBar2.Value = CInt(CDbl(My.Settings(settingName)) * SpeedMultiplier)
                 UpdateSpeedFromTrackBar()
             Catch ex As Exception
                 ' 設定が見つからない場合などは何もしない
@@ -675,8 +675,8 @@ Public Class MainPlayerForm
     End Sub
 
     Private Sub UpdateSpeedFromTrackBar()
-        Label4.Text = String.Format(My.Resources.SpeedFormat, (TrackBar2.Value*SpeedMultiplier).ToString("0.0"))
-        _mediaPlayer.Speed = TrackBar2.Value*SpeedMultiplier
+        Label4.Text = String.Format(My.Resources.SpeedFormat, (TrackBar2.Value * SpeedMultiplier).ToString("0.0"))
+        _mediaPlayer.Speed = TrackBar2.Value * SpeedMultiplier
     End Sub
 
     Private Sub TrackBar2_Scroll(sender As Object, e As EventArgs) Handles TrackBar2.Scroll
@@ -807,7 +807,7 @@ Public Class MainPlayerForm
         Dim minutes = Integer.Parse(cCounter.Substring(HourDigits, MinuteDigits))
         Dim seconds = Integer.Parse(cCounter.Substring(HourDigits + MinuteDigits, SecondDigits))
 
-        resultSeconds = (hours*3600) + (minutes*60) + seconds
+        resultSeconds = (hours * 3600) + (minutes * 60) + seconds
         formattedCounter = String.Format("{0:D2}:{1:D2}:{2:D2}", hours, minutes, seconds)
 
         ' 動画の長さチェック（実際の再生時間と比較）
@@ -871,8 +871,8 @@ Public Class MainPlayerForm
     ''' </summary>
     Private Function ParseTimestampToSeconds(timestamp As String) As Integer
         ' フォーマット: (HH:MM:SS) の10文字
-        Return (Integer.Parse(timestamp.Substring(1, 2))*3600) +
-               (Integer.Parse(timestamp.Substring(4, 2))*60) +
+        Return (Integer.Parse(timestamp.Substring(1, 2)) * 3600) +
+               (Integer.Parse(timestamp.Substring(4, 2)) * 60) +
                Integer.Parse(timestamp.Substring(7, 2))
     End Function
 
@@ -1422,6 +1422,10 @@ Public Class MainPlayerForm
     Friend Function GetMediaPlayerForTest() As MpvPlayerWrapper
         Return _mediaPlayer
     End Function
+
+    Private Sub MainPlayerForm_Resize(sender As Object, e As EventArgs) Handles Me.Resize
+        TextBox2.Text = Me.Width & "," & Me.Height & "|" & TableLayoutPanel1.Width & "," & TableLayoutPanel1.Height
+    End Sub
 
 #End Region
 End Class

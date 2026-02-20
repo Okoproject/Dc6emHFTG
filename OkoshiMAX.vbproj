@@ -135,7 +135,6 @@
     <Compile Include="src\ClipboardImageViewer.Designer.vb">
       <DependentUpon>ClipboardImageViewer.vb</DependentUpon>
     </Compile>
-
     <Compile Include="src\MpvPlayerWrapper.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
