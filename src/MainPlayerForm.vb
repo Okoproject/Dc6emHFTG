@@ -9,6 +9,12 @@ Imports System.Text
 ''' </summary>
 Public Class MainPlayerForm
 
+    <DllImport("user32.dll")>
+    Private Shared Function SendMessage(hWnd As IntPtr, msg As Integer, wParam As Boolean, lParam As IntPtr) As IntPtr
+    End Function
+
+    Private Const WM_SETREDRAW As Integer = &HB
+
 #Region "定数"
 
     ' ウィンドウ位置の最小値
@@ -273,12 +279,12 @@ Public Class MainPlayerForm
             If My.Settings.SC2_Distance > 0 Then
                 SplitContainer2.SplitterDistance = My.Settings.SC2_Distance
             Else
-                SplitContainer2.SplitterDistance = SplitContainer2.Width\4
+                SplitContainer2.SplitterDistance = SplitContainer2.Width \ 4
             End If
-            CheckBox1.Checked = True
+            CheckBoxPlayList.Checked = True
         Else
             SplitContainer2.Panel1Collapsed = True
-            CheckBox1.Checked = False
+            CheckBoxPlayList.Checked = False
         End If
     End Sub
 
@@ -297,7 +303,7 @@ Public Class MainPlayerForm
         ' UI状態の保存
         My.Settings.gamen = Not CheckBox2.Checked
         My.Settings.shiori = Not SplitContainer1.Panel2Collapsed
-        My.Settings.PL = CheckBox1.Checked
+        My.Settings.PL = CheckBoxPlayList.Checked
 
         ' SplitterDistanceを常に保存（非表示時も最後の値を保持）
         My.Settings.SC1_Distance = SplitContainer1.SplitterDistance
@@ -384,7 +390,7 @@ Public Class MainPlayerForm
             Case HotKeyType.SpeedUp
                 AdjustPlaybackSpeed(SpeedMultiplier)
             Case HotKeyType.SpeedDown
-                AdjustPlaybackSpeed(- SpeedMultiplier)
+                AdjustPlaybackSpeed(-SpeedMultiplier)
             Case HotKeyType.SpeedResetTo1X
                 SetPlaybackSpeed(1.0)
             Case HotKeyType.SpeedSetToHalf
@@ -449,10 +455,10 @@ Public Class MainPlayerForm
     ''' </summary>
     Private Function GetCurrentTimeCode() As String
         Dim position As Double = _mediaPlayer.Position
-        Dim hours As Integer = CInt(position)\3600
-        Dim minutes As Integer = (CInt(position) Mod 3600)\60
+        Dim hours As Integer = CInt(position) \ 3600
+        Dim minutes As Integer = (CInt(position) Mod 3600) \ 60
         Dim seconds As Integer = CInt(position) Mod 60
-        Dim frames = CInt((position - Math.Floor(position))*30)
+        Dim frames = CInt((position - Math.Floor(position)) * 30)
 
         Return $"{hours:D2}:{minutes:D2}:{seconds:D2}.{frames:D2}"
     End Function
@@ -547,13 +553,13 @@ Public Class MainPlayerForm
         Dim speed = 1.0
 
         Select Case hotkeyType
-            Case HotKeyType.SpeedControlButton1 : speed = My.Settings.SC1/10.0
-            Case HotKeyType.SpeedControlButton2 : speed = My.Settings.SC2/10.0
-            Case HotKeyType.SpeedControlButton3 : speed = My.Settings.SC3/10.0
-            Case HotKeyType.SpeedControlButton4 : speed = My.Settings.SC4/10.0
-            Case HotKeyType.SpeedControlButton5 : speed = My.Settings.SC5/10.0
-            Case HotKeyType.SpeedControlButton6 : speed = My.Settings.SC6/10.0
-            Case HotKeyType.SpeedControlButton7 : speed = My.Settings.SC7/10.0
+            Case HotKeyType.SpeedControlButton1 : speed = My.Settings.SC1 / 10.0
+            Case HotKeyType.SpeedControlButton2 : speed = My.Settings.SC2 / 10.0
+            Case HotKeyType.SpeedControlButton3 : speed = My.Settings.SC3 / 10.0
+            Case HotKeyType.SpeedControlButton4 : speed = My.Settings.SC4 / 10.0
+            Case HotKeyType.SpeedControlButton5 : speed = My.Settings.SC5 / 10.0
+            Case HotKeyType.SpeedControlButton6 : speed = My.Settings.SC6 / 10.0
+            Case HotKeyType.SpeedControlButton7 : speed = My.Settings.SC7 / 10.0
         End Select
 
         SetPlaybackSpeed(speed)
@@ -610,19 +616,21 @@ Public Class MainPlayerForm
     ''' <summary>
     '''     プレイリストの表示/非表示切り替え
     ''' </summary>
-    Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
-        Dim isShowing As Boolean = CheckBox1.Checked
+    Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBoxPlayList.CheckedChanged
+        Dim isShowing As Boolean = CheckBoxPlayList.Checked
 
+        Me.SuspendLayout()
+        SendMessage(Me.Handle, WM_SETREDRAW, False, IntPtr.Zero)
         If isShowing Then
             ' 表示する場合
             Dim panelWidth As Integer = If(My.Settings.SC2_Distance > 0, My.Settings.SC2_Distance, 300)
 
+            SplitContainer2.Panel1Collapsed = False
+            SplitContainer2.SplitterDistance = panelWidth
             ' フォームサイズを拡張し、Leftを調整して右端位置を固定（旧Form1.vbと同じ処理）
             Me.Width += panelWidth
             Me.Left -= panelWidth
 
-            SplitContainer2.Panel1Collapsed = False
-            SplitContainer2.SplitterDistance = panelWidth
         Else
             ' 非表示にする前にパネルの実際のサイズを保存
             Dim actualPanelWidth As Integer = SplitContainer2.Panel1.Width
@@ -634,6 +642,9 @@ Public Class MainPlayerForm
             Me.Width -= actualPanelWidth
             Me.Left += actualPanelWidth
         End If
+        Me.ResumeLayout()
+        SendMessage(Me.Handle, WM_SETREDRAW, True, IntPtr.Zero)
+        Me.Refresh()
     End Sub
 
 #End Region
@@ -1059,7 +1070,11 @@ Public Class MainPlayerForm
         End If
     End Sub
 
-    Private Sub Button30_Click(sender As Object, e As EventArgs) Handles Button30.Click
+
+    Private Sub ButtonSiori_Click(sender As Object, e As EventArgs) Handles ButtonSiori.Click
+
+        Me.SuspendLayout()
+        SendMessage(Me.Handle, WM_SETREDRAW, False, IntPtr.Zero)
         If SplitContainer1.Panel2Collapsed Then
             ' しおりパネルを開く
             ' Panel2（しおり）の幅を使ってフォームを拡張する
@@ -1094,6 +1109,9 @@ Public Class MainPlayerForm
 
             SplitContainer1.Panel2Collapsed = True
         End If
+        Me.ResumeLayout()
+        SendMessage(Me.Handle, WM_SETREDRAW, True, IntPtr.Zero)
+        Me.Refresh()
     End Sub
 
 #End Region
