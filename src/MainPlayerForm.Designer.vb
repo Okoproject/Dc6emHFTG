@@ -146,12 +146,12 @@ Partial Class MainPlayerForm
         'SplitContainer1.Panel1
         '
         Me.SplitContainer1.Panel1.Controls.Add(Me.SplitContainer2)
-        Me.SplitContainer1.Panel1MinSize = 516
+        Me.SplitContainer1.Panel1MinSize = 0
         '
         'SplitContainer1.Panel2
         '
         Me.SplitContainer1.Panel2.Controls.Add(Me.TableLayoutPanel2)
-        Me.SplitContainer1.Panel2MinSize = 100
+        Me.SplitContainer1.Panel2MinSize = 0
         Me.SplitContainer1.Size = New System.Drawing.Size(1605, 838)
         Me.SplitContainer1.SplitterDistance = 1287
         Me.SplitContainer1.SplitterWidth = 5
@@ -168,13 +168,13 @@ Partial Class MainPlayerForm
         '
         Me.SplitContainer2.Panel1.AllowDrop = True
         Me.SplitContainer2.Panel1.Controls.Add(Me.DataGridView2)
-        Me.SplitContainer2.Panel1MinSize = 100
+        Me.SplitContainer2.Panel1MinSize = 0
         '
         'SplitContainer2.Panel2
         '
         Me.SplitContainer2.Panel2.AllowDrop = True
         Me.SplitContainer2.Panel2.Controls.Add(Me.SplitContainer3)
-        Me.SplitContainer2.Panel2MinSize = 516
+        Me.SplitContainer2.Panel2MinSize = 0
         Me.SplitContainer2.Size = New System.Drawing.Size(1287, 838)
         Me.SplitContainer2.SplitterDistance = 281
         Me.SplitContainer2.SplitterWidth = 5
@@ -342,7 +342,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.Controls.Add(Me.Button12, 2, 4)
         Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 0)
-        Me.TableLayoutPanel1.Margin = New System.Windows.Forms.Padding(1)
+        Me.TableLayoutPanel1.Margin = New System.Windows.Forms.Padding(1, 1, 1, 10)
         Me.TableLayoutPanel1.MinimumSize = New System.Drawing.Size(516, 208)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 7
@@ -452,6 +452,7 @@ Partial Class MainPlayerForm
         '
         'Button3
         '
+        Me.Button3.AutoSize = True
         Me.Button3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button3.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button3, 2)
@@ -466,6 +467,7 @@ Partial Class MainPlayerForm
         '
         'Button4
         '
+        Me.Button4.AutoSize = True
         Me.Button4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button4.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button4, 2)
@@ -480,6 +482,7 @@ Partial Class MainPlayerForm
         '
         'Button5
         '
+        Me.Button5.AutoSize = True
         Me.Button5.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button5.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button5, 2)
@@ -494,6 +497,7 @@ Partial Class MainPlayerForm
         '
         'Button6
         '
+        Me.Button6.AutoSize = True
         Me.Button6.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button6.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button6, 2)
@@ -508,6 +512,7 @@ Partial Class MainPlayerForm
         '
         'Button7
         '
+        Me.Button7.AutoSize = True
         Me.Button7.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button7.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button7, 2)
@@ -522,6 +527,7 @@ Partial Class MainPlayerForm
         '
         'Button8
         '
+        Me.Button8.AutoSize = True
         Me.Button8.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button8.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button8, 2)
@@ -536,6 +542,7 @@ Partial Class MainPlayerForm
         '
         'Button9
         '
+        Me.Button9.AutoSize = True
         Me.Button9.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button9.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button9, 2)
@@ -550,6 +557,7 @@ Partial Class MainPlayerForm
         '
         'Button10
         '
+        Me.Button10.AutoSize = True
         Me.Button10.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button10.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button10, 2)
@@ -1017,6 +1025,7 @@ Partial Class MainPlayerForm
         '
         'Button35
         '
+        Me.Button35.AutoSize = True
         Me.Button35.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button35.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button35, 2)
@@ -1031,6 +1040,7 @@ Partial Class MainPlayerForm
         '
         'Button1
         '
+        Me.Button1.AutoSize = True
         Me.Button1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button1.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button1, 2)
@@ -1045,6 +1055,7 @@ Partial Class MainPlayerForm
         '
         'Button2
         '
+        Me.Button2.AutoSize = True
         Me.Button2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button2.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button2, 2)
