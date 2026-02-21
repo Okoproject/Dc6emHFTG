@@ -271,14 +271,14 @@ Public Class MainPlayerForm
             If My.Settings.SC3_Distance > 0 Then
                 SplitContainer3.SplitterDistance = My.Settings.SC3_Distance
             End If
-            CheckBox2.Checked = True
+            CheckBoxMpvPamel.Checked = True
         Else
             ' 動画画面を非表示にする場合
             SplitContainer3.Panel1Collapsed = True
             If My.Settings.SC3_Distance > 0 Then
                 SplitContainer3.SplitterDistance = My.Settings.SC3_Distance
             End If
-            CheckBox2.Checked = False
+            CheckBoxMpvPamel.Checked = False
         End If
 
         ' しおりパネルの復元
@@ -327,7 +327,7 @@ Public Class MainPlayerForm
         My.Settings.LastIchi = _mediaPlayer.Position
 
         ' UI状態の保存
-        My.Settings.gamen = Not CheckBox2.Checked
+        My.Settings.gamen = Not CheckBoxMpvPamel.Checked
         My.Settings.shiori = Not SplitContainer1.Panel2Collapsed
         My.Settings.PL = CheckBoxPlayList.Checked
 
@@ -612,9 +612,10 @@ Public Class MainPlayerForm
     ''' <summary>
     '''     動画表示画面の表示/非表示切り替え
     ''' </summary>
-    Private Sub CheckBox2_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox2.CheckedChanged
-        Dim isShowing As Boolean = CheckBox2.Checked
-
+    Private Sub CheckBoxMpvPanel_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBoxMpvPamel.CheckedChanged
+        Dim isShowing As Boolean = CheckBoxMpvPamel.Checked
+        Me.SuspendLayout()
+        SendMessage(Me.Handle, WM_SETREDRAW, False, IntPtr.Zero)
         If isShowing Then
             ' 表示する場合
             Dim panelHeight As Integer = If(My.Settings.SC3_Distance > 0, My.Settings.SC3_Distance, 300)
@@ -635,8 +636,11 @@ Public Class MainPlayerForm
 
             SplitContainer3.Panel1Collapsed = True
         End If
-
         UpdateControllerMinSize()
+
+        Me.ResumeLayout()
+        SendMessage(Me.Handle, WM_SETREDRAW, True, IntPtr.Zero)
+        Me.Refresh()
     End Sub
 
     ''' <summary>
@@ -1321,7 +1325,7 @@ Public Class MainPlayerForm
             Dim enc As Encoding = Encoding.GetEncoding("Shift_JIS")
             sw = New StreamWriter(csvPath, False, enc)
 
-            For Each arrLine () As String In csvData
+            For Each arrLine() As String In csvData
                 Dim isFirst = True
                 For Each str As String In arrLine
                     If Not isFirst Then
