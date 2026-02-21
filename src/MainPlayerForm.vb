@@ -101,9 +101,20 @@ Public Class MainPlayerForm
 
         ' MpvPanelのウィンドウハンドルが確実に作成されるように強制作成
         ' これをしないとmpvのwid設定が正しく行われない可能性がある
+
+        ' ハンドルの強制確保
+        'If Not MpvPanel.IsHandleCreated Then
+        '    Dim handle = MpvPanel.Handle
+        'End If
+
+
         Dim handle = MpvPanel.Handle
 
         _mediaPlayer = New MpvPlayerWrapper(MpvPanel)
+
+
+        ' ★ここで「準備ができたら教えてね」という約束（イベント登録）をする
+        'AddHandler _mediaPlayer.MpvInitialized, AddressOf OnMpvReady
         AddHandler _mediaPlayer.MediaChanged, AddressOf OnMediaChanged
 
         _mediaPlayer.Volume = My.Settings.Onryou
@@ -112,6 +123,21 @@ Public Class MainPlayerForm
 
         ' ファイル未読み込み時はTrackBar1を無効化
         TrackBar1.Enabled = False
+
+        ' ★ここで直接再生せず、タイマーを起動する
+        'Timer2.Start()
+
+        Application.DoEvents()
+
+    End Sub
+
+    ' ★ここが「準備ができた瞬間に自動で呼ばれる」場所
+    ' InitializeMediaPlayerの外（同じクラス内）に書きます
+    Private Sub OnMpvReady(sender As Object, e As EventArgs)
+        ' 初回再生が失敗するのは、ここが呼ばれる前にLoadを実行しているからです
+        Debug.WriteLine("mpvの準備が完了しました。これで動画を読み込めます。")
+
+        ' もし自動で何か再生したいなら、ここに再生処理を書くのが一番安全です
     End Sub
 
     ''' <summary>
@@ -666,7 +692,8 @@ Public Class MainPlayerForm
             Dim settingName = "SC" & scIndex
 
             Try
-                TrackBar2.Value = CInt(CDbl(My.Settings(settingName)) * SpeedMultiplier)
+                'TrackBar2.Value = CInt(CDbl(My.Settings(settingName)) * SpeedMultiplier)
+                TrackBar2.Value = My.Settings(settingName)
                 UpdateSpeedFromTrackBar()
             Catch ex As Exception
                 ' 設定が見つからない場合などは何もしない
@@ -686,14 +713,22 @@ Public Class MainPlayerForm
     Private Sub Button400_Click(sender As Object, e As EventArgs) Handles Button400.Click
         _mediaPlayer.Pause()
         _mediaPlayer.Position = 0
+
+        Label1.Text = TimeSpan.FromSeconds(_mediaPlayer.Position).ToString("hh\:mm\:ss") &
+              My.Resources.TimeSeparator &
+              TimeSpan.FromSeconds(_mediaPlayer.Duration).ToString("hh\:mm\:ss")
+
     End Sub
 
     Private Sub Button200_Click(sender As Object, e As EventArgs) Handles Button200.Click
+
+
         If _mediaPlayer.IsPlaying Then
             _mediaPlayer.Pause()
         Else
             _mediaPlayer.Play()
         End If
+
     End Sub
 
     ' ジャンプボタン
@@ -1142,10 +1177,14 @@ Public Class MainPlayerForm
         If Not e.Data.GetDataPresent(DataFormats.FileDrop) Then Return
 
         Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
-        If files.Length = 0 Then Return
+        'If files.Length = 0 Then Return
 
         _mediaPlayer.LoadFile(files(0))
+
         My.Settings.LastOpenedFile = files(0)
+
+        'System.Threading.Thread.Sleep(5000)
+
     End Sub
 
     ''' <summary>
@@ -1425,6 +1464,27 @@ Public Class MainPlayerForm
 
     Private Sub MainPlayerForm_Resize(sender As Object, e As EventArgs) Handles Me.Resize
         TextBox2.Text = Me.Width & "," & Me.Height & "|" & TableLayoutPanel1.Width & "," & TableLayoutPanel1.Height
+    End Sub
+
+    Private Sub MainPlayerForm_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+        ' フォームが画面にパッと出てから初期化を始める
+        'InitializeMediaPlayer()
+
+        ' 初期化の直後に少しだけOSに処理を戻す（おまじない）
+        'Application.DoEvents()
+    End Sub
+
+    Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles Timer2.Tick
+        Timer2.Stop() ' 1回だけ実行したいので止める
+
+        ' ここで初めて動画を読み込む！
+        ' 例: _mediaPlayer.Load("C:\test.mp4")
+
+        Debug.WriteLine("mpvの準備時間を確保しました。再生を開始します。")
+    End Sub
+
+    Private Sub MainPlayerForm_MenuStart(sender As Object, e As EventArgs) Handles Me.MenuStart
+
     End Sub
 
 #End Region

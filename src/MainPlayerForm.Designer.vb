@@ -106,6 +106,7 @@ Partial Class MainPlayerForm
         Me.Button34 = New System.Windows.Forms.Button()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
+        Me.Timer2 = New System.Windows.Forms.Timer(Me.components)
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.Panel2.SuspendLayout()
@@ -1245,6 +1246,9 @@ Partial Class MainPlayerForm
         Me.ToolTip1.SetToolTip(Me.Button34, "カウンタを手動入力して追加")
         Me.Button34.UseVisualStyleBackColor = False
         '
+        'Timer2
+        '
+        '
         'MainPlayerForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(120.0!, 120.0!)
@@ -1361,4 +1365,5 @@ Partial Class MainPlayerForm
     Friend WithEvents File_Delete As DataGridViewTextBoxColumn
     Friend WithEvents File_Position As DataGridViewTextBoxColumn
     Friend WithEvents File_Progress As DataGridViewTextBoxColumn
+    Friend WithEvents Timer2 As Timer
 End Class

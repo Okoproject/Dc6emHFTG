@@ -1,4 +1,4 @@
-﻿<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='utf-8'?>
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="My" GeneratedClassName="MySettings" UseMySettingsClassName="true">
   <Profiles />
   <Settings>
@@ -345,25 +345,25 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="SC1" Type="System.Int16" Scope="User">
-      <Value Profile="(Default)">50</Value>
+      <Value Profile="(Default)">5</Value>
     </Setting>
     <Setting Name="SC2" Type="System.Int16" Scope="User">
-      <Value Profile="(Default)">100</Value>
+      <Value Profile="(Default)">10</Value>
     </Setting>
     <Setting Name="SC3" Type="System.Int16" Scope="User">
-      <Value Profile="(Default)">110</Value>
+      <Value Profile="(Default)">11</Value>
     </Setting>
     <Setting Name="SC4" Type="System.Int16" Scope="User">
-      <Value Profile="(Default)">120</Value>
+      <Value Profile="(Default)">12</Value>
     </Setting>
     <Setting Name="SC5" Type="System.Int16" Scope="User">
-      <Value Profile="(Default)">130</Value>
+      <Value Profile="(Default)">13</Value>
     </Setting>
     <Setting Name="SC6" Type="System.Int16" Scope="User">
-      <Value Profile="(Default)">140</Value>
+      <Value Profile="(Default)">14</Value>
     </Setting>
     <Setting Name="SC7" Type="System.Int16" Scope="User">
-      <Value Profile="(Default)">150</Value>
+      <Value Profile="(Default)">15</Value>
     </Setting>
     <Setting Name="SC1A" Type="System.Int16" Scope="User">
       <Value Profile="(Default)" />

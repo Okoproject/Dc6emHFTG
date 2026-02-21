@@ -1320,7 +1320,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("50")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("5")>  _
         Public Property SC1() As Short
             Get
                 Return CType(Me("SC1"),Short)
@@ -1332,7 +1332,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("100")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("10")>  _
         Public Property SC2() As Short
             Get
                 Return CType(Me("SC2"),Short)
@@ -1344,7 +1344,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("110")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("11")>  _
         Public Property SC3() As Short
             Get
                 Return CType(Me("SC3"),Short)
@@ -1356,7 +1356,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("120")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("12")>  _
         Public Property SC4() As Short
             Get
                 Return CType(Me("SC4"),Short)
@@ -1368,7 +1368,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("130")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("13")>  _
         Public Property SC5() As Short
             Get
                 Return CType(Me("SC5"),Short)
@@ -1380,7 +1380,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("140")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("14")>  _
         Public Property SC6() As Short
             Get
                 Return CType(Me("SC6"),Short)
@@ -1392,7 +1392,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("150")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("15")>  _
         Public Property SC7() As Short
             Get
                 Return CType(Me("SC7"),Short)
