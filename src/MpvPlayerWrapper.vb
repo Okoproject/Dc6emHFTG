@@ -115,6 +115,7 @@ Public Class MpvPlayerWrapper
     Private _running As Boolean = False
 
     Public Event MediaChanged()
+    Public Event Initialized()
 
     ''' <summary>
     '''     mpv プレーヤーを初期化し、指定された Panel に映像を埋め込む。
@@ -171,6 +172,16 @@ Public Class MpvPlayerWrapper
         _eventThread.IsBackground = True
         _eventThread.Name = "mpv-event-loop"
         _eventThread.Start()
+
+        Task.Delay(100).ContinueWith(
+            Sub()
+                If _hostPanel IsNot Nothing AndAlso _hostPanel.IsHandleCreated Then
+                    Try
+                        _hostPanel.BeginInvoke(Sub() RaiseEvent Initialized())
+                    Catch ex As ObjectDisposedException
+                    End Try
+                End If
+            End Sub)
     End Sub
 
     Private Sub EventLoop()

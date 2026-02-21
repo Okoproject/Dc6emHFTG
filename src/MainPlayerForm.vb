@@ -112,9 +112,10 @@ Public Class MainPlayerForm
 
         _mediaPlayer = New MpvPlayerWrapper(MpvPanel)
 
-
-        ' ★ここで「準備ができたら教えてね」という約束（イベント登録）をする
-        'AddHandler _mediaPlayer.MpvInitialized, AddressOf OnMpvReady
+        'イベントの登録
+        'MpvPlayer初期化イベント
+        AddHandler _mediaPlayer.Initialized, AddressOf OnMpvReady
+        'MpvPlayer再生ファイル変更イベント
         AddHandler _mediaPlayer.MediaChanged, AddressOf OnMediaChanged
 
         _mediaPlayer.Volume = My.Settings.Onryou
@@ -124,20 +125,14 @@ Public Class MainPlayerForm
         ' ファイル未読み込み時はTrackBar1を無効化
         TrackBar1.Enabled = False
 
-        ' ★ここで直接再生せず、タイマーを起動する
-        'Timer2.Start()
-
         Application.DoEvents()
 
     End Sub
-
-    ' ★ここが「準備ができた瞬間に自動で呼ばれる」場所
-    ' InitializeMediaPlayerの外（同じクラス内）に書きます
-    Private Sub OnMpvReady(sender As Object, e As EventArgs)
-        ' 初回再生が失敗するのは、ここが呼ばれる前にLoadを実行しているからです
+    ''' <summary>
+    '''     MpvPalerの準備ができたときの処理
+    ''' </summary>
+    Private Sub OnMpvReady()
         Debug.WriteLine("mpvの準備が完了しました。これで動画を読み込めます。")
-
-        ' もし自動で何か再生したいなら、ここに再生処理を書くのが一番安全です
     End Sub
 
     ''' <summary>
@@ -158,6 +153,8 @@ Public Class MainPlayerForm
         Label4.Text = String.Format(My.Resources.SpeedFormat, (TrackBar2.Value * SpeedMultiplier).ToString("0.0"))
 
         UpdateControllerMinSize()
+        'ファイル読込時、自動再生とする
+        _mediaPlayer.Play()
     End Sub
 
     ''' <summary>
