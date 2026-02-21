@@ -84,3 +84,26 @@ Application settings are stored in `My.Settings` with custom properties like:
 2. **COM references** - Microsoft.Office.Interop.Word for document import
 3. **Target framework** - .NET Framework 4.8, x64 only
 4. **VB.NET specific patterns** - `My.Settings`, `My.Resources`, `CallByName` for dynamic property access
+
+## Git Commit Guidelines
+
+When creating commits, write detailed commit messages that include:
+
+1. **Summary line** - Brief description of the change (Japanese)
+2. **Changes section** - List each modified file and specific changes
+
+Example:
+```
+MpvPlayer初期化完了イベントとファイル読込時自動再生を追加
+
+## 変更内容
+
+### MpvPlayerWrapper.vb
+- Initializedイベントを追加
+- コンストラクタ末尾で100ms遅延後にInitializedイベントを発火する処理を追加
+
+### MainPlayerForm.vb
+- OnMpvReadyイベントハンドラを追加
+- InitializeMediaPlayerでInitializedイベントハンドラを登録
+- OnMediaChangedでファイル読込時に自動再生する処理を追加
+```
