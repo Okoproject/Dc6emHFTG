@@ -85,6 +85,7 @@ Application settings are stored in `My.Settings` with custom properties like:
 ### Type Safety
 - Always enable `Option Explicit On` and `Option Strict On`
 - Use `If()` operator (short-circuit) instead of `IIf()` function
+- Do NOT use deprecated or obsolete functions, methods, or APIs; always use the recommended modern alternative
 
 ### Error Handling
 - Catch specific exception types, not generic `Exception`
