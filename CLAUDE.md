@@ -119,6 +119,19 @@ Await Task.Delay(100)
 RaiseEvent Initialized(Me, EventArgs.Empty)
 ```
 
+## Git Workflow
+
+### Branch Strategy
+- **Before starting any work, ask the user whether to create a new branch**
+- If the user says yes → create a new branch and work on it
+- If the user says no or specifies a branch → use that branch
+- Branches are used to maintain reviewability, even if the code contains bugs
+
+### One Commit Per Task
+- Always make exactly **one commit per task/change**
+- Do NOT make multiple commits for a single task
+- Do NOT bundle multiple unrelated changes into one commit
+
 ## Git Commit Guidelines
 
 **All commit messages MUST be written in Japanese.**

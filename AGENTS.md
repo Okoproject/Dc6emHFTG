@@ -147,7 +147,7 @@ When creating commits, write detailed commit messages that include:
 ### Example
 
 ```
-MpvPlayer初期化完了イベントとファイル読込時自動再生を追加
+MpvPlayer初期化完了イベントと読込時自動再生を追加
 
 ## 変更内容
 
