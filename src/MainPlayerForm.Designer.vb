@@ -138,7 +138,6 @@ Partial Class MainPlayerForm
         '
         'SplitContainer1
         '
-        Me.SplitContainer1.AllowDrop = True
         Me.SplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SplitContainer1.Location = New System.Drawing.Point(0, 0)
         Me.SplitContainer1.Margin = New System.Windows.Forms.Padding(1)
@@ -166,13 +165,11 @@ Partial Class MainPlayerForm
         '
         'SplitContainer2.Panel1
         '
-        Me.SplitContainer2.Panel1.AllowDrop = True
         Me.SplitContainer2.Panel1.Controls.Add(Me.DataGridView2)
         Me.SplitContainer2.Panel1MinSize = 0
         '
         'SplitContainer2.Panel2
         '
-        Me.SplitContainer2.Panel2.AllowDrop = True
         Me.SplitContainer2.Panel2.Controls.Add(Me.SplitContainer3)
         Me.SplitContainer2.Panel2MinSize = 0
         Me.SplitContainer2.Size = New System.Drawing.Size(1029, 670)
@@ -252,7 +249,6 @@ Partial Class MainPlayerForm
         '
         'MpvPanel
         '
-        Me.MpvPanel.AllowDrop = True
         Me.MpvPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.MpvPanel.BackColor = System.Drawing.Color.Black
         Me.MpvPanel.Dock = System.Windows.Forms.DockStyle.Fill
@@ -264,7 +260,6 @@ Partial Class MainPlayerForm
         '
         'TableLayoutPanel1
         '
-        Me.TableLayoutPanel1.AllowDrop = True
         Me.TableLayoutPanel1.AutoSize = True
         Me.TableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.TableLayoutPanel1.BackColor = System.Drawing.SystemColors.ControlDarkDark
@@ -569,7 +564,6 @@ Partial Class MainPlayerForm
         '
         'TrackBar1
         '
-        Me.TrackBar1.AllowDrop = True
         Me.TrackBar1.BackColor = System.Drawing.SystemColors.ControlDarkDark
         Me.TableLayoutPanel1.SetColumnSpan(Me.TrackBar1, 20)
         Me.TrackBar1.Dock = System.Windows.Forms.DockStyle.Fill
@@ -1082,7 +1076,6 @@ Partial Class MainPlayerForm
         '
         'TableLayoutPanel2
         '
-        Me.TableLayoutPanel2.AllowDrop = True
         Me.TableLayoutPanel2.BackColor = System.Drawing.SystemColors.ControlDarkDark
         Me.TableLayoutPanel2.ColumnCount = 4
         Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
@@ -1247,6 +1240,7 @@ Partial Class MainPlayerForm
         '
         'MainPlayerForm
         '
+        Me.AllowDrop = True
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.ClientSize = New System.Drawing.Size(1284, 670)

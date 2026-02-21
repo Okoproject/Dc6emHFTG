@@ -1212,30 +1212,6 @@ Public Class MainPlayerForm
         HandleFileDragEnter(e)
     End Sub
 
-    Private Sub TableLayoutPanel1_DragDrop(sender As Object, e As DragEventArgs) Handles TableLayoutPanel1.DragDrop
-        HandleFileDragDrop(e)
-    End Sub
-
-    Private Sub TableLayoutPanel1_DragEnter(sender As Object, e As DragEventArgs) Handles TableLayoutPanel1.DragEnter
-        HandleFileDragEnter(e)
-    End Sub
-
-    Private Sub TrackBar1_DragDrop(sender As Object, e As DragEventArgs) Handles TrackBar1.DragDrop
-        HandleFileDragDrop(e)
-    End Sub
-
-    Private Sub TrackBar1_DragEnter(sender As Object, e As DragEventArgs) Handles TrackBar1.DragEnter
-        HandleFileDragEnter(e)
-    End Sub
-
-    Private Sub SplitContainer2_DragDrop(sender As Object, e As DragEventArgs) Handles SplitContainer2.DragDrop
-        HandleFileDragDrop(e)
-    End Sub
-
-    Private Sub SplitContainer2_DragEnter(sender As Object, e As DragEventArgs) Handles SplitContainer2.DragEnter
-        HandleFileDragEnter(e)
-    End Sub
-
 #End Region
 
 #Region "CSV入出力"
