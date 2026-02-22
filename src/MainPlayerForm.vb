@@ -131,7 +131,10 @@ Public Class MainPlayerForm
     ''' <summary>
     '''     MpvPalerの準備ができたときの処理
     ''' </summary>
+    Private _mpvReady As Boolean = False
+
     Private Sub OnMpvReady()
+        _mpvReady = True
         Debug.WriteLine("mpvの準備が完了しました。これで動画を読み込めます。")
     End Sub
 
@@ -153,7 +156,12 @@ Public Class MainPlayerForm
         Label4.Text = String.Format(My.Resources.SpeedFormat, (TrackBar2.Value * SpeedMultiplier).ToString("0.0"))
 
         UpdateControllerMinSize()
-        'ファイル読込時、自動再生とする
+        'ファイル読込時、自動再生とする（初期化完了を最大10秒待機）
+        Dim waitCount As Integer = 0
+        While Not _mpvReady AndAlso waitCount < 100
+            Threading.Thread.Sleep(100)
+            waitCount += 1
+        End While
         _mediaPlayer.Play()
     End Sub
 
