@@ -148,6 +148,7 @@ Public Class SettingsForm
         LoadJumpButtonSettings()
         LoadJumpHotkeySettings()
         LoadSpeedControlSettings()
+        LoadAutoPlaySettings()
     End Sub
 
     ''' <summary>
@@ -228,14 +229,26 @@ Public Class SettingsForm
     '''     速度コントロール設定の読み込み
     ''' </summary>
     Private Sub LoadSpeedControlSettings()
-        NumericUpDown28.Value = CDec(My.Settings.SC1/10.0)
-        NumericUpDown29.Value = CDec(My.Settings.SC2/10.0)
-        NumericUpDown30.Value = CDec(My.Settings.SC3/10.0)
-        NumericUpDown31.Value = CDec(My.Settings.SC4/10.0)
-        NumericUpDown32.Value = CDec(My.Settings.SC5/10.0)
-        NumericUpDown33.Value = CDec(My.Settings.SC6/10.0)
-        NumericUpDown34.Value = CDec(My.Settings.SC7/10.0)
+        NumericUpDown28.Value = CDec(My.Settings.SC1 / 10.0)
+        NumericUpDown29.Value = CDec(My.Settings.SC2 / 10.0)
+        NumericUpDown30.Value = CDec(My.Settings.SC3 / 10.0)
+        NumericUpDown31.Value = CDec(My.Settings.SC4 / 10.0)
+        NumericUpDown32.Value = CDec(My.Settings.SC5 / 10.0)
+        NumericUpDown33.Value = CDec(My.Settings.SC6 / 10.0)
+        NumericUpDown34.Value = CDec(My.Settings.SC7 / 10.0)
 
+        UpdateSpeedControlLabels()
+    End Sub
+
+    ''' <summary>
+    '''     ファイル読込時に自動再生するかどうか
+    ''' </summary>
+    Private Sub LoadAutoPlaySettings()
+        If My.Settings.AutoPlay = True Then
+            RadioButton6.Checked = True
+        Else
+            RadioButton7.Checked = True
+        End If
         UpdateSpeedControlLabels()
     End Sub
 
@@ -543,6 +556,26 @@ Public Class SettingsForm
 
     Friend Sub Button1_ClickForTest()
         Button1_Click(Nothing, EventArgs.Empty)
+    End Sub
+
+    Private Sub GroupBox10_Enter(sender As Object, e As EventArgs) Handles GroupBox10.Enter
+
+    End Sub
+
+    Private Sub RadioButton6_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton6.CheckedChanged
+        If RadioButton6.Checked = True Then
+            My.Settings.AutoPlay = True
+        Else
+            My.Settings.AutoPlay = False
+        End If
+    End Sub
+
+    Private Sub RadioButton7_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton7.CheckedChanged
+        If RadioButton7.Checked = True Then
+            My.Settings.AutoPlay = False
+        Else
+            My.Settings.AutoPlay = True
+        End If
     End Sub
 
 #End Region

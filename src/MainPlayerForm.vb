@@ -165,7 +165,19 @@ Public Class MainPlayerForm
             Threading.Thread.Sleep(100)
             waitCount += 1
         End While
-        _mediaPlayer.Play()
+        '_mediaPlayer.Play()
+
+        AutoPlayHandan()
+    End Sub
+
+    Private Sub AutoPlayHandan()
+        If My.Settings.AutoPlay = True Then
+            _mediaPlayer.Play()
+            Button200.Image = My.Resources.Pause_16x
+        Else
+            _mediaPlayer.Pause()
+            Button200.Image = My.Resources.Run_16x
+        End If
     End Sub
 
     ''' <summary>
@@ -452,8 +464,10 @@ Public Class MainPlayerForm
     Private Sub TogglePlayPause()
         If _mediaPlayer.IsPlaying Then
             _mediaPlayer.Pause()
+            Button200.Image = My.Resources.Run_16x
         Else
             _mediaPlayer.Play()
+            Button200.Image = My.Resources.Pause_16x
         End If
     End Sub
 
@@ -725,6 +739,7 @@ Public Class MainPlayerForm
     Private Sub Button400_Click(sender As Object, e As EventArgs) Handles Button400.Click
         _mediaPlayer.Pause()
         _mediaPlayer.Position = 0
+        Button200.Image = My.Resources.Run_16x
 
         Label1.Text = TimeSpan.FromSeconds(_mediaPlayer.Position).ToString("hh\:mm\:ss") &
               My.Resources.TimeSeparator &
@@ -737,8 +752,10 @@ Public Class MainPlayerForm
 
         If _mediaPlayer.IsPlaying Then
             _mediaPlayer.Pause()
+            Button200.Image = My.Resources.Run_16x
         Else
             _mediaPlayer.Play()
+            Button200.Image = My.Resources.Pause_16x
         End If
 
     End Sub
@@ -760,9 +777,16 @@ Public Class MainPlayerForm
         ' 設定値を取得して移動
         Try
             Dim jumpValue = CInt(My.Settings(settingName))
+            TrackBar1.Value += jumpValue
             _mediaPlayer.Position = TrackBar1.Value + jumpValue
+
+            ToolTip1.SetToolTip(TrackBar1, TimeSpan.FromSeconds(TrackBar1.Value).ToString("hh\:mm\:ss"))
+            Label1.Text = TimeSpan.FromSeconds(TrackBar1.Value).ToString("hh\:mm\:ss") & My.Resources.TimeSeparator &
+                          TimeSpan.FromSeconds(_mediaPlayer.Duration).ToString("hh\:mm\:ss")
+
         Catch ex As Exception
             ' 設定が見つからない場合などは何もしない
+            '再生位置がファイルの長さを超える場合も例外が発生するため、そちらもキャッチする
         End Try
     End Sub
 
