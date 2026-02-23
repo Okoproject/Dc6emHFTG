@@ -189,7 +189,7 @@ Public Class MpvPlayerWrapper
             Dim evtPtr As IntPtr = mpv_wait_event(_mpvHandle, EventTimeoutSeconds)
             If evtPtr = IntPtr.Zero Then Continue While
 
-            Dim evt = Marshal.PtrToStructure (Of MpvEvent)(evtPtr)
+            Dim evt = Marshal.PtrToStructure(Of MpvEvent)(evtPtr)
 
             Select Case evt.EventId
                 Case MpvEventFileLoaded
@@ -224,8 +224,8 @@ Public Class MpvPlayerWrapper
         End Get
         Set
             If _mpvHandle = IntPtr.Zero Then Return
-            If value < 0 Then value = 0
-            mpv_set_property(_mpvHandle, "time-pos", MpvFormatDouble, value)
+            If Value < 0 Then Value = 0
+            mpv_set_property(_mpvHandle, "time-pos", MpvFormatDouble, Value)
         End Set
     End Property
 
@@ -254,9 +254,9 @@ Public Class MpvPlayerWrapper
         End Get
         Set
             If _mpvHandle = IntPtr.Zero Then Return
-            If value < MinSpeed Then value = MinSpeed
-            If value > MaxSpeed Then value = MaxSpeed
-            mpv_set_property(_mpvHandle, "speed", MpvFormatDouble, value)
+            If Value < MinSpeed Then Value = MinSpeed
+            If Value > MaxSpeed Then Value = MaxSpeed
+            mpv_set_property(_mpvHandle, "speed", MpvFormatDouble, Value)
         End Set
     End Property
 
@@ -272,9 +272,9 @@ Public Class MpvPlayerWrapper
         End Get
         Set
             If _mpvHandle = IntPtr.Zero Then Return
-            If value < MinVolume Then value = MinVolume
-            If value > MaxVolume Then value = MaxVolume
-            Dim vol = CDbl(value)
+            If Value < MinVolume Then Value = MinVolume
+            If Value > MaxVolume Then Value = MaxVolume
+            Dim vol = CDbl(Value)
             mpv_set_property(_mpvHandle, "volume", MpvFormatDouble, vol)
         End Set
     End Property

@@ -148,6 +148,9 @@ Public Class MainPlayerForm
             TrackBar1.Enabled = True
             TrackBar1.Maximum = CInt(dur)
             Label1.Text = String.Format(My.Resources.TimeFormat, TimeSpan.FromSeconds(dur).ToString("hh\:mm\:ss"))
+
+            _mediaPlayer.Position = 0
+
         Else
             TrackBar1.Enabled = False
         End If
