@@ -69,6 +69,7 @@ Public Class MainPlayerForm
         ApplyPanelHeights()
         ApplyUiSettings()
         UpdateControllerMinSize()
+        UpdateJumpButtonLabels()
 
         TextBox2.Text = My.Settings.SC2_Distance & "," & My.Settings.SC1_Distance
 
@@ -336,7 +337,34 @@ Public Class MainPlayerForm
             SplitContainer2.Panel1Collapsed = True
             Button40.Text = "PL=False"
         End If
+
+
     End Sub
+
+    ''' <summary>
+    '''     ジャンプボタンのラベルを設定値で更新
+    ''' </summary>
+    Private Sub UpdateJumpButtonLabels()
+        For i As Integer = 1 To 20
+            Dim btn As Button = TryCast(Me.Controls.Find("Button" & i, True).FirstOrDefault(), Button)
+            If btn IsNot Nothing Then
+                Dim value As Integer = CInt(My.Settings("SK" & i))
+                btn.Text = FormatJumpValue(value)
+            End If
+        Next
+    End Sub
+
+    ''' <summary>
+    '''     ジャンプ値を表示用文字列に変換（例: 60 → "+1M", -5 → "-5S"）
+    ''' </summary>
+    Private Function FormatJumpValue(seconds As Integer) As String
+        Dim sign As String = If(seconds >= 0, "+", "")
+        If Math.Abs(seconds) >= 60 Then
+            Return sign & (seconds \ 60) & "M"
+        Else
+            Return sign & seconds & "S"
+        End If
+    End Function
 
 #End Region
 
