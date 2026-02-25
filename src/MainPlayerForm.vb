@@ -69,6 +69,10 @@ Public Class MainPlayerForm
         ApplyPanelHeights()
         ApplyUiSettings()
         UpdateControllerMinSize()
+
+        TextBox2.Text = My.Settings.SC2_Distance & "," & My.Settings.SC1_Distance
+
+
     End Sub
 
     Private Sub MainPlayerForm_Closing(sender As Object, e As CancelEventArgs) Handles MyBase.Closing
@@ -325,12 +329,12 @@ Public Class MainPlayerForm
             If My.Settings.SC2_Distance > 0 Then
                 SplitContainer2.SplitterDistance = My.Settings.SC2_Distance
             Else
-                SplitContainer2.SplitterDistance = SplitContainer2.Width \ 4
+                SplitContainer2.SplitterDistance = 100
             End If
-            CheckBoxPlayList.Checked = True
+            Button40.Text = "PL=True"
         Else
             SplitContainer2.Panel1Collapsed = True
-            CheckBoxPlayList.Checked = False
+            Button40.Text = "PL=False"
         End If
     End Sub
 
@@ -349,7 +353,8 @@ Public Class MainPlayerForm
         ' UI状態の保存
         My.Settings.gamen = Not CheckBoxMpvPamel.Checked
         My.Settings.shiori = Not SplitContainer1.Panel2Collapsed
-        My.Settings.PL = CheckBoxPlayList.Checked
+        My.Settings.PL = Not SplitContainer2.Panel1Collapsed
+        'My.Settings.PL = CheckBoxPlayList.Checked
 
         ' SplitterDistanceを常に保存（非表示時も最後の値を保持）
         My.Settings.SC1_Distance = SplitContainer1.SplitterDistance
@@ -464,6 +469,9 @@ Public Class MainPlayerForm
     Private Sub TogglePlayPause()
         If _mediaPlayer.IsPlaying Then
             _mediaPlayer.Pause()
+            If My.Settings.AutoBack <> 0 Then
+                _mediaPlayer.Position -= My.Settings.AutoBack / 100
+            End If
             Button200.Image = My.Resources.Run_16x
         Else
             _mediaPlayer.Play()
@@ -665,40 +673,6 @@ Public Class MainPlayerForm
         Me.Refresh()
     End Sub
 
-    ''' <summary>
-    '''     プレイリストの表示/非表示切り替え
-    ''' </summary>
-    Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBoxPlayList.CheckedChanged
-        Dim isShowing As Boolean = CheckBoxPlayList.Checked
-
-        Me.SuspendLayout()
-        SendMessage(Me.Handle, WM_SETREDRAW, False, IntPtr.Zero)
-        If isShowing Then
-            ' 表示する場合
-            Dim panelWidth As Integer = If(My.Settings.SC2_Distance > 0, My.Settings.SC2_Distance, 300)
-
-            SplitContainer2.Panel1Collapsed = False
-            SplitContainer2.SplitterDistance = panelWidth
-            ' フォームサイズを拡張し、Leftを調整して右端位置を固定（旧Form1.vbと同じ処理）
-            Me.Width += panelWidth
-            Me.Left -= panelWidth
-
-        Else
-            ' 非表示にする前にパネルの実際のサイズを保存
-            Dim actualPanelWidth As Integer = SplitContainer2.Panel1.Width
-            My.Settings.SC2_Distance = SplitContainer2.SplitterDistance
-            My.Settings.Save()
-
-            ' フォームサイズを縮小し、Leftを調整して右端位置を固定（旧Form1.vbと同じ処理）
-            SplitContainer2.Panel1Collapsed = True
-            Me.Width -= actualPanelWidth
-            Me.Left += actualPanelWidth
-        End If
-        Me.ResumeLayout()
-        SendMessage(Me.Handle, WM_SETREDRAW, True, IntPtr.Zero)
-        Me.Refresh()
-    End Sub
-
 #End Region
 
 #Region "ボタンイベントハンドラ"
@@ -778,7 +752,7 @@ Public Class MainPlayerForm
         Try
             Dim jumpValue = CInt(My.Settings(settingName))
             TrackBar1.Value += jumpValue
-            _mediaPlayer.Position = TrackBar1.Value + jumpValue
+            _mediaPlayer.Position = TrackBar1.Value
 
             ToolTip1.SetToolTip(TrackBar1, TimeSpan.FromSeconds(TrackBar1.Value).ToString("hh\:mm\:ss"))
             Label1.Text = TimeSpan.FromSeconds(TrackBar1.Value).ToString("hh\:mm\:ss") & My.Resources.TimeSeparator &
@@ -1475,7 +1449,7 @@ Public Class MainPlayerForm
     End Function
 
     Private Sub MainPlayerForm_Resize(sender As Object, e As EventArgs) Handles Me.Resize
-        TextBox2.Text = Me.Width & "," & Me.Height & "|" & TableLayoutPanel1.Width & "," & TableLayoutPanel1.Height
+        'TextBox2.Text = Me.Width & "," & Me.Height & "|" & TableLayoutPanel1.Width & "," & TableLayoutPanel1.Height
     End Sub
 
     Private Sub MainPlayerForm_Shown(sender As Object, e As EventArgs) Handles Me.Shown
@@ -1495,7 +1469,54 @@ Public Class MainPlayerForm
         Debug.WriteLine("mpvの準備時間を確保しました。再生を開始します。")
     End Sub
 
-    Private Sub MainPlayerForm_MenuStart(sender As Object, e As EventArgs) Handles Me.MenuStart
+    Private Sub Button40_Click(sender As Object, e As EventArgs) Handles Button40.Click
+
+        Me.SuspendLayout()
+        SendMessage(Me.Handle, WM_SETREDRAW, False, IntPtr.Zero)
+        If SplitContainer2.Panel1Collapsed = True Then
+            ' 表示する場合
+            Dim panelWidth As Integer = If(My.Settings.SC2_Distance > 0, My.Settings.SC2_Distance, 100)
+
+            SplitContainer2.FixedPanel = FixedPanel.Panel2
+
+
+
+            Me.Width += SplitContainer2.Panel1.Width + SplitContainer2.SplitterWidth
+            ' フォームサイズを拡張し、Leftを調整して右端位置を固定（旧Form1.vbと同じ処理
+            Me.Left -= SplitContainer2.Panel1.Width - SplitContainer2.SplitterWidth
+
+            SplitContainer2.Panel1Collapsed = False
+
+            SplitContainer2.SplitterDistance = My.Settings.SC2_Distance ' これでパネルの幅が復元されるはず
+
+            Button40.Text = "PL >"
+            Button40.ForeColor = Color.Green
+
+            TextBox2.Text = My.Settings.SC2_Distance & "," & My.Settings.SC1_Distance
+
+        Else
+            ' 非表示にする前にパネルの実際のサイズを保存
+            'Dim actualPanelWidth As Integer = SplitContainer2.Panel1.Width
+            'サイズ変更をしていないもかかわらず、なぜかここで数値が増えてしまう
+            My.Settings.SC2_Distance = SplitContainer2.Panel1.Width
+            My.Settings.Save()
+
+            TextBox2.Text = My.Settings.SC2_Distance & "," & My.Settings.SC1_Distance
+
+            ' フォームサイズを縮小し、Leftを調整して右端位置を固定（旧Form1.vbと同じ処理）
+            SplitContainer2.FixedPanel = FixedPanel.Panel2
+            SplitContainer2.Panel1Collapsed = True
+            Me.Width -= SplitContainer2.Panel1.Width - My.Settings.SC2_Distance
+            Me.Left += SplitContainer2.Panel1.Width + SplitContainer2.SplitterWidth
+
+            Button40.Text = "< PL"
+            Button40.ForeColor = Color.Black
+
+        End If
+        Me.ResumeLayout()
+        SendMessage(Me.Handle, WM_SETREDRAW, True, IntPtr.Zero)
+        Me.Refresh()
+
 
     End Sub
 

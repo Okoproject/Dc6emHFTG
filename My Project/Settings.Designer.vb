@@ -67,7 +67,8 @@ Namespace My
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("250")>  _
         Public Property AutoBack() As Integer
             Get
                 Return CType(Me("AutoBack"),Integer)
@@ -1774,9 +1775,9 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
-        Public Property SC1_Distance() As Long
+        Public Property SC1_Distance() As Integer
             Get
-                Return CType(Me("SC1_Distance"),Long)
+                Return CType(Me("SC1_Distance"),Integer)
             End Get
             Set
                 Me("SC1_Distance") = value
@@ -1786,9 +1787,9 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
-        Public Property SC2_Distance() As Long
+        Public Property SC2_Distance() As Integer
             Get
-                Return CType(Me("SC2_Distance"),Long)
+                Return CType(Me("SC2_Distance"),Integer)
             End Get
             Set
                 Me("SC2_Distance") = value
@@ -1798,9 +1799,9 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
-        Public Property SC3_Distance() As Long
+        Public Property SC3_Distance() As Integer
             Get
-                Return CType(Me("SC3_Distance"),Long)
+                Return CType(Me("SC3_Distance"),Integer)
             End Get
             Set
                 Me("SC3_Distance") = value

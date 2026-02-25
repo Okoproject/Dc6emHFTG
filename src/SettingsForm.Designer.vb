@@ -138,8 +138,8 @@ Partial Class SettingsForm
         Me.RadioButton5 = New System.Windows.Forms.RadioButton()
         Me.RadioButton4 = New System.Windows.Forms.RadioButton()
         Me.GroupBox10 = New System.Windows.Forms.GroupBox()
-        Me.RadioButton7 = New System.Windows.Forms.RadioButton()
         Me.RadioButton6 = New System.Windows.Forms.RadioButton()
+        Me.RadioButton7 = New System.Windows.Forms.RadioButton()
         Me.GroupBox1.SuspendLayout()
         CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox2.SuspendLayout()
@@ -1486,16 +1486,6 @@ Partial Class SettingsForm
         Me.GroupBox10.TabStop = False
         Me.GroupBox10.Text = "メディアファイル読み込み時の設定"
         '
-        'RadioButton7
-        '
-        Me.RadioButton7.AutoSize = True
-        Me.RadioButton7.Location = New System.Drawing.Point(119, 21)
-        Me.RadioButton7.Name = "RadioButton7"
-        Me.RadioButton7.Size = New System.Drawing.Size(58, 19)
-        Me.RadioButton7.TabIndex = 2
-        Me.RadioButton7.Text = "再生"
-        Me.RadioButton7.UseVisualStyleBackColor = True
-        '
         'RadioButton6
         '
         Me.RadioButton6.AutoSize = True
@@ -1507,6 +1497,16 @@ Partial Class SettingsForm
         Me.RadioButton6.TabStop = True
         Me.RadioButton6.Text = "一時停止"
         Me.RadioButton6.UseVisualStyleBackColor = True
+        '
+        'RadioButton7
+        '
+        Me.RadioButton7.AutoSize = True
+        Me.RadioButton7.Location = New System.Drawing.Point(119, 21)
+        Me.RadioButton7.Name = "RadioButton7"
+        Me.RadioButton7.Size = New System.Drawing.Size(58, 19)
+        Me.RadioButton7.TabIndex = 2
+        Me.RadioButton7.Text = "再生"
+        Me.RadioButton7.UseVisualStyleBackColor = True
         '
         'SettingsForm
         '

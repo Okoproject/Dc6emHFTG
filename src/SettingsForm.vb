@@ -1,3 +1,5 @@
+Imports System.ComponentModel
+
 ''' <summary>
 '''     設定フォーム
 ''' </summary>
@@ -57,7 +59,7 @@ Public Class SettingsForm
         {15, HotKeyType.JumpHotkey6},
         {16, HotKeyType.SpeedUp},
         {17, HotKeyType.SpeedDown},
-        {18, HotKeyType.SpeedResetTo1x},
+        {18, HotKeyType.SpeedResetTo1X},
         {19, HotKeyType.SpeedSetToHalf},
         {20, HotKeyType.SpeedSetToDouble},
         {21, HotKeyType.BringWindowToFront},
@@ -166,7 +168,7 @@ Public Class SettingsForm
     '''     自動巻戻し設定の読み込み
     ''' </summary>
     Private Sub LoadAutoBackupSettings()
-        NumericUpDown1.Value = CDec(My.Settings.AutoBack/10.0)
+        NumericUpDown1.Value = CDec(My.Settings.AutoBack / 10.0)
         CheckBox1.Checked = My.Settings.autoBM
         TextBox10.Text = My.Settings.autoBMDir
     End Sub
@@ -389,10 +391,10 @@ Public Class SettingsForm
         Dim keyProp As String = GetSettingKeyProperty(hotkeyType)
 
         If Not String.IsNullOrEmpty(modifierProp) Then
-            CallByName(My.Settings, modifierProp, CallType.Set, - 1)
+            CallByName(My.Settings, modifierProp, CallType.Set, -1)
         End If
         If Not String.IsNullOrEmpty(keyProp) Then
-            CallByName(My.Settings, keyProp, CallType.Set, - 1)
+            CallByName(My.Settings, keyProp, CallType.Set, -1)
         End If
 
         My.Settings.Save()
@@ -577,6 +579,15 @@ Public Class SettingsForm
             My.Settings.AutoPlay = True
         End If
     End Sub
+
+    Private Sub SettingsForm_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+
+    End Sub
+
+    Private Sub NumericUpDown1_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown1.ValueChanged
+        My.Settings.AutoBack = NumericUpDown1.Value
+    End Sub
+
 
 #End Region
 End Class

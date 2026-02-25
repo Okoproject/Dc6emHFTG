@@ -45,7 +45,6 @@ Partial Class MainPlayerForm
         Me.SplitContainer3 = New System.Windows.Forms.SplitContainer()
         Me.MpvPanel = New System.Windows.Forms.Panel()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
-        Me.CheckBoxPlayList = New System.Windows.Forms.CheckBox()
         Me.CheckBoxMpvPamel = New System.Windows.Forms.CheckBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Button33 = New System.Windows.Forms.Button()
@@ -92,6 +91,9 @@ Partial Class MainPlayerForm
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Button12 = New System.Windows.Forms.Button()
+        Me.Button30 = New System.Windows.Forms.Button()
+        Me.Button38 = New System.Windows.Forms.Button()
+        Me.Button40 = New System.Windows.Forms.Button()
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.colCounter = New System.Windows.Forms.DataGridViewButtonColumn()
@@ -289,7 +291,6 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.70151!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.70151!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5.969807!))
-        Me.TableLayoutPanel1.Controls.Add(Me.CheckBoxPlayList, 0, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.CheckBoxMpvPamel, 0, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Label1, 13, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Button33, 10, 0)
@@ -336,6 +337,9 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.Controls.Add(Me.Button1, 0, 2)
         Me.TableLayoutPanel1.Controls.Add(Me.Button2, 2, 2)
         Me.TableLayoutPanel1.Controls.Add(Me.Button12, 2, 4)
+        Me.TableLayoutPanel1.Controls.Add(Me.Button30, 12, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.Button38, 12, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.Button40, 0, 1)
         Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 0)
         Me.TableLayoutPanel1.Margin = New System.Windows.Forms.Padding(1, 1, 1, 10)
@@ -352,25 +356,6 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(1002, 513)
         Me.TableLayoutPanel1.TabIndex = 0
-        '
-        'CheckBoxPlayList
-        '
-        Me.CheckBoxPlayList.Appearance = System.Windows.Forms.Appearance.Button
-        Me.CheckBoxPlayList.AutoSize = True
-        Me.CheckBoxPlayList.BackColor = System.Drawing.SystemColors.ActiveBorder
-        Me.CheckBoxPlayList.Checked = True
-        Me.CheckBoxPlayList.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.TableLayoutPanel1.SetColumnSpan(Me.CheckBoxPlayList, 2)
-        Me.CheckBoxPlayList.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CheckBoxPlayList.Location = New System.Drawing.Point(1, 74)
-        Me.CheckBoxPlayList.Margin = New System.Windows.Forms.Padding(1)
-        Me.CheckBoxPlayList.Name = "CheckBoxPlayList"
-        Me.CheckBoxPlayList.Size = New System.Drawing.Size(92, 71)
-        Me.CheckBoxPlayList.TabIndex = 972
-        Me.CheckBoxPlayList.Text = "PL"
-        Me.CheckBoxPlayList.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.ToolTip1.SetToolTip(Me.CheckBoxPlayList, "動画再生画面の表示・非表示")
-        Me.CheckBoxPlayList.UseVisualStyleBackColor = False
         '
         'CheckBoxMpvPamel
         '
@@ -1045,7 +1030,7 @@ Partial Class MainPlayerForm
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(92, 71)
         Me.Button1.TabIndex = 940
-        Me.Button1.Text = "-3S"
+        Me.Button1.Text = "+1S"
         Me.Button1.UseVisualStyleBackColor = False
         '
         'Button2
@@ -1060,7 +1045,7 @@ Partial Class MainPlayerForm
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(92, 71)
         Me.Button2.TabIndex = 928
-        Me.Button2.Text = "+1S"
+        Me.Button2.Text = "+3S"
         Me.Button2.UseVisualStyleBackColor = False
         '
         'Button12
@@ -1075,8 +1060,38 @@ Partial Class MainPlayerForm
         Me.Button12.Name = "Button12"
         Me.Button12.Size = New System.Drawing.Size(92, 71)
         Me.Button12.TabIndex = 929
-        Me.Button12.Text = "+3S"
+        Me.Button12.Text = "-3S"
         Me.Button12.UseVisualStyleBackColor = False
+        '
+        'Button30
+        '
+        Me.Button30.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Button30.Location = New System.Drawing.Point(567, 3)
+        Me.Button30.Name = "Button30"
+        Me.Button30.Size = New System.Drawing.Size(41, 67)
+        Me.Button30.TabIndex = 973
+        Me.Button30.Text = "Button30"
+        Me.Button30.UseVisualStyleBackColor = True
+        '
+        'Button38
+        '
+        Me.Button38.Location = New System.Drawing.Point(567, 76)
+        Me.Button38.Name = "Button38"
+        Me.Button38.Size = New System.Drawing.Size(41, 23)
+        Me.Button38.TabIndex = 974
+        Me.Button38.Text = "Button38"
+        Me.Button38.UseVisualStyleBackColor = True
+        '
+        'Button40
+        '
+        Me.TableLayoutPanel1.SetColumnSpan(Me.Button40, 2)
+        Me.Button40.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Button40.Location = New System.Drawing.Point(3, 76)
+        Me.Button40.Name = "Button40"
+        Me.Button40.Size = New System.Drawing.Size(88, 67)
+        Me.Button40.TabIndex = 975
+        Me.Button40.Text = "Button40"
+        Me.Button40.UseVisualStyleBackColor = True
         '
         'TableLayoutPanel2
         '
@@ -1352,7 +1367,6 @@ Partial Class MainPlayerForm
     Friend WithEvents Button35 As Button
     Friend WithEvents SplitContainer3 As SplitContainer
     Friend WithEvents DataGridView2 As DataGridView
-    Friend WithEvents CheckBoxPlayList As CheckBox
     Friend WithEvents File_Namae As DataGridViewTextBoxColumn
     Friend WithEvents File_Length As DataGridViewTextBoxColumn
     Friend WithEvents File_Memo As DataGridViewTextBoxColumn
@@ -1360,4 +1374,7 @@ Partial Class MainPlayerForm
     Friend WithEvents File_Position As DataGridViewTextBoxColumn
     Friend WithEvents File_Progress As DataGridViewTextBoxColumn
     Friend WithEvents Timer2 As Timer
+    Friend WithEvents Button30 As Button
+    Friend WithEvents Button38 As Button
+    Friend WithEvents Button40 As Button
 End Class

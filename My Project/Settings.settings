@@ -6,7 +6,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="AutoBack" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">250</Value>
     </Setting>
     <Setting Name="LastIchi" Type="System.Double" Scope="User">
       <Value Profile="(Default)" />
@@ -461,13 +461,13 @@
     <Setting Name="Main_Width" Type="System.Int64" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="SC1_Distance" Type="System.Int64" Scope="User">
+    <Setting Name="SC1_Distance" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="SC2_Distance" Type="System.Int64" Scope="User">
+    <Setting Name="SC2_Distance" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="SC3_Distance" Type="System.Int64" Scope="User">
+    <Setting Name="SC3_Distance" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="AutoPlay" Type="System.Boolean" Scope="User">
