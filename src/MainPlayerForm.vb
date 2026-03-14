@@ -2,6 +2,7 @@ Imports System.ComponentModel
 Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.InteropServices
+Imports System.Security.Cryptography.X509Certificates
 Imports System.Text
 
 ''' <summary>
@@ -9,8 +10,13 @@ Imports System.Text
 ''' </summary>
 Public Class MainPlayerForm
 
-    <DllImport("user32.dll")>
-    Private Shared Function SendMessage(hWnd As IntPtr, msg As Integer, wParam As Boolean, lParam As IntPtr) As IntPtr
+    Public BMWidth As Integer
+    Public PLWidth As Integer
+    Public MainHeight As Integer
+    Public MainWidth As Integer
+
+
+    <DllImport("user32.dll")> Private Shared Function SendMessage(hWnd As IntPtr, msg As Integer, wParam As Boolean, lParam As IntPtr) As IntPtr
     End Function
 
     Private Const WM_SETREDRAW As Integer = &HB
@@ -61,6 +67,8 @@ Public Class MainPlayerForm
 #Region "フォームイベント"
 
     Private Sub MainPlayerForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+
         Instance = Me
         InitializeWindowPosition()
         InitializeMediaPlayer()
@@ -1504,38 +1512,47 @@ Public Class MainPlayerForm
         If SplitContainer2.Panel1Collapsed = True Then
             ' 表示する場合
             Dim panelWidth As Integer = If(My.Settings.SC2_Distance > 0, My.Settings.SC2_Distance, 100)
+            Dim expandWidth As Integer = panelWidth + SplitContainer2.SplitterWidth
 
+            ' FixedPanelを先に設定（Panel2の幅を固定）
             SplitContainer2.FixedPanel = FixedPanel.Panel2
 
+            ' フォーム幅を拡張（左方向に伸ばす）
+            Me.Width += expandWidth
+            Me.Left -= expandWidth
 
+            ' プレイリストパネルが表示されている場合、SplitContainer1.Panel1の幅も増やす
+            If Not SplitContainer1.Panel2Collapsed Then
+                SplitContainer1.SplitterDistance += expandWidth
+            End If
 
-            Me.Width += SplitContainer2.Panel1.Width + SplitContainer2.SplitterWidth
-            ' フォームサイズを拡張し、Leftを調整して右端位置を固定（旧Form1.vbと同じ処理
-            Me.Left -= SplitContainer2.Panel1.Width - SplitContainer2.SplitterWidth
-
+            ' Panel1を表示
             SplitContainer2.Panel1Collapsed = False
-
-            SplitContainer2.SplitterDistance = My.Settings.SC2_Distance ' これでパネルの幅が復元されるはず
+            SplitContainer2.SplitterDistance = panelWidth
 
             Button40.Text = "PL >"
             Button40.ForeColor = Color.Green
 
-            TextBox2.Text = My.Settings.SC2_Distance & "," & My.Settings.SC1_Distance
-
         Else
-            ' 非表示にする前にパネルの実際のサイズを保存
-            'Dim actualPanelWidth As Integer = SplitContainer2.Panel1.Width
-            'サイズ変更をしていないもかかわらず、なぜかここで数値が増えてしまう
-            My.Settings.SC2_Distance = SplitContainer2.Panel1.Width
+            ' 非表示にする場合
+            Dim actualPanelWidth As Integer = SplitContainer2.Panel1.Width
+            Dim shrinkWidth As Integer = actualPanelWidth + SplitContainer2.SplitterWidth
+
+            ' 設定を保存
+            My.Settings.SC2_Distance = actualPanelWidth
             My.Settings.Save()
 
-            TextBox2.Text = My.Settings.SC2_Distance & "," & My.Settings.SC1_Distance
+            ' プレイリストパネルが表示されている場合、SplitContainer1.Panel1の幅を先に減らす
+            If Not SplitContainer1.Panel2Collapsed Then
+                SplitContainer1.SplitterDistance -= shrinkWidth
+            End If
 
-            ' フォームサイズを縮小し、Leftを調整して右端位置を固定（旧Form1.vbと同じ処理）
-            SplitContainer2.FixedPanel = FixedPanel.Panel2
+            ' フォーム幅を縮小（右方向に縮める）
+            Me.Width -= shrinkWidth
+            Me.Left += shrinkWidth
+
+            ' Panel1を非表示
             SplitContainer2.Panel1Collapsed = True
-            Me.Width -= SplitContainer2.Panel1.Width - My.Settings.SC2_Distance
-            Me.Left += SplitContainer2.Panel1.Width + SplitContainer2.SplitterWidth
 
             Button40.Text = "< PL"
             Button40.ForeColor = Color.Black
@@ -1546,6 +1563,48 @@ Public Class MainPlayerForm
         Me.Refresh()
 
 
+    End Sub
+
+    Private Sub Button30_Click(sender As Object, e As EventArgs) Handles Button30.Click
+        Me.SuspendLayout()
+        SendMessage(Me.Handle, WM_SETREDRAW, False, IntPtr.Zero)
+        If SplitContainer1.Panel2Collapsed Then
+            ' しおりパネルを開く
+            ' Panel2（しおり）の幅を使ってフォームを拡張する
+            Dim panelWidth As Integer
+            If BMWidth > 0 Then
+                panelWidth = CInt(BMWidth)
+            Else
+                ' デフォルトのしおりパネル幅
+                panelWidth = 125
+            End If
+
+            ' Panel2 + スプリッター幅の合計分だけフォームを拡張
+            Dim expandWidth As Integer = panelWidth + SplitContainer1.SplitterWidth
+            Me.ClientSize = New Size(Me.ClientSize.Width + expandWidth, Me.ClientSize.Height)
+
+            SplitContainer1.Panel2Collapsed = False
+            ' SC1_Distance（Panel1の幅）が保存されていれば復元
+            If My.Settings.SC1_Distance > 0 Then
+                SplitContainer1.SplitterDistance = CInt(My.Settings.SC1_Distance)
+            End If
+        Else
+            ' しおりパネルを閉じる
+            ' 非表示にする前にパネルの実際のサイズを保存（Panel2幅 + スプリッター幅）
+            Dim actualPanelWidth As Integer = SplitContainer1.Panel2.Width
+            Dim shrinkWidth As Integer = actualPanelWidth + SplitContainer1.SplitterWidth
+            BMWidth = actualPanelWidth
+            'My.Settings.SC1_Distance = SplitContainer1.SplitterDistance
+            'My.Settings.Save()
+
+            ' フォームサイズをPanel2+スプリッター幅分縮小（Panel1のサイズを変えないように）
+            Me.ClientSize = New Size(Math.Max(100, BMWidth - shrinkWidth), Me.ClientSize.Height)
+
+            SplitContainer1.Panel2Collapsed = True
+        End If
+        Me.ResumeLayout()
+        SendMessage(Me.Handle, WM_SETREDRAW, True, IntPtr.Zero)
+        Me.Refresh()
     End Sub
 
 #End Region
