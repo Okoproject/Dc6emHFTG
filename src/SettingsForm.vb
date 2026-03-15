@@ -165,10 +165,12 @@ Public Class SettingsForm
     End Sub
 
     ''' <summary>
-    '''     自動巻戻し設定の読み込み
+    '''     自動巻戻し設定とカウンタコピーとメモのCSVの保存設定の読み込み
     ''' </summary>
     Private Sub LoadAutoBackupSettings()
-        NumericUpDown1.Value = CDec(My.Settings.AutoBack / 10.0)
+
+        NumericUpDown1.Value = My.Settings.AutoBack / 100
+
         CheckBox1.Checked = My.Settings.autoBM
         TextBox10.Text = My.Settings.autoBMDir
     End Sub
@@ -581,13 +583,17 @@ Public Class SettingsForm
     End Sub
 
     Private Sub SettingsForm_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-
+        My.Settings.AutoBack = NumericUpDown1.Value * 100
+        MsgBox("AutoBack = " & My.Settings.AutoBack)
     End Sub
 
     Private Sub NumericUpDown1_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown1.ValueChanged
-        My.Settings.AutoBack = NumericUpDown1.Value
+
     End Sub
 
+    Private Sub CheckBox5_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox5.CheckedChanged
+
+    End Sub
 
 #End Region
 End Class

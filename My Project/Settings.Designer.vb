@@ -15,7 +15,7 @@ Option Explicit On
 Namespace My
     
     <Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.14.0.0"),  _
+     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "18.4.0.0"),  _
      Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
     Partial Friend NotInheritable Class MySettings
         Inherits Global.System.Configuration.ApplicationSettingsBase
@@ -67,8 +67,7 @@ Namespace My
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("250")>  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
         Public Property AutoBack() As Integer
             Get
                 Return CType(Me("AutoBack"),Integer)
@@ -1208,94 +1207,6 @@ Namespace My
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
-        Public Property p11_width() As Integer
-            Get
-                Return CType(Me("p11_width"),Integer)
-            End Get
-            Set
-                Me("p11_width") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
-        Public Property p11_height() As Integer
-            Get
-                Return CType(Me("p11_height"),Integer)
-            End Get
-            Set
-                Me("p11_height") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
-        Public Property p12_width() As Integer
-            Get
-                Return CType(Me("p12_width"),Integer)
-            End Get
-            Set
-                Me("p12_width") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
-        Public Property p12_height() As Integer
-            Get
-                Return CType(Me("p12_height"),Integer)
-            End Get
-            Set
-                Me("p12_height") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
-        Public Property p21_width() As Integer
-            Get
-                Return CType(Me("p21_width"),Integer)
-            End Get
-            Set
-                Me("p21_width") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
-        Public Property p21_height() As Integer
-            Get
-                Return CType(Me("p21_height"),Integer)
-            End Get
-            Set
-                Me("p21_height") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
-        Public Property p22_width() As Integer
-            Get
-                Return CType(Me("p22_width"),Integer)
-            End Get
-            Set
-                Me("p22_width") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
-        Public Property p22_height() As Integer
-            Get
-                Return CType(Me("p22_height"),Integer)
-            End Get
-            Set
-                Me("p22_height") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
         Public Property gamen() As Boolean
@@ -1678,18 +1589,6 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
-        Public Property PL_Height() As Integer
-            Get
-                Return CType(Me("PL_Height"),Integer)
-            End Get
-            Set
-                Me("PL_Height") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("100")>  _
         Public Property PL_Width() As Integer
             Get
@@ -1715,36 +1614,12 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
-        Public Property Gamen_Width() As Long
-            Get
-                Return CType(Me("Gamen_Width"),Long)
-            End Get
-            Set
-                Me("Gamen_Width") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
         Public Property Shiori_Width() As Long
             Get
                 Return CType(Me("Shiori_Width"),Long)
             End Get
             Set
                 Me("Shiori_Width") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
-        Public Property Shiori_Height() As Long
-            Get
-                Return CType(Me("Shiori_Height"),Long)
-            End Get
-            Set
-                Me("Shiori_Height") = value
             End Set
         End Property
         
@@ -1769,42 +1644,6 @@ Namespace My
             End Get
             Set
                 Me("Main_Width") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
-        Public Property SC1_Distance() As Integer
-            Get
-                Return CType(Me("SC1_Distance"),Integer)
-            End Get
-            Set
-                Me("SC1_Distance") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
-        Public Property SC2_Distance() As Integer
-            Get
-                Return CType(Me("SC2_Distance"),Integer)
-            End Get
-            Set
-                Me("SC2_Distance") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
-        Public Property SC3_Distance() As Integer
-            Get
-                Return CType(Me("SC3_Distance"),Integer)
-            End Get
-            Set
-                Me("SC3_Distance") = value
             End Set
         End Property
         

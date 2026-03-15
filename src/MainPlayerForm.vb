@@ -1,4 +1,5 @@
 Imports System.ComponentModel
+Imports System.Diagnostics.Eventing.Reader
 Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.InteropServices
@@ -10,10 +11,16 @@ Imports System.Text
 ''' </summary>
 Public Class MainPlayerForm
 
+    'BMパネルの幅を保存する変数
     Public BMWidth As Integer
+    'PLパネルの幅を保存する変数
     Public PLWidth As Integer
+    'フォーム自体の高さを保存する変数
     Public MainHeight As Integer
+    'フォーム自体の幅を保存する変数
     Public MainWidth As Integer
+    '動画表示パネルの高さを保存する変数
+    Public ScrHeight As Integer
 
 
     <DllImport("user32.dll")> Private Shared Function SendMessage(hWnd As IntPtr, msg As Integer, wParam As Boolean, lParam As IntPtr) As IntPtr
@@ -68,18 +75,19 @@ Public Class MainPlayerForm
 
     Private Sub MainPlayerForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        SendMessage(Me.Handle, WM_SETREDRAW, False, IntPtr.Zero)
 
         Instance = Me
         InitializeWindowPosition()
         InitializeMediaPlayer()
         InitializeHotKeys()
         LoadDefaultSettings()
-        ApplyPanelHeights()
         ApplyUiSettings()
         UpdateControllerMinSize()
         UpdateJumpButtonLabels()
 
-        TextBox2.Text = My.Settings.SC2_Distance & "," & My.Settings.SC1_Distance
+        SendMessage(Me.Handle, WM_SETREDRAW, True, IntPtr.Zero)
+        Me.Refresh()
 
 
     End Sub
@@ -281,13 +289,6 @@ Public Class MainPlayerForm
     End Sub
 
     ''' <summary>
-    '''     パネル高さの適用
-    ''' </summary>
-    Private Sub ApplyPanelHeights()
-        MpvPanel.Height = My.Settings.p21_height
-    End Sub
-
-    ''' <summary>
     '''     UI設定の復元
     ''' </summary>
     Private Sub ApplyUiSettings()
@@ -301,15 +302,15 @@ Public Class MainPlayerForm
         If My.Settings.gamen = False Then
             ' 動画画面を表示する場合、まずパネルを展開してからサイズを設定
             SplitContainer3.Panel1Collapsed = False
-            If My.Settings.SC3_Distance > 0 Then
-                SplitContainer3.SplitterDistance = My.Settings.SC3_Distance
+            If My.Settings.Gamen_Height > 0 Then
+                SplitContainer3.SplitterDistance = My.Settings.Gamen_Height
             End If
             CheckBoxMpvPamel.Checked = True
         Else
             ' 動画画面を非表示にする場合
             SplitContainer3.Panel1Collapsed = True
-            If My.Settings.SC3_Distance > 0 Then
-                SplitContainer3.SplitterDistance = My.Settings.SC3_Distance
+            If My.Settings.Gamen_Height > 0 Then
+                SplitContainer3.SplitterDistance = My.Settings.Gamen_Height
             End If
             CheckBoxMpvPamel.Checked = False
         End If
@@ -320,8 +321,8 @@ Public Class MainPlayerForm
             ' パネルを展開
             SplitContainer1.Panel2Collapsed = False
             ' SC1_Distanceが0の場合、デフォルト値を使用
-            If My.Settings.SC1_Distance > 0 Then
-                SplitContainer1.SplitterDistance = My.Settings.SC1_Distance
+            If My.Settings.Shiori_Width > 0 Then
+                SplitContainer1.SplitterDistance = My.Settings.Shiori_Width
             Else
                 SplitContainer1.SplitterDistance = SplitContainer1.Width - 125
             End If
@@ -335,8 +336,8 @@ Public Class MainPlayerForm
         If My.Settings.PL = True Then
             ' プレイリストを表示する場合、まずパネルを展開してからサイズを設定
             SplitContainer2.Panel1Collapsed = False
-            If My.Settings.SC2_Distance > 0 Then
-                SplitContainer2.SplitterDistance = My.Settings.SC2_Distance
+            If My.Settings.PL_Width > 0 Then
+                SplitContainer2.SplitterDistance = My.Settings.PL_Width
             Else
                 SplitContainer2.SplitterDistance = 100
             End If
@@ -390,18 +391,14 @@ Public Class MainPlayerForm
         My.Settings.gamen = Not CheckBoxMpvPamel.Checked
         My.Settings.shiori = Not SplitContainer1.Panel2Collapsed
         My.Settings.PL = Not SplitContainer2.Panel1Collapsed
-        'My.Settings.PL = CheckBoxPlayList.Checked
 
-        ' SplitterDistanceを常に保存（非表示時も最後の値を保持）
-        My.Settings.SC1_Distance = SplitContainer1.SplitterDistance
-        My.Settings.SC2_Distance = SplitContainer2.SplitterDistance
-        My.Settings.SC3_Distance = SplitContainer3.SplitterDistance
-
-        ' しおりパネルが表示中ならPanel2の実幅を保存
-        If Not SplitContainer1.Panel2Collapsed Then
-            My.Settings.Shiori_Width = SplitContainer1.Panel2.Width
-        End If
-
+        'BMパネルの幅を保存
+        My.Settings.Shiori_Width = BMWidth
+        'PLパネルの幅を保存
+        My.Settings.PL_Width = PLWidth
+        '動画表示パネルの高さを保存
+        My.Settings.Gamen_Height = ScrHeight
+        'フォームのサイズを保存
         My.Settings.MyClientSize = ClientSize
     End Sub
 
@@ -513,6 +510,12 @@ Public Class MainPlayerForm
             _mediaPlayer.Play()
             Button200.Image = My.Resources.Pause_16x
         End If
+
+        Label1.Text = TimeSpan.FromSeconds(_mediaPlayer.Position).ToString("hh\:mm\:ss") &
+              My.Resources.TimeSeparator &
+              TimeSpan.FromSeconds(_mediaPlayer.Duration).ToString("hh\:mm\:ss")
+        TrackBar1.Value = _mediaPlayer.Position
+
     End Sub
 
     ''' <summary>
@@ -680,11 +683,10 @@ Public Class MainPlayerForm
     ''' </summary>
     Private Sub CheckBoxMpvPanel_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBoxMpvPamel.CheckedChanged
         Dim isShowing As Boolean = CheckBoxMpvPamel.Checked
-        Me.SuspendLayout()
         SendMessage(Me.Handle, WM_SETREDRAW, False, IntPtr.Zero)
         If isShowing Then
             ' 表示する場合
-            Dim panelHeight As Integer = If(My.Settings.SC3_Distance > 0, My.Settings.SC3_Distance, 300)
+            Dim panelHeight As Integer = If(My.Settings.Gamen_Height > 0, My.Settings.Gamen_Height, 300)
 
             ' まずフォームサイズを拡張（Panel2のサイズを変えないように）
             Me.ClientSize = New Size(Me.ClientSize.Width, Me.ClientSize.Height + panelHeight)
@@ -694,7 +696,7 @@ Public Class MainPlayerForm
         Else
             ' 非表示にする前にパネルの実際のサイズを保存
             Dim actualPanelHeight As Integer = SplitContainer3.Panel1.Height
-            My.Settings.SC3_Distance = SplitContainer3.SplitterDistance
+            My.Settings.Gamen_Height = SplitContainer3.SplitterDistance
             My.Settings.Save()
 
             ' フォームサイズをパネルの実際の高さ分縮小（Panel2のサイズを変えないように）
@@ -704,7 +706,6 @@ Public Class MainPlayerForm
         End If
         UpdateControllerMinSize()
 
-        Me.ResumeLayout()
         SendMessage(Me.Handle, WM_SETREDRAW, True, IntPtr.Zero)
         Me.Refresh()
     End Sub
@@ -785,19 +786,51 @@ Public Class MainPlayerForm
         Dim settingName = "SK" & buttonNumber
 
         ' 設定値を取得して移動
-        Try
-            Dim jumpValue = CInt(My.Settings(settingName))
-            TrackBar1.Value += jumpValue
-            _mediaPlayer.Position = TrackBar1.Value
+        'Try
+        'Dim jumpValue = CInt(My.Settings(settingName))
+        'TrackBar1.Value += jumpValue
+        '_mediaPlayer.Position = TrackBar1.Value
 
-            ToolTip1.SetToolTip(TrackBar1, TimeSpan.FromSeconds(TrackBar1.Value).ToString("hh\:mm\:ss"))
-            Label1.Text = TimeSpan.FromSeconds(TrackBar1.Value).ToString("hh\:mm\:ss") & My.Resources.TimeSeparator &
-                          TimeSpan.FromSeconds(_mediaPlayer.Duration).ToString("hh\:mm\:ss")
+        'ToolTip1.SetToolTip(TrackBar1, TimeSpan.FromSeconds(TrackBar1.Value).ToString("hh\:mm\:ss"))
+        'Label1.Text = TimeSpan.FromSeconds(TrackBar1.Value).ToString("hh\:mm\:ss") & My.Resources.TimeSeparator &
+        'TimeSpan.FromSeconds(_mediaPlayer.Duration).ToString("hh\:mm\:ss")
 
-        Catch ex As Exception
-            ' 設定が見つからない場合などは何もしない
-            '再生位置がファイルの長さを超える場合も例外が発生するため、そちらもキャッチする
-        End Try
+
+        'Catch ex As Exception
+        ' 設定が見つからない場合などは何もしない
+        '再生位置がファイルの長さを超える場合と0以下の場合も例外が発生するため、そちらもキャッチする
+        'End Try
+
+        Dim JumpValue2 = CInt(My.Settings(settingName))
+        Select Case TrackBar1.Value + JumpValue2
+
+            'ファイルの長さ以上にジャンプしようとした場合はファイルの長さに移動
+            Case Is > TrackBar1.Maximum
+
+                TrackBar1.Value = TrackBar1.Maximum
+                _mediaPlayer.Position = _mediaPlayer.Duration
+
+            '0以下にジャンプしようとした場合は0に移動
+            Case Is < TrackBar1.Minimum
+
+                TrackBar1.Value = TrackBar1.Minimum
+                _mediaPlayer.Position = 0
+
+
+                'それ以外は通常通りジャンプ
+            Case Else
+
+                TrackBar1.Value += JumpValue2
+                _mediaPlayer.Position = TrackBar1.Value
+
+        End Select
+
+        ToolTip1.SetToolTip(TrackBar1, TimeSpan.FromSeconds(TrackBar1.Value).ToString("hh\:mm\:ss"))
+        Label1.Text = TimeSpan.FromSeconds(TrackBar1.Value).ToString("hh\:mm\:ss") & My.Resources.TimeSeparator &
+                      TimeSpan.FromSeconds(_mediaPlayer.Duration).ToString("hh\:mm\:ss")
+
+
+
     End Sub
 
     Private Sub TrackBar6_Scroll(sender As Object, e As EventArgs) Handles TrackBar6.Scroll
@@ -1151,46 +1184,50 @@ Public Class MainPlayerForm
         End If
     End Sub
 
+    'しおりパネルの表示/非表示切り替え
+    Private Sub ButtonShiori_Click(sender As Object, e As EventArgs) Handles ButtonShiori.Click
 
-    Private Sub ButtonSiori_Click(sender As Object, e As EventArgs) Handles ButtonSiori.Click
-
-        Me.SuspendLayout()
         SendMessage(Me.Handle, WM_SETREDRAW, False, IntPtr.Zero)
         If SplitContainer1.Panel2Collapsed Then
             ' しおりパネルを開く
             ' Panel2（しおり）の幅を使ってフォームを拡張する
+            Dim motoSize As Integer = Me.Width
             Dim panelWidth As Integer
-            If My.Settings.Shiori_Width > 0 Then
-                panelWidth = CInt(My.Settings.Shiori_Width)
+            If BMWidth > 0 Then
+                panelWidth = BMWidth
             Else
                 ' デフォルトのしおりパネル幅
-                panelWidth = 125
+                panelWidth = 500
             End If
 
             ' Panel2 + スプリッター幅の合計分だけフォームを拡張
-            Dim expandWidth As Integer = panelWidth + SplitContainer1.SplitterWidth
-            Me.ClientSize = New Size(Me.ClientSize.Width + expandWidth, Me.ClientSize.Height)
+            Dim expandWidth As Integer = panelWidth
+            Me.Width += expandWidth + 28
 
             SplitContainer1.Panel2Collapsed = False
             ' SC1_Distance（Panel1の幅）が保存されていれば復元
-            If My.Settings.SC1_Distance > 0 Then
-                SplitContainer1.SplitterDistance = CInt(My.Settings.SC1_Distance)
+            If My.Settings.Shiori_Width > 0 Then
+                SplitContainer1.SplitterDistance = motoSize - 18
             End If
+
+            'MsgBox("BMWidth = " & BMWidth & "Panel2のWidth = " & SplitContainer1.Panel2.Width)
+
+
         Else
             ' しおりパネルを閉じる
             ' 非表示にする前にパネルの実際のサイズを保存（Panel2幅 + スプリッター幅）
             Dim actualPanelWidth As Integer = SplitContainer1.Panel2.Width
-            Dim shrinkWidth As Integer = actualPanelWidth + SplitContainer1.SplitterWidth
-            My.Settings.Shiori_Width = actualPanelWidth
-            My.Settings.SC1_Distance = SplitContainer1.SplitterDistance
-            My.Settings.Save()
+            BMWidth = actualPanelWidth
 
             ' フォームサイズをPanel2+スプリッター幅分縮小（Panel1のサイズを変えないように）
-            Me.ClientSize = New Size(Math.Max(100, Me.ClientSize.Width - shrinkWidth), Me.ClientSize.Height)
+            Me.Width -= actualPanelWidth
 
             SplitContainer1.Panel2Collapsed = True
+
+            'MsgBox("BMWidth = " & BMWidth & "Panel2のWidth = " & SplitContainer1.Panel2.Width)
+
+
         End If
-        Me.ResumeLayout()
         SendMessage(Me.Handle, WM_SETREDRAW, True, IntPtr.Zero)
         Me.Refresh()
     End Sub
@@ -1209,6 +1246,7 @@ Public Class MainPlayerForm
             Label1.Text = TimeSpan.FromSeconds(_mediaPlayer.Position).ToString("hh\:mm\:ss") &
                           My.Resources.TimeSeparator &
                           TimeSpan.FromSeconds(_mediaPlayer.Duration).ToString("hh\:mm\:ss")
+            ToolTip1.SetToolTip(TrackBar1, TimeSpan.FromSeconds(TrackBar1.Value).ToString("hh\:mm\:ss"))
         End If
     End Sub
 
@@ -1401,14 +1439,9 @@ Public Class MainPlayerForm
     ''' </summary>
     Private Sub SplitContainer1_SplitterMoved(sender As Object, e As SplitterEventArgs) _
         Handles SplitContainer1.SplitterMoved
-        My.Settings.p11_height = SplitContainer1.Panel1.Height
-        My.Settings.p11_width = SplitContainer1.Panel2.Width
-        My.Settings.p12_height = SplitContainer1.Panel2.Height
-        My.Settings.p12_width = SplitContainer1.Panel2.Width
-        My.Settings.p21_height = SplitContainer3.Panel1.Height
-        My.Settings.p21_width = SplitContainer3.Panel1.Width
-        My.Settings.p22_height = SplitContainer3.Panel2.Height
-        My.Settings.p22_width = SplitContainer3.Panel2.Width
+
+        BMWidth = SplitContainer1.Panel2.Width
+
     End Sub
 
     ''' <summary>
@@ -1416,14 +1449,9 @@ Public Class MainPlayerForm
     ''' </summary>
     Private Sub SplitContainer3_SplitterMoved(sender As Object, e As SplitterEventArgs) _
         Handles SplitContainer3.SplitterMoved
-        My.Settings.p11_height = SplitContainer1.Panel1.Height
-        My.Settings.p11_width = SplitContainer1.Panel2.Width
-        My.Settings.p12_height = SplitContainer1.Panel2.Height
-        My.Settings.p12_width = SplitContainer1.Panel2.Width
-        My.Settings.p21_height = SplitContainer3.Panel1.Height
-        My.Settings.p21_width = SplitContainer3.Panel1.Width
-        My.Settings.p22_height = SplitContainer3.Panel2.Height
-        My.Settings.p22_width = SplitContainer3.Panel2.Width
+
+        ScrHeight = SplitContainer3.Panel1.Height
+
     End Sub
 
     ''' <summary>
@@ -1464,6 +1492,8 @@ Public Class MainPlayerForm
         If (e.Column = 6 OrElse e.Column >= 8 AndAlso e.Column <= 18) AndAlso e.Row = 5 Then
             e.Graphics.FillRectangle(darkBrush2, e.CellBounds)
         End If
+
+
     End Sub
 
 #End Region
@@ -1486,6 +1516,7 @@ Public Class MainPlayerForm
 
     Private Sub MainPlayerForm_Resize(sender As Object, e As EventArgs) Handles Me.Resize
         'TextBox2.Text = Me.Width & "," & Me.Height & "|" & TableLayoutPanel1.Width & "," & TableLayoutPanel1.Height
+        BMWidth = SplitContainer1.Panel2.Width
     End Sub
 
     Private Sub MainPlayerForm_Shown(sender As Object, e As EventArgs) Handles Me.Shown
@@ -1496,35 +1527,20 @@ Public Class MainPlayerForm
         'Application.DoEvents()
     End Sub
 
-    Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles Timer2.Tick
-        Timer2.Stop() ' 1回だけ実行したいので止める
-
-        ' ここで初めて動画を読み込む！
-        ' 例: _mediaPlayer.Load("C:\test.mp4")
-
-        Debug.WriteLine("mpvの準備時間を確保しました。再生を開始します。")
-    End Sub
-
+    'PlayListの表示・非表示切替
     Private Sub Button40_Click(sender As Object, e As EventArgs) Handles Button40.Click
 
-        Me.SuspendLayout()
         SendMessage(Me.Handle, WM_SETREDRAW, False, IntPtr.Zero)
         If SplitContainer2.Panel1Collapsed = True Then
             ' 表示する場合
-            Dim panelWidth As Integer = If(My.Settings.SC2_Distance > 0, My.Settings.SC2_Distance, 100)
-            Dim expandWidth As Integer = panelWidth + SplitContainer2.SplitterWidth
+            Dim panelWidth As Integer = If(PLWidth > 0, PLWidth, 300)
 
             ' FixedPanelを先に設定（Panel2の幅を固定）
             SplitContainer2.FixedPanel = FixedPanel.Panel2
 
             ' フォーム幅を拡張（左方向に伸ばす）
-            Me.Width += expandWidth
-            Me.Left -= expandWidth
-
-            ' プレイリストパネルが表示されている場合、SplitContainer1.Panel1の幅も増やす
-            If Not SplitContainer1.Panel2Collapsed Then
-                SplitContainer1.SplitterDistance += expandWidth
-            End If
+            Me.Left -= panelWidth
+            Me.Width += panelWidth
 
             ' Panel1を表示
             SplitContainer2.Panel1Collapsed = False
@@ -1536,20 +1552,13 @@ Public Class MainPlayerForm
         Else
             ' 非表示にする場合
             Dim actualPanelWidth As Integer = SplitContainer2.Panel1.Width
-            Dim shrinkWidth As Integer = actualPanelWidth + SplitContainer2.SplitterWidth
 
-            ' 設定を保存
-            My.Settings.SC2_Distance = actualPanelWidth
-            My.Settings.Save()
-
-            ' プレイリストパネルが表示されている場合、SplitContainer1.Panel1の幅を先に減らす
-            If Not SplitContainer1.Panel2Collapsed Then
-                SplitContainer1.SplitterDistance -= shrinkWidth
-            End If
+            ' PlayListの幅を保存
+            PLWidth = actualPanelWidth
 
             ' フォーム幅を縮小（右方向に縮める）
-            Me.Width -= shrinkWidth
-            Me.Left += shrinkWidth
+            Me.Left += actualPanelWidth
+            Me.Width -= actualPanelWidth
 
             ' Panel1を非表示
             SplitContainer2.Panel1Collapsed = True
@@ -1558,53 +1567,53 @@ Public Class MainPlayerForm
             Button40.ForeColor = Color.Black
 
         End If
-        Me.ResumeLayout()
         SendMessage(Me.Handle, WM_SETREDRAW, True, IntPtr.Zero)
         Me.Refresh()
-
 
     End Sub
 
-    Private Sub Button30_Click(sender As Object, e As EventArgs) Handles Button30.Click
-        Me.SuspendLayout()
-        SendMessage(Me.Handle, WM_SETREDRAW, False, IntPtr.Zero)
-        If SplitContainer1.Panel2Collapsed Then
-            ' しおりパネルを開く
-            ' Panel2（しおり）の幅を使ってフォームを拡張する
-            Dim panelWidth As Integer
-            If BMWidth > 0 Then
-                panelWidth = CInt(BMWidth)
-            Else
-                ' デフォルトのしおりパネル幅
-                panelWidth = 125
-            End If
+    Private Sub MainPlayerForm_ResizeBegin(sender As Object, e As EventArgs) Handles Me.ResizeBegin
+        BMWidth = SplitContainer1.Panel2.Width
+        PLWidth = SplitContainer2.Panel1.Width
+        ScrHeight = SplitContainer3.Panel1.Height
+    End Sub
 
-            ' Panel2 + スプリッター幅の合計分だけフォームを拡張
-            Dim expandWidth As Integer = panelWidth + SplitContainer1.SplitterWidth
-            Me.ClientSize = New Size(Me.ClientSize.Width + expandWidth, Me.ClientSize.Height)
+    Private Sub MainPlayerForm_ResizeEnd(sender As Object, e As EventArgs) Handles Me.ResizeEnd
+        BMWidth = SplitContainer1.Panel2.Width
+        PLWidth = SplitContainer2.Panel1.Width
+        ScrHeight = SplitContainer3.Panel1.Height
+    End Sub
 
-            SplitContainer1.Panel2Collapsed = False
-            ' SC1_Distance（Panel1の幅）が保存されていれば復元
-            If My.Settings.SC1_Distance > 0 Then
-                SplitContainer1.SplitterDistance = CInt(My.Settings.SC1_Distance)
-            End If
-        Else
-            ' しおりパネルを閉じる
-            ' 非表示にする前にパネルの実際のサイズを保存（Panel2幅 + スプリッター幅）
-            Dim actualPanelWidth As Integer = SplitContainer1.Panel2.Width
-            Dim shrinkWidth As Integer = actualPanelWidth + SplitContainer1.SplitterWidth
-            BMWidth = actualPanelWidth
-            'My.Settings.SC1_Distance = SplitContainer1.SplitterDistance
-            'My.Settings.Save()
+    Private Sub SplitContainer3_Move(sender As Object, e As EventArgs) Handles SplitContainer3.Move
 
-            ' フォームサイズをPanel2+スプリッター幅分縮小（Panel1のサイズを変えないように）
-            Me.ClientSize = New Size(Math.Max(100, BMWidth - shrinkWidth), Me.ClientSize.Height)
+    End Sub
 
-            SplitContainer1.Panel2Collapsed = True
-        End If
-        Me.ResumeLayout()
-        SendMessage(Me.Handle, WM_SETREDRAW, True, IntPtr.Zero)
-        Me.Refresh()
+    Private Sub SplitContainer2_Move(sender As Object, e As EventArgs) Handles SplitContainer2.Move
+
+    End Sub
+
+    Private Sub SplitContainer1_Move(sender As Object, e As EventArgs) Handles SplitContainer1.Move
+
+    End Sub
+
+    Private Sub SplitContainer1_SplitterMoving(sender As Object, e As SplitterCancelEventArgs) Handles SplitContainer1.SplitterMoving
+
+    End Sub
+
+    Private Sub SplitContainer2_SplitterMoving(sender As Object, e As SplitterCancelEventArgs) Handles SplitContainer2.SplitterMoving
+
+    End Sub
+
+    Private Sub SplitContainer3_SplitterMoving(sender As Object, e As SplitterCancelEventArgs) Handles SplitContainer3.SplitterMoving
+
+    End Sub
+
+    Private Sub SplitContainer2_SplitterMoved(sender As Object, e As SplitterEventArgs) Handles SplitContainer2.SplitterMoved
+        PLWidth = SplitContainer2.Panel1.Width
+    End Sub
+
+    Private Sub DataGridView2_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView2.CellContentClick
+
     End Sub
 
 #End Region

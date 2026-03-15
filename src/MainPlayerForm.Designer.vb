@@ -86,7 +86,7 @@ Partial Class MainPlayerForm
         Me.Button200 = New System.Windows.Forms.Button()
         Me.Button400 = New System.Windows.Forms.Button()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.ButtonSiori = New System.Windows.Forms.Button()
+        Me.ButtonShiori = New System.Windows.Forms.Button()
         Me.Button35 = New System.Windows.Forms.Button()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
@@ -96,10 +96,6 @@ Partial Class MainPlayerForm
         Me.Button40 = New System.Windows.Forms.Button()
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
-        Me.colCounter = New System.Windows.Forms.DataGridViewButtonColumn()
-        Me.colMemo = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colPosition = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colDelete = New System.Windows.Forms.DataGridViewButtonColumn()
         Me.Button28 = New System.Windows.Forms.Button()
         Me.Button29 = New System.Windows.Forms.Button()
         Me.Button32 = New System.Windows.Forms.Button()
@@ -108,7 +104,15 @@ Partial Class MainPlayerForm
         Me.Button34 = New System.Windows.Forms.Button()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
-        Me.Timer2 = New System.Windows.Forms.Timer(Me.components)
+        Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Button41 = New System.Windows.Forms.Button()
+        Me.Button42 = New System.Windows.Forms.Button()
+        Me.Button43 = New System.Windows.Forms.Button()
+        Me.Button44 = New System.Windows.Forms.Button()
+        Me.colCounter = New System.Windows.Forms.DataGridViewButtonColumn()
+        Me.colMemo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colPosition = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colDelete = New System.Windows.Forms.DataGridViewButtonColumn()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.Panel2.SuspendLayout()
@@ -128,6 +132,7 @@ Partial Class MainPlayerForm
         CType(Me.TrackBar6, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel2.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TableLayoutPanel3.SuspendLayout()
         Me.SuspendLayout()
         '
         'Timer1
@@ -167,6 +172,7 @@ Partial Class MainPlayerForm
         '
         'SplitContainer2.Panel1
         '
+        Me.SplitContainer2.Panel1.Controls.Add(Me.TableLayoutPanel3)
         Me.SplitContainer2.Panel1.Controls.Add(Me.DataGridView2)
         Me.SplitContainer2.Panel1MinSize = 0
         '
@@ -180,17 +186,17 @@ Partial Class MainPlayerForm
         '
         'DataGridView2
         '
-        Me.DataGridView2.AllowUserToOrderColumns = True
+        Me.DataGridView2.AllowUserToAddRows = False
         Me.DataGridView2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView2.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.File_Namae, Me.File_Length, Me.File_Memo, Me.File_Delete, Me.File_Position, Me.File_Progress})
-        Me.DataGridView2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DataGridView2.Dock = System.Windows.Forms.DockStyle.Top
         Me.DataGridView2.Location = New System.Drawing.Point(0, 0)
         Me.DataGridView2.Margin = New System.Windows.Forms.Padding(2)
         Me.DataGridView2.Name = "DataGridView2"
         Me.DataGridView2.RowHeadersWidth = 51
         Me.DataGridView2.RowTemplate.Height = 24
-        Me.DataGridView2.Size = New System.Drawing.Size(223, 670)
+        Me.DataGridView2.Size = New System.Drawing.Size(223, 637)
         Me.DataGridView2.TabIndex = 0
         '
         'File_Namae
@@ -328,7 +334,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.Controls.Add(Me.Button200, 0, 5)
         Me.TableLayoutPanel1.Controls.Add(Me.Button400, 3, 5)
         Me.TableLayoutPanel1.Controls.Add(Me.Label5, 20, 6)
-        Me.TableLayoutPanel1.Controls.Add(Me.ButtonSiori, 17, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.ButtonShiori, 17, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.Button35, 15, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.Button1, 0, 2)
         Me.TableLayoutPanel1.Controls.Add(Me.Button2, 2, 2)
@@ -983,21 +989,21 @@ Partial Class MainPlayerForm
         Me.Label5.Text = "100"
         Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'ButtonSiori
+        'ButtonShiori
         '
-        Me.ButtonSiori.AutoSize = True
-        Me.ButtonSiori.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.ButtonSiori.BackColor = System.Drawing.SystemColors.ActiveBorder
-        Me.TableLayoutPanel1.SetColumnSpan(Me.ButtonSiori, 2)
-        Me.ButtonSiori.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ButtonSiori.Image = Global.OkoshiMAX.My.Resources.Resources.Bookmark_16x
-        Me.ButtonSiori.Location = New System.Drawing.Point(630, 59)
-        Me.ButtonSiori.Margin = New System.Windows.Forms.Padding(1)
-        Me.ButtonSiori.Name = "ButtonSiori"
-        Me.ButtonSiori.Size = New System.Drawing.Size(72, 56)
-        Me.ButtonSiori.TabIndex = 967
-        Me.ToolTip1.SetToolTip(Me.ButtonSiori, "しおり一覧")
-        Me.ButtonSiori.UseVisualStyleBackColor = False
+        Me.ButtonShiori.AutoSize = True
+        Me.ButtonShiori.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.ButtonShiori.BackColor = System.Drawing.SystemColors.ActiveBorder
+        Me.TableLayoutPanel1.SetColumnSpan(Me.ButtonShiori, 2)
+        Me.ButtonShiori.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.ButtonShiori.Image = Global.OkoshiMAX.My.Resources.Resources.Bookmark_16x
+        Me.ButtonShiori.Location = New System.Drawing.Point(630, 59)
+        Me.ButtonShiori.Margin = New System.Windows.Forms.Padding(1)
+        Me.ButtonShiori.Name = "ButtonShiori"
+        Me.ButtonShiori.Size = New System.Drawing.Size(72, 56)
+        Me.ButtonShiori.TabIndex = 967
+        Me.ToolTip1.SetToolTip(Me.ButtonShiori, "しおり一覧")
+        Me.ButtonShiori.UseVisualStyleBackColor = False
         '
         'Button35
         '
@@ -1012,6 +1018,7 @@ Partial Class MainPlayerForm
         Me.Button35.Name = "Button35"
         Me.Button35.Size = New System.Drawing.Size(72, 56)
         Me.Button35.TabIndex = 971
+        Me.ToolTip1.SetToolTip(Me.Button35, "最前面に表示")
         Me.Button35.UseVisualStyleBackColor = False
         '
         'Button1
@@ -1063,7 +1070,7 @@ Partial Class MainPlayerForm
         '
         Me.Button30.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button30.Location = New System.Drawing.Point(446, 2)
-        Me.Button30.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Button30.Margin = New System.Windows.Forms.Padding(2)
         Me.Button30.Name = "Button30"
         Me.Button30.Size = New System.Drawing.Size(33, 54)
         Me.Button30.TabIndex = 973
@@ -1073,7 +1080,7 @@ Partial Class MainPlayerForm
         'Button38
         '
         Me.Button38.Location = New System.Drawing.Point(446, 60)
-        Me.Button38.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Button38.Margin = New System.Windows.Forms.Padding(2)
         Me.Button38.Name = "Button38"
         Me.Button38.Size = New System.Drawing.Size(33, 18)
         Me.Button38.TabIndex = 974
@@ -1085,11 +1092,12 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button40, 2)
         Me.Button40.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button40.Location = New System.Drawing.Point(2, 60)
-        Me.Button40.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Button40.Margin = New System.Windows.Forms.Padding(2)
         Me.Button40.Name = "Button40"
         Me.Button40.Size = New System.Drawing.Size(70, 54)
         Me.Button40.TabIndex = 975
         Me.Button40.Text = "Button40"
+        Me.ToolTip1.SetToolTip(Me.Button40, "プレイリストの表示・非表示")
         Me.Button40.UseVisualStyleBackColor = True
         '
         'TableLayoutPanel2
@@ -1135,45 +1143,6 @@ Partial Class MainPlayerForm
         Me.DataGridView1.Size = New System.Drawing.Size(250, 604)
         Me.DataGridView1.TabIndex = 149
         '
-        'colCounter
-        '
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        Me.colCounter.DefaultCellStyle = DataGridViewCellStyle1
-        Me.colCounter.FillWeight = 80.0!
-        Me.colCounter.HeaderText = "カウンタ"
-        Me.colCounter.MinimumWidth = 6
-        Me.colCounter.Name = "colCounter"
-        Me.colCounter.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.colCounter.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        Me.colCounter.Text = "カウンタ"
-        Me.colCounter.ToolTipText = "カウンタ"
-        '
-        'colMemo
-        '
-        Me.colMemo.FillWeight = 150.0!
-        Me.colMemo.HeaderText = "メモ"
-        Me.colMemo.MinimumWidth = 50
-        Me.colMemo.Name = "colMemo"
-        '
-        'colPosition
-        '
-        Me.colPosition.FillWeight = 80.0!
-        Me.colPosition.HeaderText = "Position"
-        Me.colPosition.MinimumWidth = 50
-        Me.colPosition.Name = "colPosition"
-        '
-        'colDelete
-        '
-        Me.colDelete.FillWeight = 50.0!
-        Me.colDelete.HeaderText = "削除"
-        Me.colDelete.MinimumWidth = 40
-        Me.colDelete.Name = "colDelete"
-        Me.colDelete.Text = "削除"
-        Me.colDelete.ToolTipText = "削除"
-        Me.colDelete.UseColumnTextForButtonValue = True
-        '
         'Button28
         '
         Me.Button28.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
@@ -1185,6 +1154,7 @@ Partial Class MainPlayerForm
         Me.Button28.Name = "Button28"
         Me.Button28.Size = New System.Drawing.Size(61, 30)
         Me.Button28.TabIndex = 150
+        Me.ToolTip1.SetToolTip(Me.Button28, "一覧から削除")
         Me.Button28.UseVisualStyleBackColor = False
         '
         'Button29
@@ -1198,6 +1168,7 @@ Partial Class MainPlayerForm
         Me.Button29.Name = "Button29"
         Me.Button29.Size = New System.Drawing.Size(61, 30)
         Me.Button29.TabIndex = 151
+        Me.ToolTip1.SetToolTip(Me.Button29, "しおりを追加")
         Me.Button29.UseVisualStyleBackColor = False
         '
         'Button32
@@ -1211,6 +1182,7 @@ Partial Class MainPlayerForm
         Me.Button32.Name = "Button32"
         Me.Button32.Size = New System.Drawing.Size(61, 30)
         Me.Button32.TabIndex = 152
+        Me.ToolTip1.SetToolTip(Me.Button32, "CSV・Wordファイル読み込み")
         Me.Button32.UseVisualStyleBackColor = False
         '
         'Button31
@@ -1253,8 +1225,111 @@ Partial Class MainPlayerForm
         Me.ToolTip1.SetToolTip(Me.Button34, "カウンタを手動入力して追加")
         Me.Button34.UseVisualStyleBackColor = False
         '
-        'Timer2
+        'TableLayoutPanel3
         '
+        Me.TableLayoutPanel3.ColumnCount = 4
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
+        Me.TableLayoutPanel3.Controls.Add(Me.Button41, 0, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.Button42, 1, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.Button43, 2, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.Button44, 3, 0)
+        Me.TableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.TableLayoutPanel3.Location = New System.Drawing.Point(0, 639)
+        Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
+        Me.TableLayoutPanel3.RowCount = 1
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel3.Size = New System.Drawing.Size(223, 31)
+        Me.TableLayoutPanel3.TabIndex = 1
+        '
+        'Button41
+        '
+        Me.Button41.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Button41.Image = Global.OkoshiMAX.My.Resources.Resources.FolderClosed_16x
+        Me.Button41.Location = New System.Drawing.Point(1, 1)
+        Me.Button41.Margin = New System.Windows.Forms.Padding(1)
+        Me.Button41.Name = "Button41"
+        Me.Button41.Size = New System.Drawing.Size(53, 29)
+        Me.Button41.TabIndex = 0
+        Me.ToolTip1.SetToolTip(Me.Button41, "フォルダを開く")
+        Me.Button41.UseVisualStyleBackColor = True
+        '
+        'Button42
+        '
+        Me.Button42.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Button42.Location = New System.Drawing.Point(56, 1)
+        Me.Button42.Margin = New System.Windows.Forms.Padding(1)
+        Me.Button42.Name = "Button42"
+        Me.Button42.Size = New System.Drawing.Size(53, 29)
+        Me.Button42.TabIndex = 1
+        Me.Button42.Text = "Button42"
+        Me.Button42.UseVisualStyleBackColor = True
+        '
+        'Button43
+        '
+        Me.Button43.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Button43.Image = Global.OkoshiMAX.My.Resources.Resources.Cancel_16x
+        Me.Button43.Location = New System.Drawing.Point(111, 1)
+        Me.Button43.Margin = New System.Windows.Forms.Padding(1)
+        Me.Button43.Name = "Button43"
+        Me.Button43.Size = New System.Drawing.Size(53, 29)
+        Me.Button43.TabIndex = 2
+        Me.ToolTip1.SetToolTip(Me.Button43, "一覧から削除")
+        Me.Button43.UseVisualStyleBackColor = True
+        '
+        'Button44
+        '
+        Me.Button44.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Button44.Image = Global.OkoshiMAX.My.Resources.Resources.Add_16x
+        Me.Button44.Location = New System.Drawing.Point(166, 1)
+        Me.Button44.Margin = New System.Windows.Forms.Padding(1)
+        Me.Button44.Name = "Button44"
+        Me.Button44.Size = New System.Drawing.Size(56, 29)
+        Me.Button44.TabIndex = 3
+        Me.ToolTip1.SetToolTip(Me.Button44, "ファイルを追加")
+        Me.Button44.UseVisualStyleBackColor = True
+        '
+        'colCounter
+        '
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        Me.colCounter.DefaultCellStyle = DataGridViewCellStyle1
+        Me.colCounter.FillWeight = 80.0!
+        Me.colCounter.HeaderText = "カウンタ"
+        Me.colCounter.MinimumWidth = 6
+        Me.colCounter.Name = "colCounter"
+        Me.colCounter.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.colCounter.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.colCounter.Text = "カウンタ"
+        Me.colCounter.ToolTipText = "カウンタ"
+        '
+        'colMemo
+        '
+        Me.colMemo.FillWeight = 150.0!
+        Me.colMemo.HeaderText = "メモ"
+        Me.colMemo.MinimumWidth = 50
+        Me.colMemo.Name = "colMemo"
+        '
+        'colPosition
+        '
+        Me.colPosition.FillWeight = 80.0!
+        Me.colPosition.HeaderText = "Position"
+        Me.colPosition.MinimumWidth = 50
+        Me.colPosition.Name = "colPosition"
+        Me.colPosition.Visible = False
+        '
+        'colDelete
+        '
+        Me.colDelete.FillWeight = 50.0!
+        Me.colDelete.HeaderText = "削除"
+        Me.colDelete.MinimumWidth = 40
+        Me.colDelete.Name = "colDelete"
+        Me.colDelete.Text = "削除"
+        Me.colDelete.ToolTipText = "削除"
+        Me.colDelete.UseColumnTextForButtonValue = True
         '
         'MainPlayerForm
         '
@@ -1294,6 +1369,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel2.ResumeLayout(False)
         Me.TableLayoutPanel2.PerformLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TableLayoutPanel3.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -1311,10 +1387,6 @@ Partial Class MainPlayerForm
     Friend WithEvents DataGridView1 As DataGridView
     Friend WithEvents ToolTip1 As ToolTip
     Friend WithEvents TableLayoutPanel2 As TableLayoutPanel
-    Friend WithEvents colCounter As DataGridViewButtonColumn
-    Friend WithEvents colMemo As DataGridViewTextBoxColumn
-    Friend WithEvents colPosition As DataGridViewTextBoxColumn
-    Friend WithEvents colDelete As DataGridViewButtonColumn
     Friend WithEvents SaveFileDialog1 As SaveFileDialog
     Friend WithEvents Button29 As Button
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
@@ -1361,7 +1433,7 @@ Partial Class MainPlayerForm
     Friend WithEvents Button27 As Button
     Friend WithEvents Button200 As Button
     Friend WithEvents Button400 As Button
-    Friend WithEvents ButtonSiori As Button
+    Friend WithEvents ButtonShiori As Button
     Friend WithEvents Label2 As Label
     Friend WithEvents Button35 As Button
     Friend WithEvents SplitContainer3 As SplitContainer
@@ -1372,8 +1444,16 @@ Partial Class MainPlayerForm
     Friend WithEvents File_Delete As DataGridViewTextBoxColumn
     Friend WithEvents File_Position As DataGridViewTextBoxColumn
     Friend WithEvents File_Progress As DataGridViewTextBoxColumn
-    Friend WithEvents Timer2 As Timer
     Friend WithEvents Button30 As Button
     Friend WithEvents Button38 As Button
     Friend WithEvents Button40 As Button
+    Friend WithEvents TableLayoutPanel3 As TableLayoutPanel
+    Friend WithEvents Button41 As Button
+    Friend WithEvents Button42 As Button
+    Friend WithEvents Button43 As Button
+    Friend WithEvents Button44 As Button
+    Friend WithEvents colCounter As DataGridViewButtonColumn
+    Friend WithEvents colMemo As DataGridViewTextBoxColumn
+    Friend WithEvents colPosition As DataGridViewTextBoxColumn
+    Friend WithEvents colDelete As DataGridViewButtonColumn
 End Class

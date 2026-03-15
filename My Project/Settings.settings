@@ -6,7 +6,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="AutoBack" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">250</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="LastIchi" Type="System.Double" Scope="User">
       <Value Profile="(Default)" />
@@ -314,30 +314,6 @@
     <Setting Name="SKZ" Type="System.Int16" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="p11_width" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="p11_height" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="p12_width" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="p12_height" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="p21_width" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="p21_height" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="p22_width" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="p22_height" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
     <Setting Name="gamen" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
@@ -437,37 +413,19 @@
     <Setting Name="PL" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="PL_Height" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
     <Setting Name="PL_Width" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">100</Value>
     </Setting>
     <Setting Name="Gamen_Height" Type="System.Int64" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="Gamen_Width" Type="System.Int64" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
     <Setting Name="Shiori_Width" Type="System.Int64" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
-    <Setting Name="Shiori_Height" Type="System.Int64" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="Main_Height" Type="System.Int64" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="Main_Width" Type="System.Int64" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
-    <Setting Name="SC1_Distance" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
-    <Setting Name="SC2_Distance" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
-    <Setting Name="SC3_Distance" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="AutoPlay" Type="System.Boolean" Scope="User">
