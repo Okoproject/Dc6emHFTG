@@ -1167,6 +1167,7 @@ Public Class MainPlayerForm
         _mediaPlayer.Position = TrackBar1.Value
     End Sub
 
+    'ファイルを開くボタン
     Private Sub Button39_Click(sender As Object, e As EventArgs) Handles Button39.Click
         If OpenFileDialog1.ShowDialog() = DialogResult.OK Then
             _mediaPlayer.LoadFile(OpenFileDialog1.FileName)
@@ -1175,6 +1176,7 @@ Public Class MainPlayerForm
         End If
     End Sub
 
+    '常に手前に表示の切り替え
     Private Sub Button35_Click(sender As Object, e As EventArgs) Handles Button35.Click
         TopMost = Not TopMost
         If TopMost Then

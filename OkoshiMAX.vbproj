@@ -135,12 +135,11 @@
     <Compile Include="src\ClipboardImageViewer.Designer.vb">
       <DependentUpon>ClipboardImageViewer.vb</DependentUpon>
     </Compile>
-    <Compile Include="src\MpvPlayerWrapper.vb" />
-    <Compile Include="My Project\AssemblyInfo.vb" />
-    <Compile Include="My Project\Application.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Application.myapp</DependentUpon>
-      <DesignTime>True</DesignTime>
+    <Compile Include="src\VideoSeekBar.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\VideoSeekBar.Designer.vb">
+      <DependentUpon>VideoSeekBar.vb</DependentUpon>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>

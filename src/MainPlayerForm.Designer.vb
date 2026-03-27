@@ -35,6 +35,11 @@ Partial Class MainPlayerForm
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.SplitContainer2 = New System.Windows.Forms.SplitContainer()
+        Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Button41 = New System.Windows.Forms.Button()
+        Me.Button42 = New System.Windows.Forms.Button()
+        Me.Button43 = New System.Windows.Forms.Button()
+        Me.Button44 = New System.Windows.Forms.Button()
         Me.DataGridView2 = New System.Windows.Forms.DataGridView()
         Me.File_Namae = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.File_Length = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -96,6 +101,10 @@ Partial Class MainPlayerForm
         Me.Button40 = New System.Windows.Forms.Button()
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.colCounter = New System.Windows.Forms.DataGridViewButtonColumn()
+        Me.colMemo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colPosition = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colDelete = New System.Windows.Forms.DataGridViewButtonColumn()
         Me.Button28 = New System.Windows.Forms.Button()
         Me.Button29 = New System.Windows.Forms.Button()
         Me.Button32 = New System.Windows.Forms.Button()
@@ -104,15 +113,6 @@ Partial Class MainPlayerForm
         Me.Button34 = New System.Windows.Forms.Button()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
-        Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Button41 = New System.Windows.Forms.Button()
-        Me.Button42 = New System.Windows.Forms.Button()
-        Me.Button43 = New System.Windows.Forms.Button()
-        Me.Button44 = New System.Windows.Forms.Button()
-        Me.colCounter = New System.Windows.Forms.DataGridViewButtonColumn()
-        Me.colMemo = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colPosition = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colDelete = New System.Windows.Forms.DataGridViewButtonColumn()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.Panel2.SuspendLayout()
@@ -121,6 +121,7 @@ Partial Class MainPlayerForm
         Me.SplitContainer2.Panel1.SuspendLayout()
         Me.SplitContainer2.Panel2.SuspendLayout()
         Me.SplitContainer2.SuspendLayout()
+        Me.TableLayoutPanel3.SuspendLayout()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SplitContainer3, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer3.Panel1.SuspendLayout()
@@ -132,7 +133,6 @@ Partial Class MainPlayerForm
         CType(Me.TrackBar6, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel2.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TableLayoutPanel3.SuspendLayout()
         Me.SuspendLayout()
         '
         'Timer1
@@ -183,6 +183,72 @@ Partial Class MainPlayerForm
         Me.SplitContainer2.Size = New System.Drawing.Size(1028, 670)
         Me.SplitContainer2.SplitterDistance = 223
         Me.SplitContainer2.TabIndex = 0
+        '
+        'TableLayoutPanel3
+        '
+        Me.TableLayoutPanel3.ColumnCount = 4
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
+        Me.TableLayoutPanel3.Controls.Add(Me.Button41, 0, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.Button42, 1, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.Button43, 2, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.Button44, 3, 0)
+        Me.TableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.TableLayoutPanel3.Location = New System.Drawing.Point(0, 639)
+        Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
+        Me.TableLayoutPanel3.RowCount = 1
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel3.Size = New System.Drawing.Size(223, 31)
+        Me.TableLayoutPanel3.TabIndex = 1
+        '
+        'Button41
+        '
+        Me.Button41.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Button41.Image = Global.OkoshiMAX.My.Resources.Resources.FolderClosed_16x
+        Me.Button41.Location = New System.Drawing.Point(1, 1)
+        Me.Button41.Margin = New System.Windows.Forms.Padding(1)
+        Me.Button41.Name = "Button41"
+        Me.Button41.Size = New System.Drawing.Size(53, 29)
+        Me.Button41.TabIndex = 0
+        Me.ToolTip1.SetToolTip(Me.Button41, "フォルダを開く")
+        Me.Button41.UseVisualStyleBackColor = True
+        '
+        'Button42
+        '
+        Me.Button42.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Button42.Location = New System.Drawing.Point(56, 1)
+        Me.Button42.Margin = New System.Windows.Forms.Padding(1)
+        Me.Button42.Name = "Button42"
+        Me.Button42.Size = New System.Drawing.Size(53, 29)
+        Me.Button42.TabIndex = 1
+        Me.Button42.Text = "Button42"
+        Me.Button42.UseVisualStyleBackColor = True
+        '
+        'Button43
+        '
+        Me.Button43.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Button43.Image = Global.OkoshiMAX.My.Resources.Resources.Cancel_16x
+        Me.Button43.Location = New System.Drawing.Point(111, 1)
+        Me.Button43.Margin = New System.Windows.Forms.Padding(1)
+        Me.Button43.Name = "Button43"
+        Me.Button43.Size = New System.Drawing.Size(53, 29)
+        Me.Button43.TabIndex = 2
+        Me.ToolTip1.SetToolTip(Me.Button43, "一覧から削除")
+        Me.Button43.UseVisualStyleBackColor = True
+        '
+        'Button44
+        '
+        Me.Button44.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Button44.Image = Global.OkoshiMAX.My.Resources.Resources.Add_16x
+        Me.Button44.Location = New System.Drawing.Point(166, 1)
+        Me.Button44.Margin = New System.Windows.Forms.Padding(1)
+        Me.Button44.Name = "Button44"
+        Me.Button44.Size = New System.Drawing.Size(56, 29)
+        Me.Button44.TabIndex = 3
+        Me.ToolTip1.SetToolTip(Me.Button44, "ファイルを追加")
+        Me.Button44.UseVisualStyleBackColor = True
         '
         'DataGridView2
         '
@@ -1143,6 +1209,46 @@ Partial Class MainPlayerForm
         Me.DataGridView1.Size = New System.Drawing.Size(250, 604)
         Me.DataGridView1.TabIndex = 149
         '
+        'colCounter
+        '
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        Me.colCounter.DefaultCellStyle = DataGridViewCellStyle1
+        Me.colCounter.FillWeight = 80.0!
+        Me.colCounter.HeaderText = "カウンタ"
+        Me.colCounter.MinimumWidth = 6
+        Me.colCounter.Name = "colCounter"
+        Me.colCounter.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.colCounter.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.colCounter.Text = "カウンタ"
+        Me.colCounter.ToolTipText = "カウンタ"
+        '
+        'colMemo
+        '
+        Me.colMemo.FillWeight = 150.0!
+        Me.colMemo.HeaderText = "メモ"
+        Me.colMemo.MinimumWidth = 50
+        Me.colMemo.Name = "colMemo"
+        '
+        'colPosition
+        '
+        Me.colPosition.FillWeight = 80.0!
+        Me.colPosition.HeaderText = "Position"
+        Me.colPosition.MinimumWidth = 50
+        Me.colPosition.Name = "colPosition"
+        Me.colPosition.Visible = False
+        '
+        'colDelete
+        '
+        Me.colDelete.FillWeight = 50.0!
+        Me.colDelete.HeaderText = "削除"
+        Me.colDelete.MinimumWidth = 40
+        Me.colDelete.Name = "colDelete"
+        Me.colDelete.Text = "削除"
+        Me.colDelete.ToolTipText = "削除"
+        Me.colDelete.UseColumnTextForButtonValue = True
+        '
         'Button28
         '
         Me.Button28.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
@@ -1225,112 +1331,6 @@ Partial Class MainPlayerForm
         Me.ToolTip1.SetToolTip(Me.Button34, "カウンタを手動入力して追加")
         Me.Button34.UseVisualStyleBackColor = False
         '
-        'TableLayoutPanel3
-        '
-        Me.TableLayoutPanel3.ColumnCount = 4
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
-        Me.TableLayoutPanel3.Controls.Add(Me.Button41, 0, 0)
-        Me.TableLayoutPanel3.Controls.Add(Me.Button42, 1, 0)
-        Me.TableLayoutPanel3.Controls.Add(Me.Button43, 2, 0)
-        Me.TableLayoutPanel3.Controls.Add(Me.Button44, 3, 0)
-        Me.TableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.TableLayoutPanel3.Location = New System.Drawing.Point(0, 639)
-        Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
-        Me.TableLayoutPanel3.RowCount = 1
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel3.Size = New System.Drawing.Size(223, 31)
-        Me.TableLayoutPanel3.TabIndex = 1
-        '
-        'Button41
-        '
-        Me.Button41.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button41.Image = Global.OkoshiMAX.My.Resources.Resources.FolderClosed_16x
-        Me.Button41.Location = New System.Drawing.Point(1, 1)
-        Me.Button41.Margin = New System.Windows.Forms.Padding(1)
-        Me.Button41.Name = "Button41"
-        Me.Button41.Size = New System.Drawing.Size(53, 29)
-        Me.Button41.TabIndex = 0
-        Me.ToolTip1.SetToolTip(Me.Button41, "フォルダを開く")
-        Me.Button41.UseVisualStyleBackColor = True
-        '
-        'Button42
-        '
-        Me.Button42.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button42.Location = New System.Drawing.Point(56, 1)
-        Me.Button42.Margin = New System.Windows.Forms.Padding(1)
-        Me.Button42.Name = "Button42"
-        Me.Button42.Size = New System.Drawing.Size(53, 29)
-        Me.Button42.TabIndex = 1
-        Me.Button42.Text = "Button42"
-        Me.Button42.UseVisualStyleBackColor = True
-        '
-        'Button43
-        '
-        Me.Button43.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button43.Image = Global.OkoshiMAX.My.Resources.Resources.Cancel_16x
-        Me.Button43.Location = New System.Drawing.Point(111, 1)
-        Me.Button43.Margin = New System.Windows.Forms.Padding(1)
-        Me.Button43.Name = "Button43"
-        Me.Button43.Size = New System.Drawing.Size(53, 29)
-        Me.Button43.TabIndex = 2
-        Me.ToolTip1.SetToolTip(Me.Button43, "一覧から削除")
-        Me.Button43.UseVisualStyleBackColor = True
-        '
-        'Button44
-        '
-        Me.Button44.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button44.Image = Global.OkoshiMAX.My.Resources.Resources.Add_16x
-        Me.Button44.Location = New System.Drawing.Point(166, 1)
-        Me.Button44.Margin = New System.Windows.Forms.Padding(1)
-        Me.Button44.Name = "Button44"
-        Me.Button44.Size = New System.Drawing.Size(56, 29)
-        Me.Button44.TabIndex = 3
-        Me.ToolTip1.SetToolTip(Me.Button44, "ファイルを追加")
-        Me.Button44.UseVisualStyleBackColor = True
-        '
-        'colCounter
-        '
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        Me.colCounter.DefaultCellStyle = DataGridViewCellStyle1
-        Me.colCounter.FillWeight = 80.0!
-        Me.colCounter.HeaderText = "カウンタ"
-        Me.colCounter.MinimumWidth = 6
-        Me.colCounter.Name = "colCounter"
-        Me.colCounter.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.colCounter.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        Me.colCounter.Text = "カウンタ"
-        Me.colCounter.ToolTipText = "カウンタ"
-        '
-        'colMemo
-        '
-        Me.colMemo.FillWeight = 150.0!
-        Me.colMemo.HeaderText = "メモ"
-        Me.colMemo.MinimumWidth = 50
-        Me.colMemo.Name = "colMemo"
-        '
-        'colPosition
-        '
-        Me.colPosition.FillWeight = 80.0!
-        Me.colPosition.HeaderText = "Position"
-        Me.colPosition.MinimumWidth = 50
-        Me.colPosition.Name = "colPosition"
-        Me.colPosition.Visible = False
-        '
-        'colDelete
-        '
-        Me.colDelete.FillWeight = 50.0!
-        Me.colDelete.HeaderText = "削除"
-        Me.colDelete.MinimumWidth = 40
-        Me.colDelete.Name = "colDelete"
-        Me.colDelete.Text = "削除"
-        Me.colDelete.ToolTipText = "削除"
-        Me.colDelete.UseColumnTextForButtonValue = True
-        '
         'MainPlayerForm
         '
         Me.AllowDrop = True
@@ -1355,6 +1355,7 @@ Partial Class MainPlayerForm
         Me.SplitContainer2.Panel2.ResumeLayout(False)
         CType(Me.SplitContainer2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer2.ResumeLayout(False)
+        Me.TableLayoutPanel3.ResumeLayout(False)
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer3.Panel1.ResumeLayout(False)
         Me.SplitContainer3.Panel2.ResumeLayout(False)
@@ -1369,7 +1370,6 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel2.ResumeLayout(False)
         Me.TableLayoutPanel2.PerformLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TableLayoutPanel3.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
