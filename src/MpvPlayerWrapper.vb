@@ -83,8 +83,17 @@ Public Class MpvPlayerWrapper
         Public Data As IntPtr
     End Structure
 
+    ' mpv_event_end_file structure
+    <StructLayout(LayoutKind.Sequential)>
+    Private Structure MpvEndFileEventData
+        Public Reason As Integer
+        Public [Error] As Integer
+        Public PlaybackUid As ULong
+    End Structure
+
     Private Const MpvEventFileLoaded As Integer = 8
     Private Const MpvEventShutdown As Integer = 1
+    Private Const MpvEventEndFile As Integer = 7
 
 #End Region
 
@@ -116,6 +125,8 @@ Public Class MpvPlayerWrapper
 
     Public Event MediaChanged()
     Public Event Initialized()
+    ''' <summary>ファイルの再生が終了したときに発生（通常の終了のみ）</summary>
+    Public Event PlaybackEnded()
 
     ''' <summary>
     '''     mpv プレーヤーを初期化し、指定された Panel に映像を埋め込む。
@@ -199,6 +210,16 @@ Public Class MpvPlayerWrapper
                             _hostPanel.BeginInvoke(Sub() RaiseEvent MediaChanged())
                         Catch ex As ObjectDisposedException
                             ' フォームが既に閉じている場合は無視
+                        End Try
+                    End If
+
+                Case MpvEventEndFile
+                    Dim endFileData = Marshal.PtrToStructure(Of MpvEndFileEventData)(evt.Data)
+                    ' Reason 0 = MPV_END_FILE_REASON_EOF (通常の再生終了時のみ)
+                    If endFileData.Reason = 0 AndAlso _hostPanel IsNot Nothing AndAlso _hostPanel.IsHandleCreated Then
+                        Try
+                            _hostPanel.BeginInvoke(Sub() RaiseEvent PlaybackEnded())
+                        Catch ex As ObjectDisposedException
                         End Try
                     End If
 
@@ -408,6 +429,57 @@ Public Class MpvPlayerWrapper
         Finally
             mpv_free(ptr)
         End Try
+    End Function
+
+    ''' <summary>
+    '''     一時的な mpv インスタンスを使ってファイルの長さを取得する（画面表示なし）
+    ''' </summary>
+    Public Shared Function GetFileDuration(path As String) As Double
+        If String.IsNullOrEmpty(path) OrElse Not IO.File.Exists(path) Then Return 0
+
+        Dim handle = mpv_create()
+        If handle = IntPtr.Zero Then Return 0
+
+        ' 映像出力なし
+        mpv_set_option_string(handle, "vo", "null")
+        mpv_set_option_string(handle, "pause", "yes")
+
+        If mpv_initialize(handle) < 0 Then
+            mpv_terminate_destroy(handle)
+            Return 0
+        End If
+
+        ' loadfile コマンド送信（null-terminated array）
+        Dim args(2) As IntPtr
+        Dim cmdStr = "loadfile"
+        Dim pathStr = path
+        Try
+            Dim cmdBytes = Encoding.UTF8.GetBytes(cmdStr & Chr(0))
+            args(0) = Marshal.AllocHGlobal(cmdBytes.Length)
+            Marshal.Copy(cmdBytes, 0, args(0), cmdBytes.Length)
+
+            Dim pathBytes = Encoding.UTF8.GetBytes(pathStr & Chr(0))
+            args(1) = Marshal.AllocHGlobal(pathBytes.Length)
+            Marshal.Copy(pathBytes, 0, args(1), pathBytes.Length)
+
+            args(2) = IntPtr.Zero ' null terminator
+
+            mpv_command(handle, args)
+        Finally
+            If args(0) <> IntPtr.Zero Then Marshal.FreeHGlobal(args(0))
+            If args(1) <> IntPtr.Zero Then Marshal.FreeHGlobal(args(1))
+        End Try
+
+        ' duration プロパティが取得できるまでポーリング（最大3秒）
+        Dim dur As Double = 0
+        For i As Integer = 0 To 60
+            Threading.Thread.Sleep(50)
+            Dim err = mpv_get_property(handle, "duration", MpvFormatDouble, dur)
+            If err >= 0 AndAlso dur > 0 Then Exit For
+        Next
+
+        mpv_terminate_destroy(handle)
+        Return If(dur > 0, dur, 0)
     End Function
 
 #End Region

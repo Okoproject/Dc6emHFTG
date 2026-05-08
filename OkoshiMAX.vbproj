@@ -116,6 +116,7 @@
   <ItemGroup>
     <Compile Include="src\ApplicationEvents.vb" />
     <Compile Include="src\HotKeyManager.vb" />
+    <Compile Include="src\MpvPlayerWrapper.vb" />
     <Compile Include="src\MainPlayerForm.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -135,12 +136,6 @@
     <Compile Include="src\ClipboardImageViewer.Designer.vb">
       <DependentUpon>ClipboardImageViewer.vb</DependentUpon>
     </Compile>
-    <Compile Include="src\VideoSeekBar.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="src\VideoSeekBar.Designer.vb">
-      <DependentUpon>VideoSeekBar.vb</DependentUpon>
-    </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -152,6 +147,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="src\Settings.vb" />
+    <Compile Include="src\PlaylistItem.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="src\MainPlayerForm.resx">
@@ -252,6 +248,12 @@
     <None Include="Resources\SettingsOutline_16x.png" />
     <None Include="Resources\AlwaysVisible_16x.png" />
     <None Include="Resources\CaptureFrame_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <NativeReference Include="mpv, Version=0.0.9.0, ProcessorArchitecture=%2a, Type=win32">
+      <Name>libmpv-2.dll</Name>
+      <HintPath>dll\libmpv-2.dll</HintPath>
+    </NativeReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

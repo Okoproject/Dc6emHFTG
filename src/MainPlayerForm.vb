@@ -64,6 +64,22 @@ Public Class MainPlayerForm
     Private _mediaPlayer As MpvPlayerWrapper
     Private _currentPlaybackSpeed As Double = 1.0
 
+    Private _playlistItems As New List(Of PlaylistItem)
+    Private _currentPlaylistIndex As Integer = -1
+
+    Private Const ColFileName As Integer = 0
+    Private Const ColFileLength As Integer = 1
+    Private Const ColFileMemo As Integer = 2
+    Private Const ColFileDelete As Integer = 3
+    Private Const ColFilePosition As Integer = 4
+    Private Const ColFileProgress As Integer = 5
+
+    Private Shared ReadOnly MediaExtensions() As String = {
+        ".mp4", ".avi", ".mkv", ".mov", ".wmv", ".flv", ".webm",
+        ".mpg", ".mpeg", ".ts", ".m2ts", ".mts", ".ogv", ".3gp", ".m4v",
+        ".mp3", ".wav", ".flac", ".ogg", ".m4a", ".aac", ".wma", ".opus"
+    }
+
     ''' <summary>
     '''     メインフォームのインスタンス（シングルトン）
     ''' </summary>
@@ -86,6 +102,10 @@ Public Class MainPlayerForm
         UpdateControllerMinSize()
         UpdateJumpButtonLabels()
 
+        ' プレイリストの復元
+        RestorePlaylist()
+        ScanPlaylistDurations()
+
         SendMessage(Me.Handle, WM_SETREDRAW, True, IntPtr.Zero)
         Me.Refresh()
 
@@ -93,6 +113,7 @@ Public Class MainPlayerForm
     End Sub
 
     Private Sub MainPlayerForm_Closing(sender As Object, e As CancelEventArgs) Handles MyBase.Closing
+        SavePlaylist()
         SaveCurrentSettings()
         DisposeHotKeys()
         DisposeMediaPlayer()
@@ -138,6 +159,7 @@ Public Class MainPlayerForm
         AddHandler _mediaPlayer.Initialized, AddressOf OnMpvReady
         'MpvPlayer再生ファイル変更イベント
         AddHandler _mediaPlayer.MediaChanged, AddressOf OnMediaChanged
+        AddHandler _mediaPlayer.PlaybackEnded, AddressOf OnPlaybackEnded
 
         _mediaPlayer.Volume = My.Settings.Onryou
         TrackBar6.Value = _mediaPlayer.Volume
@@ -153,6 +175,7 @@ Public Class MainPlayerForm
     '''     MpvPalerの準備ができたときの処理
     ''' </summary>
     Private _mpvReady As Boolean = False
+    Private _suppressAutoPlay As Boolean = False
 
     Private Sub OnMpvReady()
         _mpvReady = True
@@ -171,6 +194,12 @@ Public Class MainPlayerForm
             Label1.Text = String.Format(My.Resources.TimeFormat, TimeSpan.FromSeconds(dur).ToString("hh\:mm\:ss"))
 
             _mediaPlayer.Position = 0
+
+            ' プレイリスト項目のDurationを更新
+            If _currentPlaylistIndex >= 0 AndAlso _currentPlaylistIndex < _playlistItems.Count Then
+                _playlistItems(_currentPlaylistIndex).Duration = dur
+                DataGridView2.Rows(_currentPlaylistIndex).Cells(ColFileLength).Value = TimeSpan.FromSeconds(dur).ToString("hh\:mm\:ss")
+            End If
 
         Else
             TrackBar1.Enabled = False
@@ -192,6 +221,10 @@ Public Class MainPlayerForm
     End Sub
 
     Private Sub AutoPlayHandan()
+        If _suppressAutoPlay Then
+            _suppressAutoPlay = False
+            Return
+        End If
         If My.Settings.AutoPlay = True Then
             _mediaPlayer.Play()
             Button200.Image = My.Resources.Pause_16x
@@ -1249,6 +1282,16 @@ Public Class MainPlayerForm
                           My.Resources.TimeSeparator &
                           TimeSpan.FromSeconds(_mediaPlayer.Duration).ToString("hh\:mm\:ss")
             ToolTip1.SetToolTip(TrackBar1, TimeSpan.FromSeconds(TrackBar1.Value).ToString("hh\:mm\:ss"))
+
+            ' プレイリストの再生位置・進捗を更新
+            If _currentPlaylistIndex >= 0 AndAlso _currentPlaylistIndex < _playlistItems.Count Then
+                Dim item = _playlistItems(_currentPlaylistIndex)
+                item.Position = _mediaPlayer.Position
+                Dim row = DataGridView2.Rows(_currentPlaylistIndex)
+                row.Cells(ColFilePosition).Value = TimeSpan.FromSeconds(item.Position).ToString("hh\:mm\:ss")
+                Dim progress = If(item.Duration > 0, CInt((item.Position / item.Duration) * 100) & "%", "0%")
+                row.Cells(ColFileProgress).Value = progress
+            End If
         End If
     End Sub
 
@@ -1263,14 +1306,21 @@ Public Class MainPlayerForm
         If Not e.Data.GetDataPresent(DataFormats.FileDrop) Then Return
 
         Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
-        'If files.Length = 0 Then Return
+        If files Is Nothing OrElse files.Length = 0 Then Return
 
+        ' 元のコードと同じ直接再生（確実に動作させるため）
         _mediaPlayer.LoadFile(files(0))
-
         My.Settings.LastOpenedFile = files(0)
 
-        'System.Threading.Thread.Sleep(5000)
-
+        ' プレイリストに追加
+        _currentPlaylistIndex = 0
+        _playlistItems.Clear()
+        DataGridView2.Rows.Clear()
+        For Each f In files
+            _playlistItems.Add(New PlaylistItem(f))
+            AddPlaylistRow(_playlistItems.Last())
+        Next
+        ScanPlaylistDurations()
     End Sub
 
     ''' <summary>
@@ -1522,11 +1572,12 @@ Public Class MainPlayerForm
     End Sub
 
     Private Sub MainPlayerForm_Shown(sender As Object, e As EventArgs) Handles Me.Shown
-        ' フォームが画面にパッと出てから初期化を始める
-        'InitializeMediaPlayer()
-
-        ' 初期化の直後に少しだけOSに処理を戻す（おまじない）
-        'Application.DoEvents()
+        ' プレイリストの最初のファイルを読み込む（自動再生は抑制）
+        If _playlistItems.Count > 0 Then
+            _suppressAutoPlay = True
+            _currentPlaylistIndex = 0
+            _mediaPlayer.LoadFile(_playlistItems(0).FilePath)
+        End If
     End Sub
 
     'PlayListの表示・非表示切替
@@ -1614,8 +1665,272 @@ Public Class MainPlayerForm
         PLWidth = SplitContainer2.Panel1.Width
     End Sub
 
-    Private Sub DataGridView2_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView2.CellContentClick
+    Private Sub DataGridView2_CellClick(sender As Object, e As DataGridViewCellEventArgs)
+        If e.RowIndex < 0 OrElse e.ColumnIndex < 0 OrElse e.RowIndex >= _playlistItems.Count Then Return
 
+        If e.ColumnIndex = ColFileDelete Then
+            RemovePlaylistItem(e.RowIndex)
+            Return
+        End If
+
+        If e.ColumnIndex <> ColFileMemo Then
+            PlayPlaylistItem(e.RowIndex)
+        End If
+    End Sub
+
+    Private Sub DataGridView2_RowHeaderMouseDoubleClick(sender As Object, e As DataGridViewCellMouseEventArgs)
+        If e.RowIndex >= 0 AndAlso e.RowIndex < _playlistItems.Count Then
+            PlayPlaylistItem(e.RowIndex)
+        End If
+    End Sub
+
+    Private Sub DataGridView2_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs)
+        If e.RowIndex < 0 OrElse e.RowIndex >= _playlistItems.Count Then Return
+        If e.ColumnIndex = ColFileMemo Then
+            Dim value = DataGridView2.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
+            _playlistItems(e.RowIndex).Memo = If(value IsNot Nothing, value.ToString(), "")
+        End If
+    End Sub
+
+#End Region
+
+#Region "プレイリスト"
+
+    Private Sub AddPlaylistRow(item As PlaylistItem)
+        Dim row As New DataGridViewRow()
+        row.CreateCells(DataGridView2)
+        row.Cells(0).Value = If(item.FileName, "")
+        row.Cells(1).Value = "00:00:00"
+        row.Cells(2).Value = If(item.Memo, "")
+        row.Cells(3).Value = "削除"
+        row.Cells(4).Value = ""
+        row.Cells(5).Value = "0%"
+        DataGridView2.Rows.Add(row)
+    End Sub
+
+    Private Sub RemovePlaylistItem(index As Integer)
+        If index < 0 OrElse index >= _playlistItems.Count Then Return
+        _playlistItems.RemoveAt(index)
+        DataGridView2.Rows.RemoveAt(index)
+        If index = _currentPlaylistIndex Then
+            _currentPlaylistIndex = -1
+        ElseIf index < _currentPlaylistIndex Then
+            _currentPlaylistIndex -= 1
+        End If
+    End Sub
+
+    Private Sub PlayPlaylistItem(index As Integer)
+        If index < 0 OrElse index >= _playlistItems.Count Then Return
+        _currentPlaylistIndex = index
+        _mediaPlayer.LoadFile(_playlistItems(index).FilePath)
+        DataGridView2.ClearSelection()
+        DataGridView2.Rows(index).Selected = True
+    End Sub
+
+    Private Sub OnPlaybackEnded()
+        Dim nextIndex = _currentPlaylistIndex + 1
+        If nextIndex >= 0 AndAlso nextIndex < _playlistItems.Count Then
+            PlayPlaylistItem(nextIndex)
+        Else
+            _currentPlaylistIndex = -1
+        End If
+    End Sub
+
+    Private Sub Button41_Click(sender As Object, e As EventArgs) Handles Button41.Click
+        Using fbd As New FolderBrowserDialog()
+            fbd.Description = "メディアファイルがあるフォルダを選択"
+            If fbd.ShowDialog() = DialogResult.OK Then
+                Dim dir = fbd.SelectedPath
+                Dim files = IO.Directory.GetFiles(dir)
+                Dim addedCount = 0
+                Dim firstIndex = _playlistItems.Count
+                For Each f In files
+                    If IsMediaFile(f) Then
+                        Dim newItem As New PlaylistItem(f)
+                        _playlistItems.Add(newItem)
+                        AddPlaylistRow(newItem)
+                        addedCount += 1
+                    End If
+                Next
+                If addedCount = 0 Then
+                    MsgBox("メディアファイルが見つかりませんでした。")
+                End If
+                ScanPlaylistDurations()
+                If addedCount > 0 Then
+                    _suppressAutoPlay = True
+                    _currentPlaylistIndex = firstIndex
+                    _mediaPlayer.LoadFile(_playlistItems(firstIndex).FilePath)
+                End If
+            End If
+        End Using
+    End Sub
+
+    Private Sub Button42_Click(sender As Object, e As EventArgs) Handles Button42.Click
+        If _playlistItems.Count = 0 Then Return
+        Dim nextIndex = _currentPlaylistIndex + 1
+        If nextIndex >= _playlistItems.Count Then nextIndex = 0
+        PlayPlaylistItem(nextIndex)
+    End Sub
+
+    Private Sub Button43_Click(sender As Object, e As EventArgs) Handles Button43.Click
+        If DataGridView2.SelectedCells.Count = 0 Then Return
+        Dim rowIndex = DataGridView2.SelectedCells(0).RowIndex
+        If rowIndex >= 0 AndAlso rowIndex < _playlistItems.Count Then
+            RemovePlaylistItem(rowIndex)
+        End If
+    End Sub
+
+    Private Sub Button44_Click(sender As Object, e As EventArgs) Handles Button44.Click
+        Using ofd As New OpenFileDialog()
+            ofd.Multiselect = False
+            ofd.Title = "プレイリストに追加するファイルを選択"
+            ofd.Filter = "メディアファイル|*.mp4;*.avi;*.mkv;*.mov;*.wmv;*.flv;*.webm;*.mpg;*.mpeg;*.ts;*.m2ts;*.mts;*.ogv;*.3gp;*.m4v;*.mp3;*.wav;*.flac;*.ogg;*.m4a;*.aac;*.wma;*.opus|すべてのファイル|*.*"
+            If ofd.ShowDialog() = DialogResult.OK Then
+                Dim newItem As New PlaylistItem(ofd.FileName)
+                _playlistItems.Add(newItem)
+                AddPlaylistRow(newItem)
+                ScanPlaylistDurations()
+            End If
+        End Using
+    End Sub
+
+    Private Sub Button45_Click(sender As Object, e As EventArgs) Handles Button45.Click
+        If _playlistItems.Count = 0 Then
+            MsgBox("プレイリストが空です。")
+            Return
+        End If
+        Using sfd As New SaveFileDialog()
+            sfd.Title = "プレイリストを保存"
+            sfd.Filter = "M3U8 プレイリスト|*.m3u8|すべてのファイル|*.*"
+            sfd.DefaultExt = "m3u8"
+            sfd.FileName = "playlist.m3u8"
+            If sfd.ShowDialog() = DialogResult.OK Then
+                SavePlaylist(sfd.FileName)
+            End If
+        End Using
+    End Sub
+
+    Private Sub Button46_Click(sender As Object, e As EventArgs) Handles Button46.Click
+        Using ofd As New OpenFileDialog()
+            ofd.Title = "プレイリストを読み込む"
+            ofd.Filter = "M3U8 プレイリスト|*.m3u8|すべてのファイル|*.*"
+            If ofd.ShowDialog() = DialogResult.OK Then
+                LoadPlaylist(ofd.FileName)
+                ScanPlaylistDurations()
+            End If
+        End Using
+    End Sub
+
+    Private Shared Function IsMediaFile(path As String) As Boolean
+        Dim ext = IO.Path.GetExtension(path)
+        If String.IsNullOrEmpty(ext) Then Return False
+        Return Array.IndexOf(MediaExtensions, ext.ToLowerInvariant()) >= 0
+    End Function
+
+    Private Shared Function GetDefaultPlaylistDir() As String
+        Return IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "OkoshiMAX")
+    End Function
+
+    Private Shared Function GetDefaultPlaylistPath() As String
+        Return IO.Path.Combine(GetDefaultPlaylistDir(), "last_playlist.m3u8")
+    End Function
+
+    Private Sub SavePlaylist()
+        If _playlistItems.Count = 0 Then
+            Dim path = GetDefaultPlaylistPath()
+            If IO.File.Exists(path) Then IO.File.Delete(path)
+            Return
+        End If
+        Dim dir = GetDefaultPlaylistDir()
+        If Not IO.Directory.Exists(dir) Then IO.Directory.CreateDirectory(dir)
+        SavePlaylist(GetDefaultPlaylistPath())
+    End Sub
+
+    Private Sub SavePlaylist(filePath As String)
+        Using sw As New IO.StreamWriter(filePath, False, System.Text.Encoding.UTF8)
+            sw.WriteLine("#EXTM3U")
+            For Each item In _playlistItems
+                sw.WriteLine("#EXTINF:" & item.Duration & "," & item.FileName)
+                If Not String.IsNullOrEmpty(item.Memo) Then
+                    sw.WriteLine("#OKM-MEMO:" & item.Memo)
+                End If
+                If item.Position > 0 Then
+                    sw.WriteLine("#OKM-POS:" & item.Position)
+                End If
+                sw.WriteLine(item.FilePath)
+            Next
+        End Using
+    End Sub
+
+    Private Sub RestorePlaylist()
+        Dim path = GetDefaultPlaylistPath()
+        If IO.File.Exists(path) Then
+            LoadPlaylist(path)
+        End If
+    End Sub
+
+    Private Sub LoadPlaylist(filePath As String)
+        _playlistItems.Clear()
+        DataGridView2.Rows.Clear()
+
+        Using sr As New IO.StreamReader(filePath, System.Text.Encoding.UTF8)
+            Dim currentItem As PlaylistItem = Nothing
+            Do
+                Dim line = sr.ReadLine()
+                If line Is Nothing Then Exit Do
+                If String.IsNullOrWhiteSpace(line) Then Continue Do
+                If line.StartsWith("#EXTM3U") Then Continue Do
+                If line.StartsWith("#EXTINF:") Then
+                    currentItem = New PlaylistItem()
+                    Dim dataPart = line.Substring(8)
+                    Dim commaPos = dataPart.IndexOf(","c)
+                    If commaPos > 0 Then
+                        Double.TryParse(dataPart.Substring(0, commaPos), currentItem.Duration)
+                    End If
+                    Continue Do
+                End If
+                If line.StartsWith("#OKM-MEMO:") AndAlso currentItem IsNot Nothing Then
+                    currentItem.Memo = line.Substring(10)
+                    Continue Do
+                End If
+                If line.StartsWith("#OKM-POS:") AndAlso currentItem IsNot Nothing Then
+                    Double.TryParse(line.Substring(9), currentItem.Position)
+                    Continue Do
+                End If
+                If line.StartsWith("#") Then Continue Do
+                ' ファイルパス行
+                If currentItem IsNot Nothing Then
+                    currentItem.FilePath = line
+                Else
+                    currentItem = New PlaylistItem(line)
+                End If
+                _playlistItems.Add(currentItem)
+                AddPlaylistRow(currentItem)
+                currentItem = Nothing
+            Loop
+        End Using
+    End Sub
+
+    ''' <summary>
+    '''     mpv を使ってファイルの長さを取得する（vo=null で画面表示なし）
+    ''' </summary>
+    Private Shared Function GetFileDuration(path As String) As Double
+        Return MpvPlayerWrapper.GetFileDuration(path)
+    End Function
+
+    ''' <summary>
+    '''     プレイリストの全項目の長さを事前取得する
+    ''' </summary>
+    Private Sub ScanPlaylistDurations()
+        For i As Integer = 0 To _playlistItems.Count - 1
+            If _playlistItems(i).Duration <= 0 Then
+                Dim dur = GetFileDuration(_playlistItems(i).FilePath)
+                If dur > 0 Then
+                    _playlistItems(i).Duration = dur
+                    DataGridView2.Rows(i).Cells(ColFileLength).Value = TimeSpan.FromSeconds(dur).ToString("hh\:mm\:ss")
+                End If
+            End If
+        Next
     End Sub
 
 #End Region
