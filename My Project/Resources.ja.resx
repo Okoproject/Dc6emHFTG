@@ -128,6 +128,15 @@
   <data name="Delete" xml:space="preserve">
     <value>削除</value>
   </data>
+  <data name="NoMediaLoaded" xml:space="preserve">
+    <value>メディアが読み込まれていません</value>
+  </data>
+  <data name="ScreenCaptureSaved" xml:space="preserve">
+    <value>キャプチャを保存しました：{0}</value>
+  </data>
+  <data name="ScreenCaptureFailed" xml:space="preserve">
+    <value>キャプチャに失敗しました</value>
+  </data>
   <data name="TimeFormat" xml:space="preserve">
     <value>00:00:00 / {0}</value>
   </data>

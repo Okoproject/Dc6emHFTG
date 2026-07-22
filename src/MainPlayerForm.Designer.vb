@@ -208,8 +208,8 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel3.Margin = New System.Windows.Forms.Padding(4)
         Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
         Me.TableLayoutPanel3.RowCount = 2
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90.0!))
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 85.0!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15.0!))
         Me.TableLayoutPanel3.Size = New System.Drawing.Size(278, 838)
         Me.TableLayoutPanel3.TabIndex = 1
         '
@@ -228,7 +228,7 @@ Partial Class MainPlayerForm
         Me.DataGridView2.Name = "DataGridView2"
         Me.DataGridView2.RowHeadersWidth = 51
         Me.DataGridView2.RowTemplate.Height = 24
-        Me.DataGridView2.Size = New System.Drawing.Size(274, 750)
+        Me.DataGridView2.Size = New System.Drawing.Size(274, 708)
         Me.DataGridView2.TabIndex = 6
         '
         'File_Namae
@@ -269,75 +269,87 @@ Partial Class MainPlayerForm
         '
         'Button41
         '
+        Me.Button41.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.Button41.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.Button41.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button41.Image = Global.OkoshiMAX.My.Resources.Resources.FolderClosed_16x
-        Me.Button41.Location = New System.Drawing.Point(1, 755)
+        Me.Button41.Location = New System.Drawing.Point(1, 713)
         Me.Button41.Margin = New System.Windows.Forms.Padding(1)
         Me.Button41.Name = "Button41"
-        Me.Button41.Size = New System.Drawing.Size(44, 82)
+        Me.Button41.Size = New System.Drawing.Size(44, 124)
         Me.Button41.TabIndex = 0
         Me.ToolTip1.SetToolTip(Me.Button41, "フォルダを開く")
-        Me.Button41.UseVisualStyleBackColor = True
+        Me.Button41.UseVisualStyleBackColor = False
         '
         'Button42
         '
+        Me.Button42.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.Button42.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.Button42.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button42.Image = Global.OkoshiMAX.My.Resources.Resources.GlyphRight_16x
-        Me.Button42.Location = New System.Drawing.Point(47, 755)
+        Me.Button42.Location = New System.Drawing.Point(47, 713)
         Me.Button42.Margin = New System.Windows.Forms.Padding(1)
         Me.Button42.Name = "Button42"
-        Me.Button42.Size = New System.Drawing.Size(44, 82)
+        Me.Button42.Size = New System.Drawing.Size(44, 124)
         Me.Button42.TabIndex = 1
         Me.ToolTip1.SetToolTip(Me.Button42, "次へ")
-        Me.Button42.UseVisualStyleBackColor = True
+        Me.Button42.UseVisualStyleBackColor = False
         '
         'Button43
         '
+        Me.Button43.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.Button43.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.Button43.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button43.Image = Global.OkoshiMAX.My.Resources.Resources.Cancel_16x
-        Me.Button43.Location = New System.Drawing.Point(93, 755)
+        Me.Button43.Location = New System.Drawing.Point(93, 713)
         Me.Button43.Margin = New System.Windows.Forms.Padding(1)
         Me.Button43.Name = "Button43"
-        Me.Button43.Size = New System.Drawing.Size(44, 82)
+        Me.Button43.Size = New System.Drawing.Size(44, 124)
         Me.Button43.TabIndex = 2
         Me.ToolTip1.SetToolTip(Me.Button43, "一覧から削除")
-        Me.Button43.UseVisualStyleBackColor = True
+        Me.Button43.UseVisualStyleBackColor = False
         '
         'Button44
         '
+        Me.Button44.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.Button44.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.Button44.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button44.Image = Global.OkoshiMAX.My.Resources.Resources.Add_16x
-        Me.Button44.Location = New System.Drawing.Point(139, 755)
+        Me.Button44.Location = New System.Drawing.Point(139, 713)
         Me.Button44.Margin = New System.Windows.Forms.Padding(1)
         Me.Button44.Name = "Button44"
-        Me.Button44.Size = New System.Drawing.Size(44, 82)
+        Me.Button44.Size = New System.Drawing.Size(44, 124)
         Me.Button44.TabIndex = 3
         Me.ToolTip1.SetToolTip(Me.Button44, "ファイルを追加")
-        Me.Button44.UseVisualStyleBackColor = True
+        Me.Button44.UseVisualStyleBackColor = False
         '
         'Button45
         '
+        Me.Button45.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.Button45.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.Button45.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button45.Image = Global.OkoshiMAX.My.Resources.Resources.DownloadDocument_16x
-        Me.Button45.Location = New System.Drawing.Point(185, 755)
+        Me.Button45.Location = New System.Drawing.Point(185, 713)
         Me.Button45.Margin = New System.Windows.Forms.Padding(1)
         Me.Button45.Name = "Button45"
-        Me.Button45.Size = New System.Drawing.Size(44, 82)
+        Me.Button45.Size = New System.Drawing.Size(44, 124)
         Me.Button45.TabIndex = 4
         Me.ToolTip1.SetToolTip(Me.Button45, "プレイリスト保存")
-        Me.Button45.UseVisualStyleBackColor = True
+        Me.Button45.UseVisualStyleBackColor = False
         '
         'Button46
         '
+        Me.Button46.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.Button46.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.Button46.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button46.Image = Global.OkoshiMAX.My.Resources.Resources.OpenFolder_16x
-        Me.Button46.Location = New System.Drawing.Point(231, 755)
+        Me.Button46.Location = New System.Drawing.Point(231, 713)
         Me.Button46.Margin = New System.Windows.Forms.Padding(1)
         Me.Button46.Name = "Button46"
-        Me.Button46.Size = New System.Drawing.Size(46, 82)
+        Me.Button46.Size = New System.Drawing.Size(46, 124)
         Me.Button46.TabIndex = 5
         Me.ToolTip1.SetToolTip(Me.Button46, "プレイリスト読込")
-        Me.Button46.UseVisualStyleBackColor = True
+        Me.Button46.UseVisualStyleBackColor = False
         '
         'SplitContainer3
         '
@@ -355,7 +367,7 @@ Partial Class MainPlayerForm
         'SplitContainer3.Panel2
         '
         Me.SplitContainer3.Panel2.Controls.Add(Me.TableLayoutPanel1)
-        Me.SplitContainer3.Panel2MinSize = 208
+        Me.SplitContainer3.Panel2MinSize = 0
         Me.SplitContainer3.Size = New System.Drawing.Size(1002, 838)
         Me.SplitContainer3.SplitterDistance = 318
         Me.SplitContainer3.SplitterWidth = 5
@@ -374,8 +386,6 @@ Partial Class MainPlayerForm
         '
         'TableLayoutPanel1
         '
-        Me.TableLayoutPanel1.AutoSize = True
-        Me.TableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.TableLayoutPanel1.BackColor = System.Drawing.SystemColors.ControlDarkDark
         Me.TableLayoutPanel1.ColumnCount = 21
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.70151!))
@@ -451,7 +461,6 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 0)
         Me.TableLayoutPanel1.Margin = New System.Windows.Forms.Padding(1, 1, 1, 10)
-        Me.TableLayoutPanel1.MinimumSize = New System.Drawing.Size(516, 208)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 7
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
@@ -461,14 +470,12 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(1002, 515)
         Me.TableLayoutPanel1.TabIndex = 0
         '
         'CheckBoxMpvPamel
         '
         Me.CheckBoxMpvPamel.Appearance = System.Windows.Forms.Appearance.Button
-        Me.CheckBoxMpvPamel.AutoSize = True
         Me.CheckBoxMpvPamel.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.CheckBoxMpvPamel.Checked = True
         Me.CheckBoxMpvPamel.CheckState = System.Windows.Forms.CheckState.Checked
@@ -486,7 +493,6 @@ Partial Class MainPlayerForm
         'Label1
         '
         Me.Label1.AutoEllipsis = True
-        Me.Label1.AutoSize = True
         Me.Label1.BackColor = System.Drawing.SystemColors.ActiveCaptionText
         Me.TableLayoutPanel1.SetColumnSpan(Me.Label1, 8)
         Me.Label1.Dock = System.Windows.Forms.DockStyle.Fill
@@ -503,8 +509,6 @@ Partial Class MainPlayerForm
         '
         'Button33
         '
-        Me.Button33.AutoSize = True
-        Me.Button33.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button33.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button33, 2)
         Me.Button33.Dock = System.Windows.Forms.DockStyle.Fill
@@ -541,8 +545,6 @@ Partial Class MainPlayerForm
         '
         'Button3
         '
-        Me.Button3.AutoSize = True
-        Me.Button3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button3.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button3, 2)
         Me.Button3.Dock = System.Windows.Forms.DockStyle.Fill
@@ -556,8 +558,6 @@ Partial Class MainPlayerForm
         '
         'Button4
         '
-        Me.Button4.AutoSize = True
-        Me.Button4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button4.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button4, 2)
         Me.Button4.Dock = System.Windows.Forms.DockStyle.Fill
@@ -571,8 +571,6 @@ Partial Class MainPlayerForm
         '
         'Button5
         '
-        Me.Button5.AutoSize = True
-        Me.Button5.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button5.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button5, 2)
         Me.Button5.Dock = System.Windows.Forms.DockStyle.Fill
@@ -586,8 +584,6 @@ Partial Class MainPlayerForm
         '
         'Button6
         '
-        Me.Button6.AutoSize = True
-        Me.Button6.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button6.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button6, 2)
         Me.Button6.Dock = System.Windows.Forms.DockStyle.Fill
@@ -601,8 +597,6 @@ Partial Class MainPlayerForm
         '
         'Button7
         '
-        Me.Button7.AutoSize = True
-        Me.Button7.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button7.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button7, 2)
         Me.Button7.Dock = System.Windows.Forms.DockStyle.Fill
@@ -616,8 +610,6 @@ Partial Class MainPlayerForm
         '
         'Button8
         '
-        Me.Button8.AutoSize = True
-        Me.Button8.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button8.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button8, 2)
         Me.Button8.Dock = System.Windows.Forms.DockStyle.Fill
@@ -631,8 +623,6 @@ Partial Class MainPlayerForm
         '
         'Button9
         '
-        Me.Button9.AutoSize = True
-        Me.Button9.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button9.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button9, 2)
         Me.Button9.Dock = System.Windows.Forms.DockStyle.Fill
@@ -646,8 +636,6 @@ Partial Class MainPlayerForm
         '
         'Button10
         '
-        Me.Button10.AutoSize = True
-        Me.Button10.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button10.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button10, 2)
         Me.Button10.Dock = System.Windows.Forms.DockStyle.Fill
@@ -675,8 +663,6 @@ Partial Class MainPlayerForm
         '
         'Button11
         '
-        Me.Button11.AutoSize = True
-        Me.Button11.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button11.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button11, 2)
         Me.Button11.Dock = System.Windows.Forms.DockStyle.Fill
@@ -690,8 +676,6 @@ Partial Class MainPlayerForm
         '
         'Button13
         '
-        Me.Button13.AutoSize = True
-        Me.Button13.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button13.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button13, 2)
         Me.Button13.Dock = System.Windows.Forms.DockStyle.Fill
@@ -705,8 +689,6 @@ Partial Class MainPlayerForm
         '
         'Button14
         '
-        Me.Button14.AutoSize = True
-        Me.Button14.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button14.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button14, 2)
         Me.Button14.Dock = System.Windows.Forms.DockStyle.Fill
@@ -720,8 +702,6 @@ Partial Class MainPlayerForm
         '
         'Button15
         '
-        Me.Button15.AutoSize = True
-        Me.Button15.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button15.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button15, 2)
         Me.Button15.Dock = System.Windows.Forms.DockStyle.Fill
@@ -735,8 +715,6 @@ Partial Class MainPlayerForm
         '
         'Button16
         '
-        Me.Button16.AutoSize = True
-        Me.Button16.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button16.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button16, 2)
         Me.Button16.Dock = System.Windows.Forms.DockStyle.Fill
@@ -750,8 +728,6 @@ Partial Class MainPlayerForm
         '
         'Button17
         '
-        Me.Button17.AutoSize = True
-        Me.Button17.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button17.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button17, 2)
         Me.Button17.Dock = System.Windows.Forms.DockStyle.Fill
@@ -765,8 +741,6 @@ Partial Class MainPlayerForm
         '
         'Button18
         '
-        Me.Button18.AutoSize = True
-        Me.Button18.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button18.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button18, 2)
         Me.Button18.Dock = System.Windows.Forms.DockStyle.Fill
@@ -780,8 +754,6 @@ Partial Class MainPlayerForm
         '
         'Button19
         '
-        Me.Button19.AutoSize = True
-        Me.Button19.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button19.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button19, 2)
         Me.Button19.Dock = System.Windows.Forms.DockStyle.Fill
@@ -795,8 +767,6 @@ Partial Class MainPlayerForm
         '
         'Button20
         '
-        Me.Button20.AutoSize = True
-        Me.Button20.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button20.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button20, 2)
         Me.Button20.Dock = System.Windows.Forms.DockStyle.Fill
@@ -826,7 +796,6 @@ Partial Class MainPlayerForm
         '
         'Label4
         '
-        Me.Label4.AutoSize = True
         Me.Label4.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
         Me.TableLayoutPanel1.SetColumnSpan(Me.Label4, 3)
         Me.Label4.Dock = System.Windows.Forms.DockStyle.Fill
@@ -842,8 +811,6 @@ Partial Class MainPlayerForm
         '
         'Button21
         '
-        Me.Button21.AutoSize = True
-        Me.Button21.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button21.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button21, 2)
         Me.Button21.Dock = System.Windows.Forms.DockStyle.Fill
@@ -857,8 +824,6 @@ Partial Class MainPlayerForm
         '
         'Button22
         '
-        Me.Button22.AutoSize = True
-        Me.Button22.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button22.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button22, 2)
         Me.Button22.Dock = System.Windows.Forms.DockStyle.Fill
@@ -872,8 +837,6 @@ Partial Class MainPlayerForm
         '
         'Button23
         '
-        Me.Button23.AutoSize = True
-        Me.Button23.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button23.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button23, 2)
         Me.Button23.Dock = System.Windows.Forms.DockStyle.Fill
@@ -887,8 +850,6 @@ Partial Class MainPlayerForm
         '
         'Button24
         '
-        Me.Button24.AutoSize = True
-        Me.Button24.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button24.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button24, 2)
         Me.Button24.Dock = System.Windows.Forms.DockStyle.Fill
@@ -902,8 +863,6 @@ Partial Class MainPlayerForm
         '
         'Button25
         '
-        Me.Button25.AutoSize = True
-        Me.Button25.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button25.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button25, 2)
         Me.Button25.Dock = System.Windows.Forms.DockStyle.Fill
@@ -917,8 +876,6 @@ Partial Class MainPlayerForm
         '
         'Button26
         '
-        Me.Button26.AutoSize = True
-        Me.Button26.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button26.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button26, 2)
         Me.Button26.Dock = System.Windows.Forms.DockStyle.Fill
@@ -932,8 +889,6 @@ Partial Class MainPlayerForm
         '
         'Button27
         '
-        Me.Button27.AutoSize = True
-        Me.Button27.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button27.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button27, 2)
         Me.Button27.Dock = System.Windows.Forms.DockStyle.Fill
@@ -947,7 +902,6 @@ Partial Class MainPlayerForm
         '
         'Label6
         '
-        Me.Label6.AutoSize = True
         Me.Label6.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
         Me.TableLayoutPanel1.SetColumnSpan(Me.Label6, 2)
         Me.Label6.Dock = System.Windows.Forms.DockStyle.Fill
@@ -962,8 +916,6 @@ Partial Class MainPlayerForm
         '
         'Button39
         '
-        Me.Button39.AutoSize = True
-        Me.Button39.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button39.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button39, 2)
         Me.Button39.Dock = System.Windows.Forms.DockStyle.Fill
@@ -978,8 +930,6 @@ Partial Class MainPlayerForm
         '
         'Button37
         '
-        Me.Button37.AutoSize = True
-        Me.Button37.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button37.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button37, 2)
         Me.Button37.Dock = System.Windows.Forms.DockStyle.Fill
@@ -994,7 +944,6 @@ Partial Class MainPlayerForm
         '
         'Label2
         '
-        Me.Label2.AutoSize = True
         Me.Label2.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.Label2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Label2.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
@@ -1008,16 +957,16 @@ Partial Class MainPlayerForm
         '
         'TrackBar6
         '
-        Me.TrackBar6.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom), System.Windows.Forms.AnchorStyles)
         Me.TrackBar6.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.TrackBar6.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TrackBar6.LargeChange = 1
-        Me.TrackBar6.Location = New System.Drawing.Point(943, 219)
+        Me.TrackBar6.Location = New System.Drawing.Point(940, 219)
         Me.TrackBar6.Margin = New System.Windows.Forms.Padding(0)
         Me.TrackBar6.Maximum = 100
         Me.TrackBar6.Name = "TrackBar6"
         Me.TrackBar6.Orientation = System.Windows.Forms.Orientation.Vertical
         Me.TableLayoutPanel1.SetRowSpan(Me.TrackBar6, 3)
-        Me.TrackBar6.Size = New System.Drawing.Size(56, 219)
+        Me.TrackBar6.Size = New System.Drawing.Size(62, 219)
         Me.TrackBar6.TabIndex = 950
         Me.TrackBar6.TickFrequency = 10
         Me.TrackBar6.TickStyle = System.Windows.Forms.TickStyle.Both
@@ -1026,12 +975,9 @@ Partial Class MainPlayerForm
         '
         'Button36
         '
-        Me.Button36.AutoSize = True
-        Me.Button36.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button36.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button36, 2)
         Me.Button36.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button36.Enabled = False
         Me.Button36.Image = Global.OkoshiMAX.My.Resources.Resources.CaptureFrame_16x
         Me.Button36.Location = New System.Drawing.Point(95, 1)
         Me.Button36.Margin = New System.Windows.Forms.Padding(1)
@@ -1043,13 +989,9 @@ Partial Class MainPlayerForm
         '
         'Button200
         '
-        Me.Button200.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button200.AutoSize = True
-        Me.Button200.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button200.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button200, 3)
+        Me.Button200.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button200.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button200.Image = Global.OkoshiMAX.My.Resources.Resources.Run_16x
         Me.Button200.Location = New System.Drawing.Point(1, 366)
@@ -1063,13 +1005,9 @@ Partial Class MainPlayerForm
         '
         'Button400
         '
-        Me.Button400.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button400.AutoSize = True
-        Me.Button400.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button400.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button400, 3)
+        Me.Button400.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button400.Image = Global.OkoshiMAX.My.Resources.Resources.Stop_grey_16x
         Me.Button400.Location = New System.Drawing.Point(142, 366)
         Me.Button400.Margin = New System.Windows.Forms.Padding(1)
@@ -1082,7 +1020,6 @@ Partial Class MainPlayerForm
         '
         'Label5
         '
-        Me.Label5.AutoSize = True
         Me.Label5.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.Label5.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Label5.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
@@ -1097,8 +1034,6 @@ Partial Class MainPlayerForm
         '
         'ButtonShiori
         '
-        Me.ButtonShiori.AutoSize = True
-        Me.ButtonShiori.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.ButtonShiori.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.ButtonShiori, 2)
         Me.ButtonShiori.Dock = System.Windows.Forms.DockStyle.Fill
@@ -1113,8 +1048,6 @@ Partial Class MainPlayerForm
         '
         'Button35
         '
-        Me.Button35.AutoSize = True
-        Me.Button35.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button35.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button35, 2)
         Me.Button35.Dock = System.Windows.Forms.DockStyle.Fill
@@ -1129,13 +1062,12 @@ Partial Class MainPlayerForm
         '
         'Button1
         '
-        Me.Button1.AutoSize = True
-        Me.Button1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button1.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button1, 2)
         Me.Button1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button1.Location = New System.Drawing.Point(1, 147)
         Me.Button1.Margin = New System.Windows.Forms.Padding(1)
+        Me.Button1.MinimumSize = New System.Drawing.Size(0, 25)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(92, 71)
         Me.Button1.TabIndex = 940
@@ -1144,8 +1076,6 @@ Partial Class MainPlayerForm
         '
         'Button2
         '
-        Me.Button2.AutoSize = True
-        Me.Button2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button2.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button2, 2)
         Me.Button2.Dock = System.Windows.Forms.DockStyle.Fill
@@ -1159,8 +1089,6 @@ Partial Class MainPlayerForm
         '
         'Button12
         '
-        Me.Button12.AutoSize = True
-        Me.Button12.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.Button12.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button12, 2)
         Me.Button12.Dock = System.Windows.Forms.DockStyle.Fill
@@ -1400,7 +1328,6 @@ Partial Class MainPlayerForm
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer3.Panel1.ResumeLayout(False)
         Me.SplitContainer3.Panel2.ResumeLayout(False)
-        Me.SplitContainer3.Panel2.PerformLayout()
         CType(Me.SplitContainer3, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer3.ResumeLayout(False)
         Me.TableLayoutPanel1.ResumeLayout(False)
@@ -1419,7 +1346,6 @@ Partial Class MainPlayerForm
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
     Friend WithEvents SplitContainer1 As SplitContainer
     Friend WithEvents SplitContainer2 As SplitContainer
-    Friend WithEvents MpvPanel As Panel
     Friend WithEvents Button34 As Button
     Friend WithEvents TextBox3 As TextBox
     Friend WithEvents Button32 As Button
@@ -1499,4 +1425,5 @@ Partial Class MainPlayerForm
     Friend WithEvents File_Delete As DataGridViewTextBoxColumn
     Friend WithEvents File_Position As DataGridViewTextBoxColumn
     Friend WithEvents File_Progress As DataGridViewTextBoxColumn
+    Friend WithEvents MpvPanel As Panel
 End Class

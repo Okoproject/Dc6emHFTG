@@ -451,6 +451,33 @@ Namespace My.Resources
         End Property
 
         '''<summary>
+        '''  メディア未読み込みエラーメッセージを検索します。
+        '''</summary>
+        Friend ReadOnly Property NoMediaLoaded() As String
+            Get
+                Return ResourceManager.GetString("NoMediaLoaded", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  キャプチャ保存完了メッセージを検索します。
+        '''</summary>
+        Friend ReadOnly Property ScreenCaptureSaved() As String
+            Get
+                Return ResourceManager.GetString("ScreenCaptureSaved", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  キャプチャ失敗エラーメッセージを検索します。
+        '''</summary>
+        Friend ReadOnly Property ScreenCaptureFailed() As String
+            Get
+                Return ResourceManager.GetString("ScreenCaptureFailed", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
         '''  無効な数字入力エラーメッセージを検索します。
         '''</summary>
         Friend ReadOnly Property InvalidDigits() As String

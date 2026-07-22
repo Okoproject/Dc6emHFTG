@@ -242,6 +242,15 @@
   <data name="ScreenCaptureNotImplemented" xml:space="preserve">
     <value>Screen capture feature is not implemented</value>
   </data>
+  <data name="NoMediaLoaded" xml:space="preserve">
+    <value>No media loaded</value>
+  </data>
+  <data name="ScreenCaptureSaved" xml:space="preserve">
+    <value>Screenshot saved: {0}</value>
+  </data>
+  <data name="ScreenCaptureFailed" xml:space="preserve">
+    <value>Failed to take screenshot</value>
+  </data>
   <data name="InvalidDigits" xml:space="preserve">
     <value>No digits found or 7+ digits entered</value>
   </data>

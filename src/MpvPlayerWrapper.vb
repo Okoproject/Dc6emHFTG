@@ -385,6 +385,32 @@ Public Class MpvPlayerWrapper
     End Sub
 
     ''' <summary>
+    '''     動画フレームをキャプチャしてファイルに保存
+    ''' </summary>
+    ''' <param name="outputPath">保存先パス（指定しない場合は自動生成）</param>
+    ''' <param name="includeSubtitles">字幕を含めるか</param>
+    ''' <returns>保存されたファイルのパス（失敗時はString.Empty）</returns>
+    Public Function TakeScreenshot(Optional outputPath As String = "", Optional includeSubtitles As Boolean = True) As String
+        If IsDisposed Then Return String.Empty
+
+        ' ファイル名未指定の場合は自動生成
+        If String.IsNullOrEmpty(outputPath) Then
+            Dim dir = IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "OkoshiMAX")
+            IO.Directory.CreateDirectory(dir)
+            outputPath = IO.Path.Combine(dir, $"capture_{DateTime.Now:yyyyMMdd_HHmmss}.png")
+        End If
+
+        Try
+            ' screenshot-to-file コマンド: screenshot-to-file <path> [subtitles|video|window]
+            Dim mode = If(includeSubtitles, "subtitles", "video")
+            DoMpvCommand("screenshot-to-file", outputPath, mode)
+            Return outputPath
+        Catch
+            Return String.Empty
+        End Try
+    End Function
+
+    ''' <summary>
     '''     停止。先頭に戻してstopコマンドを実行。
     ''' </summary>
     Public Sub [Stop]()
@@ -501,6 +527,12 @@ Public Class MpvPlayerWrapper
             _mpvHandle = IntPtr.Zero
         End If
     End Sub
+
+    Public ReadOnly Property IsDisposed As Boolean
+        Get
+            Return _disposed OrElse _mpvHandle = IntPtr.Zero
+        End Get
+    End Property
 
     Protected Overrides Sub Finalize()
         Dispose()
