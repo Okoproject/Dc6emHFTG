@@ -149,4 +149,7 @@
   <data name="TimeSeparator" xml:space="preserve">
     <value> / </value>
   </data>
+  <data name="YtDlpNotFound" xml:space="preserve">
+    <value>yt-dlp が見つかりません。YouTube 等の URL を再生するには yt-dlp が必要です。</value>
+  </data>
 </root>

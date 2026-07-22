@@ -400,11 +400,28 @@ Public Class MpvPlayerWrapper
             outputPath = IO.Path.Combine(dir, $"capture_{DateTime.Now:yyyyMMdd_HHmmss}.png")
         End If
 
+        ' 絶対パスに変換（mpvは相対パスだと作業ディレクトリ基準になるため）
+        outputPath = IO.Path.GetFullPath(outputPath)
+
         Try
             ' screenshot-to-file コマンド: screenshot-to-file <path> [subtitles|video|window]
             Dim mode = If(includeSubtitles, "subtitles", "video")
             DoMpvCommand("screenshot-to-file", outputPath, mode)
-            Return outputPath
+            
+            ' 少し待ってファイル存在確認（mpvの書き込みは非同期の場合がある）
+            System.Threading.Thread.Sleep(100)
+            If IO.File.Exists(outputPath) Then
+                Return outputPath
+            End If
+            
+            ' 失敗時は代替コマンドを試行
+            DoMpvCommand("screenshot", mode, outputPath)
+            System.Threading.Thread.Sleep(100)
+            If IO.File.Exists(outputPath) Then
+                Return outputPath
+            End If
+            
+            Return String.Empty
         Catch
             Return String.Empty
         End Try

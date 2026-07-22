@@ -1544,6 +1544,53 @@ Public Class MainPlayerForm
     End Sub
 
     ''' <summary>
+    '''     TextBox1でEnterキーが押されたときにYouTube URL等を再生
+    ''' </summary>
+    Private Sub TextBox1_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBox1.KeyDown
+        If e.KeyCode <> Keys.Enter Then Return
+        Dim url = TextBox1.Text.Trim()
+        If String.IsNullOrEmpty(url) Then Return
+
+        ' YouTube等のURL判定（mpvはyt-dlpがあれば直接再生可能）
+        If url.StartsWith("http://", StringComparison.OrdinalIgnoreCase) OrElse
+           url.StartsWith("https://", StringComparison.OrdinalIgnoreCase) Then
+
+            ' yt-dlp の存在確認（YouTube等のストリーミング再生に必要）
+            If Not IsYtDlpAvailable() Then
+                MsgBox("yt-dlp が見つかりません。YouTube 等の URL を再生するには yt-dlp が必要です。", vbOKOnly Or vbExclamation)
+                Return
+            End If
+
+            _suppressAutoPlay = False
+            _mediaPlayer.LoadFile(url)
+
+            ' 即座にクリアせず、MediaChanged イベントで正常読み込みを確認してからクリアする
+            ' ここではクリアしない（失敗時のユーザー確認のため）
+        End If
+    End Sub
+
+    ''' <summary>
+    '''     yt-dlp が PATH に存在するか確認
+    ''' </summary>
+    Private Function IsYtDlpAvailable() As Boolean
+        Try
+            Dim psi As New ProcessStartInfo("yt-dlp", "--version") With {
+                .UseShellExecute = False,
+                .CreateNoWindow = True,
+                .RedirectStandardOutput = True,
+                .RedirectStandardError = True
+            }
+            Using proc = Process.Start(psi)
+                If proc Is Nothing Then Return False
+                proc.WaitForExit(3000)
+                Return proc.ExitCode = 0
+            End Using
+        Catch
+            Return False
+        End Try
+    End Function
+
+    ''' <summary>
     '''     SplitContainer1のスプリッター移動時
     ''' </summary>
     Private Sub SplitContainer1_SplitterMoved(sender As Object, e As SplitterEventArgs) _
