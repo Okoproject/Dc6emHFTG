@@ -130,6 +130,9 @@ Public Class MainPlayerForm
         ' ボタンフォントサイズの初期調整
         AdjustTableLayoutPanelButtonFonts()
 
+        ' ピッチ補正（タイムストレッチ）チェックボックスの初期化
+        InitializePitchCorrectionCheckbox()
+
         SendMessage(Me.Handle, WM_SETREDRAW, True, IntPtr.Zero)
         Me.Refresh()
 
@@ -381,6 +384,60 @@ Public Class MainPlayerForm
         For i = 0 To speedValues.Length - 1
             CallByName(My.Settings, $"SC{i + 1}", CallType.Set, speedValues(i))
         Next
+    End Sub
+
+    ''' <summary>
+    '''     ピッチ補正（タイムストレッチ）チェックボックスの初期化
+    ''' </summary>
+    Private Sub InitializePitchCorrectionCheckbox()
+        ' TableLayoutPanel1 の速度調整エリア（Row 5, Column 8-16 あたり）に配置
+        Dim chkPitch = New CheckBox With {
+            .Name = "CheckBoxPitchCorrection",
+            .Text = "",
+            .AutoSize = True,
+            .Anchor = AnchorStyles.Left,
+            .Font = New Font("Meiryo UI", 8.0F, FontStyle.Regular),
+            .ForeColor = Color.White,
+            .BackColor = Color.Transparent
+        }
+
+        ' TrackBar2 の ColumnSpan を 9 -> 8 に縮小し、最後の列（Column 16）にチェックボックス配置
+        If TableLayoutPanel1.Controls.Contains(TrackBar2) Then
+            Dim cellPos = TableLayoutPanel1.GetCellPosition(TrackBar2)
+            ' 現在の ColumnSpan を取得して 8 に変更
+            TableLayoutPanel1.SetColumnSpan(TrackBar2, 8)
+            ' TrackBar2 が Column 8 から始まるとして、Column 16 (8+8) にチェックボックス配置
+            TableLayoutPanel1.Controls.Add(chkPitch, cellPos.Column + 8, cellPos.Row)
+            TableLayoutPanel1.SetColumnSpan(chkPitch, 1)
+        Else
+            ' フォールバック
+            TableLayoutPanel1.Controls.Add(chkPitch, 16, 5)
+        End If
+
+        ' ツールチップ設定
+        ToolTip1.SetToolTip(chkPitch, "タイムストレッチ（音程維持）")
+
+        ' 設定から復元（設定がない場合は True = 有効）
+        Dim savedValue As Boolean = True
+        Try
+            savedValue = CBool(My.Settings("PitchCorrection"))
+        Catch
+            ' 設定が存在しない場合はデフォルト True
+        End Try
+        chkPitch.Checked = savedValue
+        _mediaPlayer.PitchCorrection = savedValue
+
+        AddHandler chkPitch.CheckedChanged, AddressOf CheckBoxPitchCorrection_CheckedChanged
+    End Sub
+
+    ''' <summary>
+    '''     ピッチ補正チェックボックス変更時
+    ''' </summary>
+    Private Sub CheckBoxPitchCorrection_CheckedChanged(sender As Object, e As EventArgs)
+        Dim chk = DirectCast(sender, CheckBox)
+        _mediaPlayer.PitchCorrection = chk.Checked
+        My.Settings("PitchCorrection") = chk.Checked
+        My.Settings.Save()
     End Sub
 
     ''' <summary>

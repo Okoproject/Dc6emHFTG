@@ -301,6 +301,21 @@ Public Class MpvPlayerWrapper
     End Property
 
     ''' <summary>
+    '''     ピッチ補正（タイムストレッチ）の有効/無効。mpvの audio-pitch-correction プロパティ。
+    ''' true=速度変更時も音程を維持、false=速度に合わせて音程も変化
+    ''' </summary>
+    Public Property PitchCorrection As Boolean
+        Get
+            If _mpvHandle = IntPtr.Zero Then Return True
+            Return GetPropertyString("audio-pitch-correction") = "yes"
+        End Get
+        Set
+            If _mpvHandle = IntPtr.Zero Then Return
+            mpv_set_property_string(_mpvHandle, "audio-pitch-correction", If(Value, "yes", "no"))
+        End Set
+    End Property
+
+    ''' <summary>
     '''     再生中かどうか。mpvの pause プロパティが "no" かつアイドルでない場合 True。
     ''' </summary>
     Public ReadOnly Property IsPlaying As Boolean
