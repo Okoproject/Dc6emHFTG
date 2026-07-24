@@ -149,6 +149,8 @@
     <Compile Include="src\Settings.vb" />
     <Compile Include="src\BookmarkEntry.vb" />
     <Compile Include="src\BookmarkCsvStore.vb" />
+    <Compile Include="src\BookmarkTextReader.vb" />
+    <Compile Include="src\BookmarkTextParser.vb" />
     <Compile Include="src\PlaylistItem.vb" />
   </ItemGroup>
   <ItemGroup>
