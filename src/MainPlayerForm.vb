@@ -1470,19 +1470,9 @@ Public Class MainPlayerForm
 
         DataGridView1.Rows.Clear()
 
-        Using sr As New StreamReader(csvFile, Encoding.GetEncoding("shift_jis"))
-            ' ヘッダー行をスキップ
-            If sr.ReadLine() Is Nothing Then Return
-
-            Dim conStr As String
-            Do
-                conStr = sr.ReadLine()
-                If conStr Is Nothing Then Exit Do
-                conStr = Replace(conStr, """", "")
-                Dim rowPlus() As String = conStr.Split(",")
-                DataGridView1.Rows.Add(rowPlus)
-            Loop
-        End Using
+        For Each row As String() In BookmarkCsvStore.Load(csvFile)
+            DataGridView1.Rows.Add(row)
+        Next
     End Sub
 
     ''' <summary>
@@ -1529,45 +1519,12 @@ Public Class MainPlayerForm
                 arrData(row + 1) = arrLine
             Next
 
-            Return WriteCsv(filePath, arrData)
-
-        Catch ex As Exception
-            MsgBox(ex.Message, vbOKOnly)
-            Return False
-        End Try
-    End Function
-
-    ''' <summary>
-    '''     CSVファイルの書込処理
-    ''' </summary>
-    Private Function WriteCsv(csvPath As String, csvData As String()()) As Boolean
-        Dim sw As StreamWriter = Nothing
-
-        Try
-            Dim enc As Encoding = Encoding.GetEncoding("Shift_JIS")
-            sw = New StreamWriter(csvPath, False, enc)
-
-            For Each arrLine() As String In csvData
-                Dim isFirst = True
-                For Each str As String In arrLine
-                    If Not isFirst Then
-                        sw.Write(",")
-                    End If
-                    isFirst = False
-                    sw.Write("""" & str & """")
-                Next
-                sw.Write(vbCrLf)
-            Next
-
+            BookmarkCsvStore.Save(filePath, arrData)
             Return True
 
         Catch ex As Exception
             MsgBox(ex.Message, vbOKOnly)
             Return False
-        Finally
-            If sw IsNot Nothing Then
-                sw.Close()
-            End If
         End Try
     End Function
 
