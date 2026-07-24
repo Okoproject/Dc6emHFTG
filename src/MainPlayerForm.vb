@@ -1818,19 +1818,7 @@ Public Class MainPlayerForm
     End Sub
 
     Private Sub SavePlaylist(filePath As String)
-        Using sw As New IO.StreamWriter(filePath, False, System.Text.Encoding.UTF8)
-            sw.WriteLine("#EXTM3U")
-            For Each item In _playlistItems
-                sw.WriteLine("#EXTINF:" & item.Duration & "," & item.FileName)
-                If Not String.IsNullOrEmpty(item.Memo) Then
-                    sw.WriteLine("#OKM-MEMO:" & item.Memo)
-                End If
-                If item.Position > 0 Then
-                    sw.WriteLine("#OKM-POS:" & item.Position)
-                End If
-                sw.WriteLine(item.FilePath)
-            Next
-        End Using
+        M3u8PlaylistStore.Save(filePath, _playlistItems)
     End Sub
 
     Private Sub RestorePlaylist()
@@ -1844,42 +1832,11 @@ Public Class MainPlayerForm
         _playlistItems.Clear()
         DataGridView2.Rows.Clear()
 
-        Using sr As New IO.StreamReader(filePath, System.Text.Encoding.UTF8)
-            Dim currentItem As PlaylistItem = Nothing
-            Do
-                Dim line = sr.ReadLine()
-                If line Is Nothing Then Exit Do
-                If String.IsNullOrWhiteSpace(line) Then Continue Do
-                If line.StartsWith("#EXTM3U") Then Continue Do
-                If line.StartsWith("#EXTINF:") Then
-                    currentItem = New PlaylistItem()
-                    Dim dataPart = line.Substring(8)
-                    Dim commaPos = dataPart.IndexOf(","c)
-                    If commaPos > 0 Then
-                        Double.TryParse(dataPart.Substring(0, commaPos), currentItem.Duration)
-                    End If
-                    Continue Do
-                End If
-                If line.StartsWith("#OKM-MEMO:") AndAlso currentItem IsNot Nothing Then
-                    currentItem.Memo = line.Substring(10)
-                    Continue Do
-                End If
-                If line.StartsWith("#OKM-POS:") AndAlso currentItem IsNot Nothing Then
-                    Double.TryParse(line.Substring(9), currentItem.Position)
-                    Continue Do
-                End If
-                If line.StartsWith("#") Then Continue Do
-                ' ファイルパス行
-                If currentItem IsNot Nothing Then
-                    currentItem.FilePath = line
-                Else
-                    currentItem = New PlaylistItem(line)
-                End If
-                _playlistItems.Add(currentItem)
-                AddPlaylistRow(currentItem)
-                currentItem = Nothing
-            Loop
-        End Using
+        Dim loadedItems As List(Of PlaylistItem) = M3u8PlaylistStore.Load(filePath)
+        _playlistItems.AddRange(loadedItems)
+        For Each item As PlaylistItem In _playlistItems
+            AddPlaylistRow(item)
+        Next
     End Sub
 
     ''' <summary>

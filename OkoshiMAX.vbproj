@@ -151,6 +151,7 @@
     <Compile Include="src\BookmarkCsvStore.vb" />
     <Compile Include="src\BookmarkTextReader.vb" />
     <Compile Include="src\BookmarkTextParser.vb" />
+    <Compile Include="src\M3u8PlaylistStore.vb" />
     <Compile Include="src\PlaylistItem.vb" />
   </ItemGroup>
   <ItemGroup>
