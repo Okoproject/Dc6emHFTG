@@ -5,7 +5,6 @@ Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.InteropServices
 Imports System.Security.Cryptography.X509Certificates
-Imports System.Text
 
 ''' <summary>
 '''     メイン動画プレイヤーフォーム
@@ -68,10 +67,6 @@ Public Class MainPlayerForm
 
     ' ドラッグ＆ドロップのCtrlキーマスク
     Private Const CtrlMask As Integer = 8
-
-    ' ファイル解析用の文字列長
-    Private Const TimestampLength As Integer = 10
-    Private Const TimeDisplayLength As Integer = 8
 
     ' カウンタ解析用の桁数
     Private Const HourDigits As Integer = 2
@@ -1143,16 +1138,6 @@ Public Class MainPlayerForm
 #Region "ファイル解析ヘルパー"
 
     ''' <summary>
-    '''     タイムスタンプ文字列から秒数を計算
-    ''' </summary>
-    Private Function ParseTimestampToSeconds(timestamp As String) As Integer
-        ' フォーマット: (HH:MM:SS) の10文字
-        Return (Integer.Parse(timestamp.Substring(1, 2)) * 3600) +
-               (Integer.Parse(timestamp.Substring(4, 2)) * 60) +
-               Integer.Parse(timestamp.Substring(7, 2))
-    End Function
-
-    ''' <summary>
     '''     DataGridViewに行を追加
     ''' </summary>
     Private Sub AddBookmarkRow(timeDisplay As String, memo As String, seconds As Integer)
@@ -1161,121 +1146,15 @@ Public Class MainPlayerForm
     End Sub
 
     ''' <summary>
-    '''     テキスト内容を解析してしおりを追加
+    '''     テキストから抽出したしおりをDataGridViewに追加
     ''' </summary>
     Private Sub ParseTextContentForBookmarks(content As String)
-        Dim fukaChar As String = My.Settings.Fuka
-        Dim fumeiChar As String = My.Settings.Fumei
-        Dim fumei2Char As String = My.Settings.Fumei2
-        Dim sonotaChar As String = My.Settings.Sonota
-
-        For n = 0 To content.Length - TimestampLength
-            Dim currentChar As String = content.Substring(n, 1)
-
-            If currentChar = fukaChar Then
-                ' 不可パターン
-                ParseFukaPattern(content, n)
-            ElseIf currentChar = fumeiChar Then
-                ' 不明パターン
-                ParseFumeiPattern(content, n, fumei2Char)
-            ElseIf currentChar = sonotaChar Then
-                ' その他パターン
-                ParseSonotaPattern(content, n)
-            End If
+        Dim entries = BookmarkTextParser.Parse(content, My.Settings.Fuka, My.Settings.Fumei,
+                                               My.Settings.Fumei2, My.Settings.Sonota)
+        For Each entry As BookmarkEntry In entries
+            AddBookmarkRow(entry.TimeDisplay, entry.Memo, entry.PositionSeconds)
         Next
     End Sub
-
-    ''' <summary>
-    '''     「不可」パターンを解析
-    ''' </summary>
-    Private Sub ParseFukaPattern(content As String, startIndex As Integer)
-        If startIndex + TimestampLength + 1 > content.Length Then Return
-
-        Dim timestamp As String = content.Substring(startIndex + 1, TimestampLength)
-        Dim seconds As Integer = ParseTimestampToSeconds(timestamp)
-        Dim timeDisplay As String = content.Substring(startIndex + 2, TimeDisplayLength)
-        AddBookmarkRow(timeDisplay, "聞き取り不可", seconds)
-    End Sub
-
-    ''' <summary>
-    '''     「不明」パターンを解析
-    ''' </summary>
-    Private Sub ParseFumeiPattern(content As String, startIndex As Integer, endMarker As String)
-        For i As Integer = startIndex + 1 To content.Length - TimestampLength - 1
-            If content.Substring(i, 1) = endMarker Then
-                Dim memo As String = content.Substring(startIndex + 1, i - startIndex - 1)
-                Dim timestamp As String = content.Substring(i + 1, TimestampLength)
-                Dim seconds As Integer = ParseTimestampToSeconds(timestamp)
-                Dim timeDisplay As String = content.Substring(i + 2, TimeDisplayLength)
-                AddBookmarkRow(timeDisplay, memo & "？", seconds)
-                Exit For
-            End If
-        Next
-    End Sub
-
-    ''' <summary>
-    '''     「その他」パターンを解析
-    ''' </summary>
-    Private Sub ParseSonotaPattern(content As String, startIndex As Integer)
-        For i As Integer = startIndex + 1 To content.Length - TimestampLength - 1
-            Dim checkChar As String = content.Substring(i, 1)
-            If checkChar = "(" OrElse checkChar = "（" Then
-                Dim memo As String = content.Substring(startIndex, i - startIndex)
-                Dim timestamp As String = content.Substring(i, TimestampLength)
-                Dim seconds As Integer = ParseTimestampToSeconds(timestamp)
-                Dim timeDisplay As String = content.Substring(i + 1, TimeDisplayLength)
-                AddBookmarkRow(timeDisplay, memo, seconds)
-                Exit For
-            End If
-        Next
-    End Sub
-
-    ''' <summary>
-    '''     Word文書からテキストを抽出
-    ''' </summary>
-    Private Function ExtractTextFromWord(filePath As String) As String
-        Dim objWord As Object = Nothing
-        Dim objDoc As Object = Nothing
-        Dim extractedText As String = String.Empty
-
-        Try
-            objWord = CreateObject("Word.Application")
-            objWord.Visible = False
-            objDoc = objWord.Documents.Open(filePath)
-            objDoc.Range.Copy()
-            extractedText = Clipboard.GetText()
-        Finally
-            ' クリップボードのクリーンアップ
-            Try
-                Clipboard.Clear()
-            Catch
-            End Try
-
-            ' COMオブジェクトの解放（ReleaseComObject → Quit の順で実行）
-            If objDoc IsNot Nothing Then
-                Try
-                    objDoc.Close(False)
-                Catch
-                End Try
-                Marshal.ReleaseComObject(objDoc)
-                objDoc = Nothing
-            End If
-            If objWord IsNot Nothing Then
-                Try
-                    objWord.Quit()
-                Catch
-                End Try
-                Marshal.ReleaseComObject(objWord)
-                objWord = Nothing
-            End If
-
-            ' 強制ガベージコレクションでCOMプロキシを確実に解放
-            GC.Collect()
-            GC.WaitForPendingFinalizers()
-        End Try
-
-        Return extractedText
-    End Function
 
 #End Region
 
@@ -1293,17 +1172,15 @@ Public Class MainPlayerForm
 
             Case ".doc", ".docx"
                 Try
-                    Dim content As String = ExtractTextFromWord(filePath)
+                    Dim content As String = BookmarkTextReader.ReadWordDocument(filePath)
                     ParseTextContentForBookmarks(content)
                 Catch ex As Exception
                     MsgBox(String.Format(My.Resources.WordFileLoadFailed, ex.Message), vbOKOnly)
                 End Try
 
             Case ".txt"
-                Using reader As New StreamReader(filePath, Encoding.GetEncoding("Shift_JIS"))
-                    Dim content As String = reader.ReadToEnd()
-                    ParseTextContentForBookmarks(content)
-                End Using
+                Dim content As String = BookmarkTextReader.ReadTextFile(filePath)
+                ParseTextContentForBookmarks(content)
 
             Case Else
                 MsgBox(My.Resources.FileFormatNotSupported, vbOKOnly)
@@ -1470,19 +1347,9 @@ Public Class MainPlayerForm
 
         DataGridView1.Rows.Clear()
 
-        Using sr As New StreamReader(csvFile, Encoding.GetEncoding("shift_jis"))
-            ' ヘッダー行をスキップ
-            If sr.ReadLine() Is Nothing Then Return
-
-            Dim conStr As String
-            Do
-                conStr = sr.ReadLine()
-                If conStr Is Nothing Then Exit Do
-                conStr = Replace(conStr, """", "")
-                Dim rowPlus() As String = conStr.Split(",")
-                DataGridView1.Rows.Add(rowPlus)
-            Loop
-        End Using
+        For Each row As String() In BookmarkCsvStore.Load(csvFile)
+            DataGridView1.Rows.Add(row)
+        Next
     End Sub
 
     ''' <summary>
@@ -1529,45 +1396,12 @@ Public Class MainPlayerForm
                 arrData(row + 1) = arrLine
             Next
 
-            Return WriteCsv(filePath, arrData)
-
-        Catch ex As Exception
-            MsgBox(ex.Message, vbOKOnly)
-            Return False
-        End Try
-    End Function
-
-    ''' <summary>
-    '''     CSVファイルの書込処理
-    ''' </summary>
-    Private Function WriteCsv(csvPath As String, csvData As String()()) As Boolean
-        Dim sw As StreamWriter = Nothing
-
-        Try
-            Dim enc As Encoding = Encoding.GetEncoding("Shift_JIS")
-            sw = New StreamWriter(csvPath, False, enc)
-
-            For Each arrLine() As String In csvData
-                Dim isFirst = True
-                For Each str As String In arrLine
-                    If Not isFirst Then
-                        sw.Write(",")
-                    End If
-                    isFirst = False
-                    sw.Write("""" & str & """")
-                Next
-                sw.Write(vbCrLf)
-            Next
-
+            BookmarkCsvStore.Save(filePath, arrData)
             Return True
 
         Catch ex As Exception
             MsgBox(ex.Message, vbOKOnly)
             Return False
-        Finally
-            If sw IsNot Nothing Then
-                sw.Close()
-            End If
         End Try
     End Function
 
@@ -1984,19 +1818,7 @@ Public Class MainPlayerForm
     End Sub
 
     Private Sub SavePlaylist(filePath As String)
-        Using sw As New IO.StreamWriter(filePath, False, System.Text.Encoding.UTF8)
-            sw.WriteLine("#EXTM3U")
-            For Each item In _playlistItems
-                sw.WriteLine("#EXTINF:" & item.Duration & "," & item.FileName)
-                If Not String.IsNullOrEmpty(item.Memo) Then
-                    sw.WriteLine("#OKM-MEMO:" & item.Memo)
-                End If
-                If item.Position > 0 Then
-                    sw.WriteLine("#OKM-POS:" & item.Position)
-                End If
-                sw.WriteLine(item.FilePath)
-            Next
-        End Using
+        M3u8PlaylistStore.Save(filePath, _playlistItems)
     End Sub
 
     Private Sub RestorePlaylist()
@@ -2010,42 +1832,11 @@ Public Class MainPlayerForm
         _playlistItems.Clear()
         DataGridView2.Rows.Clear()
 
-        Using sr As New IO.StreamReader(filePath, System.Text.Encoding.UTF8)
-            Dim currentItem As PlaylistItem = Nothing
-            Do
-                Dim line = sr.ReadLine()
-                If line Is Nothing Then Exit Do
-                If String.IsNullOrWhiteSpace(line) Then Continue Do
-                If line.StartsWith("#EXTM3U") Then Continue Do
-                If line.StartsWith("#EXTINF:") Then
-                    currentItem = New PlaylistItem()
-                    Dim dataPart = line.Substring(8)
-                    Dim commaPos = dataPart.IndexOf(","c)
-                    If commaPos > 0 Then
-                        Double.TryParse(dataPart.Substring(0, commaPos), currentItem.Duration)
-                    End If
-                    Continue Do
-                End If
-                If line.StartsWith("#OKM-MEMO:") AndAlso currentItem IsNot Nothing Then
-                    currentItem.Memo = line.Substring(10)
-                    Continue Do
-                End If
-                If line.StartsWith("#OKM-POS:") AndAlso currentItem IsNot Nothing Then
-                    Double.TryParse(line.Substring(9), currentItem.Position)
-                    Continue Do
-                End If
-                If line.StartsWith("#") Then Continue Do
-                ' ファイルパス行
-                If currentItem IsNot Nothing Then
-                    currentItem.FilePath = line
-                Else
-                    currentItem = New PlaylistItem(line)
-                End If
-                _playlistItems.Add(currentItem)
-                AddPlaylistRow(currentItem)
-                currentItem = Nothing
-            Loop
-        End Using
+        Dim loadedItems As List(Of PlaylistItem) = M3u8PlaylistStore.Load(filePath)
+        _playlistItems.AddRange(loadedItems)
+        For Each item As PlaylistItem In _playlistItems
+            AddPlaylistRow(item)
+        Next
     End Sub
 
     ''' <summary>
