@@ -37,10 +37,19 @@ Friend NotInheritable Class BookmarkTextParser
         Return entries
     End Function
 
-    Private Shared Function ParseTimestampToSeconds(timestamp As String) As Integer
-        Return (Integer.Parse(timestamp.Substring(1, 2)) * 3600) +
-               (Integer.Parse(timestamp.Substring(4, 2)) * 60) +
-               Integer.Parse(timestamp.Substring(7, 2))
+    Private Shared Function TryParseTimestampToSeconds(timestamp As String, ByRef seconds As Integer) As Boolean
+        Dim hours As Integer
+        Dim minutes As Integer
+        Dim secondsPart As Integer
+
+        If Not Integer.TryParse(timestamp.Substring(1, 2), hours) OrElse
+           Not Integer.TryParse(timestamp.Substring(4, 2), minutes) OrElse
+           Not Integer.TryParse(timestamp.Substring(7, 2), secondsPart) Then
+            Return False
+        End If
+
+        seconds = (hours * 3600) + (minutes * 60) + secondsPart
+        Return True
     End Function
 
     Private Shared Sub ParseFukaPattern(content As String, startIndex As Integer,
@@ -48,7 +57,9 @@ Friend NotInheritable Class BookmarkTextParser
         If startIndex + TimestampLength + 1 > content.Length Then Return
 
         Dim timestamp As String = content.Substring(startIndex + 1, TimestampLength)
-        Dim seconds As Integer = ParseTimestampToSeconds(timestamp)
+        Dim seconds As Integer
+        If Not TryParseTimestampToSeconds(timestamp, seconds) Then Return
+
         Dim timeDisplay As String = content.Substring(startIndex + 2, TimeDisplayLength)
         entries.Add(New BookmarkEntry(timeDisplay, "聞き取り不可", seconds))
     End Sub
@@ -59,7 +70,9 @@ Friend NotInheritable Class BookmarkTextParser
             If content.Substring(i, 1) = endMarker Then
                 Dim memo As String = content.Substring(startIndex + 1, i - startIndex - 1)
                 Dim timestamp As String = content.Substring(i + 1, TimestampLength)
-                Dim seconds As Integer = ParseTimestampToSeconds(timestamp)
+                Dim seconds As Integer
+                If Not TryParseTimestampToSeconds(timestamp, seconds) Then Return
+
                 Dim timeDisplay As String = content.Substring(i + 2, TimeDisplayLength)
                 entries.Add(New BookmarkEntry(timeDisplay, memo & "？", seconds))
                 Exit For
@@ -74,7 +87,9 @@ Friend NotInheritable Class BookmarkTextParser
             If checkChar = "(" OrElse checkChar = "（" Then
                 Dim memo As String = content.Substring(startIndex, i - startIndex)
                 Dim timestamp As String = content.Substring(i, TimestampLength)
-                Dim seconds As Integer = ParseTimestampToSeconds(timestamp)
+                Dim seconds As Integer
+                If Not TryParseTimestampToSeconds(timestamp, seconds) Then Return
+
                 Dim timeDisplay As String = content.Substring(i + 1, TimeDisplayLength)
                 entries.Add(New BookmarkEntry(timeDisplay, memo, seconds))
                 Exit For
