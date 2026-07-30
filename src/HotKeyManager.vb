@@ -127,7 +127,7 @@ Public Module HotKeyManager
         Dim hashCode As String = formHandle.GetHashCode().ToString()
 
         For Each hotkeyType As HotKeyType In [Enum].GetValues(GetType(HotKeyType))
-            Dim atomName As String = $"GlobalHotKey_{hotkeyType}_{hashCode}"
+            Dim atomName As String = "GlobalHotKey_" & hotkeyType.ToString() & "_" & hashCode
             HotKeyAtoms(hotkeyType) = GlobalAddAtom(atomName)
         Next
     End Sub

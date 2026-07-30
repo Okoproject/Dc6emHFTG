@@ -412,7 +412,7 @@ Public Class SettingsForm
         If String.IsNullOrEmpty(modifierText) Then
             Label3.Text = keyText
         Else
-            Label3.Text = $"{modifierText} + {keyText}"
+            Label3.Text = modifierText & " + " & keyText
         End If
     End Sub
 
@@ -433,7 +433,7 @@ Public Class SettingsForm
             Return Chr(keyCode) ' 0-9
         End If
 
-        Return $"Key({keyCode})"
+        Return "Key(" & keyCode & ")"
     End Function
 
 #End Region
@@ -458,7 +458,7 @@ Public Class SettingsForm
     Private Sub UpdateJumpLabel(label As Label, modifier As Integer, keyCode As Integer)
         Dim modifierText As String = GetModifierDisplayText(modifier)
         Dim keyText As String = GetKeyDisplayText(keyCode)
-        Dim displayText As String = $"秒({modifierText} + {keyText})"
+        Dim displayText As String = "秒(" & modifierText & " + " & keyText & ")"
         label.Text = displayText.Replace("秒( + ", "秒(")
     End Sub
 
@@ -481,7 +481,7 @@ Public Class SettingsForm
     Private Sub UpdateSpeedLabel(label As Label, modifier As Integer, keyCode As Integer)
         Dim modifierText As String = GetModifierDisplayText(modifier)
         Dim keyText As String = GetKeyDisplayText(keyCode)
-        Dim displayText As String = $"({modifierText} + {keyText})"
+        Dim displayText As String = "(" & modifierText & " + " & keyText & ")"
         label.Text = displayText.Replace("( + ", "(")
     End Sub
 
