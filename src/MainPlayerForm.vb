@@ -22,23 +22,131 @@ Public Class MainPlayerForm
     '動画表示パネルの高さを保存する変数
     Public ScrHeight As Integer
 
+    ''' <summary>
+    '''     カスタムタイトルバーの高さ
+    ''' </summary>
+    Private Const CustomTitleBarHeight As Integer = 28
 
     ''' <summary>
-    ''' コンストラクタ：ダブルバッファリングとコンポジット描画を有効化
+    '''     リサイズボーダーの幅
+    ''' </summary>
+    Private Const ResizeBorderWidth As Integer = 25
+
+    ''' <summary>
+    '''     ウィンドウ状態の保存用
+    ''' </summary>
+    Private _previousWindowState As FormWindowState = FormWindowState.Normal
+    Private _previousBounds As Rectangle
+
+    ''' <summary>
+    '''     コンストラクタ：ダブルバッファリングとコンポジット描画を有効化
     ''' </summary>
     Public Sub New()
         Me.DoubleBuffered = True
         Me.SetStyle(ControlStyles.OptimizedDoubleBuffer Or ControlStyles.AllPaintingInWmPaint Or ControlStyles.UserPaint, True)
+        Me.FormBorderStyle = FormBorderStyle.None
+        Me.Padding = New Padding(0, CustomTitleBarHeight, 0, 0)
         InitializeComponent()
     End Sub
 
+#Region "Win32 API (カスタムタイトルバー用)"
+    <DllImport("user32.dll")>
+    Private Shared Function ReleaseCapture() As Boolean
+    End Function
+
+    <DllImport("user32.dll")>
+    Private Shared Function SendMessage(hWnd As IntPtr, Msg As Integer, wParam As IntPtr, lParam As IntPtr) As IntPtr
+    End Function
+
+    <DllImport("user32.dll")>
+    Private Shared Function GetWindowRect(hWnd As IntPtr, ByRef lpRect As RECT) As Boolean
+    End Function
+
+    <DllImport("user32.dll")>
+    Private Shared Function SetWindowPos(hWnd As IntPtr, hWndInsertAfter As IntPtr, X As Integer, Y As Integer, cx As Integer, cy As Integer, uFlags As UInteger) As Boolean
+    End Function
+
+    <DllImport("user32.dll")>
+    Private Shared Function GetMonitorInfo(hMonitor As IntPtr, ByRef lpmi As MONITORINFO) As Boolean
+    End Function
+
+    <DllImport("user32.dll")>
+    Private Shared Function MonitorFromWindow(hwnd As IntPtr, dwFlags As UInteger) As IntPtr
+    End Function
+
+    <StructLayout(LayoutKind.Sequential)>
+    Private Structure RECT
+        Public Left As Integer
+        Public Top As Integer
+        Public Right As Integer
+        Public Bottom As Integer
+    End Structure
+
+    <StructLayout(LayoutKind.Sequential)>
+    Private Structure MONITORINFO
+        Public cbSize As Integer
+        Public rcMonitor As RECT
+        Public rcWork As RECT
+        Public dwFlags As UInteger
+    End Structure
+
+    Private Const WM_NCHITTEST As Integer = &H84
+    Private Const WM_NCCALCSIZE As Integer = &H83
+    Private Const WM_SYSCOMMAND As Integer = &H112
+    Private Const WM_GETMINMAXINFO As Integer = &H24
+    Private Const HTCLIENT As Integer = 1
+    Private Const HTCAPTION As Integer = 2
+    Private Const HTLEFT As Integer = 10
+    Private Const HTRIGHT As Integer = 11
+    Private Const HTTOP As Integer = 12
+    Private Const HTTOPLEFT As Integer = 13
+    Private Const HTTOPRIGHT As Integer = 14
+    Private Const HTBOTTOM As Integer = 15
+    Private Const HTBOTTOMLEFT As Integer = 16
+    Private Const HTBOTTOMRIGHT As Integer = 17
+    Private Const SC_MAXIMIZE As Integer = &HF030
+    Private Const SC_MINIMIZE As Integer = &HF020
+    Private Const SC_RESTORE As Integer = &HF120
+    Private Const SC_CLOSE As Integer = &HF060
+    Private Const SWP_FRAMECHANGED As UInteger = &H20
+    Private Const SWP_NOACTIVATE As UInteger = &H10
+    Private Const SWP_NOMOVE As UInteger = &H2
+    Private Const SWP_NOSIZE As UInteger = &H1
+    Private Const SWP_NOZORDER As UInteger = &H4
+    Private Const MONITOR_DEFAULTTONEAREST As UInteger = 2
+
+    <StructLayout(LayoutKind.Sequential)>
+    Private Structure MINMAXINFO
+        Public ptReserved As Win32Point
+        Public ptMaxSize As Win32Point
+        Public ptMaxPosition As Win32Point
+        Public ptMinTrackSize As Win32Point
+        Public ptMaxTrackSize As Win32Point
+    End Structure
+
+    <StructLayout(LayoutKind.Sequential)>
+    Private Structure Win32Point
+        Public X As Integer
+        Public Y As Integer
+    End Structure
+
+    <StructLayout(LayoutKind.Sequential)>
+    Private Structure NCCALCSIZE_PARAMS
+        Public rgrc0 As RECT
+        Public rgrc1 As RECT
+        Public rgrc2 As RECT
+        Public lppos As IntPtr
+    End Structure
+#End Region
+
     ''' <summary>
-    ''' WS_EX_COMPOSITED を追加して子コントロールのちらつきを抑制
+    '''     ダブルバッファリングでちらつきを抑制（WS_EX_COMPOSITEDを無効化して透過問題回避）
     ''' </summary>
     Protected Overrides ReadOnly Property CreateParams As CreateParams
         Get
             Dim cp = MyBase.CreateParams
-            cp.ExStyle = cp.ExStyle Or &H2000000 ' WS_EX_COMPOSITED
+            ' WS_EX_COMPOSITEDを無効化（透過問題の原因になるため）
+            ' cp.ExStyle = cp.ExStyle Or &H2000000 ' WS_EX_COMPOSITED
             Return cp
         End Get
     End Property
@@ -109,18 +217,31 @@ Public Class MainPlayerForm
     ''' </summary>
     Public Shared Instance As MainPlayerForm
 
+    ''' <summary>
+    '''     リサイズグリップ用の状態変数
+    ''' </summary>
+    Private _isResizing As Boolean = False
+    Private _resizeStartPoint As Point
+    Private _resizeStartSize As Size
+    Private _resizeStartLocation As Point
+    Private _resizeDirection As String = ""
+    Private _lastResizeTime As Long = 0
+
 #End Region
 
 #Region "フォームイベント"
 
     Private Sub MainPlayerForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        Me.SuspendLayout()
         SendMessage(Me.Handle, WM_SETREDRAW, False, IntPtr.Zero)
 
         Instance = Me
         InitializeWindowPosition()
         InitializeMediaPlayer()
         InitializeHotKeys()
+        InitializeCustomTitleBar()
+        InitializeResizeGrips()
         LoadDefaultSettings()
         ApplyUiSettings()
         UpdateControllerMinSize()
@@ -130,12 +251,43 @@ Public Class MainPlayerForm
         RestorePlaylist()
         ScanPlaylistDurations()
 
+        ' しおりパネルの背景色を明示的に設定（透明化防止）
+        If SplitContainer1.Panel2 IsNot Nothing Then
+            SplitContainer1.Panel2.BackColor = SystemColors.ControlDarkDark
+        End If
+        If DataGridView1 IsNot Nothing Then
+            DataGridView1.BackgroundColor = SystemColors.ControlDarkDark
+        End If
+
         ' ボタンフォントサイズの初期調整
         AdjustTableLayoutPanelButtonFonts()
+
+        ' カスタムタイトルバーを最前面に固定
+        If CustomTitleBar IsNot Nothing Then
+            Me.Controls.SetChildIndex(CustomTitleBar, 0)
+        End If
 
         ' ピッチ補正（タイムストレッチ）チェックボックスの初期化
         InitializePitchCorrectionCheckbox()
 
+        ' しおりパネルの背景色設定（透過防止）
+        SplitContainer1.Panel2.BackColor = SystemColors.ControlDarkDark
+        SetDoubleBuffered(SplitContainer1.Panel2, True)
+        If TableLayoutPanel2 IsNot Nothing Then
+            TableLayoutPanel2.BackColor = SystemColors.ControlDarkDark
+            SetDoubleBuffered(TableLayoutPanel2, True)
+            AddHandler TableLayoutPanel2.Paint, AddressOf TableLayoutPanel2_Paint
+        End If
+        If DataGridView1 IsNot Nothing Then
+            DataGridView1.BackgroundColor = SystemColors.ControlDarkDark
+            DataGridView1.DefaultCellStyle.BackColor = SystemColors.ControlDarkDark
+            DataGridView1.AlternatingRowsDefaultCellStyle.BackColor = SystemColors.ControlDarkDark
+            SetDoubleBuffered(DataGridView1, True)
+        End If
+        ' Panel2のPaintイベントで背景を確実に描画
+        AddHandler SplitContainer1.Panel2.Paint, AddressOf Panel2_Paint
+
+        Me.ResumeLayout()
         SendMessage(Me.Handle, WM_SETREDRAW, True, IntPtr.Zero)
         Me.Refresh()
 
@@ -170,6 +322,21 @@ Public Class MainPlayerForm
             Next
         Next
     End Function
+
+    ''' <summary>
+    '''     コントロールの DoubleBuffered プロパティをリフレクションで設定
+    ''' </summary>
+    Private Sub SetDoubleBuffered(ctrl As Control, value As Boolean)
+        If ctrl Is Nothing Then Return
+        Try
+            Dim prop = ctrl.GetType().GetProperty("DoubleBuffered", Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance)
+            If prop IsNot Nothing Then
+                prop.SetValue(ctrl, value, Nothing)
+            End If
+        Catch
+            ' 無視
+        End Try
+    End Sub
 
     ''' <summary>
     ''' TableLayoutPanel1リサイズ時の処理
@@ -374,7 +541,7 @@ Public Class MainPlayerForm
                 {1, 3, 5, 10, 15, 30, 60, 180, 300, 600, -1, -3, -5, -10, -15, -30, -60, -180, -300, -600}
 
         For i = 0 To jumpValues.Length - 1
-            CallByName(My.Settings, $"SK{i + 1}", CallType.Set, jumpValues(i))
+            CallByName(My.Settings, "SK" & (i + 1).ToString(), CallType.Set, jumpValues(i))
         Next
     End Sub
 
@@ -385,7 +552,7 @@ Public Class MainPlayerForm
         Dim speedValues As Double() = {5, 10, 12, 13, 14, 15, 20}
 
         For i = 0 To speedValues.Length - 1
-            CallByName(My.Settings, $"SC{i + 1}", CallType.Set, speedValues(i))
+            CallByName(My.Settings, "SC" & (i + 1).ToString(), CallType.Set, speedValues(i))
         Next
     End Sub
 
@@ -483,11 +650,32 @@ Public Class MainPlayerForm
         ' しおりパネルの復元（右に飛び出し）
         If My.Settings.shiori = True Then
             Dim panelWidth As Integer = If(My.Settings.Shiori_Width > 0, My.Settings.Shiori_Width, 250)
+            SplitContainer1.FixedPanel = FixedPanel.Panel2
             Me.Width += panelWidth + SplitContainer1.SplitterWidth
             SplitContainer1.Panel2Collapsed = False
+
+            ' 背景色を確実に設定（Panel2, TableLayoutPanel2, DataGridView1 すべて）
+            SplitContainer1.Panel2.BackColor = SystemColors.ControlDarkDark
+            SetDoubleBuffered(SplitContainer1.Panel2, True)
+            If TableLayoutPanel2 IsNot Nothing Then
+                TableLayoutPanel2.BackColor = SystemColors.ControlDarkDark
+                SetDoubleBuffered(TableLayoutPanel2, True)
+            End If
+            If DataGridView1 IsNot Nothing Then
+                DataGridView1.BackgroundColor = SystemColors.ControlDarkDark
+                DataGridView1.DefaultCellStyle.BackColor = SystemColors.ControlDarkDark
+                DataGridView1.AlternatingRowsDefaultCellStyle.BackColor = SystemColors.ControlDarkDark
+                SetDoubleBuffered(DataGridView1, True)
+            End If
+
+            Me.PerformLayout()
+            Application.DoEvents()
             SplitContainer1.SplitterDistance = Me.ClientSize.Width - panelWidth - SplitContainer1.SplitterWidth
+            SplitContainer1.Panel2.Invalidate()
+            SplitContainer1.Panel2.Update()
         Else
             SplitContainer1.Panel2Collapsed = True
+            SplitContainer1.FixedPanel = FixedPanel.None
         End If
 
         ' プレイリストパネルの復元（左に飛び出し）
@@ -505,6 +693,10 @@ Public Class MainPlayerForm
             Button40.ForeColor = Color.Black
         End If
 
+        ' カスタムタイトルバーを最前面に（しおりパネル展開時に隠れないよう）
+        If CustomTitleBar IsNot Nothing Then
+            CustomTitleBar.BringToFront()
+        End If
     End Sub
 
     ''' <summary>
@@ -592,13 +784,129 @@ Public Class MainPlayerForm
 #Region "イベントハンドラ"
 
     ''' <summary>
-    '''     ウィンドウプロシージャ（ホットキー処理用）
+    '''     ウィンドウプロシージャ（ホットキー処理用、カスタムタイトルバー対応）
     ''' </summary>
     Protected Overrides Sub WndProc(ByRef m As Message)
+        Select Case m.Msg
+            Case WM_NCCALCSIZE
+                ' クライアント領域をウィンドウ全体に拡張（標準タイトルバーを非表示化）
+                If m.WParam <> IntPtr.Zero Then
+                    Dim ncParams = DirectCast(Marshal.PtrToStructure(m.LParam, GetType(NCCALCSIZE_PARAMS)), NCCALCSIZE_PARAMS)
+                    ncParams.rgrc0.Top += 0 ' タイトルバー分のスペースを確保しない
+                    Marshal.StructureToPtr(ncParams, m.LParam, True)
+                End If
+                m.Result = IntPtr.Zero
+                Return
+
+            Case WM_NCHITTEST
+                ' カスタムタイトルバー領域でのヒットテスト
+                Dim result = HitTestNCA(m.LParam)
+                If result <> HTCLIENT Then
+                    m.Result = New IntPtr(result)
+                    Return
+                End If
+
+            Case WM_SYSCOMMAND
+                ' システムコマンド（最大化/最小化/閉じる）をフック
+                If (m.WParam.ToInt32() And &HFFF0) = SC_MAXIMIZE Then
+                    MaximizeWindow()
+                    Return
+                ElseIf (m.WParam.ToInt32() And &HFFF0) = SC_RESTORE Then
+                    RestoreWindow()
+                    Return
+                ElseIf (m.WParam.ToInt32() And &HFFF0) = SC_MINIMIZE Then
+                    Me.WindowState = FormWindowState.Minimized
+                    Return
+                ElseIf (m.WParam.ToInt32() And &HFFF0) = SC_CLOSE Then
+                    Me.Close()
+                    Return
+                End If
+
+            Case WM_GETMINMAXINFO
+                ' 最大化時のサイズ/位置をモニタのワークエリアに制限 + 最小サイズ設定
+                Dim mmi = DirectCast(Marshal.PtrToStructure(m.LParam, GetType(MINMAXINFO)), MINMAXINFO)
+                Dim monitor = MonitorFromWindow(Me.Handle, MONITOR_DEFAULTTONEAREST)
+                If monitor <> IntPtr.Zero Then
+                    Dim mi As New MONITORINFO()
+                    mi.cbSize = Marshal.SizeOf(mi)
+                    If GetMonitorInfo(monitor, mi) Then
+                        mmi.ptMaxPosition.X = mi.rcWork.Left - mi.rcMonitor.Left
+                        mmi.ptMaxPosition.Y = mi.rcWork.Top - mi.rcMonitor.Top
+                        mmi.ptMaxSize.X = mi.rcWork.Right - mi.rcWork.Left
+                        mmi.ptMaxSize.Y = mi.rcWork.Bottom - mi.rcWork.Top
+                    End If
+                End If
+                ' 最小トラッキングサイズ設定（デザイナのMinimumSizeを使用）
+                mmi.ptMinTrackSize.X = Me.MinimumSize.Width
+                mmi.ptMinTrackSize.Y = Me.MinimumSize.Height
+                Marshal.StructureToPtr(mmi, m.LParam, True)
+                Return
+        End Select
+
         If m.Msg = WmHotkey Then
             HandleHotKey(m.WParam.ToInt32())
         End If
         MyBase.WndProc(m)
+    End Sub
+
+    ''' <summary>
+    '''     非クライアント領域のヒットテスト（カスタムタイトルバー・リサイズ対応）
+    ''' </summary>
+    Private Function HitTestNCA(lParam As IntPtr) As Integer
+        Dim pt = New Point(CInt(lParam.ToInt64() And &HFFFF), CInt(lParam.ToInt64() >> 16))
+        pt = Me.PointToClient(pt)
+
+        ' タイトルバー領域の高さ（カスタムタイトルバーの高さ）
+        Const TitleBarHeight As Integer = 28
+        Dim clientRect = Me.ClientRectangle
+        Dim resizeBorder = 25
+
+        ' タイトルバー領域（ドラッグ移動可能）
+        If pt.Y <= TitleBarHeight AndAlso pt.X >= 0 AndAlso pt.X < clientRect.Width Then
+            ' ウィンドウボタン領域を除外
+            If pt.X > clientRect.Width - 130 Then
+                ' 閉じる/最大化/最小化ボタンの領域は HTCLIENT にしてボタンイベントを通す
+                Return HTCLIENT
+            End If
+            Return HTCAPTION
+        End If
+
+        ' リサイズボーダー判定
+        Dim isLeft = pt.X < resizeBorder
+        Dim isRight = pt.X >= clientRect.Width - resizeBorder
+        Dim isTop = pt.Y < resizeBorder
+        Dim isBottom = pt.Y >= clientRect.Height - resizeBorder
+
+        If isTop AndAlso isLeft Then Return HTTOPLEFT
+        If isTop AndAlso isRight Then Return HTTOPRIGHT
+        If isBottom AndAlso isLeft Then Return HTBOTTOMLEFT
+        If isBottom AndAlso isRight Then Return HTBOTTOMRIGHT
+        If isLeft Then Return HTLEFT
+        If isRight Then Return HTRIGHT
+        If isTop Then Return HTTOP
+        If isBottom Then Return HTBOTTOM
+
+        Return HTCLIENT
+    End Function
+
+    ''' <summary>
+    '''     ウィンドウを最大化
+    ''' </summary>
+    Private Sub MaximizeWindow()
+        If Me.WindowState = FormWindowState.Maximized Then
+            RestoreWindow()
+        Else
+            Me.WindowState = FormWindowState.Maximized
+        End If
+    End Sub
+
+    ''' <summary>
+    '''     ウィンドウを元のサイズに戻す
+    ''' </summary>
+    Private Sub RestoreWindow()
+        If Me.WindowState = FormWindowState.Maximized Then
+            Me.WindowState = FormWindowState.Normal
+        End If
     End Sub
 
     ''' <summary>
@@ -710,7 +1018,7 @@ Public Class MainPlayerForm
         Dim prefix As String = GetTimeCodePrefix(counterIndex)
         Dim suffix As String = GetTimeCodeSuffix(counterIndex)
 
-        Clipboard.SetText($"{prefix}{timeCode}{suffix}")
+        Clipboard.SetText(prefix & timeCode & suffix)
     End Sub
 
     ''' <summary>
@@ -723,7 +1031,7 @@ Public Class MainPlayerForm
         Dim seconds As Integer = CInt(position) Mod 60
         Dim frames = CInt((position - Math.Floor(position)) * 30)
 
-        Return $"{hours:D2}:{minutes:D2}:{seconds:D2}.{frames:D2}"
+        Return String.Format("{0:D2}:{1:D2}:{2:D2}.{3:D2}", hours, minutes, seconds, frames)
     End Function
 
     ''' <summary>
@@ -779,7 +1087,7 @@ Public Class MainPlayerForm
     Private Sub SetPlaybackSpeed(speed As Double)
         _currentPlaybackSpeed = speed
         _mediaPlayer.Speed = speed
-        Label4.Text = $"x{speed:F1}"
+        Label4.Text = "x" & speed.ToString("F1")
     End Sub
 
     ''' <summary>
@@ -1267,7 +1575,8 @@ Public Class MainPlayerForm
         LockWindowUpdate(Me.Handle)
         Try
             If SplitContainer1.Panel2Collapsed Then
-                ' 表示：フォーム幅を右に拡張
+                ' 表示：FixedPanelを先に設定（Panel2の幅を固定）
+                SplitContainer1.FixedPanel = FixedPanel.Panel2
                 Dim panelWidth As Integer = If(BMWidth > 0, BMWidth, 250)
                 Me.Width += panelWidth + SplitContainer1.SplitterWidth
                 SplitContainer1.Panel2Collapsed = False
@@ -1276,6 +1585,20 @@ Public Class MainPlayerForm
                 ' Me.Width変更中にMainPlayerForm_ResizeがBMWidthを一時的な値（Panel2折りたたみ中の幅）で
                 ' 上書きしてしまうため、最後に確定値を再設定する
                 BMWidth = panelWidth
+
+                ' 背景色を確実に設定（Panel2, TableLayoutPanel2, DataGridView1 すべて）
+                SplitContainer1.Panel2.BackColor = SystemColors.ControlDarkDark
+                SetDoubleBuffered(SplitContainer1.Panel2, True)
+                If TableLayoutPanel2 IsNot Nothing Then
+                    TableLayoutPanel2.BackColor = SystemColors.ControlDarkDark
+                    SetDoubleBuffered(TableLayoutPanel2, True)
+                End If
+                If DataGridView1 IsNot Nothing Then
+                    DataGridView1.BackgroundColor = SystemColors.ControlDarkDark
+                    DataGridView1.DefaultCellStyle.BackColor = SystemColors.ControlDarkDark
+                    DataGridView1.AlternatingRowsDefaultCellStyle.BackColor = SystemColors.ControlDarkDark
+                    SetDoubleBuffered(DataGridView1, True)
+                End If
             Else
                 ' 非表示：幅を保存してからPanel2を折りたたみ、その後にフォーム幅を縮小する
                 ' （折りたたむ前に幅を縮めると、FixedPanel=NoneのためPanel2も比例縮小し、
@@ -1283,11 +1606,17 @@ Public Class MainPlayerForm
                 Dim actualPanelWidth As Integer = SplitContainer1.Panel2.Width
                 BMWidth = actualPanelWidth
                 SplitContainer1.Panel2Collapsed = True
+                SplitContainer1.FixedPanel = FixedPanel.None
                 Me.Width -= actualPanelWidth + SplitContainer1.SplitterWidth
 
                 ' Me.Width変更中にMainPlayerForm_ResizeがBMWidthを上書きする可能性があるため、
                 ' 最後に確定値を再設定する
                 BMWidth = actualPanelWidth
+            End If
+
+            ' カスタムタイトルバーを最前面に（しおりパネル表示/非表示でフォーム幅が変わるため）
+            If CustomTitleBar IsNot Nothing Then
+                CustomTitleBar.BringToFront()
             End If
         Finally
             LockWindowUpdate(IntPtr.Zero)
@@ -1582,6 +1911,334 @@ Public Class MainPlayerForm
 
 #End Region
 
+#Region "カスタムタイトルバー"
+
+    ''' <summary>
+    '''     カスタムタイトルバーの初期化
+    ''' </summary>
+    Private Sub InitializeCustomTitleBar()
+        ' タイトルバーの基本設定 - 絶対配置でフォーム最上部に固定
+        If CustomTitleBar IsNot Nothing Then
+            CustomTitleBar.Height = CustomTitleBarHeight
+            CustomTitleBar.Dock = DockStyle.None
+            CustomTitleBar.Location = New Point(0, 0)
+            CustomTitleBar.Size = New Size(Me.ClientSize.Width, CustomTitleBarHeight)
+            CustomTitleBar.BackColor = Color.FromArgb(30, 30, 30)
+            CustomTitleBar.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
+            CustomTitleBar.BringToFront()
+        End If
+
+        ' タイトルラベル
+        If LblTitle IsNot Nothing Then
+            LblTitle.Text = Me.Text
+            LblTitle.ForeColor = Color.White
+            LblTitle.Font = New Font("Segoe UI", 9.0F, FontStyle.Regular)
+            LblTitle.AutoSize = False
+            LblTitle.TextAlign = ContentAlignment.MiddleLeft
+            LblTitle.Dock = DockStyle.Fill
+            LblTitle.Padding = New Padding(12, 0, 0, 0)
+            LblTitle.BackColor = Color.Transparent
+        End If
+
+        ' 最小化ボタン
+        If BtnMinimize IsNot Nothing Then
+            BtnMinimize.Text = "━"
+            BtnMinimize.Size = New Size(46, CustomTitleBarHeight)
+            BtnMinimize.Location = New Point(0, 0)
+            BtnMinimize.Dock = DockStyle.Right
+            BtnMinimize.FlatStyle = FlatStyle.Flat
+            BtnMinimize.FlatAppearance.BorderSize = 0
+            BtnMinimize.FlatAppearance.MouseOverBackColor = Color.FromArgb(60, 60, 60)
+            BtnMinimize.FlatAppearance.MouseDownBackColor = Color.FromArgb(80, 80, 80)
+            BtnMinimize.BackColor = Color.Transparent
+            BtnMinimize.ForeColor = Color.White
+            BtnMinimize.Font = New Font("Segoe UI", 9.0F, FontStyle.Regular)
+            BtnMinimize.TabStop = False
+            BtnMinimize.Cursor = Cursors.Hand
+            AddHandler BtnMinimize.Click, AddressOf BtnMinimize_Click
+        End If
+
+        ' 最大化/復元ボタン
+        If BtnMaximize IsNot Nothing Then
+            BtnMaximize.Text = "□"
+            BtnMaximize.Size = New Size(46, CustomTitleBarHeight)
+            BtnMaximize.Location = New Point(0, 0)
+            BtnMaximize.Dock = DockStyle.Right
+            BtnMaximize.FlatStyle = FlatStyle.Flat
+            BtnMaximize.FlatAppearance.BorderSize = 0
+            BtnMaximize.FlatAppearance.MouseOverBackColor = Color.FromArgb(60, 60, 60)
+            BtnMaximize.FlatAppearance.MouseDownBackColor = Color.FromArgb(80, 80, 80)
+            BtnMaximize.BackColor = Color.Transparent
+            BtnMaximize.ForeColor = Color.White
+            BtnMaximize.Font = New Font("Segoe UI", 9.0F, FontStyle.Regular)
+            BtnMaximize.TabStop = False
+            BtnMaximize.Cursor = Cursors.Hand
+            AddHandler BtnMaximize.Click, AddressOf BtnMaximize_Click
+        End If
+
+        ' 閉じるボタン
+        If BtnClose IsNot Nothing Then
+            BtnClose.Text = "✕"
+            BtnClose.Size = New Size(46, CustomTitleBarHeight)
+            BtnClose.Location = New Point(0, 0)
+            BtnClose.Dock = DockStyle.Right
+            BtnClose.FlatStyle = FlatStyle.Flat
+            BtnClose.FlatAppearance.BorderSize = 0
+            BtnClose.FlatAppearance.MouseOverBackColor = Color.FromArgb(232, 17, 35)
+            BtnClose.FlatAppearance.MouseDownBackColor = Color.FromArgb(196, 43, 28)
+            BtnClose.BackColor = Color.Transparent
+            BtnClose.ForeColor = Color.White
+            BtnClose.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+            BtnClose.TabStop = False
+            BtnClose.Cursor = Cursors.Hand
+            AddHandler BtnClose.Click, AddressOf BtnClose_Click
+        End If
+
+        ' コントロール追加順：Dock=Rightなので最初に追加したものが右端、最後に追加したものが左端
+        ' 左から：閉じる、最大化、最小化 の順にするため、追加順は逆（最小化→最大化→閉じる）
+        If CustomTitleBar IsNot Nothing Then
+            ' 既にデザイナで追加済みなのでクリアしてから追加
+            CustomTitleBar.Controls.Clear()
+            CustomTitleBar.Controls.Add(BtnMinimize)   ' 最初に追加＝右端
+            CustomTitleBar.Controls.Add(BtnMaximize)   ' 中央
+            CustomTitleBar.Controls.Add(BtnClose)      ' 最後に追加＝左端
+            CustomTitleBar.Controls.Add(LblTitle)      ' 左側残り全部
+            CustomTitleBar.BringToFront()
+        End If
+
+        ' タイトルバーでのドラッグ移動を有効化
+        AddHandler CustomTitleBar.MouseDown, AddressOf TitleBar_MouseDown
+        AddHandler LblTitle.MouseDown, AddressOf TitleBar_MouseDown
+
+        ' タイトルバーでのダブルクリックで最大化/復元
+        AddHandler CustomTitleBar.DoubleClick, AddressOf CustomTitleBar_DoubleClick
+        If LblTitle IsNot Nothing Then AddHandler LblTitle.DoubleClick, AddressOf CustomTitleBar_DoubleClick
+    End Sub
+
+    ''' <summary>
+    '''     タイトルバーでのマウスダウンでドラッグ移動開始
+    ''' </summary>
+    Private Sub TitleBar_MouseDown(sender As Object, e As MouseEventArgs)
+        If e.Button = MouseButtons.Left Then
+            ReleaseCapture()
+            SendMessage(Me.Handle, &HA1, New IntPtr(2), IntPtr.Zero) ' WM_NCLBUTTONDOWN, HTCAPTION
+        End If
+    End Sub
+
+    ''' <summary>
+    '''     最小化ボタンクリック
+    ''' </summary>
+    Private Sub BtnMinimize_Click(sender As Object, e As EventArgs)
+        Me.WindowState = FormWindowState.Minimized
+    End Sub
+
+    ''' <summary>
+    '''     最大化/復元ボタンクリック
+    ''' </summary>
+    Private Sub BtnMaximize_Click(sender As Object, e As EventArgs)
+        If Me.WindowState = FormWindowState.Maximized Then
+            Me.WindowState = FormWindowState.Normal
+            BtnMaximize.Text = "□"
+        Else
+            Me.WindowState = FormWindowState.Maximized
+            BtnMaximize.Text = "❐"
+        End If
+    End Sub
+
+    ''' <summary>
+    '''     閉じるボタンクリック
+    ''' </summary>
+    Private Sub BtnClose_Click(sender As Object, e As EventArgs)
+        Me.Close()
+    End Sub
+
+    ''' <summary>
+    '''     タイトルバーダブルクリックで最大化/復元
+    ''' </summary>
+    Private Sub CustomTitleBar_DoubleClick(sender As Object, e As EventArgs)
+        BtnMaximize_Click(Nothing, Nothing)
+    End Sub
+
+    ''' <summary>
+    '''     しおりパネルの背景を確実に描画（透過防止）
+    ''' </summary>
+    Private Sub Panel2_Paint(sender As Object, e As PaintEventArgs)
+        Dim pnl = DirectCast(sender, Panel)
+        Using brush As New SolidBrush(pnl.BackColor)
+            e.Graphics.FillRectangle(brush, e.ClipRectangle)
+        End Using
+    End Sub
+
+    ''' <summary>
+    '''     TableLayoutPanel2の背景を確実に描画（透過防止）
+    ''' </summary>
+    Private Sub TableLayoutPanel2_Paint(sender As Object, e As PaintEventArgs)
+        Dim tlp = DirectCast(sender, TableLayoutPanel)
+        Using brush As New SolidBrush(tlp.BackColor)
+            e.Graphics.FillRectangle(brush, e.ClipRectangle)
+        End Using
+    End Sub
+
+    ''' <summary>
+    '''     リサイズグリップ（コーナーのハンドル）を初期化
+    ''' </summary>
+    Private Sub InitializeResizeGrips()
+        Dim gripSize As Integer = 16
+        Dim gripColor As Color = Color.FromArgb(80, 80, 80)
+
+        ' 右下グリップ（メイン）
+        Dim gripBottomRight As New Panel With {
+            .Name = "GripBottomRight",
+            .Size = New Size(gripSize, gripSize),
+            .Anchor = AnchorStyles.Bottom Or AnchorStyles.Right,
+            .BackColor = Color.Transparent,
+            .Cursor = Cursors.SizeNWSE
+        }
+        AddHandler gripBottomRight.MouseDown, AddressOf Grip_MouseDown
+        AddHandler gripBottomRight.MouseMove, AddressOf Grip_MouseMove
+        AddHandler gripBottomRight.MouseUp, AddressOf Grip_MouseUp
+        AddHandler gripBottomRight.Paint, Sub(s, e)
+            Using pen As New Pen(gripColor, 2)
+                Dim r = gripBottomRight.ClientRectangle
+                e.Graphics.DrawLine(pen, r.Right - 4, r.Bottom - 1, r.Right - 1, r.Bottom - 4)
+                e.Graphics.DrawLine(pen, r.Right - 7, r.Bottom - 1, r.Right - 1, r.Bottom - 7)
+                e.Graphics.DrawLine(pen, r.Right - 10, r.Bottom - 1, r.Right - 1, r.Bottom - 10)
+            End Using
+        End Sub
+        Me.Controls.Add(gripBottomRight)
+        gripBottomRight.BringToFront()
+
+        ' 右上グリップ
+        Dim gripTopRight As New Panel With {
+            .Name = "GripTopRight",
+            .Size = New Size(gripSize, gripSize),
+            .Anchor = AnchorStyles.Top Or AnchorStyles.Right,
+            .BackColor = Color.Transparent,
+            .Cursor = Cursors.SizeNESW
+        }
+        AddHandler gripTopRight.MouseDown, AddressOf Grip_MouseDown
+        AddHandler gripTopRight.MouseMove, AddressOf Grip_MouseMove
+        AddHandler gripTopRight.MouseUp, AddressOf Grip_MouseUp
+        AddHandler gripTopRight.Paint, Sub(s, e)
+            Using pen As New Pen(gripColor, 2)
+                Dim r = gripTopRight.ClientRectangle
+                e.Graphics.DrawLine(pen, r.Right - 4, r.Top + 1, r.Right - 1, r.Top + 4)
+                e.Graphics.DrawLine(pen, r.Right - 7, r.Top + 1, r.Right - 1, r.Top + 7)
+                e.Graphics.DrawLine(pen, r.Right - 10, r.Top + 1, r.Right - 1, r.Top + 10)
+            End Using
+        End Sub
+        Me.Controls.Add(gripTopRight)
+        gripTopRight.BringToFront()
+
+        ' 左下グリップ
+        Dim gripBottomLeft As New Panel With {
+            .Name = "GripBottomLeft",
+            .Size = New Size(gripSize, gripSize),
+            .Anchor = AnchorStyles.Bottom Or AnchorStyles.Left,
+            .BackColor = Color.Transparent,
+            .Cursor = Cursors.SizeNESW
+        }
+        AddHandler gripBottomLeft.MouseDown, AddressOf Grip_MouseDown
+        AddHandler gripBottomLeft.MouseMove, AddressOf Grip_MouseMove
+        AddHandler gripBottomLeft.MouseUp, AddressOf Grip_MouseUp
+        AddHandler gripBottomLeft.Paint, Sub(s, e)
+            Using pen As New Pen(gripColor, 2)
+                Dim r = gripBottomLeft.ClientRectangle
+                e.Graphics.DrawLine(pen, r.Left + 4, r.Bottom - 1, r.Left + 1, r.Bottom - 4)
+                e.Graphics.DrawLine(pen, r.Left + 7, r.Bottom - 1, r.Left + 1, r.Bottom - 7)
+                e.Graphics.DrawLine(pen, r.Left + 10, r.Bottom - 1, r.Left + 1, r.Bottom - 10)
+            End Using
+        End Sub
+        Me.Controls.Add(gripBottomLeft)
+        gripBottomLeft.BringToFront()
+
+        ' 左上グリップ
+        Dim gripTopLeft As New Panel With {
+            .Name = "GripTopLeft",
+            .Size = New Size(gripSize, gripSize),
+            .Anchor = AnchorStyles.Top Or AnchorStyles.Left,
+            .BackColor = Color.Transparent,
+            .Cursor = Cursors.SizeNWSE
+        }
+        AddHandler gripTopLeft.MouseDown, AddressOf Grip_MouseDown
+        AddHandler gripTopLeft.MouseMove, AddressOf Grip_MouseMove
+        AddHandler gripTopLeft.MouseUp, AddressOf Grip_MouseUp
+        AddHandler gripTopLeft.Paint, Sub(s, e)
+            Using pen As New Pen(gripColor, 2)
+                Dim r = gripTopLeft.ClientRectangle
+                e.Graphics.DrawLine(pen, r.Left + 4, r.Top + 1, r.Left + 1, r.Top + 4)
+                e.Graphics.DrawLine(pen, r.Left + 7, r.Top + 1, r.Left + 1, r.Top + 7)
+                e.Graphics.DrawLine(pen, r.Left + 10, r.Top + 1, r.Left + 1, r.Top + 10)
+            End Using
+        End Sub
+        Me.Controls.Add(gripTopLeft)
+        gripTopLeft.BringToFront()
+
+        ' 全グリップを最前面に
+        gripBottomRight.BringToFront()
+        gripTopRight.BringToFront()
+        gripBottomLeft.BringToFront()
+        gripTopLeft.BringToFront()
+    End Sub
+
+    ''' <summary>
+    '''     グリップでマウスムーブ：リサイズ実行（チラつき防止のためスロットル）
+    ''' </summary>
+    Private Sub Grip_MouseMove(sender As Object, e As MouseEventArgs)
+        If Not _isResizing Then Return
+
+        ' スロットル: 16ms (約60fps) 以上間隔を開ける
+        Dim now = Environment.TickCount
+        If now - _lastResizeTime < 16 Then Return
+        _lastResizeTime = now
+
+        Dim grip = DirectCast(sender, Control)
+        Dim currentPoint = grip.PointToScreen(e.Location)
+        Dim dx = currentPoint.X - _resizeStartPoint.X
+        Dim dy = currentPoint.Y - _resizeStartPoint.Y
+
+        Select Case _resizeDirection
+            Case "BottomRight"
+                Me.Size = New Size(_resizeStartSize.Width + dx, _resizeStartSize.Height + dy)
+            Case "TopRight"
+                Me.Size = New Size(_resizeStartSize.Width + dx, Math.Max(Me.MinimumSize.Height, _resizeStartSize.Height - dy))
+                If dy > 0 Then Me.Location = New Point(_resizeStartLocation.X, _resizeStartLocation.Y + dy)
+            Case "BottomLeft"
+                Me.Size = New Size(Math.Max(Me.MinimumSize.Width, _resizeStartSize.Width - dx), _resizeStartSize.Height + dy)
+                If dx > 0 Then Me.Location = New Point(_resizeStartLocation.X + dx, _resizeStartLocation.Y)
+            Case "TopLeft"
+                Me.Size = New Size(Math.Max(Me.MinimumSize.Width, _resizeStartSize.Width - dx), Math.Max(Me.MinimumSize.Height, _resizeStartSize.Height - dy))
+                If dx > 0 Then Me.Location = New Point(_resizeStartLocation.X + dx, _resizeStartLocation.Y)
+                If dy > 0 Then Me.Location = New Point(Me.Location.X, _resizeStartLocation.Y + dy)
+        End Select
+    End Sub
+
+    ''' <summary>
+    '''     グリップでマウスアップ：リサイズ終了
+    ''' </summary>
+    Private Sub Grip_MouseUp(sender As Object, e As MouseEventArgs)
+        _isResizing = False
+        SendMessage(Me.Handle, WM_SETREDRAW, True, IntPtr.Zero)
+        Me.Refresh()
+    End Sub
+
+    ''' <summary>
+    '''     グリップでマウスダウン：リサイズ開始
+    ''' </summary>
+    Private Sub Grip_MouseDown(sender As Object, e As MouseEventArgs)
+        If e.Button = MouseButtons.Left Then
+            Dim grip = DirectCast(sender, Control)
+            _isResizing = True
+            _resizeStartPoint = grip.PointToScreen(e.Location)
+            _resizeStartSize = Me.Size
+            _resizeStartLocation = Me.Location
+            _resizeDirection = DirectCast(sender, Panel).Name.Replace("Grip", "")
+            SendMessage(Me.Handle, WM_SETREDRAW, False, IntPtr.Zero)
+        End If
+    End Sub
+
+#End Region
+
 #Region "テスト用ヘルパー"
 
     ''' <summary>
@@ -1601,6 +2258,23 @@ Public Class MainPlayerForm
     Private Sub MainPlayerForm_Resize(sender As Object, e As EventArgs) Handles Me.Resize
         TextBox2.Text = Me.Width & "," & Me.Height & "|" & TableLayoutPanel1.Width & "," & TableLayoutPanel1.Height
         BMWidth = SplitContainer1.Panel2.Width
+        PLWidth = SplitContainer2.Panel1.Width
+        ScrHeight = SplitContainer3.Panel1.Height
+
+        If BtnMaximize IsNot Nothing Then
+            If Me.WindowState = FormWindowState.Maximized Then
+                BtnMaximize.Text = "❐"
+            Else
+                BtnMaximize.Text = "□"
+            End If
+        End If
+
+        ' カスタムタイトルバーを再描画（リサイズ時）
+        If CustomTitleBar IsNot Nothing Then
+            CustomTitleBar.Invalidate()
+            CustomTitleBar.BringToFront()
+            CustomTitleBar.Width = Me.ClientSize.Width
+        End If
     End Sub
 
     Private Sub MainPlayerForm_Shown(sender As Object, e As EventArgs) Handles Me.Shown
@@ -1609,6 +2283,18 @@ Public Class MainPlayerForm
             _suppressAutoPlay = True
             _currentPlaylistIndex = 0
             _mediaPlayer.LoadFile(_playlistItems(0).FilePath)
+        End If
+
+        ' リサイズグリップを最前面に配置
+        For Each ctrl As Control In Me.Controls
+            If ctrl.Name.StartsWith("Grip") Then
+                ctrl.BringToFront()
+            End If
+        Next
+
+        ' カスタムタイトルバーを最前面に
+        If CustomTitleBar IsNot Nothing Then
+            CustomTitleBar.BringToFront()
         End If
     End Sub
 
@@ -1922,5 +2608,6 @@ Public Class MainPlayerForm
     End Sub
 
 #End Region
+
 End Class
 

@@ -133,7 +133,7 @@ Public Class MpvPlayerWrapper
     ''' </summary>
     Public Sub New(hostPanel As Panel)
         If hostPanel Is Nothing Then
-            Throw New ArgumentNullException(NameOf(hostPanel))
+            Throw New ArgumentNullException("hostPanel")
         End If
 
         _hostPanel = hostPanel
@@ -412,7 +412,7 @@ Public Class MpvPlayerWrapper
         If String.IsNullOrEmpty(outputPath) Then
             Dim dir = IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "OkoshiMAX")
             IO.Directory.CreateDirectory(dir)
-            outputPath = IO.Path.Combine(dir, $"capture_{DateTime.Now:yyyyMMdd_HHmmss}.png")
+            outputPath = IO.Path.Combine(dir, "capture_" & DateTime.Now.ToString("yyyyMMdd_HHmmss") & ".png")
         End If
 
         ' 絶対パスに変換（mpvは相対パスだと作業ディレクトリ基準になるため）

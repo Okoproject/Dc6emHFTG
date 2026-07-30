@@ -123,7 +123,7 @@ Public Class ClipboardImageViewer
         Using saveDialog As New SaveFileDialog()
             saveDialog.Filter = My.Resources.ImageSaveFilter
             saveDialog.Title = My.Resources.SaveImage
-            saveDialog.FileName = $"ClipboardImage_{DateTime.Now:yyyyMMdd_HHmmss}.png"
+            saveDialog.FileName = "ClipboardImage_" & DateTime.Now.ToString("yyyyMMdd_HHmmss") & ".png"
 
             If saveDialog.ShowDialog() = DialogResult.OK Then
                 Try
