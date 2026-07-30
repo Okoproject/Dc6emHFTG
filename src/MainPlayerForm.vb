@@ -21,6 +21,10 @@ Public Class MainPlayerForm
     Public MainWidth As Integer
     '動画表示パネルの高さを保存する変数
     Public ScrHeight As Integer
+    ' しおりパネル表示時にフォーム幅を広げた量（非表示時に同じ量だけ戻すため）
+    Private _shioriWidthDelta As Integer = 0
+    ' プレイリストパネル表示時にフォーム幅を広げた量（非表示時に同じ量だけ戻すため）
+    Private _playlistWidthDelta As Integer = 0
 
     ''' <summary>
     '''     カスタムタイトルバーの高さ
@@ -287,6 +291,19 @@ Public Class MainPlayerForm
         ' Panel2のPaintイベントで背景を確実に描画
         AddHandler SplitContainer1.Panel2.Paint, AddressOf Panel2_Paint
 
+        ' パネル表示切替でリサイズされる主要なコンテナにもダブルバッファリングを適用し、ちらつきを低減する
+        ' （WS_EX_COMPOSITEDはカスタムタイトルバーの透過問題を避けるため無効化されているため、代わりに
+        ' 　コントロール単位でダブルバッファリングを行う）
+        SetDoubleBuffered(SplitContainer1, True)
+        SetDoubleBuffered(SplitContainer1.Panel1, True)
+        SetDoubleBuffered(SplitContainer2, True)
+        SetDoubleBuffered(SplitContainer2.Panel1, True)
+        SetDoubleBuffered(SplitContainer2.Panel2, True)
+        SetDoubleBuffered(SplitContainer3, True)
+        SetDoubleBuffered(SplitContainer3.Panel2, True)
+        SetDoubleBuffered(TableLayoutPanel1, True)
+        SetDoubleBuffered(DataGridView2, True)
+
         Me.ResumeLayout()
         SendMessage(Me.Handle, WM_SETREDRAW, True, IntPtr.Zero)
         Me.Refresh()
@@ -306,7 +323,12 @@ Public Class MainPlayerForm
                 ' ボタンの高さから適切なフォントサイズを計算（パディング考慮）
                 Dim availableHeight = btn.Height - btn.Margin.Vertical - 4
                 Dim fontSize = CSng(Math.Max(7, Math.Min(14, availableHeight * 0.45)))
-                btn.Font = New Font(btn.Font.FontFamily, fontSize, btn.Font.Style)
+
+                ' サイズが変わっていない場合にFontを作り直すと、幅だけの変化（例：プレイリスト開閉）でも
+                ' 全ボタンが不要に再描画されてしまうため、実際にサイズが変わる場合のみ再代入する
+                If Math.Abs(btn.Font.Size - fontSize) > 0.01F Then
+                    btn.Font = New Font(btn.Font.FontFamily, fontSize, btn.Font.Style)
+                End If
             End If
         Next
     End Sub
@@ -648,11 +670,17 @@ Public Class MainPlayerForm
         End If
 
         ' しおりパネルの復元（右に飛び出し）
+        ' ※このメソッドはMe.SuspendLayout()中に呼ばれるため、SplitContainer1.Widthなど子コントロールの
+        ' 　サイズはまだMe.ClientSizeに追従しておらず古い値のままとなる。Me.ClientSizeはフォーム自身の
+        ' 　プロパティで即座に反映されるため、計算には必ずMe.ClientSizeを使う
         If My.Settings.shiori = True Then
             Dim panelWidth As Integer = If(My.Settings.Shiori_Width > 0, My.Settings.Shiori_Width, 250)
             SplitContainer1.FixedPanel = FixedPanel.Panel2
-            Me.Width += panelWidth + SplitContainer1.SplitterWidth
+            ' ButtonShiori_Clickで非表示にする際、ここで広げた量だけ正確に戻すために記録する
+            _shioriWidthDelta = panelWidth + SplitContainer1.SplitterWidth
+            Me.Width += _shioriWidthDelta
             SplitContainer1.Panel2Collapsed = False
+            SplitContainer1.SplitterDistance = Me.ClientSize.Width - panelWidth - SplitContainer1.SplitterWidth
 
             ' 背景色を確実に設定（Panel2, TableLayoutPanel2, DataGridView1 すべて）
             SplitContainer1.Panel2.BackColor = SystemColors.ControlDarkDark
@@ -668,9 +696,6 @@ Public Class MainPlayerForm
                 SetDoubleBuffered(DataGridView1, True)
             End If
 
-            Me.PerformLayout()
-            Application.DoEvents()
-            SplitContainer1.SplitterDistance = Me.ClientSize.Width - panelWidth - SplitContainer1.SplitterWidth
             SplitContainer1.Panel2.Invalidate()
             SplitContainer1.Panel2.Update()
         Else
@@ -679,10 +704,16 @@ Public Class MainPlayerForm
         End If
 
         ' プレイリストパネルの復元（左に飛び出し）
+        ' ※SplitterDistanceは絶対値（panelWidth）で指定するため、子コントロールのサイズが
+        ' 　まだMe.ClientSizeに追従していなくても影響を受けない
         If My.Settings.PL = True Then
             Dim panelWidth As Integer = If(My.Settings.PL_Width > 0, My.Settings.PL_Width, 300)
-            Me.Left -= panelWidth
-            Me.Width += panelWidth
+            SplitContainer2.FixedPanel = FixedPanel.Panel2
+            ' Button40_Clickで非表示にする際、ここで広げた量だけ正確に戻すために記録する
+            ' スプリッター分の幅も含めないと、メインプレイヤー側がスプリッター幅の分だけ狭くなる
+            _playlistWidthDelta = panelWidth + SplitContainer2.SplitterWidth
+            Me.Left -= _playlistWidthDelta
+            Me.Width += _playlistWidthDelta
             SplitContainer2.Panel1Collapsed = False
             SplitContainer2.SplitterDistance = panelWidth
             Button40.Text = "PL >"
@@ -1578,12 +1609,18 @@ Public Class MainPlayerForm
                 ' 表示：FixedPanelを先に設定（Panel2の幅を固定）
                 SplitContainer1.FixedPanel = FixedPanel.Panel2
                 Dim panelWidth As Integer = If(BMWidth > 0, BMWidth, 250)
-                Me.Width += panelWidth + SplitContainer1.SplitterWidth
-                SplitContainer1.Panel2Collapsed = False
-                SplitContainer1.SplitterDistance = Me.ClientSize.Width - panelWidth - SplitContainer1.SplitterWidth
+                _shioriWidthDelta = panelWidth + SplitContainer1.SplitterWidth
 
-                ' Me.Width変更中にMainPlayerForm_ResizeがBMWidthを一時的な値（Panel2折りたたみ中の幅）で
-                ' 上書きしてしまうため、最後に確定値を再設定する
+                ' 先にPanel2(しおり)の幅がpanelWidthになるよう分割位置を決めてから、あとでウィンドウを広げる。
+                ' FixedPanel=Panel2のため、広げた分は自動的にPanel1（メインプレイヤー側）に割り当てられ、
+                ' Panel2はpanelWidthのまま保たれる。先に広げてからMe.ClientSize.Widthを読んで分割位置を
+                ' 計算する順序だと、リサイズ完了タイミングとのずれで数px誤差が生じ、開閉のたびにズレが蓄積する
+                SplitContainer1.Panel2Collapsed = False
+                SplitContainer1.SplitterDistance = SplitContainer1.Width - panelWidth - SplitContainer1.SplitterWidth
+                Me.Width += _shioriWidthDelta
+
+                ' Me.Width変更中にMainPlayerForm_ResizeがBMWidthを一時的な値で上書きしてしまうため、
+                ' 最後に確定値を再設定する
                 BMWidth = panelWidth
 
                 ' 背景色を確実に設定（Panel2, TableLayoutPanel2, DataGridView1 すべて）
@@ -1600,17 +1637,16 @@ Public Class MainPlayerForm
                     SetDoubleBuffered(DataGridView1, True)
                 End If
             Else
-                ' 非表示：幅を保存してからPanel2を折りたたみ、その後にフォーム幅を縮小する
-                ' （折りたたむ前に幅を縮めると、FixedPanel=NoneのためPanel2も比例縮小し、
-                ' 　Me.ResizeでBMWidthに縮んだ値が入ってしまう）
+                ' 非表示：次回表示時の幅として現在の実幅を保存しつつ、フォーム幅は表示時に広げた量を
+                ' そのまま戻す（実幅を使うと、開閉を繰り返すたびに誤差が蓄積するため）
                 Dim actualPanelWidth As Integer = SplitContainer1.Panel2.Width
                 BMWidth = actualPanelWidth
                 SplitContainer1.Panel2Collapsed = True
                 SplitContainer1.FixedPanel = FixedPanel.None
-                Me.Width -= actualPanelWidth + SplitContainer1.SplitterWidth
+                Me.Width -= _shioriWidthDelta
 
-                ' Me.Width変更中にMainPlayerForm_ResizeがBMWidthを上書きする可能性があるため、
-                ' 最後に確定値を再設定する
+                ' Me.Width変更中にMainPlayerForm_ResizeがBMWidthをPanel2折りたたみ中の値（0など）で
+                ' 上書きしてしまうため、最後に確定値を再設定する
                 BMWidth = actualPanelWidth
             End If
 
@@ -2098,13 +2134,13 @@ Public Class MainPlayerForm
         AddHandler gripBottomRight.MouseMove, AddressOf Grip_MouseMove
         AddHandler gripBottomRight.MouseUp, AddressOf Grip_MouseUp
         AddHandler gripBottomRight.Paint, Sub(s, e)
-            Using pen As New Pen(gripColor, 2)
-                Dim r = gripBottomRight.ClientRectangle
-                e.Graphics.DrawLine(pen, r.Right - 4, r.Bottom - 1, r.Right - 1, r.Bottom - 4)
-                e.Graphics.DrawLine(pen, r.Right - 7, r.Bottom - 1, r.Right - 1, r.Bottom - 7)
-                e.Graphics.DrawLine(pen, r.Right - 10, r.Bottom - 1, r.Right - 1, r.Bottom - 10)
-            End Using
-        End Sub
+                                              Using pen As New Pen(gripColor, 2)
+                                                  Dim r = gripBottomRight.ClientRectangle
+                                                  e.Graphics.DrawLine(pen, r.Right - 4, r.Bottom - 1, r.Right - 1, r.Bottom - 4)
+                                                  e.Graphics.DrawLine(pen, r.Right - 7, r.Bottom - 1, r.Right - 1, r.Bottom - 7)
+                                                  e.Graphics.DrawLine(pen, r.Right - 10, r.Bottom - 1, r.Right - 1, r.Bottom - 10)
+                                              End Using
+                                          End Sub
         Me.Controls.Add(gripBottomRight)
         gripBottomRight.BringToFront()
 
@@ -2120,13 +2156,13 @@ Public Class MainPlayerForm
         AddHandler gripTopRight.MouseMove, AddressOf Grip_MouseMove
         AddHandler gripTopRight.MouseUp, AddressOf Grip_MouseUp
         AddHandler gripTopRight.Paint, Sub(s, e)
-            Using pen As New Pen(gripColor, 2)
-                Dim r = gripTopRight.ClientRectangle
-                e.Graphics.DrawLine(pen, r.Right - 4, r.Top + 1, r.Right - 1, r.Top + 4)
-                e.Graphics.DrawLine(pen, r.Right - 7, r.Top + 1, r.Right - 1, r.Top + 7)
-                e.Graphics.DrawLine(pen, r.Right - 10, r.Top + 1, r.Right - 1, r.Top + 10)
-            End Using
-        End Sub
+                                           Using pen As New Pen(gripColor, 2)
+                                               Dim r = gripTopRight.ClientRectangle
+                                               e.Graphics.DrawLine(pen, r.Right - 4, r.Top + 1, r.Right - 1, r.Top + 4)
+                                               e.Graphics.DrawLine(pen, r.Right - 7, r.Top + 1, r.Right - 1, r.Top + 7)
+                                               e.Graphics.DrawLine(pen, r.Right - 10, r.Top + 1, r.Right - 1, r.Top + 10)
+                                           End Using
+                                       End Sub
         Me.Controls.Add(gripTopRight)
         gripTopRight.BringToFront()
 
@@ -2142,13 +2178,13 @@ Public Class MainPlayerForm
         AddHandler gripBottomLeft.MouseMove, AddressOf Grip_MouseMove
         AddHandler gripBottomLeft.MouseUp, AddressOf Grip_MouseUp
         AddHandler gripBottomLeft.Paint, Sub(s, e)
-            Using pen As New Pen(gripColor, 2)
-                Dim r = gripBottomLeft.ClientRectangle
-                e.Graphics.DrawLine(pen, r.Left + 4, r.Bottom - 1, r.Left + 1, r.Bottom - 4)
-                e.Graphics.DrawLine(pen, r.Left + 7, r.Bottom - 1, r.Left + 1, r.Bottom - 7)
-                e.Graphics.DrawLine(pen, r.Left + 10, r.Bottom - 1, r.Left + 1, r.Bottom - 10)
-            End Using
-        End Sub
+                                             Using pen As New Pen(gripColor, 2)
+                                                 Dim r = gripBottomLeft.ClientRectangle
+                                                 e.Graphics.DrawLine(pen, r.Left + 4, r.Bottom - 1, r.Left + 1, r.Bottom - 4)
+                                                 e.Graphics.DrawLine(pen, r.Left + 7, r.Bottom - 1, r.Left + 1, r.Bottom - 7)
+                                                 e.Graphics.DrawLine(pen, r.Left + 10, r.Bottom - 1, r.Left + 1, r.Bottom - 10)
+                                             End Using
+                                         End Sub
         Me.Controls.Add(gripBottomLeft)
         gripBottomLeft.BringToFront()
 
@@ -2164,13 +2200,13 @@ Public Class MainPlayerForm
         AddHandler gripTopLeft.MouseMove, AddressOf Grip_MouseMove
         AddHandler gripTopLeft.MouseUp, AddressOf Grip_MouseUp
         AddHandler gripTopLeft.Paint, Sub(s, e)
-            Using pen As New Pen(gripColor, 2)
-                Dim r = gripTopLeft.ClientRectangle
-                e.Graphics.DrawLine(pen, r.Left + 4, r.Top + 1, r.Left + 1, r.Top + 4)
-                e.Graphics.DrawLine(pen, r.Left + 7, r.Top + 1, r.Left + 1, r.Top + 7)
-                e.Graphics.DrawLine(pen, r.Left + 10, r.Top + 1, r.Left + 1, r.Top + 10)
-            End Using
-        End Sub
+                                          Using pen As New Pen(gripColor, 2)
+                                              Dim r = gripTopLeft.ClientRectangle
+                                              e.Graphics.DrawLine(pen, r.Left + 4, r.Top + 1, r.Left + 1, r.Top + 4)
+                                              e.Graphics.DrawLine(pen, r.Left + 7, r.Top + 1, r.Left + 1, r.Top + 7)
+                                              e.Graphics.DrawLine(pen, r.Left + 10, r.Top + 1, r.Left + 1, r.Top + 10)
+                                          End Using
+                                      End Sub
         Me.Controls.Add(gripTopLeft)
         gripTopLeft.BringToFront()
 
@@ -2308,16 +2344,17 @@ Public Class MainPlayerForm
                 ' 表示する場合
                 Dim panelWidth As Integer = If(PLWidth > 0, PLWidth, 300)
 
-                ' FixedPanelを先に設定（Panel2の幅を固定）
+                ' FixedPanelを先に設定（Panel2＝メインプレイヤー側の幅を固定）
                 SplitContainer2.FixedPanel = FixedPanel.Panel2
 
-                ' フォーム位置とサイズを1回の呼び出しでまとめて変更（左方向に伸ばす）
-                ' ※SplitterDistanceの計算はコンテナの最終幅を基準に行う必要があるため、
-                '   ウィンドウ拡張をPanel1Collapsedより先に行う（順序を入れ替えると
-                '   FixedPanel=Panel2により拡張分がPanel1に二重加算され、幅が肥大化する）
-                Me.SetBounds(Me.Left - panelWidth, Me.Top, Me.Width + panelWidth, Me.Height)
-
-                ' Panel1を表示
+                ' Panel1(プレイリスト)は新規に幅を割り当てる側なので、先にウィンドウを広げてから
+                ' Panel1の幅を絶対値（panelWidth）で確定させる。
+                ' （逆に先にSplitterDistanceを設定すると、FixedPanel=Panel2により
+                ' 　あとで広げた分がPanel1に二重加算され、幅が肥大化する）
+                ' スプリッター分の幅も含めて広げないと、メインプレイヤー側がスプリッター幅の分だけ
+                ' 狭くなり、TableLayoutPanel1内のボタン配置がずれる
+                _playlistWidthDelta = panelWidth + SplitContainer2.SplitterWidth
+                Me.SetBounds(Me.Left - _playlistWidthDelta, Me.Top, Me.Width + _playlistWidthDelta, Me.Height)
                 SplitContainer2.Panel1Collapsed = False
                 SplitContainer2.SplitterDistance = panelWidth
 
@@ -2325,17 +2362,14 @@ Public Class MainPlayerForm
                 Button40.ForeColor = Color.Green
 
             Else
-                ' 非表示にする場合
-                Dim actualPanelWidth As Integer = SplitContainer2.Panel1.Width
-
-                ' PlayListの幅を保存
-                PLWidth = actualPanelWidth
+                ' 非表示にする場合：次回表示時の幅として現在の実幅を保存しつつ、
+                ' フォーム幅は表示時に広げた量をそのまま戻す（実幅を使うと誤差が蓄積するため）
+                PLWidth = SplitContainer2.Panel1.Width
 
                 ' Panel1を非表示
                 SplitContainer2.Panel1Collapsed = True
 
-                ' フォーム位置とサイズを1回の呼び出しでまとめて変更（右方向に縮める）
-                Me.SetBounds(Me.Left + actualPanelWidth, Me.Top, Me.Width - actualPanelWidth, Me.Height)
+                Me.SetBounds(Me.Left + _playlistWidthDelta, Me.Top, Me.Width - _playlistWidthDelta, Me.Height)
 
                 Button40.Text = "< PL"
                 Button40.ForeColor = Color.Black
