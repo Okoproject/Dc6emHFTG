@@ -46,6 +46,14 @@ Public Class MainPlayerForm
     <DllImport("user32.dll")> Private Shared Function SendMessage(hWnd As IntPtr, msg As Integer, wParam As Boolean, lParam As IntPtr) As IntPtr
     End Function
 
+    ''' <summary>
+    ''' 指定ウィンドウとその子孫コントロールすべての再描画をまとめて抑制する。
+    ''' WM_SETREDRAWは対象ウィンドウ自身にしか効かず、SplitContainerやDataGridViewのように
+    ''' 個別のハンドルを持つ子コントロールの再描画は抑制できないため使用する。
+    ''' </summary>
+    <DllImport("user32.dll")> Private Shared Function LockWindowUpdate(hWndLock As IntPtr) As Boolean
+    End Function
+
     Private Const WM_SETREDRAW As Integer = &HB
 
 #Region "定数"
@@ -843,25 +851,39 @@ Public Class MainPlayerForm
     ''' </summary>
     Private Sub CheckBoxMpvPanel_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBoxMpvPamel.CheckedChanged
         Dim isShowing As Boolean = CheckBoxMpvPamel.Checked
-        SendMessage(Me.Handle, WM_SETREDRAW, False, IntPtr.Zero)
-        If isShowing Then
-            Dim panelHeight As Integer = If(ScrHeight > 0, ScrHeight, 300)
-            ' フォームを上に拡張（Topを減らし、Heightを増やす）
-            Me.Top -= panelHeight
-            Me.Height += panelHeight
-            SplitContainer3.Panel1Collapsed = False
-            SplitContainer3.SplitterDistance = panelHeight
-        Else
-            ' 非表示：高さを保存してフォームを上に縮小
-            ScrHeight = SplitContainer3.Panel1.Height
-            My.Settings.Gamen_Height = ScrHeight
-            My.Settings.Save()
-            Me.Top += SplitContainer3.Panel1.Height
-            Me.Height -= SplitContainer3.Panel1.Height
-            SplitContainer3.Panel1Collapsed = True
-        End If
-        UpdateControllerMinSize()
-        SendMessage(Me.Handle, WM_SETREDRAW, True, IntPtr.Zero)
+
+        ' ウィンドウサイズの変更とパネル表示切替を1回の再描画にまとめ、ちらつきを防ぐ
+        LockWindowUpdate(Me.Handle)
+        Try
+            If isShowing Then
+                Dim panelHeight As Integer = If(ScrHeight > 0, ScrHeight, 300)
+                ' フォームを上に拡張（Topを減らし、Heightを増やす）
+                Me.Top -= panelHeight
+                Me.Height += panelHeight
+                SplitContainer3.Panel1Collapsed = False
+                SplitContainer3.SplitterDistance = panelHeight
+
+                ' SplitContainer3.SplitterMovedがScrHeightを上書きする可能性があるため、最後に確定値を再設定する
+                ScrHeight = panelHeight
+            Else
+                ' 非表示：高さを保存してからPanel1を折りたたみ、その後にフォームを上に縮小する
+                ' （折りたたむ前に高さを縮めると、FixedPanel未設定のためPanel1も比例縮小し、
+                ' 　SplitterMovedでScrHeightに縮んだ値が入ってしまう）
+                Dim actualPanelHeight As Integer = SplitContainer3.Panel1.Height
+                ScrHeight = actualPanelHeight
+                SplitContainer3.Panel1Collapsed = True
+                Me.Top += actualPanelHeight
+                Me.Height -= actualPanelHeight
+
+                ' SplitContainer3.SplitterMovedがScrHeightを上書きする可能性があるため、最後に確定値を再設定する
+                ScrHeight = actualPanelHeight
+                My.Settings.Gamen_Height = ScrHeight
+                My.Settings.Save()
+            End If
+            UpdateControllerMinSize()
+        Finally
+            LockWindowUpdate(IntPtr.Zero)
+        End Try
         Me.Refresh()
     End Sub
 
@@ -1241,20 +1263,35 @@ Public Class MainPlayerForm
     'しおりパネルの表示/非表示切り替え（右側に飛び出し）
     Private Sub ButtonShiori_Click(sender As Object, e As EventArgs) Handles ButtonShiori.Click
 
-        SendMessage(Me.Handle, WM_SETREDRAW, False, IntPtr.Zero)
-        If SplitContainer1.Panel2Collapsed Then
-            ' 表示：フォーム幅を右に拡張
-            Dim panelWidth As Integer = If(BMWidth > 0, BMWidth, 250)
-            Me.Width += panelWidth + SplitContainer1.SplitterWidth
-            SplitContainer1.Panel2Collapsed = False
-            SplitContainer1.SplitterDistance = Me.ClientSize.Width - panelWidth - SplitContainer1.SplitterWidth
-        Else
-            ' 非表示：幅を保存してフォーム幅を縮小
-            BMWidth = SplitContainer1.Panel2.Width
-            Me.Width -= SplitContainer1.Panel2.Width + SplitContainer1.SplitterWidth
-            SplitContainer1.Panel2Collapsed = True
-        End If
-        SendMessage(Me.Handle, WM_SETREDRAW, True, IntPtr.Zero)
+        ' ウィンドウ幅の変更とパネル表示切替を1回の再描画にまとめ、ちらつきを防ぐ
+        LockWindowUpdate(Me.Handle)
+        Try
+            If SplitContainer1.Panel2Collapsed Then
+                ' 表示：フォーム幅を右に拡張
+                Dim panelWidth As Integer = If(BMWidth > 0, BMWidth, 250)
+                Me.Width += panelWidth + SplitContainer1.SplitterWidth
+                SplitContainer1.Panel2Collapsed = False
+                SplitContainer1.SplitterDistance = Me.ClientSize.Width - panelWidth - SplitContainer1.SplitterWidth
+
+                ' Me.Width変更中にMainPlayerForm_ResizeがBMWidthを一時的な値（Panel2折りたたみ中の幅）で
+                ' 上書きしてしまうため、最後に確定値を再設定する
+                BMWidth = panelWidth
+            Else
+                ' 非表示：幅を保存してからPanel2を折りたたみ、その後にフォーム幅を縮小する
+                ' （折りたたむ前に幅を縮めると、FixedPanel=NoneのためPanel2も比例縮小し、
+                ' 　Me.ResizeでBMWidthに縮んだ値が入ってしまう）
+                Dim actualPanelWidth As Integer = SplitContainer1.Panel2.Width
+                BMWidth = actualPanelWidth
+                SplitContainer1.Panel2Collapsed = True
+                Me.Width -= actualPanelWidth + SplitContainer1.SplitterWidth
+
+                ' Me.Width変更中にMainPlayerForm_ResizeがBMWidthを上書きする可能性があるため、
+                ' 最後に確定値を再設定する
+                BMWidth = actualPanelWidth
+            End If
+        Finally
+            LockWindowUpdate(IntPtr.Zero)
+        End Try
         Me.Refresh()
     End Sub
 
@@ -1578,44 +1615,49 @@ Public Class MainPlayerForm
     'PlayListの表示・非表示切替
     Private Sub Button40_Click(sender As Object, e As EventArgs) Handles Button40.Click
 
-        SendMessage(Me.Handle, WM_SETREDRAW, False, IntPtr.Zero)
-        If SplitContainer2.Panel1Collapsed = True Then
-            ' 表示する場合
-            Dim panelWidth As Integer = If(PLWidth > 0, PLWidth, 300)
+        ' ウィンドウの移動とパネル表示切替を1回の再描画にまとめ、ちらつきを防ぐ
+        LockWindowUpdate(Me.Handle)
+        Try
+            If SplitContainer2.Panel1Collapsed = True Then
+                ' 表示する場合
+                Dim panelWidth As Integer = If(PLWidth > 0, PLWidth, 300)
 
-            ' FixedPanelを先に設定（Panel2の幅を固定）
-            SplitContainer2.FixedPanel = FixedPanel.Panel2
+                ' FixedPanelを先に設定（Panel2の幅を固定）
+                SplitContainer2.FixedPanel = FixedPanel.Panel2
 
-            ' フォーム幅を拡張（左方向に伸ばす）
-            Me.Left -= panelWidth
-            Me.Width += panelWidth
+                ' フォーム位置とサイズを1回の呼び出しでまとめて変更（左方向に伸ばす）
+                ' ※SplitterDistanceの計算はコンテナの最終幅を基準に行う必要があるため、
+                '   ウィンドウ拡張をPanel1Collapsedより先に行う（順序を入れ替えると
+                '   FixedPanel=Panel2により拡張分がPanel1に二重加算され、幅が肥大化する）
+                Me.SetBounds(Me.Left - panelWidth, Me.Top, Me.Width + panelWidth, Me.Height)
 
-            ' Panel1を表示
-            SplitContainer2.Panel1Collapsed = False
-            SplitContainer2.SplitterDistance = panelWidth
+                ' Panel1を表示
+                SplitContainer2.Panel1Collapsed = False
+                SplitContainer2.SplitterDistance = panelWidth
 
-            Button40.Text = "PL >"
-            Button40.ForeColor = Color.Green
+                Button40.Text = "PL >"
+                Button40.ForeColor = Color.Green
 
-        Else
-            ' 非表示にする場合
-            Dim actualPanelWidth As Integer = SplitContainer2.Panel1.Width
+            Else
+                ' 非表示にする場合
+                Dim actualPanelWidth As Integer = SplitContainer2.Panel1.Width
 
-            ' PlayListの幅を保存
-            PLWidth = actualPanelWidth
+                ' PlayListの幅を保存
+                PLWidth = actualPanelWidth
 
-            ' フォーム幅を縮小（右方向に縮める）
-            Me.Left += actualPanelWidth
-            Me.Width -= actualPanelWidth
+                ' Panel1を非表示
+                SplitContainer2.Panel1Collapsed = True
 
-            ' Panel1を非表示
-            SplitContainer2.Panel1Collapsed = True
+                ' フォーム位置とサイズを1回の呼び出しでまとめて変更（右方向に縮める）
+                Me.SetBounds(Me.Left + actualPanelWidth, Me.Top, Me.Width - actualPanelWidth, Me.Height)
 
-            Button40.Text = "< PL"
-            Button40.ForeColor = Color.Black
+                Button40.Text = "< PL"
+                Button40.ForeColor = Color.Black
 
-        End If
-        SendMessage(Me.Handle, WM_SETREDRAW, True, IntPtr.Zero)
+            End If
+        Finally
+            LockWindowUpdate(IntPtr.Zero)
+        End Try
         Me.Refresh()
 
     End Sub
