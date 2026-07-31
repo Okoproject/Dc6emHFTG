@@ -2333,7 +2333,9 @@ Public Class MainPlayerForm
     End Function
 
     Private Sub MainPlayerForm_Resize(sender As Object, e As EventArgs) Handles Me.Resize
-        TextBox2.Text = Me.Width & "," & Me.Height & "|" & TableLayoutPanel1.Width & "," & TableLayoutPanel1.Height
+        'テスト用
+        'TextBox2.Text = Me.Width & "," & Me.Height & "|" & TableLayoutPanel1.Width & "," & TableLayoutPanel1.Height
+
         BMWidth = SplitContainer1.Panel2.Width
         PLWidth = SplitContainer2.Panel1.Width
         ScrHeight = SplitContainer3.Panel1.Height
