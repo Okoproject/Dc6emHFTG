@@ -5,6 +5,7 @@ Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.InteropServices
 Imports System.Security.Cryptography.X509Certificates
+Imports System.Windows.Forms
 
 ''' <summary>
 '''     メイン動画プレイヤーフォーム
@@ -318,8 +319,8 @@ Public Class MainPlayerForm
         If TableLayoutPanel1 Is Nothing Then Return
 
         For Each ctrl As Control In GetAllControls(TableLayoutPanel1)
-            If TypeOf ctrl Is Button Then
-                Dim btn = DirectCast(ctrl, Button)
+            If TypeOf ctrl Is System.Windows.Forms.Button Then
+                Dim btn = DirectCast(ctrl, System.Windows.Forms.Button)
                 ' ボタンの高さから適切なフォントサイズを計算（パディング考慮）
                 Dim availableHeight = btn.Height - btn.Margin.Vertical - 4
                 Dim fontSize = CSng(Math.Max(7, Math.Min(14, availableHeight * 0.45)))
@@ -424,8 +425,8 @@ Public Class MainPlayerForm
         TrackBar1.Enabled = False
 
         Application.DoEvents()
+End Sub
 
-    End Sub
     ''' <summary>
     '''     MpvPalerの準備ができたときの処理
     ''' </summary>
@@ -735,7 +736,7 @@ Public Class MainPlayerForm
     ''' </summary>
     Private Sub UpdateJumpButtonLabels()
         For i As Integer = 1 To 20
-            Dim btn As Button = TryCast(Me.Controls.Find("Button" & i, True).FirstOrDefault(), Button)
+            Dim btn As System.Windows.Forms.Button = TryCast(Me.Controls.Find("Button" & i, True).FirstOrDefault(), System.Windows.Forms.Button)
             If btn IsNot Nothing Then
                 Dim value As Integer = CInt(My.Settings("SK" & i))
                 btn.Text = FormatJumpValue(value)
@@ -1234,7 +1235,7 @@ Public Class MainPlayerForm
     Private Sub SpeedButtons_Click(sender As Object, e As EventArgs) _
         Handles Button21.Click, Button22.Click, Button23.Click, Button24.Click, Button25.Click, Button26.Click,
                 Button27.Click
-        Dim btn = TryCast(sender, Button)
+        Dim btn = TryCast(sender, System.Windows.Forms.Button)
         If btn Is Nothing Then Return
 
         ' ボタン名から番号を取得（例: "Button21" -> "1"）
@@ -1295,7 +1296,7 @@ Public Class MainPlayerForm
                 Button4.Click, Button14.Click, Button5.Click, Button15.Click, Button6.Click, Button16.Click,
                 Button7.Click, Button17.Click, Button8.Click, Button18.Click, Button9.Click, Button19.Click,
                 Button10.Click, Button20.Click
-        Dim btn = TryCast(sender, Button)
+        Dim btn = TryCast(sender, System.Windows.Forms.Button)
         If btn Is Nothing Then Return
 
         ' ボタン名から番号を取得（例: "Button1" -> "1"）

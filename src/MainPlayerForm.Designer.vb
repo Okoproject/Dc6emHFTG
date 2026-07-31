@@ -281,7 +281,6 @@ Partial Class MainPlayerForm
         Me.Button41.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button41.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button41.Image = Global.OkoshiMAX.My.Resources.Resources.FolderClosed_16x
-        Me.Button41.ImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.Button41.Location = New System.Drawing.Point(1, 763)
         Me.Button41.Margin = New System.Windows.Forms.Padding(1)
         Me.Button41.Name = "Button41"
@@ -297,7 +296,6 @@ Partial Class MainPlayerForm
         Me.Button42.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button42.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button42.Image = Global.OkoshiMAX.My.Resources.Resources.GlyphRight_16x
-        Me.Button42.ImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.Button42.Location = New System.Drawing.Point(47, 763)
         Me.Button42.Margin = New System.Windows.Forms.Padding(1)
         Me.Button42.Name = "Button42"
@@ -313,7 +311,6 @@ Partial Class MainPlayerForm
         Me.Button43.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button43.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button43.Image = Global.OkoshiMAX.My.Resources.Resources.Cancel_16x
-        Me.Button43.ImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.Button43.Location = New System.Drawing.Point(93, 763)
         Me.Button43.Margin = New System.Windows.Forms.Padding(1)
         Me.Button43.Name = "Button43"
@@ -329,7 +326,6 @@ Partial Class MainPlayerForm
         Me.Button44.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button44.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button44.Image = Global.OkoshiMAX.My.Resources.Resources.Add_16x
-        Me.Button44.ImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.Button44.Location = New System.Drawing.Point(139, 763)
         Me.Button44.Margin = New System.Windows.Forms.Padding(1)
         Me.Button44.Name = "Button44"
@@ -345,7 +341,6 @@ Partial Class MainPlayerForm
         Me.Button45.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button45.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button45.Image = Global.OkoshiMAX.My.Resources.Resources.DownloadDocument_16x
-        Me.Button45.ImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.Button45.Location = New System.Drawing.Point(185, 763)
         Me.Button45.Margin = New System.Windows.Forms.Padding(1)
         Me.Button45.Name = "Button45"
@@ -361,7 +356,6 @@ Partial Class MainPlayerForm
         Me.Button46.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button46.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button46.Image = Global.OkoshiMAX.My.Resources.Resources.OpenFolder_16x
-        Me.Button46.ImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.Button46.Location = New System.Drawing.Point(231, 763)
         Me.Button46.Margin = New System.Windows.Forms.Padding(1)
         Me.Button46.Name = "Button46"
@@ -1018,7 +1012,6 @@ Partial Class MainPlayerForm
         Me.Button39.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button39.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button39.Image = Global.OkoshiMAX.My.Resources.Resources.OpenFolder_16x
-        Me.Button39.ImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.Button39.Location = New System.Drawing.Point(600, 99)
         Me.Button39.Margin = New System.Windows.Forms.Padding(1)
         Me.Button39.Name = "Button39"
@@ -1035,7 +1028,6 @@ Partial Class MainPlayerForm
         Me.Button37.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button37.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button37.Image = Global.OkoshiMAX.My.Resources.Resources.SettingsOutline_16x
-        Me.Button37.ImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.Button37.Location = New System.Drawing.Point(876, 99)
         Me.Button37.Margin = New System.Windows.Forms.Padding(1)
         Me.Button37.Name = "Button37"
@@ -1083,7 +1075,6 @@ Partial Class MainPlayerForm
         Me.Button36.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button36.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button36.Image = Global.OkoshiMAX.My.Resources.Resources.CaptureFrame_16x
-        Me.Button36.ImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.Button36.Location = New System.Drawing.Point(94, 34)
         Me.Button36.Margin = New System.Windows.Forms.Padding(1)
         Me.Button36.Name = "Button36"
@@ -1100,7 +1091,6 @@ Partial Class MainPlayerForm
         Me.Button200.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button200.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button200.Image = Global.OkoshiMAX.My.Resources.Resources.Run_16x
-        Me.Button200.ImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.Button200.Location = New System.Drawing.Point(2, 359)
         Me.Button200.Margin = New System.Windows.Forms.Padding(1)
         Me.Button200.Name = "Button200"
@@ -1118,7 +1108,6 @@ Partial Class MainPlayerForm
         Me.Button400.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button400.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button400.Image = Global.OkoshiMAX.My.Resources.Resources.Stop_grey_16x
-        Me.Button400.ImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.Button400.Location = New System.Drawing.Point(140, 359)
         Me.Button400.Margin = New System.Windows.Forms.Padding(1)
         Me.Button400.Name = "Button400"
@@ -1150,7 +1139,6 @@ Partial Class MainPlayerForm
         Me.ButtonShiori.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.ButtonShiori.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.ButtonShiori.Image = Global.OkoshiMAX.My.Resources.Resources.Bookmark_16x
-        Me.ButtonShiori.ImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.ButtonShiori.Location = New System.Drawing.Point(784, 99)
         Me.ButtonShiori.Margin = New System.Windows.Forms.Padding(1)
         Me.ButtonShiori.Name = "ButtonShiori"
@@ -1167,7 +1155,6 @@ Partial Class MainPlayerForm
         Me.Button35.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button35.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button35.Image = Global.OkoshiMAX.My.Resources.Resources.PinnedItem_16x
-        Me.Button35.ImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.Button35.Location = New System.Drawing.Point(692, 99)
         Me.Button35.Margin = New System.Windows.Forms.Padding(1)
         Me.Button35.Name = "Button35"
@@ -1356,7 +1343,6 @@ Partial Class MainPlayerForm
         Me.Button28.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button28.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button28.Image = Global.OkoshiMAX.My.Resources.Resources.Cancel_16x
-        Me.Button28.ImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.Button28.Location = New System.Drawing.Point(235, 763)
         Me.Button28.Margin = New System.Windows.Forms.Padding(1)
         Me.Button28.Name = "Button28"
@@ -1372,7 +1358,6 @@ Partial Class MainPlayerForm
         Me.Button29.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button29.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button29.Image = Global.OkoshiMAX.My.Resources.Resources.Add_16x
-        Me.Button29.ImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.Button29.Location = New System.Drawing.Point(157, 763)
         Me.Button29.Margin = New System.Windows.Forms.Padding(1)
         Me.Button29.Name = "Button29"
@@ -1388,7 +1373,6 @@ Partial Class MainPlayerForm
         Me.Button32.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button32.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button32.Image = Global.OkoshiMAX.My.Resources.Resources.DestinationAssistant_16x
-        Me.Button32.ImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.Button32.Location = New System.Drawing.Point(79, 763)
         Me.Button32.Margin = New System.Windows.Forms.Padding(1)
         Me.Button32.Name = "Button32"
@@ -1404,7 +1388,6 @@ Partial Class MainPlayerForm
         Me.Button31.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button31.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button31.Image = Global.OkoshiMAX.My.Resources.Resources.DownloadDocument_16x
-        Me.Button31.ImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.Button31.Location = New System.Drawing.Point(1, 763)
         Me.Button31.Margin = New System.Windows.Forms.Padding(1)
         Me.Button31.Name = "Button31"
@@ -1565,94 +1548,94 @@ Partial Class MainPlayerForm
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents PageSetupDialog1 As PageSetupDialog
-    Friend WithEvents Timer1 As Timer
-    Friend WithEvents OpenFileDialog1 As OpenFileDialog
-    Friend WithEvents SplitContainer1 As SplitContainer
-    Friend WithEvents SplitContainer2 As SplitContainer
-    Friend WithEvents Button34 As Button
-    Friend WithEvents TextBox3 As TextBox
-    Friend WithEvents Button32 As Button
-    Friend WithEvents Button31 As Button
-    Friend WithEvents Button28 As Button
-    Friend WithEvents DataGridView1 As DataGridView
-    Friend WithEvents ToolTip1 As ToolTip
-    Friend WithEvents TableLayoutPanel2 As TableLayoutPanel
-    Friend WithEvents SaveFileDialog1 As SaveFileDialog
-    Friend WithEvents Button29 As Button
-    Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
-    Friend WithEvents CheckBoxMpvPamel As CheckBox
-    Friend WithEvents Label1 As Label
-    Friend WithEvents Button33 As Button
-    Friend WithEvents TextBox2 As TextBox
-    Friend WithEvents TextBox1 As TextBox
-    Friend WithEvents Button37 As Button
-    Friend WithEvents Button36 As Button
-    Friend WithEvents Button39 As Button
-    Friend WithEvents Button2 As Button
-    Friend WithEvents Button12 As Button
-    Friend WithEvents Button3 As Button
-    Friend WithEvents Button4 As Button
-    Friend WithEvents Button5 As Button
-    Friend WithEvents Button6 As Button
-    Friend WithEvents Button7 As Button
-    Friend WithEvents Button8 As Button
-    Friend WithEvents Button9 As Button
-    Friend WithEvents Button10 As Button
-    Friend WithEvents TrackBar1 As TrackBar
-    Friend WithEvents Button11 As Button
-    Friend WithEvents Button1 As Button
-    Friend WithEvents Button13 As Button
-    Friend WithEvents Button14 As Button
-    Friend WithEvents Button15 As Button
-    Friend WithEvents Button16 As Button
-    Friend WithEvents Button17 As Button
-    Friend WithEvents Button18 As Button
-    Friend WithEvents Button19 As Button
-    Friend WithEvents Button20 As Button
-    Friend WithEvents TrackBar6 As TrackBar
-    Friend WithEvents Label6 As Label
-    Friend WithEvents TrackBar2 As TrackBar
-    Friend WithEvents CustomTitleBar As Panel
-    Friend WithEvents BtnMinimize As Button
-    Friend WithEvents BtnMaximize As Button
-    Friend WithEvents BtnClose As Button
-    Friend WithEvents LblTitle As Label
-    Friend WithEvents Label4 As Label
-    Friend WithEvents Label5 As Label
-    Friend WithEvents Button21 As Button
-    Friend WithEvents Button22 As Button
-    Friend WithEvents Button23 As Button
-    Friend WithEvents Button24 As Button
-    Friend WithEvents Button25 As Button
-    Friend WithEvents Button26 As Button
-    Friend WithEvents Button27 As Button
-    Friend WithEvents Button200 As Button
-    Friend WithEvents Button400 As Button
-    Friend WithEvents ButtonShiori As Button
-    Friend WithEvents Label2 As Label
-    Friend WithEvents Button35 As Button
-    Friend WithEvents SplitContainer3 As SplitContainer
-    Friend WithEvents Button30 As Button
-    Friend WithEvents Button38 As Button
-    Friend WithEvents Button40 As Button
-    Friend WithEvents TableLayoutPanel3 As TableLayoutPanel
-    Friend WithEvents Button41 As Button
-    Friend WithEvents Button42 As Button
-    Friend WithEvents Button43 As Button
-    Friend WithEvents Button44 As Button
-    Friend WithEvents Button45 As Button
-    Friend WithEvents Button46 As Button
-    Friend WithEvents colCounter As DataGridViewButtonColumn
-    Friend WithEvents colMemo As DataGridViewTextBoxColumn
-    Friend WithEvents colPosition As DataGridViewTextBoxColumn
-    Friend WithEvents colDelete As DataGridViewButtonColumn
-    Friend WithEvents DataGridView2 As DataGridView
-    Friend WithEvents File_Namae As DataGridViewTextBoxColumn
-    Friend WithEvents File_Length As DataGridViewTextBoxColumn
-    Friend WithEvents File_Memo As DataGridViewTextBoxColumn
-    Friend WithEvents File_Delete As DataGridViewTextBoxColumn
-    Friend WithEvents File_Position As DataGridViewTextBoxColumn
-    Friend WithEvents File_Progress As DataGridViewTextBoxColumn
-    Friend WithEvents MpvPanel As Panel
+    Friend WithEvents PageSetupDialog1 As System.Windows.Forms.PageSetupDialog
+    Friend WithEvents Timer1 As System.Windows.Forms.Timer
+    Friend WithEvents OpenFileDialog1 As System.Windows.Forms.OpenFileDialog
+    Friend WithEvents SplitContainer1 As System.Windows.Forms.SplitContainer
+    Friend WithEvents SplitContainer2 As System.Windows.Forms.SplitContainer
+    Friend WithEvents Button34 As System.Windows.Forms.Button
+    Friend WithEvents TextBox3 As System.Windows.Forms.TextBox
+    Friend WithEvents Button32 As System.Windows.Forms.Button
+    Friend WithEvents Button31 As System.Windows.Forms.Button
+    Friend WithEvents Button28 As System.Windows.Forms.Button
+    Friend WithEvents DataGridView1 As System.Windows.Forms.DataGridView
+    Friend WithEvents ToolTip1 As System.Windows.Forms.ToolTip
+    Friend WithEvents TableLayoutPanel2 As System.Windows.Forms.TableLayoutPanel
+    Friend WithEvents SaveFileDialog1 As System.Windows.Forms.SaveFileDialog
+    Friend WithEvents Button29 As System.Windows.Forms.Button
+    Friend WithEvents TableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
+    Friend WithEvents CheckBoxMpvPamel As System.Windows.Forms.CheckBox
+    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents Button33 As System.Windows.Forms.Button
+    Friend WithEvents TextBox2 As System.Windows.Forms.TextBox
+    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
+    Friend WithEvents Button37 As System.Windows.Forms.Button
+    Friend WithEvents Button36 As System.Windows.Forms.Button
+    Friend WithEvents Button39 As System.Windows.Forms.Button
+    Friend WithEvents Button2 As System.Windows.Forms.Button
+    Friend WithEvents Button12 As System.Windows.Forms.Button
+    Friend WithEvents Button3 As System.Windows.Forms.Button
+    Friend WithEvents Button4 As System.Windows.Forms.Button
+    Friend WithEvents Button5 As System.Windows.Forms.Button
+    Friend WithEvents Button6 As System.Windows.Forms.Button
+    Friend WithEvents Button7 As System.Windows.Forms.Button
+    Friend WithEvents Button8 As System.Windows.Forms.Button
+    Friend WithEvents Button9 As System.Windows.Forms.Button
+    Friend WithEvents Button10 As System.Windows.Forms.Button
+    Friend WithEvents TrackBar1 As System.Windows.Forms.TrackBar
+    Friend WithEvents Button11 As System.Windows.Forms.Button
+    Friend WithEvents Button1 As System.Windows.Forms.Button
+    Friend WithEvents Button13 As System.Windows.Forms.Button
+    Friend WithEvents Button14 As System.Windows.Forms.Button
+    Friend WithEvents Button15 As System.Windows.Forms.Button
+    Friend WithEvents Button16 As System.Windows.Forms.Button
+    Friend WithEvents Button17 As System.Windows.Forms.Button
+    Friend WithEvents Button18 As System.Windows.Forms.Button
+    Friend WithEvents Button19 As System.Windows.Forms.Button
+    Friend WithEvents Button20 As System.Windows.Forms.Button
+    Friend WithEvents TrackBar6 As System.Windows.Forms.TrackBar
+    Friend WithEvents Label6 As System.Windows.Forms.Label
+    Friend WithEvents TrackBar2 As System.Windows.Forms.TrackBar
+    Friend WithEvents CustomTitleBar As System.Windows.Forms.Panel
+    Friend WithEvents BtnMinimize As System.Windows.Forms.Button
+    Friend WithEvents BtnMaximize As System.Windows.Forms.Button
+    Friend WithEvents BtnClose As System.Windows.Forms.Button
+    Friend WithEvents LblTitle As System.Windows.Forms.Label
+    Friend WithEvents Label4 As System.Windows.Forms.Label
+    Friend WithEvents Label5 As System.Windows.Forms.Label
+    Friend WithEvents Button21 As System.Windows.Forms.Button
+    Friend WithEvents Button22 As System.Windows.Forms.Button
+    Friend WithEvents Button23 As System.Windows.Forms.Button
+    Friend WithEvents Button24 As System.Windows.Forms.Button
+    Friend WithEvents Button25 As System.Windows.Forms.Button
+    Friend WithEvents Button26 As System.Windows.Forms.Button
+    Friend WithEvents Button27 As System.Windows.Forms.Button
+    Friend WithEvents Button200 As System.Windows.Forms.Button
+    Friend WithEvents Button400 As System.Windows.Forms.Button
+    Friend WithEvents ButtonShiori As System.Windows.Forms.Button
+    Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents Button35 As System.Windows.Forms.Button
+    Friend WithEvents SplitContainer3 As System.Windows.Forms.SplitContainer
+    Friend WithEvents Button30 As System.Windows.Forms.Button
+    Friend WithEvents Button38 As System.Windows.Forms.Button
+    Friend WithEvents Button40 As System.Windows.Forms.Button
+    Friend WithEvents TableLayoutPanel3 As System.Windows.Forms.TableLayoutPanel
+    Friend WithEvents Button41 As System.Windows.Forms.Button
+    Friend WithEvents Button42 As System.Windows.Forms.Button
+    Friend WithEvents Button43 As System.Windows.Forms.Button
+    Friend WithEvents Button44 As System.Windows.Forms.Button
+    Friend WithEvents Button45 As System.Windows.Forms.Button
+    Friend WithEvents Button46 As System.Windows.Forms.Button
+    Friend WithEvents colCounter As System.Windows.Forms.DataGridViewButtonColumn
+    Friend WithEvents colMemo As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents colPosition As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents colDelete As System.Windows.Forms.DataGridViewButtonColumn
+    Friend WithEvents DataGridView2 As System.Windows.Forms.DataGridView
+    Friend WithEvents File_Namae As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents File_Length As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents File_Memo As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents File_Delete As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents File_Position As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents File_Progress As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents MpvPanel As System.Windows.Forms.Panel
 End Class
