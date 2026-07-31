@@ -203,18 +203,19 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.67!))
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.67!))
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.65!))
-        Me.TableLayoutPanel3.Controls.Add(Me.DataGridView2, 0, 0)
-        Me.TableLayoutPanel3.Controls.Add(Me.Button41, 0, 1)
-        Me.TableLayoutPanel3.Controls.Add(Me.Button42, 1, 1)
-        Me.TableLayoutPanel3.Controls.Add(Me.Button43, 2, 1)
-        Me.TableLayoutPanel3.Controls.Add(Me.Button44, 3, 1)
-        Me.TableLayoutPanel3.Controls.Add(Me.Button45, 4, 1)
-        Me.TableLayoutPanel3.Controls.Add(Me.Button46, 5, 1)
+        Me.TableLayoutPanel3.Controls.Add(Me.DataGridView2, 0, 1)
+        Me.TableLayoutPanel3.Controls.Add(Me.Button41, 0, 2)
+        Me.TableLayoutPanel3.Controls.Add(Me.Button42, 1, 2)
+        Me.TableLayoutPanel3.Controls.Add(Me.Button43, 2, 2)
+        Me.TableLayoutPanel3.Controls.Add(Me.Button44, 3, 2)
+        Me.TableLayoutPanel3.Controls.Add(Me.Button45, 4, 2)
+        Me.TableLayoutPanel3.Controls.Add(Me.Button46, 5, 2)
         Me.TableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel3.Location = New System.Drawing.Point(0, 0)
         Me.TableLayoutPanel3.Margin = New System.Windows.Forms.Padding(4)
         Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
-        Me.TableLayoutPanel3.RowCount = 2
+        Me.TableLayoutPanel3.RowCount = 3
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32.0!))
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
         Me.TableLayoutPanel3.Size = New System.Drawing.Size(277, 802)
@@ -230,12 +231,12 @@ Partial Class MainPlayerForm
         Me.DataGridView2.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.File_Namae, Me.File_Length, Me.File_Memo, Me.File_Delete, Me.File_Position, Me.File_Progress})
         Me.TableLayoutPanel3.SetColumnSpan(Me.DataGridView2, 6)
         Me.DataGridView2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DataGridView2.Location = New System.Drawing.Point(2, 2)
+        Me.DataGridView2.Location = New System.Drawing.Point(2, 34)
         Me.DataGridView2.Margin = New System.Windows.Forms.Padding(2)
         Me.DataGridView2.Name = "DataGridView2"
         Me.DataGridView2.RowHeadersWidth = 51
         Me.DataGridView2.RowTemplate.Height = 24
-        Me.DataGridView2.Size = New System.Drawing.Size(273, 758)
+        Me.DataGridView2.Size = New System.Drawing.Size(273, 726)
         Me.DataGridView2.TabIndex = 6
         '
         'File_Namae
@@ -1051,8 +1052,10 @@ Partial Class MainPlayerForm
         '
         'TrackBar6
         '
+        Me.TrackBar6.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TrackBar6.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.TrackBar6.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TrackBar6.LargeChange = 1
         Me.TrackBar6.Location = New System.Drawing.Point(921, 228)
         Me.TrackBar6.Margin = New System.Windows.Forms.Padding(0)
@@ -1088,6 +1091,7 @@ Partial Class MainPlayerForm
         Me.Button200.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.Button200.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button200, 3)
+        Me.Button200.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button200.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button200.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button200.Image = Global.OkoshiMAX.My.Resources.Resources.Run_16x
@@ -1105,6 +1109,7 @@ Partial Class MainPlayerForm
         Me.Button400.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.Button400.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button400, 3)
+        Me.Button400.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button400.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button400.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button400.Image = Global.OkoshiMAX.My.Resources.Resources.Stop_grey_16x
@@ -1244,7 +1249,6 @@ Partial Class MainPlayerForm
         Me.Button40.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button40.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button40.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Button40.Image = Global.OkoshiMAX.My.Resources.Resources.Run_16x
         Me.Button40.Location = New System.Drawing.Point(3, 100)
         Me.Button40.Margin = New System.Windows.Forms.Padding(2)
         Me.Button40.Name = "Button40"
@@ -1262,18 +1266,19 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
         Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
         Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
-        Me.TableLayoutPanel2.Controls.Add(Me.DataGridView1, 0, 0)
-        Me.TableLayoutPanel2.Controls.Add(Me.Button28, 3, 2)
-        Me.TableLayoutPanel2.Controls.Add(Me.Button29, 2, 2)
-        Me.TableLayoutPanel2.Controls.Add(Me.Button32, 1, 2)
-        Me.TableLayoutPanel2.Controls.Add(Me.Button31, 0, 2)
-        Me.TableLayoutPanel2.Controls.Add(Me.TextBox3, 1, 1)
-        Me.TableLayoutPanel2.Controls.Add(Me.Button34, 0, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.DataGridView1, 0, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.Button28, 3, 3)
+        Me.TableLayoutPanel2.Controls.Add(Me.Button29, 2, 3)
+        Me.TableLayoutPanel2.Controls.Add(Me.Button32, 1, 3)
+        Me.TableLayoutPanel2.Controls.Add(Me.Button31, 0, 3)
+        Me.TableLayoutPanel2.Controls.Add(Me.TextBox3, 1, 2)
+        Me.TableLayoutPanel2.Controls.Add(Me.Button34, 0, 2)
         Me.TableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel2.Location = New System.Drawing.Point(0, 0)
         Me.TableLayoutPanel2.Margin = New System.Windows.Forms.Padding(1)
         Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
-        Me.TableLayoutPanel2.RowCount = 3
+        Me.TableLayoutPanel2.RowCount = 4
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32.0!))
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
@@ -1288,13 +1293,13 @@ Partial Class MainPlayerForm
         Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colCounter, Me.colMemo, Me.colPosition, Me.colDelete})
         Me.TableLayoutPanel2.SetColumnSpan(Me.DataGridView1, 4)
         Me.DataGridView1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DataGridView1.Location = New System.Drawing.Point(1, 1)
+        Me.DataGridView1.Location = New System.Drawing.Point(1, 33)
         Me.DataGridView1.Margin = New System.Windows.Forms.Padding(1)
         Me.DataGridView1.MinimumSize = New System.Drawing.Size(200, 100)
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.RowHeadersWidth = 25
         Me.DataGridView1.RowTemplate.Height = 24
-        Me.DataGridView1.Size = New System.Drawing.Size(313, 720)
+        Me.DataGridView1.Size = New System.Drawing.Size(313, 688)
         Me.DataGridView1.TabIndex = 149
         '
         'colCounter

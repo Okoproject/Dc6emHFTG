@@ -137,9 +137,7 @@
     <Compile Include="src\ApplicationEvents.vb" />
     <Compile Include="src\HotKeyManager.vb" />
     <Compile Include="src\MpvPlayerWrapper.vb" />
-    <Compile Include="src\MainPlayerForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="src\MainPlayerForm.vb" />
     <Compile Include="src\MainPlayerForm.Designer.vb">
       <DependentUpon>MainPlayerForm.vb</DependentUpon>
       <SubType>Form</SubType>
