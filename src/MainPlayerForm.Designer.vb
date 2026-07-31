@@ -1088,7 +1088,6 @@ Partial Class MainPlayerForm
         Me.Button200.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.Button200.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button200, 3)
-        Me.Button200.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button200.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button200.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button200.Image = Global.OkoshiMAX.My.Resources.Resources.Run_16x
@@ -1106,7 +1105,6 @@ Partial Class MainPlayerForm
         Me.Button400.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.Button400.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button400, 3)
-        Me.Button400.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button400.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button400.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button400.Image = Global.OkoshiMAX.My.Resources.Resources.Stop_grey_16x

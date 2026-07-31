@@ -269,14 +269,14 @@ Public Class MainPlayerForm
 
         ' Button200（再生/一時停止）のアイコンを中央配置（引き伸ばし防止）
         Dim btn200 = Me.Controls.Find("Button200", True).FirstOrDefault()
-        If btn200 IsNot Nothing AndAlso btn200.GetType() Is GetType(System.Windows.Forms.Button) Then
+        If btn200 IsNot Nothing Then
             Dim prop = btn200.GetType().GetProperty("ImageLayout")
             If prop IsNot Nothing Then prop.SetValue(btn200, System.Windows.Forms.ImageLayout.Center, Nothing)
         End If
 
         ' Button400（停止）のアイコンを中央配置（引き伸ばし防止）
         Dim btn400 = Me.Controls.Find("Button400", True).FirstOrDefault()
-        If btn400 IsNot Nothing AndAlso btn400.GetType() Is GetType(System.Windows.Forms.Button) Then
+        If btn400 IsNot Nothing Then
             Dim prop = btn400.GetType().GetProperty("ImageLayout")
             If prop IsNot Nothing Then prop.SetValue(btn400, System.Windows.Forms.ImageLayout.Center, Nothing)
         End If
