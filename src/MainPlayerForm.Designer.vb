@@ -154,7 +154,7 @@ Partial Class MainPlayerForm
         'SplitContainer1
         '
         Me.SplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SplitContainer1.Location = New System.Drawing.Point(2, 34)
+        Me.SplitContainer1.Location = New System.Drawing.Point(2, 42)
         Me.SplitContainer1.Margin = New System.Windows.Forms.Padding(1)
         Me.SplitContainer1.Name = "SplitContainer1"
         '
@@ -168,7 +168,7 @@ Partial Class MainPlayerForm
         Me.SplitContainer1.Panel2.BackColor = System.Drawing.SystemColors.ControlDarkDark
         Me.SplitContainer1.Panel2.Controls.Add(Me.TableLayoutPanel2)
         Me.SplitContainer1.Panel2MinSize = 0
-        Me.SplitContainer1.Size = New System.Drawing.Size(1601, 802)
+        Me.SplitContainer1.Size = New System.Drawing.Size(1601, 794)
         Me.SplitContainer1.SplitterDistance = 1281
         Me.SplitContainer1.SplitterWidth = 5
         Me.SplitContainer1.TabIndex = 0
@@ -189,7 +189,7 @@ Partial Class MainPlayerForm
         '
         Me.SplitContainer2.Panel2.Controls.Add(Me.SplitContainer3)
         Me.SplitContainer2.Panel2MinSize = 0
-        Me.SplitContainer2.Size = New System.Drawing.Size(1281, 802)
+        Me.SplitContainer2.Size = New System.Drawing.Size(1281, 794)
         Me.SplitContainer2.SplitterDistance = 277
         Me.SplitContainer2.SplitterWidth = 5
         Me.SplitContainer2.TabIndex = 0
@@ -218,7 +218,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32.0!))
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
-        Me.TableLayoutPanel3.Size = New System.Drawing.Size(277, 802)
+        Me.TableLayoutPanel3.Size = New System.Drawing.Size(277, 794)
         Me.TableLayoutPanel3.TabIndex = 1
         '
         'DataGridView2
@@ -236,7 +236,7 @@ Partial Class MainPlayerForm
         Me.DataGridView2.Name = "DataGridView2"
         Me.DataGridView2.RowHeadersWidth = 51
         Me.DataGridView2.RowTemplate.Height = 24
-        Me.DataGridView2.Size = New System.Drawing.Size(273, 726)
+        Me.DataGridView2.Size = New System.Drawing.Size(273, 718)
         Me.DataGridView2.TabIndex = 6
         '
         'File_Namae
@@ -282,7 +282,7 @@ Partial Class MainPlayerForm
         Me.Button41.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button41.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button41.Image = Global.OkoshiMAX.My.Resources.Resources.FolderClosed_16x
-        Me.Button41.Location = New System.Drawing.Point(1, 763)
+        Me.Button41.Location = New System.Drawing.Point(1, 755)
         Me.Button41.Margin = New System.Windows.Forms.Padding(1)
         Me.Button41.Name = "Button41"
         Me.Button41.Size = New System.Drawing.Size(44, 38)
@@ -297,7 +297,7 @@ Partial Class MainPlayerForm
         Me.Button42.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button42.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button42.Image = Global.OkoshiMAX.My.Resources.Resources.GlyphRight_16x
-        Me.Button42.Location = New System.Drawing.Point(47, 763)
+        Me.Button42.Location = New System.Drawing.Point(47, 755)
         Me.Button42.Margin = New System.Windows.Forms.Padding(1)
         Me.Button42.Name = "Button42"
         Me.Button42.Size = New System.Drawing.Size(44, 38)
@@ -312,7 +312,7 @@ Partial Class MainPlayerForm
         Me.Button43.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button43.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button43.Image = Global.OkoshiMAX.My.Resources.Resources.Cancel_16x
-        Me.Button43.Location = New System.Drawing.Point(93, 763)
+        Me.Button43.Location = New System.Drawing.Point(93, 755)
         Me.Button43.Margin = New System.Windows.Forms.Padding(1)
         Me.Button43.Name = "Button43"
         Me.Button43.Size = New System.Drawing.Size(44, 38)
@@ -327,7 +327,7 @@ Partial Class MainPlayerForm
         Me.Button44.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button44.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button44.Image = Global.OkoshiMAX.My.Resources.Resources.Add_16x
-        Me.Button44.Location = New System.Drawing.Point(139, 763)
+        Me.Button44.Location = New System.Drawing.Point(139, 755)
         Me.Button44.Margin = New System.Windows.Forms.Padding(1)
         Me.Button44.Name = "Button44"
         Me.Button44.Size = New System.Drawing.Size(44, 38)
@@ -342,7 +342,7 @@ Partial Class MainPlayerForm
         Me.Button45.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button45.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button45.Image = Global.OkoshiMAX.My.Resources.Resources.DownloadDocument_16x
-        Me.Button45.Location = New System.Drawing.Point(185, 763)
+        Me.Button45.Location = New System.Drawing.Point(185, 755)
         Me.Button45.Margin = New System.Windows.Forms.Padding(1)
         Me.Button45.Name = "Button45"
         Me.Button45.Size = New System.Drawing.Size(44, 38)
@@ -357,7 +357,7 @@ Partial Class MainPlayerForm
         Me.Button46.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button46.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button46.Image = Global.OkoshiMAX.My.Resources.Resources.OpenFolder_16x
-        Me.Button46.Location = New System.Drawing.Point(231, 763)
+        Me.Button46.Location = New System.Drawing.Point(231, 755)
         Me.Button46.Margin = New System.Windows.Forms.Padding(1)
         Me.Button46.Name = "Button46"
         Me.Button46.Size = New System.Drawing.Size(45, 38)
@@ -382,8 +382,8 @@ Partial Class MainPlayerForm
         '
         Me.SplitContainer3.Panel2.Controls.Add(Me.TableLayoutPanel1)
         Me.SplitContainer3.Panel2MinSize = 0
-        Me.SplitContainer3.Size = New System.Drawing.Size(999, 802)
-        Me.SplitContainer3.SplitterDistance = 302
+        Me.SplitContainer3.Size = New System.Drawing.Size(999, 794)
+        Me.SplitContainer3.SplitterDistance = 298
         Me.SplitContainer3.SplitterWidth = 5
         Me.SplitContainer3.TabIndex = 1
         '
@@ -395,7 +395,7 @@ Partial Class MainPlayerForm
         Me.MpvPanel.Location = New System.Drawing.Point(0, 0)
         Me.MpvPanel.Margin = New System.Windows.Forms.Padding(1)
         Me.MpvPanel.Name = "MpvPanel"
-        Me.MpvPanel.Size = New System.Drawing.Size(999, 302)
+        Me.MpvPanel.Size = New System.Drawing.Size(999, 298)
         Me.MpvPanel.TabIndex = 193
         '
         'TableLayoutPanel1
@@ -474,19 +474,19 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.Controls.Add(Me.Button40, 0, 2)
         Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 0)
-        Me.TableLayoutPanel1.Margin = New System.Windows.Forms.Padding(5)
+        Me.TableLayoutPanel1.Margin = New System.Windows.Forms.Padding(5, 0, 5, 5)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.Padding = New System.Windows.Forms.Padding(1, 0, 1, 1)
         Me.TableLayoutPanel1.RowCount = 8
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(999, 495)
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28572!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28572!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28572!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28572!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28572!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28572!))
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(999, 491)
         Me.TableLayoutPanel1.TabIndex = 0
         '
         'CheckBoxMpvPamel
@@ -499,10 +499,10 @@ Partial Class MainPlayerForm
         Me.CheckBoxMpvPamel.Dock = System.Windows.Forms.DockStyle.Fill
         Me.CheckBoxMpvPamel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.CheckBoxMpvPamel.Image = Global.OkoshiMAX.My.Resources.Resources.Monitor_16x
-        Me.CheckBoxMpvPamel.Location = New System.Drawing.Point(2, 33)
+        Me.CheckBoxMpvPamel.Location = New System.Drawing.Point(2, 1)
         Me.CheckBoxMpvPamel.Margin = New System.Windows.Forms.Padding(1)
         Me.CheckBoxMpvPamel.Name = "CheckBoxMpvPamel"
-        Me.CheckBoxMpvPamel.Size = New System.Drawing.Size(90, 63)
+        Me.CheckBoxMpvPamel.Size = New System.Drawing.Size(90, 67)
         Me.CheckBoxMpvPamel.TabIndex = 919
         Me.ToolTip1.SetToolTip(Me.CheckBoxMpvPamel, "動画再生画面の表示・非表示")
         Me.CheckBoxMpvPamel.UseVisualStyleBackColor = False
@@ -516,10 +516,10 @@ Partial Class MainPlayerForm
         Me.Label1.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.Lime
         Me.Label1.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.Label1.Location = New System.Drawing.Point(599, 32)
+        Me.Label1.Location = New System.Drawing.Point(599, 0)
         Me.Label1.Margin = New System.Windows.Forms.Padding(0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(399, 65)
+        Me.Label1.Size = New System.Drawing.Size(399, 69)
         Me.Label1.TabIndex = 920
         Me.Label1.Text = "00:00:00"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -531,10 +531,10 @@ Partial Class MainPlayerForm
         Me.Button33.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button33.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button33.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Button33.Location = New System.Drawing.Point(462, 33)
+        Me.Button33.Location = New System.Drawing.Point(462, 1)
         Me.Button33.Margin = New System.Windows.Forms.Padding(1)
         Me.Button33.Name = "Button33"
-        Me.Button33.Size = New System.Drawing.Size(90, 63)
+        Me.Button33.Size = New System.Drawing.Size(90, 67)
         Me.Button33.TabIndex = 921
         Me.Button33.Text = ">>"
         Me.ToolTip1.SetToolTip(Me.Button33, "指定位置にジャンプ")
@@ -544,7 +544,7 @@ Partial Class MainPlayerForm
         '
         Me.TextBox2.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.TableLayoutPanel1.SetColumnSpan(Me.TextBox2, 6)
-        Me.TextBox2.Location = New System.Drawing.Point(186, 53)
+        Me.TextBox2.Location = New System.Drawing.Point(186, 23)
         Me.TextBox2.Margin = New System.Windows.Forms.Padding(1)
         Me.TextBox2.Name = "TextBox2"
         Me.TextBox2.Size = New System.Drawing.Size(274, 22)
@@ -556,7 +556,7 @@ Partial Class MainPlayerForm
         '
         Me.TextBox1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.TableLayoutPanel1.SetColumnSpan(Me.TextBox1, 10)
-        Me.TextBox1.Location = New System.Drawing.Point(94, 118)
+        Me.TextBox1.Location = New System.Drawing.Point(94, 93)
         Me.TextBox1.Margin = New System.Windows.Forms.Padding(1)
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Size = New System.Drawing.Size(458, 22)
@@ -570,10 +570,10 @@ Partial Class MainPlayerForm
         Me.Button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button3.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button3.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Button3.Location = New System.Drawing.Point(186, 163)
+        Me.Button3.Location = New System.Drawing.Point(186, 140)
         Me.Button3.Margin = New System.Windows.Forms.Padding(1)
         Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(90, 63)
+        Me.Button3.Size = New System.Drawing.Size(90, 68)
         Me.Button3.TabIndex = 930
         Me.Button3.Text = "+5S"
         Me.Button3.UseVisualStyleBackColor = False
@@ -586,10 +586,10 @@ Partial Class MainPlayerForm
         Me.Button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button4.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button4.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Button4.Location = New System.Drawing.Point(278, 163)
+        Me.Button4.Location = New System.Drawing.Point(278, 140)
         Me.Button4.Margin = New System.Windows.Forms.Padding(1)
         Me.Button4.Name = "Button4"
-        Me.Button4.Size = New System.Drawing.Size(90, 63)
+        Me.Button4.Size = New System.Drawing.Size(90, 68)
         Me.Button4.TabIndex = 931
         Me.Button4.Text = "+10S"
         Me.Button4.UseVisualStyleBackColor = False
@@ -602,10 +602,10 @@ Partial Class MainPlayerForm
         Me.Button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button5.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button5.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Button5.Location = New System.Drawing.Point(370, 163)
+        Me.Button5.Location = New System.Drawing.Point(370, 140)
         Me.Button5.Margin = New System.Windows.Forms.Padding(1)
         Me.Button5.Name = "Button5"
-        Me.Button5.Size = New System.Drawing.Size(90, 63)
+        Me.Button5.Size = New System.Drawing.Size(90, 68)
         Me.Button5.TabIndex = 932
         Me.Button5.Text = "+15S"
         Me.Button5.UseVisualStyleBackColor = False
@@ -618,10 +618,10 @@ Partial Class MainPlayerForm
         Me.Button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button6.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button6.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Button6.Location = New System.Drawing.Point(462, 163)
+        Me.Button6.Location = New System.Drawing.Point(462, 140)
         Me.Button6.Margin = New System.Windows.Forms.Padding(1)
         Me.Button6.Name = "Button6"
-        Me.Button6.Size = New System.Drawing.Size(90, 63)
+        Me.Button6.Size = New System.Drawing.Size(90, 68)
         Me.Button6.TabIndex = 933
         Me.Button6.Text = "+30S"
         Me.Button6.UseVisualStyleBackColor = False
@@ -634,10 +634,10 @@ Partial Class MainPlayerForm
         Me.Button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button7.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button7.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Button7.Location = New System.Drawing.Point(554, 163)
+        Me.Button7.Location = New System.Drawing.Point(554, 140)
         Me.Button7.Margin = New System.Windows.Forms.Padding(1)
         Me.Button7.Name = "Button7"
-        Me.Button7.Size = New System.Drawing.Size(90, 63)
+        Me.Button7.Size = New System.Drawing.Size(90, 68)
         Me.Button7.TabIndex = 934
         Me.Button7.Text = "+1M"
         Me.Button7.UseVisualStyleBackColor = False
@@ -650,10 +650,10 @@ Partial Class MainPlayerForm
         Me.Button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button8.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button8.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Button8.Location = New System.Drawing.Point(646, 163)
+        Me.Button8.Location = New System.Drawing.Point(646, 140)
         Me.Button8.Margin = New System.Windows.Forms.Padding(1)
         Me.Button8.Name = "Button8"
-        Me.Button8.Size = New System.Drawing.Size(90, 63)
+        Me.Button8.Size = New System.Drawing.Size(90, 68)
         Me.Button8.TabIndex = 935
         Me.Button8.Text = "+3M"
         Me.Button8.UseVisualStyleBackColor = False
@@ -666,10 +666,10 @@ Partial Class MainPlayerForm
         Me.Button9.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button9.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button9.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Button9.Location = New System.Drawing.Point(738, 163)
+        Me.Button9.Location = New System.Drawing.Point(738, 140)
         Me.Button9.Margin = New System.Windows.Forms.Padding(1)
         Me.Button9.Name = "Button9"
-        Me.Button9.Size = New System.Drawing.Size(90, 63)
+        Me.Button9.Size = New System.Drawing.Size(90, 68)
         Me.Button9.TabIndex = 936
         Me.Button9.Text = "+5M"
         Me.Button9.UseVisualStyleBackColor = False
@@ -682,10 +682,10 @@ Partial Class MainPlayerForm
         Me.Button10.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button10.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button10.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Button10.Location = New System.Drawing.Point(830, 163)
+        Me.Button10.Location = New System.Drawing.Point(830, 140)
         Me.Button10.Margin = New System.Windows.Forms.Padding(1)
         Me.Button10.Name = "Button10"
-        Me.Button10.Size = New System.Drawing.Size(90, 63)
+        Me.Button10.Size = New System.Drawing.Size(90, 68)
         Me.Button10.TabIndex = 937
         Me.Button10.Text = "+10M"
         Me.Button10.UseVisualStyleBackColor = False
@@ -695,11 +695,11 @@ Partial Class MainPlayerForm
         Me.TrackBar1.BackColor = System.Drawing.SystemColors.ControlDarkDark
         Me.TableLayoutPanel1.SetColumnSpan(Me.TrackBar1, 20)
         Me.TrackBar1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TrackBar1.Location = New System.Drawing.Point(2, 228)
+        Me.TrackBar1.Location = New System.Drawing.Point(2, 210)
         Me.TrackBar1.Margin = New System.Windows.Forms.Padding(1)
         Me.TrackBar1.Maximum = 10000
         Me.TrackBar1.Name = "TrackBar1"
-        Me.TrackBar1.Size = New System.Drawing.Size(918, 63)
+        Me.TrackBar1.Size = New System.Drawing.Size(918, 68)
         Me.TrackBar1.TabIndex = 938
         Me.TrackBar1.TickFrequency = 100
         Me.TrackBar1.TickStyle = System.Windows.Forms.TickStyle.None
@@ -712,10 +712,10 @@ Partial Class MainPlayerForm
         Me.Button11.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button11.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button11.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Button11.Location = New System.Drawing.Point(2, 293)
+        Me.Button11.Location = New System.Drawing.Point(2, 280)
         Me.Button11.Margin = New System.Windows.Forms.Padding(1)
         Me.Button11.Name = "Button11"
-        Me.Button11.Size = New System.Drawing.Size(90, 63)
+        Me.Button11.Size = New System.Drawing.Size(90, 68)
         Me.Button11.TabIndex = 939
         Me.Button11.Text = "-1S"
         Me.Button11.UseVisualStyleBackColor = False
@@ -728,10 +728,10 @@ Partial Class MainPlayerForm
         Me.Button13.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button13.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button13.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Button13.Location = New System.Drawing.Point(186, 293)
+        Me.Button13.Location = New System.Drawing.Point(186, 280)
         Me.Button13.Margin = New System.Windows.Forms.Padding(1)
         Me.Button13.Name = "Button13"
-        Me.Button13.Size = New System.Drawing.Size(90, 63)
+        Me.Button13.Size = New System.Drawing.Size(90, 68)
         Me.Button13.TabIndex = 941
         Me.Button13.Text = "-5S"
         Me.Button13.UseVisualStyleBackColor = False
@@ -744,10 +744,10 @@ Partial Class MainPlayerForm
         Me.Button14.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button14.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button14.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Button14.Location = New System.Drawing.Point(278, 293)
+        Me.Button14.Location = New System.Drawing.Point(278, 280)
         Me.Button14.Margin = New System.Windows.Forms.Padding(1)
         Me.Button14.Name = "Button14"
-        Me.Button14.Size = New System.Drawing.Size(90, 63)
+        Me.Button14.Size = New System.Drawing.Size(90, 68)
         Me.Button14.TabIndex = 942
         Me.Button14.Text = "-10S"
         Me.Button14.UseVisualStyleBackColor = False
@@ -760,10 +760,10 @@ Partial Class MainPlayerForm
         Me.Button15.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button15.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button15.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Button15.Location = New System.Drawing.Point(370, 293)
+        Me.Button15.Location = New System.Drawing.Point(370, 280)
         Me.Button15.Margin = New System.Windows.Forms.Padding(1)
         Me.Button15.Name = "Button15"
-        Me.Button15.Size = New System.Drawing.Size(90, 63)
+        Me.Button15.Size = New System.Drawing.Size(90, 68)
         Me.Button15.TabIndex = 943
         Me.Button15.Text = "-15S"
         Me.Button15.UseVisualStyleBackColor = False
@@ -776,10 +776,10 @@ Partial Class MainPlayerForm
         Me.Button16.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button16.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button16.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Button16.Location = New System.Drawing.Point(462, 293)
+        Me.Button16.Location = New System.Drawing.Point(462, 280)
         Me.Button16.Margin = New System.Windows.Forms.Padding(1)
         Me.Button16.Name = "Button16"
-        Me.Button16.Size = New System.Drawing.Size(90, 63)
+        Me.Button16.Size = New System.Drawing.Size(90, 68)
         Me.Button16.TabIndex = 944
         Me.Button16.Text = "-30S"
         Me.Button16.UseVisualStyleBackColor = False
@@ -792,10 +792,10 @@ Partial Class MainPlayerForm
         Me.Button17.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button17.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button17.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Button17.Location = New System.Drawing.Point(554, 293)
+        Me.Button17.Location = New System.Drawing.Point(554, 280)
         Me.Button17.Margin = New System.Windows.Forms.Padding(1)
         Me.Button17.Name = "Button17"
-        Me.Button17.Size = New System.Drawing.Size(90, 63)
+        Me.Button17.Size = New System.Drawing.Size(90, 68)
         Me.Button17.TabIndex = 945
         Me.Button17.Text = "-1M"
         Me.Button17.UseVisualStyleBackColor = False
@@ -808,10 +808,10 @@ Partial Class MainPlayerForm
         Me.Button18.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button18.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button18.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Button18.Location = New System.Drawing.Point(646, 293)
+        Me.Button18.Location = New System.Drawing.Point(646, 280)
         Me.Button18.Margin = New System.Windows.Forms.Padding(1)
         Me.Button18.Name = "Button18"
-        Me.Button18.Size = New System.Drawing.Size(90, 63)
+        Me.Button18.Size = New System.Drawing.Size(90, 68)
         Me.Button18.TabIndex = 946
         Me.Button18.Text = "-3M"
         Me.Button18.UseVisualStyleBackColor = False
@@ -824,10 +824,10 @@ Partial Class MainPlayerForm
         Me.Button19.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button19.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button19.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Button19.Location = New System.Drawing.Point(738, 293)
+        Me.Button19.Location = New System.Drawing.Point(738, 280)
         Me.Button19.Margin = New System.Windows.Forms.Padding(1)
         Me.Button19.Name = "Button19"
-        Me.Button19.Size = New System.Drawing.Size(90, 63)
+        Me.Button19.Size = New System.Drawing.Size(90, 68)
         Me.Button19.TabIndex = 947
         Me.Button19.Text = "-5M"
         Me.Button19.UseVisualStyleBackColor = False
@@ -840,10 +840,10 @@ Partial Class MainPlayerForm
         Me.Button20.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button20.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button20.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Button20.Location = New System.Drawing.Point(830, 293)
+        Me.Button20.Location = New System.Drawing.Point(830, 280)
         Me.Button20.Margin = New System.Windows.Forms.Padding(1)
         Me.Button20.Name = "Button20"
-        Me.Button20.Size = New System.Drawing.Size(90, 63)
+        Me.Button20.Size = New System.Drawing.Size(90, 68)
         Me.Button20.TabIndex = 948
         Me.Button20.Text = "-10M"
         Me.Button20.UseVisualStyleBackColor = False
@@ -854,12 +854,12 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.TrackBar2, 9)
         Me.TrackBar2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TrackBar2.LargeChange = 1
-        Me.TrackBar2.Location = New System.Drawing.Point(370, 358)
+        Me.TrackBar2.Location = New System.Drawing.Point(370, 350)
         Me.TrackBar2.Margin = New System.Windows.Forms.Padding(1)
         Me.TrackBar2.Maximum = 40
         Me.TrackBar2.Minimum = 5
         Me.TrackBar2.Name = "TrackBar2"
-        Me.TrackBar2.Size = New System.Drawing.Size(412, 63)
+        Me.TrackBar2.Size = New System.Drawing.Size(412, 68)
         Me.TrackBar2.TabIndex = 952
         Me.ToolTip1.SetToolTip(Me.TrackBar2, "再生速度")
         Me.TrackBar2.Value = 10
@@ -871,10 +871,10 @@ Partial Class MainPlayerForm
         Me.Label4.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Label4.Font = New System.Drawing.Font("MS UI Gothic", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Label4.ForeColor = System.Drawing.SystemColors.ControlLightLight
-        Me.Label4.Location = New System.Drawing.Point(783, 357)
+        Me.Label4.Location = New System.Drawing.Point(783, 349)
         Me.Label4.Margin = New System.Windows.Forms.Padding(0)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(138, 65)
+        Me.Label4.Size = New System.Drawing.Size(138, 70)
         Me.Label4.TabIndex = 954
         Me.Label4.Text = "x1.0"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -887,10 +887,10 @@ Partial Class MainPlayerForm
         Me.Button21.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button21.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button21.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Button21.Location = New System.Drawing.Point(278, 423)
+        Me.Button21.Location = New System.Drawing.Point(278, 420)
         Me.Button21.Margin = New System.Windows.Forms.Padding(1)
         Me.Button21.Name = "Button21"
-        Me.Button21.Size = New System.Drawing.Size(90, 70)
+        Me.Button21.Size = New System.Drawing.Size(90, 69)
         Me.Button21.TabIndex = 956
         Me.Button21.Text = "0.5"
         Me.Button21.UseVisualStyleBackColor = False
@@ -903,10 +903,10 @@ Partial Class MainPlayerForm
         Me.Button22.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button22.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button22.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Button22.Location = New System.Drawing.Point(370, 423)
+        Me.Button22.Location = New System.Drawing.Point(370, 420)
         Me.Button22.Margin = New System.Windows.Forms.Padding(1)
         Me.Button22.Name = "Button22"
-        Me.Button22.Size = New System.Drawing.Size(90, 70)
+        Me.Button22.Size = New System.Drawing.Size(90, 69)
         Me.Button22.TabIndex = 957
         Me.Button22.Text = "1.0"
         Me.Button22.UseVisualStyleBackColor = False
@@ -919,10 +919,10 @@ Partial Class MainPlayerForm
         Me.Button23.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button23.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button23.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Button23.Location = New System.Drawing.Point(462, 423)
+        Me.Button23.Location = New System.Drawing.Point(462, 420)
         Me.Button23.Margin = New System.Windows.Forms.Padding(1)
         Me.Button23.Name = "Button23"
-        Me.Button23.Size = New System.Drawing.Size(90, 70)
+        Me.Button23.Size = New System.Drawing.Size(90, 69)
         Me.Button23.TabIndex = 958
         Me.Button23.Text = "1.1"
         Me.Button23.UseVisualStyleBackColor = False
@@ -935,10 +935,10 @@ Partial Class MainPlayerForm
         Me.Button24.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button24.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button24.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Button24.Location = New System.Drawing.Point(554, 423)
+        Me.Button24.Location = New System.Drawing.Point(554, 420)
         Me.Button24.Margin = New System.Windows.Forms.Padding(1)
         Me.Button24.Name = "Button24"
-        Me.Button24.Size = New System.Drawing.Size(90, 70)
+        Me.Button24.Size = New System.Drawing.Size(90, 69)
         Me.Button24.TabIndex = 959
         Me.Button24.Text = "1.2"
         Me.Button24.UseVisualStyleBackColor = False
@@ -951,10 +951,10 @@ Partial Class MainPlayerForm
         Me.Button25.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button25.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button25.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Button25.Location = New System.Drawing.Point(646, 423)
+        Me.Button25.Location = New System.Drawing.Point(646, 420)
         Me.Button25.Margin = New System.Windows.Forms.Padding(1)
         Me.Button25.Name = "Button25"
-        Me.Button25.Size = New System.Drawing.Size(90, 70)
+        Me.Button25.Size = New System.Drawing.Size(90, 69)
         Me.Button25.TabIndex = 960
         Me.Button25.Text = "1.3"
         Me.Button25.UseVisualStyleBackColor = False
@@ -967,10 +967,10 @@ Partial Class MainPlayerForm
         Me.Button26.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button26.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button26.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Button26.Location = New System.Drawing.Point(738, 423)
+        Me.Button26.Location = New System.Drawing.Point(738, 420)
         Me.Button26.Margin = New System.Windows.Forms.Padding(1)
         Me.Button26.Name = "Button26"
-        Me.Button26.Size = New System.Drawing.Size(90, 70)
+        Me.Button26.Size = New System.Drawing.Size(90, 69)
         Me.Button26.TabIndex = 961
         Me.Button26.Text = "1.4"
         Me.Button26.UseVisualStyleBackColor = False
@@ -983,10 +983,10 @@ Partial Class MainPlayerForm
         Me.Button27.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button27.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button27.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Button27.Location = New System.Drawing.Point(830, 423)
+        Me.Button27.Location = New System.Drawing.Point(830, 420)
         Me.Button27.Margin = New System.Windows.Forms.Padding(1)
         Me.Button27.Name = "Button27"
-        Me.Button27.Size = New System.Drawing.Size(90, 70)
+        Me.Button27.Size = New System.Drawing.Size(90, 69)
         Me.Button27.TabIndex = 962
         Me.Button27.Text = "1.5"
         Me.Button27.UseVisualStyleBackColor = False
@@ -997,10 +997,10 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.Label6, 2)
         Me.Label6.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Label6.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Label6.Location = New System.Drawing.Point(277, 357)
+        Me.Label6.Location = New System.Drawing.Point(277, 349)
         Me.Label6.Margin = New System.Windows.Forms.Padding(0)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(92, 65)
+        Me.Label6.Size = New System.Drawing.Size(92, 70)
         Me.Label6.TabIndex = 951
         Me.Label6.Text = "速度"
         Me.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -1013,10 +1013,10 @@ Partial Class MainPlayerForm
         Me.Button39.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button39.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button39.Image = Global.OkoshiMAX.My.Resources.Resources.OpenFolder_16x
-        Me.Button39.Location = New System.Drawing.Point(600, 98)
+        Me.Button39.Location = New System.Drawing.Point(600, 70)
         Me.Button39.Margin = New System.Windows.Forms.Padding(1)
         Me.Button39.Name = "Button39"
-        Me.Button39.Size = New System.Drawing.Size(90, 63)
+        Me.Button39.Size = New System.Drawing.Size(90, 68)
         Me.Button39.TabIndex = 927
         Me.ToolTip1.SetToolTip(Me.Button39, "ファイルを開く")
         Me.Button39.UseVisualStyleBackColor = False
@@ -1029,10 +1029,10 @@ Partial Class MainPlayerForm
         Me.Button37.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button37.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button37.Image = Global.OkoshiMAX.My.Resources.Resources.SettingsOutline_16x
-        Me.Button37.Location = New System.Drawing.Point(876, 98)
+        Me.Button37.Location = New System.Drawing.Point(876, 70)
         Me.Button37.Margin = New System.Windows.Forms.Padding(1)
         Me.Button37.Name = "Button37"
-        Me.Button37.Size = New System.Drawing.Size(121, 63)
+        Me.Button37.Size = New System.Drawing.Size(121, 68)
         Me.Button37.TabIndex = 924
         Me.ToolTip1.SetToolTip(Me.Button37, "設定")
         Me.Button37.UseVisualStyleBackColor = False
@@ -1043,10 +1043,10 @@ Partial Class MainPlayerForm
         Me.Label2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Label2.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Label2.Image = Global.OkoshiMAX.My.Resources.Resources.Volume_16x
-        Me.Label2.Location = New System.Drawing.Point(921, 162)
+        Me.Label2.Location = New System.Drawing.Point(921, 139)
         Me.Label2.Margin = New System.Windows.Forms.Padding(0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(77, 65)
+        Me.Label2.Size = New System.Drawing.Size(77, 70)
         Me.Label2.TabIndex = 969
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
@@ -1055,13 +1055,13 @@ Partial Class MainPlayerForm
         Me.TrackBar6.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom), System.Windows.Forms.AnchorStyles)
         Me.TrackBar6.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.TrackBar6.LargeChange = 1
-        Me.TrackBar6.Location = New System.Drawing.Point(931, 227)
+        Me.TrackBar6.Location = New System.Drawing.Point(931, 209)
         Me.TrackBar6.Margin = New System.Windows.Forms.Padding(0)
         Me.TrackBar6.Maximum = 100
         Me.TrackBar6.Name = "TrackBar6"
         Me.TrackBar6.Orientation = System.Windows.Forms.Orientation.Vertical
         Me.TableLayoutPanel1.SetRowSpan(Me.TrackBar6, 3)
-        Me.TrackBar6.Size = New System.Drawing.Size(56, 195)
+        Me.TrackBar6.Size = New System.Drawing.Size(56, 210)
         Me.TrackBar6.TabIndex = 950
         Me.TrackBar6.TickFrequency = 10
         Me.TrackBar6.TickStyle = System.Windows.Forms.TickStyle.Both
@@ -1076,10 +1076,10 @@ Partial Class MainPlayerForm
         Me.Button36.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button36.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button36.Image = Global.OkoshiMAX.My.Resources.Resources.CaptureFrame_16x
-        Me.Button36.Location = New System.Drawing.Point(94, 33)
+        Me.Button36.Location = New System.Drawing.Point(94, 1)
         Me.Button36.Margin = New System.Windows.Forms.Padding(1)
         Me.Button36.Name = "Button36"
-        Me.Button36.Size = New System.Drawing.Size(90, 63)
+        Me.Button36.Size = New System.Drawing.Size(90, 67)
         Me.Button36.TabIndex = 925
         Me.ToolTip1.SetToolTip(Me.Button36, "画面キャプチャ")
         Me.Button36.UseVisualStyleBackColor = False
@@ -1093,11 +1093,11 @@ Partial Class MainPlayerForm
         Me.Button200.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button200.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button200.Image = Global.OkoshiMAX.My.Resources.Resources.Run_16x
-        Me.Button200.Location = New System.Drawing.Point(2, 358)
+        Me.Button200.Location = New System.Drawing.Point(2, 350)
         Me.Button200.Margin = New System.Windows.Forms.Padding(1)
         Me.Button200.Name = "Button200"
         Me.TableLayoutPanel1.SetRowSpan(Me.Button200, 2)
-        Me.Button200.Size = New System.Drawing.Size(136, 135)
+        Me.Button200.Size = New System.Drawing.Size(136, 139)
         Me.Button200.TabIndex = 963
         Me.ToolTip1.SetToolTip(Me.Button200, "再生・一時停止")
         Me.Button200.UseVisualStyleBackColor = False
@@ -1111,11 +1111,11 @@ Partial Class MainPlayerForm
         Me.Button400.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button400.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button400.Image = Global.OkoshiMAX.My.Resources.Resources.Stop_grey_16x
-        Me.Button400.Location = New System.Drawing.Point(140, 358)
+        Me.Button400.Location = New System.Drawing.Point(140, 350)
         Me.Button400.Margin = New System.Windows.Forms.Padding(1)
         Me.Button400.Name = "Button400"
         Me.TableLayoutPanel1.SetRowSpan(Me.Button400, 2)
-        Me.Button400.Size = New System.Drawing.Size(136, 135)
+        Me.Button400.Size = New System.Drawing.Size(136, 139)
         Me.Button400.TabIndex = 964
         Me.ToolTip1.SetToolTip(Me.Button400, "停止")
         Me.Button400.UseVisualStyleBackColor = False
@@ -1126,10 +1126,10 @@ Partial Class MainPlayerForm
         Me.Label5.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Label5.Font = New System.Drawing.Font("MS UI Gothic", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Label5.ForeColor = System.Drawing.SystemColors.ControlLightLight
-        Me.Label5.Location = New System.Drawing.Point(921, 422)
+        Me.Label5.Location = New System.Drawing.Point(921, 419)
         Me.Label5.Margin = New System.Windows.Forms.Padding(0)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(77, 72)
+        Me.Label5.Size = New System.Drawing.Size(77, 71)
         Me.Label5.TabIndex = 955
         Me.Label5.Text = "100"
         Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -1142,10 +1142,10 @@ Partial Class MainPlayerForm
         Me.ButtonShiori.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.ButtonShiori.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.ButtonShiori.Image = Global.OkoshiMAX.My.Resources.Resources.Bookmark_16x
-        Me.ButtonShiori.Location = New System.Drawing.Point(784, 98)
+        Me.ButtonShiori.Location = New System.Drawing.Point(784, 70)
         Me.ButtonShiori.Margin = New System.Windows.Forms.Padding(1)
         Me.ButtonShiori.Name = "ButtonShiori"
-        Me.ButtonShiori.Size = New System.Drawing.Size(90, 63)
+        Me.ButtonShiori.Size = New System.Drawing.Size(90, 68)
         Me.ButtonShiori.TabIndex = 967
         Me.ToolTip1.SetToolTip(Me.ButtonShiori, "しおり一覧")
         Me.ButtonShiori.UseVisualStyleBackColor = False
@@ -1158,10 +1158,10 @@ Partial Class MainPlayerForm
         Me.Button35.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button35.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button35.Image = Global.OkoshiMAX.My.Resources.Resources.PinnedItem_16x
-        Me.Button35.Location = New System.Drawing.Point(692, 98)
+        Me.Button35.Location = New System.Drawing.Point(692, 70)
         Me.Button35.Margin = New System.Windows.Forms.Padding(1)
         Me.Button35.Name = "Button35"
-        Me.Button35.Size = New System.Drawing.Size(90, 63)
+        Me.Button35.Size = New System.Drawing.Size(90, 68)
         Me.Button35.TabIndex = 971
         Me.ToolTip1.SetToolTip(Me.Button35, "最前面に表示")
         Me.Button35.UseVisualStyleBackColor = False
@@ -1174,11 +1174,11 @@ Partial Class MainPlayerForm
         Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button1.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button1.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Button1.Location = New System.Drawing.Point(2, 163)
+        Me.Button1.Location = New System.Drawing.Point(2, 140)
         Me.Button1.Margin = New System.Windows.Forms.Padding(1)
         Me.Button1.MinimumSize = New System.Drawing.Size(0, 25)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(90, 63)
+        Me.Button1.Size = New System.Drawing.Size(90, 68)
         Me.Button1.TabIndex = 940
         Me.Button1.Text = "+1S"
         Me.Button1.UseVisualStyleBackColor = False
@@ -1191,10 +1191,10 @@ Partial Class MainPlayerForm
         Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button2.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button2.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Button2.Location = New System.Drawing.Point(94, 163)
+        Me.Button2.Location = New System.Drawing.Point(94, 140)
         Me.Button2.Margin = New System.Windows.Forms.Padding(1)
         Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(90, 63)
+        Me.Button2.Size = New System.Drawing.Size(90, 68)
         Me.Button2.TabIndex = 928
         Me.Button2.Text = "+3S"
         Me.Button2.UseVisualStyleBackColor = False
@@ -1207,10 +1207,10 @@ Partial Class MainPlayerForm
         Me.Button12.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button12.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button12.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Button12.Location = New System.Drawing.Point(94, 293)
+        Me.Button12.Location = New System.Drawing.Point(94, 280)
         Me.Button12.Margin = New System.Windows.Forms.Padding(1)
         Me.Button12.Name = "Button12"
-        Me.Button12.Size = New System.Drawing.Size(90, 63)
+        Me.Button12.Size = New System.Drawing.Size(90, 68)
         Me.Button12.TabIndex = 929
         Me.Button12.Text = "-3S"
         Me.Button12.UseVisualStyleBackColor = False
@@ -1220,10 +1220,10 @@ Partial Class MainPlayerForm
         Me.Button30.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button30.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button30.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Button30.Location = New System.Drawing.Point(555, 34)
+        Me.Button30.Location = New System.Drawing.Point(555, 2)
         Me.Button30.Margin = New System.Windows.Forms.Padding(2)
         Me.Button30.Name = "Button30"
-        Me.Button30.Size = New System.Drawing.Size(42, 61)
+        Me.Button30.Size = New System.Drawing.Size(42, 65)
         Me.Button30.TabIndex = 973
         Me.Button30.Text = "Button30"
         Me.Button30.UseVisualStyleBackColor = True
@@ -1233,10 +1233,10 @@ Partial Class MainPlayerForm
         Me.Button38.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button38.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button38.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Button38.Location = New System.Drawing.Point(555, 99)
+        Me.Button38.Location = New System.Drawing.Point(555, 71)
         Me.Button38.Margin = New System.Windows.Forms.Padding(2)
         Me.Button38.Name = "Button38"
-        Me.Button38.Size = New System.Drawing.Size(42, 61)
+        Me.Button38.Size = New System.Drawing.Size(42, 66)
         Me.Button38.TabIndex = 974
         Me.Button38.Text = "Button38"
         Me.Button38.UseVisualStyleBackColor = True
@@ -1247,10 +1247,10 @@ Partial Class MainPlayerForm
         Me.Button40.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button40.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button40.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Button40.Location = New System.Drawing.Point(3, 99)
+        Me.Button40.Location = New System.Drawing.Point(3, 71)
         Me.Button40.Margin = New System.Windows.Forms.Padding(2)
         Me.Button40.Name = "Button40"
-        Me.Button40.Size = New System.Drawing.Size(88, 61)
+        Me.Button40.Size = New System.Drawing.Size(88, 66)
         Me.Button40.TabIndex = 975
         Me.Button40.Text = "Button40"
         Me.ToolTip1.SetToolTip(Me.Button40, "プレイリストの表示・非表示")
@@ -1280,7 +1280,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
-        Me.TableLayoutPanel2.Size = New System.Drawing.Size(315, 802)
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(315, 794)
         Me.TableLayoutPanel2.TabIndex = 158
         '
         'DataGridView1
@@ -1297,7 +1297,7 @@ Partial Class MainPlayerForm
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.RowHeadersWidth = 25
         Me.DataGridView1.RowTemplate.Height = 24
-        Me.DataGridView1.Size = New System.Drawing.Size(313, 688)
+        Me.DataGridView1.Size = New System.Drawing.Size(313, 680)
         Me.DataGridView1.TabIndex = 149
         '
         'colCounter
@@ -1347,7 +1347,7 @@ Partial Class MainPlayerForm
         Me.Button28.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button28.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button28.Image = Global.OkoshiMAX.My.Resources.Resources.Cancel_16x
-        Me.Button28.Location = New System.Drawing.Point(235, 763)
+        Me.Button28.Location = New System.Drawing.Point(235, 755)
         Me.Button28.Margin = New System.Windows.Forms.Padding(1)
         Me.Button28.Name = "Button28"
         Me.Button28.Size = New System.Drawing.Size(79, 38)
@@ -1362,7 +1362,7 @@ Partial Class MainPlayerForm
         Me.Button29.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button29.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button29.Image = Global.OkoshiMAX.My.Resources.Resources.Add_16x
-        Me.Button29.Location = New System.Drawing.Point(157, 763)
+        Me.Button29.Location = New System.Drawing.Point(157, 755)
         Me.Button29.Margin = New System.Windows.Forms.Padding(1)
         Me.Button29.Name = "Button29"
         Me.Button29.Size = New System.Drawing.Size(76, 38)
@@ -1377,7 +1377,7 @@ Partial Class MainPlayerForm
         Me.Button32.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button32.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button32.Image = Global.OkoshiMAX.My.Resources.Resources.DestinationAssistant_16x
-        Me.Button32.Location = New System.Drawing.Point(79, 763)
+        Me.Button32.Location = New System.Drawing.Point(79, 755)
         Me.Button32.Margin = New System.Windows.Forms.Padding(1)
         Me.Button32.Name = "Button32"
         Me.Button32.Size = New System.Drawing.Size(76, 38)
@@ -1392,7 +1392,7 @@ Partial Class MainPlayerForm
         Me.Button31.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button31.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button31.Image = Global.OkoshiMAX.My.Resources.Resources.DownloadDocument_16x
-        Me.Button31.Location = New System.Drawing.Point(1, 763)
+        Me.Button31.Location = New System.Drawing.Point(1, 755)
         Me.Button31.Margin = New System.Windows.Forms.Padding(1)
         Me.Button31.Name = "Button31"
         Me.Button31.Size = New System.Drawing.Size(76, 38)
@@ -1406,7 +1406,7 @@ Partial Class MainPlayerForm
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TableLayoutPanel2.SetColumnSpan(Me.TextBox3, 3)
-        Me.TextBox3.Location = New System.Drawing.Point(79, 723)
+        Me.TextBox3.Location = New System.Drawing.Point(79, 715)
         Me.TextBox3.Margin = New System.Windows.Forms.Padding(1)
         Me.TextBox3.Name = "TextBox3"
         Me.TextBox3.Size = New System.Drawing.Size(235, 22)
@@ -1418,7 +1418,7 @@ Partial Class MainPlayerForm
         Me.Button34.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.Button34.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button34.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Button34.Location = New System.Drawing.Point(1, 723)
+        Me.Button34.Location = New System.Drawing.Point(1, 715)
         Me.Button34.Margin = New System.Windows.Forms.Padding(1)
         Me.Button34.Name = "Button34"
         Me.Button34.Size = New System.Drawing.Size(76, 38)
@@ -1437,7 +1437,7 @@ Partial Class MainPlayerForm
         Me.CustomTitleBar.Dock = System.Windows.Forms.DockStyle.Top
         Me.CustomTitleBar.Location = New System.Drawing.Point(2, 2)
         Me.CustomTitleBar.Name = "CustomTitleBar"
-        Me.CustomTitleBar.Size = New System.Drawing.Size(1601, 32)
+        Me.CustomTitleBar.Size = New System.Drawing.Size(1601, 40)
         Me.CustomTitleBar.TabIndex = 0
         '
         'BtnMinimize

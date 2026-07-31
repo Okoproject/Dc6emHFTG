@@ -246,7 +246,7 @@ Public Class MainPlayerForm
         InitializeMediaPlayer()
         InitializeHotKeys()
         InitializeCustomTitleBar()
-        InitializeResizeGrips()
+        ' InitializeResizeGrips()  ' サイズ調整用グリップ（左上、右上、左下、右下）を無効化
         LoadDefaultSettings()
         ApplyUiSettings()
         UpdateControllerMinSize()
@@ -1952,7 +1952,7 @@ Public Class MainPlayerForm
         Dim darkBrush2 As New SolidBrush(Color.FromArgb(50, 50, 50))
 
         ' Row 0
-        For col = 0 To 16
+        For col = 0 To 20
             If e.Column = col AndAlso e.Row = 0 Then
                 e.Graphics.FillRectangle(darkBrush2, e.CellBounds)
             End If
