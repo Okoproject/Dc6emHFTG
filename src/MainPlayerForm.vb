@@ -1947,10 +1947,9 @@ Public Class MainPlayerForm
         Next
 
         ' Row 1
-        Dim blackBrush As New SolidBrush(Color.FromArgb(0, 0, 0))
         For col = 0 To 20
             If e.Column = col AndAlso e.Row = 1 Then
-                e.Graphics.FillRectangle(blackBrush, e.CellBounds)
+                e.Graphics.FillRectangle(darkBrush2, e.CellBounds)
             End If
         Next
 
