@@ -349,6 +349,20 @@ Public Class MainPlayerForm
     End Sub
 
     ''' <summary>
+    ''' ボタンの画像とImageLayoutを同時に設定するヘルパー
+    ''' （Image変更時にImageLayoutがリセットされるのを防ぐ）
+    ''' </summary>
+    Private Sub SetButtonImage(btn As Control, img As System.Drawing.Image)
+        If btn IsNot Nothing AndAlso img IsNot Nothing Then
+            Dim t = btn.GetType()
+            Dim propImage = t.GetProperty("Image")
+            If propImage IsNot Nothing Then propImage.SetValue(btn, img, Nothing)
+            Dim propLayout = t.GetProperty("ImageLayout")
+            If propLayout IsNot Nothing Then propLayout.SetValue(btn, System.Windows.Forms.ImageLayout.Center, Nothing)
+        End If
+    End Sub
+
+    ''' <summary>
     ''' コントロールツリーから全ての子コントロールを取得
     ''' </summary>
     Private Iterator Function GetAllControls(parent As Control) As IEnumerable(Of Control)
@@ -497,10 +511,10 @@ Public Class MainPlayerForm
         End If
         If My.Settings.AutoPlay = True Then
             _mediaPlayer.Play()
-            Button200.Image = My.Resources.Pause_16x
+            SetButtonImage(Button200, My.Resources.Pause_16x)
         Else
             _mediaPlayer.Pause()
-            Button200.Image = My.Resources.Run_16x
+            SetButtonImage(Button200, My.Resources.Run_16x)
         End If
     End Sub
 
@@ -1027,10 +1041,10 @@ Public Class MainPlayerForm
             If My.Settings.AutoBack <> 0 Then
                 _mediaPlayer.Position -= My.Settings.AutoBack / 100
             End If
-            Button200.Image = My.Resources.Run_16x
+            SetButtonImage(Button200, My.Resources.Run_16x)
         Else
             _mediaPlayer.Play()
-            Button200.Image = My.Resources.Pause_16x
+            SetButtonImage(Button200, My.Resources.Pause_16x)
         End If
 
         Label1.Text = TimeSpan.FromSeconds(_mediaPlayer.Position).ToString("hh\:mm\:ss") &
@@ -1281,7 +1295,7 @@ Public Class MainPlayerForm
     Private Sub Button400_Click(sender As Object, e As EventArgs) Handles Button400.Click
         _mediaPlayer.Pause()
         _mediaPlayer.Position = 0
-        Button200.Image = My.Resources.Run_16x
+        SetButtonImage(Button200, My.Resources.Run_16x)
 
         Label1.Text = TimeSpan.FromSeconds(_mediaPlayer.Position).ToString("hh\:mm\:ss") &
               My.Resources.TimeSeparator &
@@ -1296,10 +1310,10 @@ Public Class MainPlayerForm
 
         If _mediaPlayer.IsPlaying Then
             _mediaPlayer.Pause()
-            Button200.Image = My.Resources.Run_16x
+            SetButtonImage(Button200, My.Resources.Run_16x)
         Else
             _mediaPlayer.Play()
-            Button200.Image = My.Resources.Pause_16x
+            SetButtonImage(Button200, My.Resources.Pause_16x)
         End If
 
     End Sub
