@@ -1994,10 +1994,10 @@ Public Class MainPlayerForm
     '''     カスタムタイトルバーの初期化
     ''' </summary>
     Private Sub InitializeCustomTitleBar()
-        ' タイトルバーの基本設定 - 絶対配置でフォーム最上部に固定
+        ' タイトルバーの基本設定 - Dock=Topでパディングを尊重してコンテンツを下に押し下げる
         If CustomTitleBar IsNot Nothing Then
             CustomTitleBar.Height = CustomTitleBarHeight
-            CustomTitleBar.Dock = DockStyle.None
+            CustomTitleBar.Dock = DockStyle.Top
             CustomTitleBar.Location = New Point(0, 0)
             CustomTitleBar.Size = New Size(Me.ClientSize.Width, CustomTitleBarHeight)
             CustomTitleBar.BackColor = Color.FromArgb(30, 30, 30)
