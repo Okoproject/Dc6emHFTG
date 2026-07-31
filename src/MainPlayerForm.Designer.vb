@@ -504,7 +504,6 @@ Partial Class MainPlayerForm
         Me.CheckBoxMpvPamel.Dock = System.Windows.Forms.DockStyle.Fill
         Me.CheckBoxMpvPamel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.CheckBoxMpvPamel.Image = Global.OkoshiMAX.My.Resources.Resources.Monitor_16x
-        Me.CheckBoxMpvPamel.ImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.CheckBoxMpvPamel.Location = New System.Drawing.Point(2, 34)
         Me.CheckBoxMpvPamel.Margin = New System.Windows.Forms.Padding(1)
         Me.CheckBoxMpvPamel.Name = "CheckBoxMpvPamel"
