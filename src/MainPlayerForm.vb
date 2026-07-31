@@ -1224,10 +1224,10 @@ Public Class MainPlayerForm
         LockWindowUpdate(Me.Handle)
         Try
             If isShowing Then
-                ' Row 0を表示（疑似タイトルバーの下に表示）
+                ' 動画表示時：Row 0を非表示（高さ0）
                 If TableLayoutPanel1.RowStyles.Count > 0 Then
-                    TableLayoutPanel1.RowStyles(0).Height = 25
-                    TableLayoutPanel1.RowStyles(0).SizeType = SizeType.Percent
+                    TableLayoutPanel1.RowStyles(0).Height = 0
+                    TableLayoutPanel1.RowStyles(0).SizeType = SizeType.Absolute
                 End If
 
                 Dim panelHeight As Integer = If(ScrHeight > 0, ScrHeight, 300)
@@ -1240,9 +1240,9 @@ Public Class MainPlayerForm
                 ' SplitContainer3.SplitterMovedがScrHeightを上書きする可能性があるため、最後に確定値を再設定する
                 ScrHeight = panelHeight
             Else
-                ' Row 0を非表示（疑似タイトルバーの下に隠す）
+                ' 動画非表示時：Row 0を高さ32で表示
                 If TableLayoutPanel1.RowStyles.Count > 0 Then
-                    TableLayoutPanel1.RowStyles(0).Height = 0
+                    TableLayoutPanel1.RowStyles(0).Height = 32
                     TableLayoutPanel1.RowStyles(0).SizeType = SizeType.Absolute
                 End If
 
