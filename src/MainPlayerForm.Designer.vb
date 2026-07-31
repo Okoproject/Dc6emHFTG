@@ -1086,10 +1086,11 @@ Partial Class MainPlayerForm
         'Button200
         '
         Me.Button200.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Button200.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button200, 3)
         Me.Button200.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button200.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button200.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Button200.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button200.Image = Global.OkoshiMAX.My.Resources.Resources.Run_16x
         Me.Button200.Location = New System.Drawing.Point(2, 359)
         Me.Button200.Margin = New System.Windows.Forms.Padding(1)
@@ -1103,10 +1104,11 @@ Partial Class MainPlayerForm
         'Button400
         '
         Me.Button400.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Button400.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.TableLayoutPanel1.SetColumnSpan(Me.Button400, 3)
         Me.Button400.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button400.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button400.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Button400.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button400.Image = Global.OkoshiMAX.My.Resources.Resources.Stop_grey_16x
         Me.Button400.Location = New System.Drawing.Point(140, 359)
         Me.Button400.Margin = New System.Windows.Forms.Padding(1)
@@ -1244,6 +1246,7 @@ Partial Class MainPlayerForm
         Me.Button40.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button40.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button40.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.Button40.Image = Global.OkoshiMAX.My.Resources.Resources.Run_16x
         Me.Button40.Location = New System.Drawing.Point(3, 100)
         Me.Button40.Margin = New System.Windows.Forms.Padding(2)
         Me.Button40.Name = "Button40"
