@@ -281,6 +281,7 @@ Partial Class MainPlayerForm
         Me.Button41.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button41.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button41.Image = Global.OkoshiMAX.My.Resources.Resources.FolderClosed_16x
+        Me.Button41.ImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.Button41.Location = New System.Drawing.Point(1, 763)
         Me.Button41.Margin = New System.Windows.Forms.Padding(1)
         Me.Button41.Name = "Button41"
@@ -296,6 +297,7 @@ Partial Class MainPlayerForm
         Me.Button42.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button42.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button42.Image = Global.OkoshiMAX.My.Resources.Resources.GlyphRight_16x
+        Me.Button42.ImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.Button42.Location = New System.Drawing.Point(47, 763)
         Me.Button42.Margin = New System.Windows.Forms.Padding(1)
         Me.Button42.Name = "Button42"
@@ -311,6 +313,7 @@ Partial Class MainPlayerForm
         Me.Button43.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button43.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button43.Image = Global.OkoshiMAX.My.Resources.Resources.Cancel_16x
+        Me.Button43.ImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.Button43.Location = New System.Drawing.Point(93, 763)
         Me.Button43.Margin = New System.Windows.Forms.Padding(1)
         Me.Button43.Name = "Button43"
@@ -326,6 +329,7 @@ Partial Class MainPlayerForm
         Me.Button44.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button44.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button44.Image = Global.OkoshiMAX.My.Resources.Resources.Add_16x
+        Me.Button44.ImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.Button44.Location = New System.Drawing.Point(139, 763)
         Me.Button44.Margin = New System.Windows.Forms.Padding(1)
         Me.Button44.Name = "Button44"
@@ -341,6 +345,7 @@ Partial Class MainPlayerForm
         Me.Button45.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button45.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button45.Image = Global.OkoshiMAX.My.Resources.Resources.DownloadDocument_16x
+        Me.Button45.ImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.Button45.Location = New System.Drawing.Point(185, 763)
         Me.Button45.Margin = New System.Windows.Forms.Padding(1)
         Me.Button45.Name = "Button45"
@@ -356,6 +361,7 @@ Partial Class MainPlayerForm
         Me.Button46.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button46.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button46.Image = Global.OkoshiMAX.My.Resources.Resources.OpenFolder_16x
+        Me.Button46.ImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.Button46.Location = New System.Drawing.Point(231, 763)
         Me.Button46.Margin = New System.Windows.Forms.Padding(1)
         Me.Button46.Name = "Button46"
@@ -498,6 +504,7 @@ Partial Class MainPlayerForm
         Me.CheckBoxMpvPamel.Dock = System.Windows.Forms.DockStyle.Fill
         Me.CheckBoxMpvPamel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.CheckBoxMpvPamel.Image = Global.OkoshiMAX.My.Resources.Resources.Monitor_16x
+        Me.CheckBoxMpvPamel.ImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.CheckBoxMpvPamel.Location = New System.Drawing.Point(2, 34)
         Me.CheckBoxMpvPamel.Margin = New System.Windows.Forms.Padding(1)
         Me.CheckBoxMpvPamel.Name = "CheckBoxMpvPamel"
@@ -1012,6 +1019,7 @@ Partial Class MainPlayerForm
         Me.Button39.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button39.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button39.Image = Global.OkoshiMAX.My.Resources.Resources.OpenFolder_16x
+        Me.Button39.ImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.Button39.Location = New System.Drawing.Point(600, 99)
         Me.Button39.Margin = New System.Windows.Forms.Padding(1)
         Me.Button39.Name = "Button39"
@@ -1028,6 +1036,7 @@ Partial Class MainPlayerForm
         Me.Button37.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button37.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button37.Image = Global.OkoshiMAX.My.Resources.Resources.SettingsOutline_16x
+        Me.Button37.ImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.Button37.Location = New System.Drawing.Point(876, 99)
         Me.Button37.Margin = New System.Windows.Forms.Padding(1)
         Me.Button37.Name = "Button37"
@@ -1075,6 +1084,7 @@ Partial Class MainPlayerForm
         Me.Button36.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button36.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button36.Image = Global.OkoshiMAX.My.Resources.Resources.CaptureFrame_16x
+        Me.Button36.ImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.Button36.Location = New System.Drawing.Point(94, 34)
         Me.Button36.Margin = New System.Windows.Forms.Padding(1)
         Me.Button36.Name = "Button36"
@@ -1091,6 +1101,7 @@ Partial Class MainPlayerForm
         Me.Button200.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button200.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button200.Image = Global.OkoshiMAX.My.Resources.Resources.Run_16x
+        Me.Button200.ImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.Button200.Location = New System.Drawing.Point(2, 359)
         Me.Button200.Margin = New System.Windows.Forms.Padding(1)
         Me.Button200.Name = "Button200"
@@ -1108,6 +1119,7 @@ Partial Class MainPlayerForm
         Me.Button400.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button400.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button400.Image = Global.OkoshiMAX.My.Resources.Resources.Stop_grey_16x
+        Me.Button400.ImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.Button400.Location = New System.Drawing.Point(140, 359)
         Me.Button400.Margin = New System.Windows.Forms.Padding(1)
         Me.Button400.Name = "Button400"
@@ -1139,6 +1151,7 @@ Partial Class MainPlayerForm
         Me.ButtonShiori.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.ButtonShiori.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.ButtonShiori.Image = Global.OkoshiMAX.My.Resources.Resources.Bookmark_16x
+        Me.ButtonShiori.ImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.ButtonShiori.Location = New System.Drawing.Point(784, 99)
         Me.ButtonShiori.Margin = New System.Windows.Forms.Padding(1)
         Me.ButtonShiori.Name = "ButtonShiori"
@@ -1155,6 +1168,7 @@ Partial Class MainPlayerForm
         Me.Button35.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button35.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button35.Image = Global.OkoshiMAX.My.Resources.Resources.PinnedItem_16x
+        Me.Button35.ImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.Button35.Location = New System.Drawing.Point(692, 99)
         Me.Button35.Margin = New System.Windows.Forms.Padding(1)
         Me.Button35.Name = "Button35"
@@ -1343,6 +1357,7 @@ Partial Class MainPlayerForm
         Me.Button28.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button28.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button28.Image = Global.OkoshiMAX.My.Resources.Resources.Cancel_16x
+        Me.Button28.ImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.Button28.Location = New System.Drawing.Point(235, 763)
         Me.Button28.Margin = New System.Windows.Forms.Padding(1)
         Me.Button28.Name = "Button28"
@@ -1358,6 +1373,7 @@ Partial Class MainPlayerForm
         Me.Button29.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button29.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button29.Image = Global.OkoshiMAX.My.Resources.Resources.Add_16x
+        Me.Button29.ImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.Button29.Location = New System.Drawing.Point(157, 763)
         Me.Button29.Margin = New System.Windows.Forms.Padding(1)
         Me.Button29.Name = "Button29"
@@ -1373,6 +1389,7 @@ Partial Class MainPlayerForm
         Me.Button32.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button32.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button32.Image = Global.OkoshiMAX.My.Resources.Resources.DestinationAssistant_16x
+        Me.Button32.ImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.Button32.Location = New System.Drawing.Point(79, 763)
         Me.Button32.Margin = New System.Windows.Forms.Padding(1)
         Me.Button32.Name = "Button32"
@@ -1388,6 +1405,7 @@ Partial Class MainPlayerForm
         Me.Button31.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button31.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Button31.Image = Global.OkoshiMAX.My.Resources.Resources.DownloadDocument_16x
+        Me.Button31.ImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.Button31.Location = New System.Drawing.Point(1, 763)
         Me.Button31.Margin = New System.Windows.Forms.Padding(1)
         Me.Button31.Name = "Button31"
