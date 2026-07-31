@@ -1959,14 +1959,6 @@ Public Class MainPlayerForm
             e.Graphics.FillRectangle(darkBrush, e.CellBounds)
         End If
 
-        ' 再生・停止部分
-        Dim blackBrush As New SolidBrush(Color.FromArgb(0, 0, 0))
-        For col = 0 To 5
-            If e.Column = col AndAlso (e.Row = 5 OrElse e.Row = 6) Then
-                e.Graphics.FillRectangle(blackBrush, e.CellBounds)
-            End If
-        Next
-
         ' 速度調整部分
         If (e.Column = 6 OrElse e.Column >= 8 AndAlso e.Column <= 18) AndAlso e.Row = 5 Then
             e.Graphics.FillRectangle(darkBrush2, e.CellBounds)
