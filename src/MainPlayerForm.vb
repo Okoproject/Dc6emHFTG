@@ -1224,6 +1224,12 @@ Public Class MainPlayerForm
         LockWindowUpdate(Me.Handle)
         Try
             If isShowing Then
+                ' Row 0を非表示（高さ0）
+                If TableLayoutPanel1.RowStyles.Count > 0 Then
+                    TableLayoutPanel1.RowStyles(0).Height = 0
+                    TableLayoutPanel1.RowStyles(0).SizeType = SizeType.Absolute
+                End If
+
                 Dim panelHeight As Integer = If(ScrHeight > 0, ScrHeight, 300)
                 ' フォームを上に拡張（Topを減らし、Heightを増やす）
                 Me.Top -= panelHeight
@@ -1234,6 +1240,12 @@ Public Class MainPlayerForm
                 ' SplitContainer3.SplitterMovedがScrHeightを上書きする可能性があるため、最後に確定値を再設定する
                 ScrHeight = panelHeight
             Else
+                ' Row 0を再表示
+                If TableLayoutPanel1.RowStyles.Count > 0 Then
+                    TableLayoutPanel1.RowStyles(0).Height = 25
+                    TableLayoutPanel1.RowStyles(0).SizeType = SizeType.Percent
+                End If
+
                 ' 非表示：高さを保存してからPanel1を折りたたみ、その後にフォームを上に縮小する
                 ' （折りたたむ前に高さを縮めると、FixedPanel未設定のためPanel1も比例縮小し、
                 ' 　SplitterMovedでScrHeightに縮んだ値が入ってしまう）
@@ -1955,9 +1967,16 @@ Public Class MainPlayerForm
 
         ' 音量調整部分
         Dim darkBrush As New SolidBrush(Color.FromArgb(64, 64, 64))
-        If e.Column = 20 AndAlso (e.Row = 3 OrElse e.Row = 4 OrElse e.Row = 5) Then
-            e.Graphics.FillRectangle(darkBrush, e.CellBounds)
-        End If
+        'If e.Column = 20 AndAlso (e.Row = 3 OrElse e.Row = 4 OrElse e.Row = 5) Then
+        'e.Graphics.FillRectangle(darkBrush, e.CellBounds)
+        'End If
+
+        '音量調整部分
+        For row = 3 To 5
+            If e.Column = 20 AndAlso e.Row Then
+                e.Graphics.FillRectangle(darkBrush, e.CellBounds)
+            End If
+        Next
 
         ' 速度調整部分
         If (e.Column = 6 OrElse e.Column >= 8 AndAlso e.Column <= 18) AndAlso e.Row = 5 Then

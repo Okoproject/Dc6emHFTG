@@ -28,7 +28,7 @@ Partial Class MainPlayerForm
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainPlayerForm))
         Me.PageSetupDialog1 = New System.Windows.Forms.PageSetupDialog()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
@@ -850,16 +850,16 @@ Partial Class MainPlayerForm
         '
         'TrackBar2
         '
-        Me.TrackBar2.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.TrackBar2.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
         Me.TableLayoutPanel1.SetColumnSpan(Me.TrackBar2, 9)
+        Me.TrackBar2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TrackBar2.LargeChange = 1
-        Me.TrackBar2.Location = New System.Drawing.Point(370, 361)
+        Me.TrackBar2.Location = New System.Drawing.Point(370, 358)
         Me.TrackBar2.Margin = New System.Windows.Forms.Padding(1)
         Me.TrackBar2.Maximum = 40
         Me.TrackBar2.Minimum = 5
         Me.TrackBar2.Name = "TrackBar2"
-        Me.TrackBar2.Size = New System.Drawing.Size(412, 56)
+        Me.TrackBar2.Size = New System.Drawing.Size(412, 63)
         Me.TrackBar2.TabIndex = 952
         Me.ToolTip1.SetToolTip(Me.TrackBar2, "再生速度")
         Me.TrackBar2.Value = 10
@@ -1052,16 +1052,16 @@ Partial Class MainPlayerForm
         '
         'TrackBar6
         '
-        Me.TrackBar6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom)), System.Windows.Forms.AnchorStyles)
+        Me.TrackBar6.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom), System.Windows.Forms.AnchorStyles)
         Me.TrackBar6.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.TrackBar6.LargeChange = 1
-        Me.TrackBar6.Location = New System.Drawing.Point(921, 227)
+        Me.TrackBar6.Location = New System.Drawing.Point(931, 227)
         Me.TrackBar6.Margin = New System.Windows.Forms.Padding(0)
         Me.TrackBar6.Maximum = 100
         Me.TrackBar6.Name = "TrackBar6"
         Me.TrackBar6.Orientation = System.Windows.Forms.Orientation.Vertical
         Me.TableLayoutPanel1.SetRowSpan(Me.TrackBar6, 3)
-        Me.TrackBar6.Size = New System.Drawing.Size(77, 195)
+        Me.TrackBar6.Size = New System.Drawing.Size(56, 195)
         Me.TrackBar6.TabIndex = 950
         Me.TrackBar6.TickFrequency = 10
         Me.TrackBar6.TickStyle = System.Windows.Forms.TickStyle.Both
@@ -1302,10 +1302,10 @@ Partial Class MainPlayerForm
         '
         'colCounter
         '
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        Me.colCounter.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
+        Me.colCounter.DefaultCellStyle = DataGridViewCellStyle2
         Me.colCounter.FillWeight = 80.0!
         Me.colCounter.HeaderText = "カウンタ"
         Me.colCounter.MinimumWidth = 6
