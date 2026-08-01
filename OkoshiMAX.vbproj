@@ -217,7 +217,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="dll\libmpv-2.dll">
+    <Content Include="libmpv-2.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <PublishState>Include</PublishState>
     </Content>

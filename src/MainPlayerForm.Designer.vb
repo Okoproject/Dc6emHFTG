@@ -27,11 +27,10 @@ Partial Class MainPlayerForm
     'コード エディターを使って変更しないでください。
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainPlayerForm))
         Me.PageSetupDialog1 = New System.Windows.Forms.PageSetupDialog()
-        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.Timer1 = New System.Windows.Forms.Timer()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.SplitContainer2 = New System.Windows.Forms.SplitContainer()
@@ -119,7 +118,7 @@ Partial Class MainPlayerForm
         Me.BtnMaximize = New System.Windows.Forms.Button()
         Me.BtnClose = New System.Windows.Forms.Button()
         Me.LblTitle = New System.Windows.Forms.Label()
-        Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
+        Me.ToolTip1 = New System.Windows.Forms.ToolTip()
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
