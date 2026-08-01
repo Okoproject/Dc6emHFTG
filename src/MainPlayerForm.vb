@@ -14,6 +14,22 @@ Public Class MainPlayerForm
 
     'BMパネルの幅を保存する変数
     Public BMWidth As Integer
+
+    ''' <summary>
+    '''     【調査用一時コード】調査ログをファイルへ出力する（%TEMP%\OkoshiMAX_debug.log）
+    ''' </summary>
+    Private Sub LogDebug(message As String)
+        Dim path = IO.Path.Combine(IO.Path.GetTempPath(), "OkoshiMAX_debug.log")
+        IO.File.AppendAllText(path, $"{DateTime.Now:HH:mm:ss.fff} {message}{Environment.NewLine}")
+    End Sub
+
+    ''' <summary>
+    '''     【調査用一時コード】BMWidthへの書き込み元を追跡するためのデバッグ出力
+    ''' </summary>
+    Private Sub SetBMWidthDebug(value As Integer, source As String)
+        BMWidth = value
+        LogDebug($"[BMWidth] {source} => {value} (Panel2Collapsed={SplitContainer1.Panel2Collapsed}, Panel2.Width={SplitContainer1.Panel2.Width})")
+    End Sub
     'PLパネルの幅を保存する変数
     Public PLWidth As Integer
     'フォーム自体の高さを保存する変数
@@ -26,6 +42,12 @@ Public Class MainPlayerForm
     Private _shioriWidthDelta As Integer = 0
     ' プレイリストパネル表示時にフォーム幅を広げた量（非表示時に同じ量だけ戻すため）
     Private _playlistWidthDelta As Integer = 0
+    ' 動画表示パネル表示時にフォーム高さを広げた量（非表示時に同じ量だけ戻すため）
+    Private _gamenHeightDelta As Integer = 0
+    ' ApplyUiSettingsからCheckBoxMpvPamel.Checkedを設定する際、CheckBoxMpvPanel_CheckedChangedの
+    ' 再入（デザイナ既定値Trueからの変化でCheckedChangedが発火し、未初期化状態のまま
+    ' My.Settings.Gamen_Heightを上書き保存してしまう）を防ぐためのフラグ
+    Private _suppressGamenCheckedChanged As Boolean = False
 
     ''' <summary>
     '''     カスタムタイトルバーの高さ
@@ -324,6 +346,14 @@ Public Class MainPlayerForm
         ' 直後（初回のパネル表示切替ボタン押下時など）に古いサイズを基準に計算してしまう
         ' 問題を防ぐ
         Me.ResumeLayout(True)
+
+        ' 起動直後、メインプレイヤー上部のコントロールがカスタムタイトルバーに埋もれることがある
+        ' （原因未特定）。動画表示パネルを実際にON/OFFすると解消されることが確認できているため、
+        ' 起動時に同じ操作を自動で行う（WM_SETREDRAWが有効なため画面には見えない）
+        Dim originalGamenChecked = CheckBoxMpvPamel.Checked
+        CheckBoxMpvPamel.Checked = Not originalGamenChecked
+        CheckBoxMpvPamel.Checked = originalGamenChecked
+
         SendMessage(Me.Handle, WM_SETREDRAW, True, IntPtr.Zero)
         Me.Refresh()
 
@@ -401,8 +431,10 @@ Public Class MainPlayerForm
     End Sub
 
     Private Sub MainPlayerForm_Closing(sender As Object, e As CancelEventArgs) Handles MyBase.Closing
+        LogDebug($"[BMWidth] MainPlayerForm_Closing(start) BMWidth={BMWidth} Panel2Collapsed={SplitContainer1.Panel2Collapsed} Panel2.Width={SplitContainer1.Panel2.Width}")
         SavePlaylist()
         SaveCurrentSettings()
+        LogDebug($"[BMWidth] MainPlayerForm_Closing(after save) My.Settings.Shiori_Width={My.Settings.Shiori_Width}")
         DisposeHotKeys()
         DisposeMediaPlayer()
     End Sub
@@ -669,6 +701,7 @@ Public Class MainPlayerForm
     '''     UI設定の復元
     ''' </summary>
     Private Sub ApplyUiSettings()
+        LogDebug($"[BMWidth] ApplyUiSettings(start) My.Settings.Shiori_Width={My.Settings.Shiori_Width} My.Settings.shiori={My.Settings.shiori}")
         ' MyClientSizeは保存時にパネル分を除いたコアサイズとして保存されているため、
         ' そのままベースサイズとして使用する（再度減算しない）
         Dim baseWidth As Integer = My.Settings.MyClientSize.Width
@@ -695,12 +728,20 @@ Public Class MainPlayerForm
         Me.ResumeLayout(True)
 
         ' 動画表示画面の復元（上に飛び出し）
+        ' CheckBoxMpvPamelはデザイナ既定値がChecked=Trueのため、ここでCheckedを設定すると
+        ' 値が変化する場合にCheckBoxMpvPanel_CheckedChangedが再入してしまう。復元処理中は
+        ' そのイベント処理を抑止する
+        _suppressGamenCheckedChanged = True
         If My.Settings.gamen = True Then
             Dim panelHeight As Integer = If(My.Settings.Gamen_Height > 0, My.Settings.Gamen_Height, 300)
-            Me.Height += panelHeight
-            Me.Top -= panelHeight
+            SplitContainer3.FixedPanel = FixedPanel.Panel2
+            ' CheckBoxMpvPanel_CheckedChangedで非表示にする際、ここで広げた量だけ正確に戻すために記録する
+            _gamenHeightDelta = panelHeight + SplitContainer3.SplitterWidth
+            Me.Height += _gamenHeightDelta
+            Me.Top -= _gamenHeightDelta
             SplitContainer3.Panel1Collapsed = False
             SplitContainer3.SplitterDistance = panelHeight
+            SplitContainer3.Panel1MinSize = 100
             ' セッション中に一度もリサイズ操作が起きないとScrHeightが既定値0のままになり、
             ' 終了時に0が保存されてしまうため、復元した値で明示的に初期化する
             ScrHeight = panelHeight
@@ -708,7 +749,11 @@ Public Class MainPlayerForm
         Else
             SplitContainer3.Panel1Collapsed = True
             CheckBoxMpvPamel.Checked = False
+            ' 非表示状態で起動した場合、セッション中に初めてボタンで表示する際に保存済みの
+            ' 高さが使われるよう、ここで明示的に読み込んでおく（表示側は上のブロックで対応済み）
+            ScrHeight = My.Settings.Gamen_Height
         End If
+        _suppressGamenCheckedChanged = False
 
         ' しおりパネルの復元（右に飛び出し）
         If My.Settings.shiori = True Then
@@ -721,7 +766,7 @@ Public Class MainPlayerForm
             SplitContainer1.SplitterDistance = Me.ClientSize.Width - panelWidth - SplitContainer1.SplitterWidth
             ' セッション中に一度もリサイズ操作が起きないとBMWidthが既定値0のままになり、
             ' 終了時に0が保存されてしまうため、復元した値で明示的に初期化する
-            BMWidth = panelWidth
+            SetBMWidthDebug(panelWidth, "ApplyUiSettings(show)")
 
             ' 背景色を確実に設定（Panel2, TableLayoutPanel2, DataGridView1 すべて）
             SplitContainer1.Panel2.BackColor = SystemColors.ControlDarkDark
@@ -742,6 +787,11 @@ Public Class MainPlayerForm
         Else
             SplitContainer1.Panel2Collapsed = True
             SplitContainer1.FixedPanel = FixedPanel.None
+            ' 非表示状態で起動した場合、セッション中に初めてボタンで表示する際に保存済みの
+            ' 幅が使われるよう、ここで明示的に読み込んでおく（表示側は上のブロックで対応済み）。
+            ' Panel2Collapsed=TrueによりSplitContainer1_SplitterMovedが発火することがあるため、
+            ' その後に代入する
+            SetBMWidthDebug(My.Settings.Shiori_Width, "ApplyUiSettings(hide)")
         End If
 
         ' プレイリストパネルの復元（左に飛び出し）
@@ -764,6 +814,9 @@ Public Class MainPlayerForm
             SplitContainer2.Panel1Collapsed = True
             Button40.Text = "< PL"
             Button40.ForeColor = Color.Black
+            ' 非表示状態で起動した場合、セッション中に初めてボタンで表示する際に保存済みの
+            ' 幅が使われるよう、ここで明示的に読み込んでおく（表示側は上のブロックで対応済み）
+            PLWidth = My.Settings.PL_Width
         End If
 
         ' カスタムタイトルバーを最前面に（しおりパネル展開時に隠れないよう）
@@ -827,6 +880,12 @@ Public Class MainPlayerForm
         'プレイリストパネルが表示されているかどうか
         My.Settings.PL = Not SplitContainer2.Panel1Collapsed
 
+        ' パネルが表示中なら、途中の不明なイベント連鎖に影響されうるフィールドではなく、
+        ' 保存の瞬間の実測値を直接使う（非表示中はほぼ0になるためフィールド値を使う）
+        If Not SplitContainer1.Panel2Collapsed Then SetBMWidthDebug(SplitContainer1.Panel2.Width, "SaveCurrentSettings")
+        If Not SplitContainer2.Panel1Collapsed Then PLWidth = SplitContainer2.Panel1.Width
+        If Not SplitContainer3.Panel1Collapsed Then ScrHeight = SplitContainer3.Panel1.Height
+
         'BMパネルの幅を保存
         My.Settings.Shiori_Width = BMWidth
         'PLパネルの幅を保存
@@ -838,7 +897,7 @@ Public Class MainPlayerForm
         Dim coreHeight As Integer = ClientSize.Height
         If Not SplitContainer2.Panel1Collapsed Then coreWidth -= SplitContainer2.Panel1.Width + SplitContainer2.SplitterWidth
         If Not SplitContainer1.Panel2Collapsed Then coreWidth -= SplitContainer1.Panel2.Width + SplitContainer1.SplitterWidth
-        If Not SplitContainer3.Panel1Collapsed Then coreHeight -= SplitContainer3.Panel1.Height
+        If Not SplitContainer3.Panel1Collapsed Then coreHeight -= SplitContainer3.Panel1.Height + SplitContainer3.SplitterWidth
         My.Settings.MyClientSize = New Size(coreWidth, coreHeight)
 
         ' 設定をディスクに保存
@@ -1241,7 +1300,11 @@ Public Class MainPlayerForm
     '''     動画表示画面の表示/非表示切り替え（上に飛び出し）
     ''' </summary>
     Private Sub CheckBoxMpvPanel_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBoxMpvPamel.CheckedChanged
+        If _suppressGamenCheckedChanged Then Return
+
         Dim isShowing As Boolean = CheckBoxMpvPamel.Checked
+
+        LogDebug($"[Gamen] CheckedChanged(before) isShowing={isShowing} Me.Top={Me.Top} Me.Height={Me.Height} Me.ClientSize={Me.ClientSize} Me.Padding={Me.Padding} SplitContainer1.Top={SplitContainer1.Top} SplitContainer1.Height={SplitContainer1.Height} CustomTitleBar.Top={If(CustomTitleBar IsNot Nothing, CustomTitleBar.Top, -1)} CustomTitleBar.Height={If(CustomTitleBar IsNot Nothing, CustomTitleBar.Height, -1)}")
 
         ' ウィンドウサイズの変更とパネル表示切替を1回の再描画にまとめ、ちらつきを防ぐ
         LockWindowUpdate(Me.Handle)
@@ -1253,16 +1316,22 @@ Public Class MainPlayerForm
                     TableLayoutPanel1.RowStyles(0).SizeType = SizeType.Absolute
                 End If
 
+                ' FixedPanelを先に設定（Panel2＝メインプレイヤー側の高さを固定）
+                SplitContainer3.FixedPanel = FixedPanel.Panel2
                 Dim panelHeight As Integer = If(ScrHeight > 0, ScrHeight, 300)
-                ' フォームを上に拡張（Topを減らし、Heightを増やす）
-                Me.Top -= panelHeight
-                Me.Height += panelHeight
+
+                ' Panel1(動画表示)は新規に高さを割り当てる側なので、先にウィンドウを広げてから
+                ' Panel1の高さを絶対値（panelHeight）で確定させる（プレイリストと同じ理由）
+                _gamenHeightDelta = panelHeight + SplitContainer3.SplitterWidth
+                Me.Top -= _gamenHeightDelta
+                Me.Height += _gamenHeightDelta
                 SplitContainer3.Panel1Collapsed = False
                 SplitContainer3.SplitterDistance = panelHeight
                 ' 動画パネルの最小高さを設定（スプリッターで潰れないように）
                 SplitContainer3.Panel1MinSize = 100
 
-                ' SplitContainer3.SplitterMovedがScrHeightを上書きする可能性があるため、最後に確定値を再設定する
+                ' セッション中に一度もリサイズ操作が起きないとScrHeightが既定値0のままになり、
+                ' 終了時に0が保存されてしまうため、復元した値で明示的に初期化する
                 ScrHeight = panelHeight
             Else
                 ' 動画非表示時：Row 0を高さ32で表示
@@ -1271,19 +1340,20 @@ Public Class MainPlayerForm
                     TableLayoutPanel1.RowStyles(0).SizeType = SizeType.Absolute
                 End If
 
-                ' 非表示：高さを保存してからPanel1を折りたたみ、その後にフォームを上に縮小する
-                ' （折りたたむ前に高さを縮めると、FixedPanel未設定のためPanel1も比例縮小し、
-                ' 　SplitterMovedでScrHeightに縮んだ値が入ってしまう）
+                ' 非表示：次回表示時の高さとして現在の実高さを保存しつつ、フォーム高さは表示時に
+                ' 広げた量をそのまま戻す（実測値を使うと、開閉を繰り返すたびに誤差が蓄積するため）
                 Dim actualPanelHeight As Integer = SplitContainer3.Panel1.Height
                 ScrHeight = actualPanelHeight
                 SplitContainer3.Panel1Collapsed = True
-                Me.Top += actualPanelHeight
-                Me.Height -= actualPanelHeight
+                SplitContainer3.FixedPanel = FixedPanel.None
+                Me.Top += _gamenHeightDelta
+                Me.Height -= _gamenHeightDelta
 
                 ' 動画パネル非表示時は最小サイズ制限を解除
                 SplitContainer3.Panel1MinSize = 0
 
-                ' SplitContainer3.SplitterMovedがScrHeightを上書きする可能性があるため、最後に確定値を再設定する
+                ' Me.Height変更中にScrHeightが一時的な値で上書きされる可能性があるため、
+                ' 最後に確定値を再設定する
                 ScrHeight = actualPanelHeight
                 My.Settings.Gamen_Height = ScrHeight
                 My.Settings.Save()
@@ -1293,6 +1363,8 @@ Public Class MainPlayerForm
             LockWindowUpdate(IntPtr.Zero)
         End Try
         Me.Refresh()
+
+        LogDebug($"[Gamen] CheckedChanged(after) Me.Top={Me.Top} Me.Height={Me.Height} Me.ClientSize={Me.ClientSize} Me.Padding={Me.Padding} SplitContainer1.Top={SplitContainer1.Top} SplitContainer1.Height={SplitContainer1.Height} SplitContainer3.Top={SplitContainer3.Top} SplitContainer3.Height={SplitContainer3.Height} SplitContainer3.Panel1.Height={SplitContainer3.Panel1.Height} CustomTitleBar.Top={If(CustomTitleBar IsNot Nothing, CustomTitleBar.Top, -1)} CustomTitleBar.Height={If(CustomTitleBar IsNot Nothing, CustomTitleBar.Height, -1)}")
     End Sub
 
 #End Region
@@ -1690,7 +1762,7 @@ Public Class MainPlayerForm
 
                 ' Me.Width変更中にMainPlayerForm_ResizeがBMWidthを一時的な値で上書きしてしまうため、
                 ' 最後に確定値を再設定する
-                BMWidth = panelWidth
+                SetBMWidthDebug(panelWidth, "ButtonShiori_Click(show)")
 
                 ' 背景色を確実に設定（Panel2, TableLayoutPanel2, DataGridView1 すべて）
                 SplitContainer1.Panel2.BackColor = SystemColors.ControlDarkDark
@@ -1709,14 +1781,14 @@ Public Class MainPlayerForm
                 ' 非表示：次回表示時の幅として現在の実幅を保存しつつ、フォーム幅は表示時に広げた量を
                 ' そのまま戻す（実幅を使うと、開閉を繰り返すたびに誤差が蓄積するため）
                 Dim actualPanelWidth As Integer = SplitContainer1.Panel2.Width
-                BMWidth = actualPanelWidth
+                SetBMWidthDebug(actualPanelWidth, "ButtonShiori_Click(hide-capture)")
                 SplitContainer1.Panel2Collapsed = True
                 SplitContainer1.FixedPanel = FixedPanel.None
                 Me.Width -= _shioriWidthDelta
 
                 ' Me.Width変更中にMainPlayerForm_ResizeがBMWidthをPanel2折りたたみ中の値（0など）で
                 ' 上書きしてしまうため、最後に確定値を再設定する
-                BMWidth = actualPanelWidth
+                SetBMWidthDebug(actualPanelWidth, "ButtonShiori_Click(hide-reassert)")
             End If
 
             ' カスタムタイトルバーを最前面に（しおりパネル表示/非表示でフォーム幅が変わるため）
@@ -1958,7 +2030,7 @@ Public Class MainPlayerForm
     Private Sub SplitContainer1_SplitterMoved(sender As Object, e As SplitterEventArgs) _
         Handles SplitContainer1.SplitterMoved
 
-        BMWidth = SplitContainer1.Panel2.Width
+        SetBMWidthDebug(SplitContainer1.Panel2.Width, "SplitContainer1_SplitterMoved")
 
         ' 表示中に手動でスプリッターを動かした場合、非表示時にウィンドウを縮める量
         ' （_shioriWidthDelta）もこの実測幅に合わせて更新しないと、表示時に広げた量のまま
@@ -1976,6 +2048,13 @@ Public Class MainPlayerForm
         Handles SplitContainer3.SplitterMoved
 
         ScrHeight = SplitContainer3.Panel1.Height
+
+        ' 表示中に手動でスプリッターを動かした場合、非表示時にウィンドウを縮める量
+        ' （_gamenHeightDelta）もこの実測高さに合わせて更新しないと、表示時に広げた量のまま
+        ' 縮めてしまい、差分がメインプレイヤー側に残ってしまう
+        If Not SplitContainer3.Panel1Collapsed Then
+            _gamenHeightDelta = SplitContainer3.Panel1.Height + SplitContainer3.SplitterWidth
+        End If
 
     End Sub
 
@@ -2372,7 +2451,7 @@ Public Class MainPlayerForm
         'TextBox2.Text = Me.Width & "," & Me.Height & "|" & TableLayoutPanel1.Width & "," & TableLayoutPanel1.Height
 
         ' 折りたたまれている（非表示の）パネルの実測幅はほぼ0のため、表示中のパネルのみ更新する
-        If Not SplitContainer1.Panel2Collapsed Then BMWidth = SplitContainer1.Panel2.Width
+        If Not SplitContainer1.Panel2Collapsed Then SetBMWidthDebug(SplitContainer1.Panel2.Width, "MainPlayerForm_Resize")
         If Not SplitContainer2.Panel1Collapsed Then PLWidth = SplitContainer2.Panel1.Width
         If Not SplitContainer3.Panel1Collapsed Then ScrHeight = SplitContainer3.Panel1.Height
 
@@ -2463,13 +2542,13 @@ Public Class MainPlayerForm
 
     Private Sub MainPlayerForm_ResizeBegin(sender As Object, e As EventArgs) Handles Me.ResizeBegin
         ' 折りたたまれている（非表示の）パネルの実測幅はほぼ0のため、表示中のパネルのみ更新する
-        If Not SplitContainer1.Panel2Collapsed Then BMWidth = SplitContainer1.Panel2.Width
+        If Not SplitContainer1.Panel2Collapsed Then SetBMWidthDebug(SplitContainer1.Panel2.Width, "MainPlayerForm_ResizeBegin")
         If Not SplitContainer2.Panel1Collapsed Then PLWidth = SplitContainer2.Panel1.Width
         If Not SplitContainer3.Panel1Collapsed Then ScrHeight = SplitContainer3.Panel1.Height
     End Sub
 
     Private Sub MainPlayerForm_ResizeEnd(sender As Object, e As EventArgs) Handles Me.ResizeEnd
-        If Not SplitContainer1.Panel2Collapsed Then BMWidth = SplitContainer1.Panel2.Width
+        If Not SplitContainer1.Panel2Collapsed Then SetBMWidthDebug(SplitContainer1.Panel2.Width, "MainPlayerForm_ResizeEnd")
         If Not SplitContainer2.Panel1Collapsed Then PLWidth = SplitContainer2.Panel1.Width
         If Not SplitContainer3.Panel1Collapsed Then ScrHeight = SplitContainer3.Panel1.Height
     End Sub
