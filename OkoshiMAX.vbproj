@@ -15,7 +15,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
-    <PublishUrl>bin\Debug\app.publish\</PublishUrl>
+    <PublishUrl>E:\Desktop\oko\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -28,7 +28,7 @@
     <ProductName>OkoshiMAX</ProductName>
     <PublisherName>Teruhisa Yoshioka</PublisherName>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationRevision>1</ApplicationRevision>
     <ApplicationVersion>2.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -219,6 +219,7 @@
   <ItemGroup>
     <Content Include="dll\libmpv-2.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PublishState>Include</PublishState>
     </Content>
     <Content Include="okoshimax.ico" />
     <Content Include="OkoshiMAX1_4_1.ico" />
@@ -244,12 +245,7 @@
     <None Include="Resources\AlwaysVisible_16x.png" />
     <None Include="Resources\CaptureFrame_16x.png" />
   </ItemGroup>
-  <ItemGroup>
-    <NativeReference Include="mpv, Version=0.0.9.0, ProcessorArchitecture=%2a, Type=win32">
-      <Name>libmpv-2.dll</Name>
-      <HintPath>dll\libmpv-2.dll</HintPath>
-    </NativeReference>
-  </ItemGroup>
+  
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
