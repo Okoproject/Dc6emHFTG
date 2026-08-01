@@ -682,6 +682,14 @@ Public Class MainPlayerForm
 
         Me.ClientSize = New Size(baseWidth, baseHeight)
 
+        ' このメソッドはMainPlayerForm_LoadのMe.SuspendLayout()中に呼ばれるため、
+        ' Me.Width/Heightを変更してもSplitContainer1・2・3など子孫コントロールのサイズは
+        ' 追従しない。Me.PerformLayout()を都度呼ぶ対症療法は各所で追従漏れを起こしたため、
+        ' ここでは本物のMe.ResumeLayout(True)でレイアウトを確定させてから復元処理を行い、
+        ' 最後に再度SuspendLayout()してMainPlayerForm_Loadの残り処理に引き継ぐ
+        ' （描画自体はWM_SETREDRAWで別途抑制されているため、ここで解除してもちらつきは出ない）
+        Me.ResumeLayout(True)
+
         ' 動画表示画面の復元（上に飛び出し）
         If My.Settings.gamen = True Then
             Dim panelHeight As Integer = If(My.Settings.Gamen_Height > 0, My.Settings.Gamen_Height, 300)
@@ -689,6 +697,9 @@ Public Class MainPlayerForm
             Me.Top -= panelHeight
             SplitContainer3.Panel1Collapsed = False
             SplitContainer3.SplitterDistance = panelHeight
+            ' セッション中に一度もリサイズ操作が起きないとScrHeightが既定値0のままになり、
+            ' 終了時に0が保存されてしまうため、復元した値で明示的に初期化する
+            ScrHeight = panelHeight
             CheckBoxMpvPamel.Checked = True
         Else
             SplitContainer3.Panel1Collapsed = True
@@ -696,9 +707,6 @@ Public Class MainPlayerForm
         End If
 
         ' しおりパネルの復元（右に飛び出し）
-        ' ※このメソッドはMe.SuspendLayout()中に呼ばれるため、SplitContainer1.Widthなど子コントロールの
-        ' 　サイズはまだMe.ClientSizeに追従しておらず古い値のままとなる。Me.ClientSizeはフォーム自身の
-        ' 　プロパティで即座に反映されるため、計算には必ずMe.ClientSizeを使う
         If My.Settings.shiori = True Then
             Dim panelWidth As Integer = If(My.Settings.Shiori_Width > 0, My.Settings.Shiori_Width, 250)
             SplitContainer1.FixedPanel = FixedPanel.Panel2
@@ -707,6 +715,9 @@ Public Class MainPlayerForm
             Me.Width += _shioriWidthDelta
             SplitContainer1.Panel2Collapsed = False
             SplitContainer1.SplitterDistance = Me.ClientSize.Width - panelWidth - SplitContainer1.SplitterWidth
+            ' セッション中に一度もリサイズ操作が起きないとBMWidthが既定値0のままになり、
+            ' 終了時に0が保存されてしまうため、復元した値で明示的に初期化する
+            BMWidth = panelWidth
 
             ' 背景色を確実に設定（Panel2, TableLayoutPanel2, DataGridView1 すべて）
             SplitContainer1.Panel2.BackColor = SystemColors.ControlDarkDark
@@ -730,8 +741,6 @@ Public Class MainPlayerForm
         End If
 
         ' プレイリストパネルの復元（左に飛び出し）
-        ' ※SplitterDistanceは絶対値（panelWidth）で指定するため、子コントロールのサイズが
-        ' 　まだMe.ClientSizeに追従していなくても影響を受けない
         If My.Settings.PL = True Then
             Dim panelWidth As Integer = If(My.Settings.PL_Width > 0, My.Settings.PL_Width, 300)
             SplitContainer2.FixedPanel = FixedPanel.Panel2
@@ -742,6 +751,9 @@ Public Class MainPlayerForm
             Me.Width += _playlistWidthDelta
             SplitContainer2.Panel1Collapsed = False
             SplitContainer2.SplitterDistance = panelWidth
+            ' セッション中に一度もリサイズ操作が起きないとPLWidthが既定値0のままになり、
+            ' 終了時に0が保存されてしまうため、復元した値で明示的に初期化する
+            PLWidth = panelWidth
             Button40.Text = "PL >"
             Button40.ForeColor = Color.Green
         Else
@@ -754,6 +766,16 @@ Public Class MainPlayerForm
         If CustomTitleBar IsNot Nothing Then
             CustomTitleBar.BringToFront()
         End If
+
+        ' StartPosition=CenterScreenによる中央配置は、ここまでのパネル復元処理の途中の
+        ' サイズを基準に行われてしまうことがあるため、全パネルの復元が終わり最終的な
+        ' サイズが確定したこの時点で改めて中央配置し直す
+        Dim workingArea = Screen.FromControl(Me).WorkingArea
+        Me.Left = workingArea.Left + (workingArea.Width - Me.Width) \ 2
+        Me.Top = workingArea.Top + (workingArea.Height - Me.Height) \ 2
+
+        ' MainPlayerForm_Loadの残り処理のため、レイアウト抑制状態に戻す
+        Me.SuspendLayout()
     End Sub
 
     ''' <summary>
@@ -810,7 +832,7 @@ Public Class MainPlayerForm
         'フォームのサイズを保存（コアサイズ＝パネル拡張分を除いたサイズ）
         Dim coreWidth As Integer = ClientSize.Width
         Dim coreHeight As Integer = ClientSize.Height
-        If Not SplitContainer2.Panel1Collapsed Then coreWidth -= SplitContainer2.Panel1.Width
+        If Not SplitContainer2.Panel1Collapsed Then coreWidth -= SplitContainer2.Panel1.Width + SplitContainer2.SplitterWidth
         If Not SplitContainer1.Panel2Collapsed Then coreWidth -= SplitContainer1.Panel2.Width + SplitContainer1.SplitterWidth
         If Not SplitContainer3.Panel1Collapsed Then coreHeight -= SplitContainer3.Panel1.Height
         My.Settings.MyClientSize = New Size(coreWidth, coreHeight)
@@ -2338,9 +2360,10 @@ Public Class MainPlayerForm
         'テスト用
         'TextBox2.Text = Me.Width & "," & Me.Height & "|" & TableLayoutPanel1.Width & "," & TableLayoutPanel1.Height
 
-        BMWidth = SplitContainer1.Panel2.Width
-        PLWidth = SplitContainer2.Panel1.Width
-        ScrHeight = SplitContainer3.Panel1.Height
+        ' 折りたたまれている（非表示の）パネルの実測幅はほぼ0のため、表示中のパネルのみ更新する
+        If Not SplitContainer1.Panel2Collapsed Then BMWidth = SplitContainer1.Panel2.Width
+        If Not SplitContainer2.Panel1Collapsed Then PLWidth = SplitContainer2.Panel1.Width
+        If Not SplitContainer3.Panel1Collapsed Then ScrHeight = SplitContainer3.Panel1.Height
 
         If BtnMaximize IsNot Nothing Then
             If Me.WindowState = FormWindowState.Maximized Then
@@ -2428,15 +2451,16 @@ Public Class MainPlayerForm
     End Sub
 
     Private Sub MainPlayerForm_ResizeBegin(sender As Object, e As EventArgs) Handles Me.ResizeBegin
-        BMWidth = SplitContainer1.Panel2.Width
-        PLWidth = SplitContainer2.Panel1.Width
-        ScrHeight = SplitContainer3.Panel1.Height
+        ' 折りたたまれている（非表示の）パネルの実測幅はほぼ0のため、表示中のパネルのみ更新する
+        If Not SplitContainer1.Panel2Collapsed Then BMWidth = SplitContainer1.Panel2.Width
+        If Not SplitContainer2.Panel1Collapsed Then PLWidth = SplitContainer2.Panel1.Width
+        If Not SplitContainer3.Panel1Collapsed Then ScrHeight = SplitContainer3.Panel1.Height
     End Sub
 
     Private Sub MainPlayerForm_ResizeEnd(sender As Object, e As EventArgs) Handles Me.ResizeEnd
-        BMWidth = SplitContainer1.Panel2.Width
-        PLWidth = SplitContainer2.Panel1.Width
-        ScrHeight = SplitContainer3.Panel1.Height
+        If Not SplitContainer1.Panel2Collapsed Then BMWidth = SplitContainer1.Panel2.Width
+        If Not SplitContainer2.Panel1Collapsed Then PLWidth = SplitContainer2.Panel1.Width
+        If Not SplitContainer3.Panel1Collapsed Then ScrHeight = SplitContainer3.Panel1.Height
     End Sub
 
     Private Sub SplitContainer2_SplitterMoved(sender As Object, e As SplitterEventArgs) Handles SplitContainer2.SplitterMoved
