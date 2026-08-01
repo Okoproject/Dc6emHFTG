@@ -1,1 +1,1 @@
-"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\devenv.exe" E:\Desktop\OkoshiMAX_git\OkoshiMAX.sln /Build "Debug|x64"
+"%VSINSTALLDIR%\Common7\IDE\devenv.exe" "%~dp0OkoshiMAX.sln" /Build "Debug|x64"
