@@ -1,0 +1,2 @@
+マネージド デバッグ アシスタント 'DisconnectedContext' 
+  Message=マネージド デバッグ アシスタント 'DisconnectedContext' : 'この RuntimeCallableWrapper の COM コンテキスト 0xd424e5c8 への変換に失敗して、エラー 起動されたオブジェクトはクライアントから切断されました。 (HRESULT からの例外:0x80010108 (RPC_E_DISCONNECTED)) が発生しました。これは、通常この RuntimeCallableWrapper が作成された COM コンテキスト 0xd424e5c8 が切断されたか、他の処理を実行していてビジーであることが原因です。現在の COM コンテキスト (COM コンテキスト 0xd424e6f0) からインターフェイスを解放しています。これは、破損またはデータの損失を発生させる可能性があります。この問題を回避するには、その内部に存在する COM コンポーネントを示す RuntimeCallableWrappers の使用が完了するまで、すべての COM コンテキスト、アパートメント、およびスレッドが完全に有効であり、コンテキスト変換に使用できることを確認してください。'

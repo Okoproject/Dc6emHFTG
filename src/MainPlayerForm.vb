@@ -50,7 +50,7 @@ Public Class MainPlayerForm
         Me.DoubleBuffered = True
         Me.SetStyle(ControlStyles.OptimizedDoubleBuffer Or ControlStyles.AllPaintingInWmPaint Or ControlStyles.UserPaint, True)
         Me.FormBorderStyle = FormBorderStyle.None
-        ' Me.Padding = New Padding(0, CustomTitleBarHeight, 0, 0)
+        Me.Padding = New Padding(0, CustomTitleBarHeight, 0, 0)
         InitializeComponent()
     End Sub
 
