@@ -1522,7 +1522,7 @@ Partial Class MainPlayerForm
         Me.MaximizeBox = False
         Me.MinimumSize = New System.Drawing.Size(638, 233)
         Me.Name = "MainPlayerForm"
-        Me.Padding = New System.Windows.Forms.Padding(2)
+        Me.Padding = New System.Windows.Forms.Padding(0, 28, 0, 0)
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "OkoshiMAX"
         Me.SplitContainer1.Panel1.ResumeLayout(False)
