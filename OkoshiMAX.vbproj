@@ -219,7 +219,6 @@
   <ItemGroup>
     <Content Include="dll\libmpv-2.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Link>libmpv-2.dll</Link>
     </Content>
     <Content Include="okoshimax.ico" />
     <Content Include="OkoshiMAX1_4_1.ico" />
