@@ -319,7 +319,11 @@ Public Class MainPlayerForm
         SetDoubleBuffered(TableLayoutPanel1, True)
         SetDoubleBuffered(DataGridView2, True)
 
-        Me.ResumeLayout()
+        ' 引数なしのResumeLayout()は内部的にはtrue相当だが、確実性のため明示的に指定する。
+        ' レイアウトが完全に確定してから再描画を許可することで、フォームが操作可能になった
+        ' 直後（初回のパネル表示切替ボタン押下時など）に古いサイズを基準に計算してしまう
+        ' 問題を防ぐ
+        Me.ResumeLayout(True)
         SendMessage(Me.Handle, WM_SETREDRAW, True, IntPtr.Zero)
         Me.Refresh()
 
@@ -1956,6 +1960,13 @@ Public Class MainPlayerForm
 
         BMWidth = SplitContainer1.Panel2.Width
 
+        ' 表示中に手動でスプリッターを動かした場合、非表示時にウィンドウを縮める量
+        ' （_shioriWidthDelta）もこの実測幅に合わせて更新しないと、表示時に広げた量のまま
+        ' 縮めてしまい、差分がメインプレイヤー側に残ってしまう
+        If Not SplitContainer1.Panel2Collapsed Then
+            _shioriWidthDelta = SplitContainer1.Panel2.Width + SplitContainer1.SplitterWidth
+        End If
+
     End Sub
 
     ''' <summary>
@@ -2465,6 +2476,13 @@ Public Class MainPlayerForm
 
     Private Sub SplitContainer2_SplitterMoved(sender As Object, e As SplitterEventArgs) Handles SplitContainer2.SplitterMoved
         PLWidth = SplitContainer2.Panel1.Width
+
+        ' 表示中に手動でスプリッターを動かした場合、非表示時にウィンドウを縮める量
+        ' （_playlistWidthDelta）もこの実測幅に合わせて更新しないと、表示時に広げた量のまま
+        ' 縮めてしまい、差分がメインプレイヤー側に残ってしまう
+        If Not SplitContainer2.Panel1Collapsed Then
+            _playlistWidthDelta = SplitContainer2.Panel1.Width + SplitContainer2.SplitterWidth
+        End If
     End Sub
 
     Private Sub DataGridView2_CellClick(sender As Object, e As DataGridViewCellEventArgs)
