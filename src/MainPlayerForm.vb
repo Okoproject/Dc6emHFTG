@@ -665,18 +665,15 @@ Public Class MainPlayerForm
     '''     UI設定の復元
     ''' </summary>
     Private Sub ApplyUiSettings()
-        ' ベースサイズの計算（保存時ClientSizeから、保存されていたパネル分を減算）
+        ' MyClientSizeは保存時にパネル分を除いたコアサイズとして保存されているため、
+        ' そのままベースサイズとして使用する（再度減算しない）
         Dim baseWidth As Integer = My.Settings.MyClientSize.Width
         Dim baseHeight As Integer = My.Settings.MyClientSize.Height
 
-        If My.Settings.PL = True AndAlso My.Settings.PL_Width > 0 Then
-            baseWidth -= My.Settings.PL_Width
-        End If
-        If My.Settings.shiori = True AndAlso My.Settings.Shiori_Width > 0 Then
-            baseWidth -= My.Settings.Shiori_Width + SplitContainer1.SplitterWidth
-        End If
-        If My.Settings.gamen = True AndAlso My.Settings.Gamen_Height > 0 Then
-            baseHeight -= My.Settings.Gamen_Height
+        ' 設定が空（初回起動等）の場合は、デザイナの既定サイズを使用
+        If baseWidth = 0 AndAlso baseHeight = 0 Then
+            baseWidth = 1605
+            baseHeight = 838
         End If
 
         ' 最小サイズチェック
@@ -1236,6 +1233,8 @@ Public Class MainPlayerForm
                 Me.Height += panelHeight
                 SplitContainer3.Panel1Collapsed = False
                 SplitContainer3.SplitterDistance = panelHeight
+                ' 動画パネルの最小高さを設定（スプリッターで潰れないように）
+                SplitContainer3.Panel1MinSize = 100
 
                 ' SplitContainer3.SplitterMovedがScrHeightを上書きする可能性があるため、最後に確定値を再設定する
                 ScrHeight = panelHeight
@@ -1254,6 +1253,9 @@ Public Class MainPlayerForm
                 SplitContainer3.Panel1Collapsed = True
                 Me.Top += actualPanelHeight
                 Me.Height -= actualPanelHeight
+
+                ' 動画パネル非表示時は最小サイズ制限を解除
+                SplitContainer3.Panel1MinSize = 0
 
                 ' SplitContainer3.SplitterMovedがScrHeightを上書きする可能性があるため、最後に確定値を再設定する
                 ScrHeight = actualPanelHeight

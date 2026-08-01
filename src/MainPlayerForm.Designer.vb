@@ -229,10 +229,12 @@ Partial Class MainPlayerForm
         Me.DataGridView2.AllowUserToAddRows = False
         Me.DataGridView2.AllowUserToOrderColumns = True
         Me.DataGridView2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.DataGridView2.BackgroundColor = System.Drawing.Color.DimGray
         Me.DataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView2.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.File_Namae, Me.File_Length, Me.File_Memo, Me.File_Delete, Me.File_Position, Me.File_Progress})
         Me.TableLayoutPanel3.SetColumnSpan(Me.DataGridView2, 6)
         Me.DataGridView2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DataGridView2.GridColor = System.Drawing.Color.DimGray
         Me.DataGridView2.Location = New System.Drawing.Point(2, 34)
         Me.DataGridView2.Margin = New System.Windows.Forms.Padding(2)
         Me.DataGridView2.Name = "DataGridView2"
@@ -411,6 +413,7 @@ Partial Class MainPlayerForm
         Me.MpvPanel.Location = New System.Drawing.Point(1, 29)
         Me.MpvPanel.Margin = New System.Windows.Forms.Padding(1)
         Me.MpvPanel.Name = "MpvPanel"
+        Me.MpvPanel.Padding = New System.Windows.Forms.Padding(0, 5, 0, 0)
         Me.MpvPanel.Size = New System.Drawing.Size(997, 272)
         Me.MpvPanel.TabIndex = 193
         '
@@ -1303,10 +1306,12 @@ Partial Class MainPlayerForm
         '
         Me.DataGridView1.AllowUserToAddRows = False
         Me.DataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.DataGridView1.BackgroundColor = System.Drawing.Color.DimGray
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colCounter, Me.colMemo, Me.colPosition, Me.colDelete})
         Me.TableLayoutPanel2.SetColumnSpan(Me.DataGridView1, 4)
         Me.DataGridView1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DataGridView1.GridColor = System.Drawing.Color.DimGray
         Me.DataGridView1.Location = New System.Drawing.Point(1, 33)
         Me.DataGridView1.Margin = New System.Windows.Forms.Padding(1)
         Me.DataGridView1.MinimumSize = New System.Drawing.Size(200, 100)
