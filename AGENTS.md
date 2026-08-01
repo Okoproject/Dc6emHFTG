@@ -8,7 +8,7 @@ OkoshiMAXは、VB.NET / Windows Forms製の動画プレーヤーです。
 
 - .NET Framework 4.8
 - x64専用
-- 再生バックエンド: `dll/libmpv-2.dll`（libmpv）
+- 再生バックエンド: `libmpv-2.dll`（libmpv）
 - 主な機能: メディア再生、プレイリスト、しおり、グローバルホットキー、クリップボード画像表示、URL再生
 
 ## アーキテクチャ

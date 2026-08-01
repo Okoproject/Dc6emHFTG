@@ -7,7 +7,7 @@
     <framework targetVersion="4.8" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="Application Files\OkoshiMAX_2_0_0_5\OkoshiMAX.exe.manifest" size="6663">
+    <dependentAssembly dependencyType="install" codebase="Application Files\OkoshiMAX_2_0_0_4\OkoshiMAX.exe.manifest" size="6663">
       <assemblyIdentity name="OkoshiMAX.exe" version="2.0.0.3" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="amd64" type="win32" />
       <hash>
         <dsig:Transforms>

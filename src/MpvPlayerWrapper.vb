@@ -1,6 +1,7 @@
 Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.Threading
+Imports System.IO
 
 ''' <summary>
 '''     mpv (libmpv) プレーヤーのラッパークラス
@@ -11,6 +12,10 @@ Public Class MpvPlayerWrapper
 #Region "libmpv P/Invoke declarations"
 
     Private Const MpvDll As String = "libmpv-2.dll"
+
+    <DllImport("kernel32.dll", CharSet := CharSet.Auto, SetLastError := True)>
+    Private Shared Function SetDllDirectory(lpPathName As String) As Boolean
+    End Function
 
     ' mpv_create / mpv_initialize / mpv_destroy / mpv_terminate_destroy
     <DllImport(MpvDll, CallingConvention := CallingConvention.Cdecl)>
@@ -137,6 +142,12 @@ Public Class MpvPlayerWrapper
         End If
 
         _hostPanel = hostPanel
+
+        ' ClickOnce展開時はdllサブフォルダにlibmpv-2.dllが配置されるため、DLL検索パスに追加
+        Dim dllDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "dll")
+        If Directory.Exists(dllDir) Then
+            SetDllDirectory(dllDir)
+        End If
 
         _mpvHandle = mpv_create()
         If _mpvHandle = IntPtr.Zero Then
