@@ -48,6 +48,11 @@ Public Class MainPlayerForm
     ' 再入（デザイナ既定値Trueからの変化でCheckedChangedが発火し、未初期化状態のまま
     ' My.Settings.Gamen_Heightを上書き保存してしまう）を防ぐためのフラグ
     Private _suppressGamenCheckedChanged As Boolean = False
+    ' CheckBoxMpvPanel_CheckedChanged/ApplyUiSettingsでのプログラム的なSplitterDistance/
+    ' Panel1MinSize変更が、SplitContainer3_SplitterMovedの_gamenHeightDelta自動追従を
+    ' 誤って発火させ（Panel1MinSize設定後の再レイアウトなどで）、表示時と非表示時で
+    ' 異なるdeltaが使われてしまうのを防ぐためのフラグ
+    Private _suppressGamenSplitterMoved As Boolean = False
 
     ''' <summary>
     '''     カスタムタイトルバーの高さ
@@ -732,13 +737,20 @@ Public Class MainPlayerForm
         ' 値が変化する場合にCheckBoxMpvPanel_CheckedChangedが再入してしまう。復元処理中は
         ' そのイベント処理を抑止する
         _suppressGamenCheckedChanged = True
+        ' SplitterDistance/Panel1MinSizeのプログラム的な変更がSplitterMovedを誤発火させ、
+        ' _gamenHeightDeltaを書き換えてしまうのを防ぐ
+        _suppressGamenSplitterMoved = True
         If My.Settings.gamen = True Then
             Dim panelHeight As Integer = If(My.Settings.Gamen_Height > 0, My.Settings.Gamen_Height, 300)
             SplitContainer3.FixedPanel = FixedPanel.Panel2
             ' CheckBoxMpvPanel_CheckedChangedで非表示にする際、ここで広げた量だけ正確に戻すために記録する
             _gamenHeightDelta = panelHeight + SplitContainer3.SplitterWidth
-            Me.Height += _gamenHeightDelta
-            Me.Top -= _gamenHeightDelta
+            ' TableLayoutPanel1のRow 0（動画表示中は高さ0）が空けた分を他のPercentage行が
+            ' 吸収して伸びてしまうため、CheckBoxMpvPanel_CheckedChangedと同様にその分を
+            ' ウィンドウの拡張量から差し引いて相殺する
+            Dim windowGrowth As Integer = _gamenHeightDelta - 32
+            Me.Height += windowGrowth
+            Me.Top -= windowGrowth
             SplitContainer3.Panel1Collapsed = False
             SplitContainer3.SplitterDistance = panelHeight
             SplitContainer3.Panel1MinSize = 100
@@ -753,6 +765,7 @@ Public Class MainPlayerForm
             ' 高さが使われるよう、ここで明示的に読み込んでおく（表示側は上のブロックで対応済み）
             ScrHeight = My.Settings.Gamen_Height
         End If
+        _suppressGamenSplitterMoved = False
         _suppressGamenCheckedChanged = False
 
         ' しおりパネルの復元（右に飛び出し）
@@ -1308,7 +1321,17 @@ Public Class MainPlayerForm
 
         ' ウィンドウサイズの変更とパネル表示切替を1回の再描画にまとめ、ちらつきを防ぐ
         LockWindowUpdate(Me.Handle)
+        ' SplitterDistance/Panel1MinSizeのプログラム的な変更がSplitterMovedを誤発火させ、
+        ' _gamenHeightDeltaを書き換えてしまうのを防ぐ
+        _suppressGamenSplitterMoved = True
         Try
+            ' TableLayoutPanel1のRow 0はPercentageではなくAbsoluteで0⇔32pxを切り替えている。
+            ' 他の行（1〜7）はPercentageのままのため、Row 0が空けた分を他の行が自動的に
+            ' 吸収して伸びてしまう。ウィンドウの拡張量からRow0HeightPx分を差し引いて
+            ' メインプレイヤー側をその分縮め、他の行の配分（＝各コントロールの見た目の高さ）が
+            ' 変わらないよう相殺する
+            Const Row0HeightPx As Integer = 32
+
             If isShowing Then
                 ' 動画表示時：Row 0を非表示（高さ0）
                 If TableLayoutPanel1.RowStyles.Count > 0 Then
@@ -1323,8 +1346,13 @@ Public Class MainPlayerForm
                 ' Panel1(動画表示)は新規に高さを割り当てる側なので、先にウィンドウを広げてから
                 ' Panel1の高さを絶対値（panelHeight）で確定させる（プレイリストと同じ理由）
                 _gamenHeightDelta = panelHeight + SplitContainer3.SplitterWidth
-                Me.Top -= _gamenHeightDelta
-                Me.Height += _gamenHeightDelta
+                Dim windowGrowth As Integer = _gamenHeightDelta - Row0HeightPx
+                Me.Top -= windowGrowth
+                Me.Height += windowGrowth
+                ' カスタムタイトルバー分のPadding調整が絡み、SplitContainer3がMe.Heightの変更に
+                ' 追従しきる前にSplitterDistanceを設定してしまうことがあるため、ここで確実に
+                ' 追従させてから絶対値を設定する
+                Me.PerformLayout()
                 SplitContainer3.Panel1Collapsed = False
                 SplitContainer3.SplitterDistance = panelHeight
                 ' 動画パネルの最小高さを設定（スプリッターで潰れないように）
@@ -1336,7 +1364,7 @@ Public Class MainPlayerForm
             Else
                 ' 動画非表示時：Row 0を高さ32で表示
                 If TableLayoutPanel1.RowStyles.Count > 0 Then
-                    TableLayoutPanel1.RowStyles(0).Height = 32
+                    TableLayoutPanel1.RowStyles(0).Height = Row0HeightPx
                     TableLayoutPanel1.RowStyles(0).SizeType = SizeType.Absolute
                 End If
 
@@ -1346,8 +1374,9 @@ Public Class MainPlayerForm
                 ScrHeight = actualPanelHeight
                 SplitContainer3.Panel1Collapsed = True
                 SplitContainer3.FixedPanel = FixedPanel.None
-                Me.Top += _gamenHeightDelta
-                Me.Height -= _gamenHeightDelta
+                Dim windowGrowth As Integer = _gamenHeightDelta - Row0HeightPx
+                Me.Top += windowGrowth
+                Me.Height -= windowGrowth
 
                 ' 動画パネル非表示時は最小サイズ制限を解除
                 SplitContainer3.Panel1MinSize = 0
@@ -1360,6 +1389,7 @@ Public Class MainPlayerForm
             End If
             UpdateControllerMinSize()
         Finally
+            _suppressGamenSplitterMoved = False
             LockWindowUpdate(IntPtr.Zero)
         End Try
         Me.Refresh()
@@ -2046,6 +2076,8 @@ Public Class MainPlayerForm
     ''' </summary>
     Private Sub SplitContainer3_SplitterMoved(sender As Object, e As SplitterEventArgs) _
         Handles SplitContainer3.SplitterMoved
+
+        If _suppressGamenSplitterMoved Then Return
 
         ScrHeight = SplitContainer3.Panel1.Height
 
