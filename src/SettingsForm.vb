@@ -144,12 +144,19 @@ Public Class SettingsForm
     '''     全設定を読み込み
     ''' </summary>
     Private Sub LoadAllSettings()
+        'タイムコード形式設定の読み込み
         LoadTimeCodeSettings()
+        '自動巻戻設定とカウンタコピーとメモのCSVの保存設定の読み込み
         LoadAutoBackupSettings()
+        'タイムコード修飾設定の読み込み
         LoadTimeCodeModifierSettings()
+        'ジャンプボタン設定の読み込み
         LoadJumpButtonSettings()
+        'ジャンプホットキー設定の読み込み
         LoadJumpHotkeySettings()
+        '速度コントロール設定の読み込み
         LoadSpeedControlSettings()
+        'ファイル読み込み時に自動再生するかどうかの設定の読み込み
         LoadAutoPlaySettings()
     End Sub
 
@@ -157,9 +164,13 @@ Public Class SettingsForm
     '''     タイムコード形式設定の読み込み
     ''' </summary>
     Private Sub LoadTimeCodeSettings()
+        '※タイムコードには前後の（）等は含まれないことに注意・カッコの全角や半角等の様式はタイムコード修飾設定で指定
         Select Case My.Settings.TimeCode
+            '全て半角
             Case 0 : RadioButton1.Checked = True
+            '全て全角
             Case 1 : RadioButton2.Checked = True
+            'コロンのみ全角
             Case 2 : RadioButton3.Checked = True
         End Select
     End Sub
@@ -169,6 +180,7 @@ Public Class SettingsForm
     ''' </summary>
     Private Sub LoadAutoBackupSettings()
 
+        'データ自体はミリ秒で格納されているので100で除算して秒単位で標示
         NumericUpDown1.Value = My.Settings.AutoBack / 100
 
         CheckBox1.Checked = My.Settings.autoBM
@@ -179,11 +191,17 @@ Public Class SettingsForm
     '''     タイムコード修飾設定の読み込み
     ''' </summary>
     Private Sub LoadTimeCodeModifierSettings()
+        'タイムコード修飾1（頭）
         TextBox1.Text = My.Settings.Atama
+        'タイムコード修飾1（末尾）
         TextBox2.Text = My.Settings.Oshiri
+        'タイムコード修飾2（頭）
         TextBox4.Text = My.Settings.Atama2
+        'タイムコード修飾2（末尾）
         TextBox3.Text = My.Settings.Oshiri2
+        'タイムコード修飾3（頭）
         TextBox6.Text = My.Settings.Atama3
+        'タイムコード修飾3（末尾）
         TextBox5.Text = My.Settings.Oshiri3
 
         RadioButton5.Checked = My.Settings.shiori_PS
@@ -219,9 +237,11 @@ Public Class SettingsForm
     '''     ジャンプホットキー設定の読み込み
     ''' </summary>
     Private Sub LoadJumpHotkeySettings()
+
         NumericUpDown22.Value = My.Settings.MM1
         NumericUpDown23.Value = My.Settings.MM2
         NumericUpDown24.Value = My.Settings.MM3
+
         NumericUpDown25.Value = My.Settings.HO1
         NumericUpDown26.Value = My.Settings.HO2
         NumericUpDown27.Value = My.Settings.HO3
@@ -526,7 +546,7 @@ Public Class SettingsForm
     End Sub
 
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
-        ' 現在のホットキー設定を一覧表示
+        ' 現在のホットキー設定をMsgBoxで一覧表示（少し見にくいので、改行を入れたほうがいいかも）
         Dim lines As New System.Collections.Generic.List(Of String)
         lines.Add("現在のホットキー設定一覧")
         lines.Add("")
@@ -547,6 +567,7 @@ Public Class SettingsForm
             lines.Add(label & " : " & GetHotKeyDisplayText(modifier, key))
         Next
 
+        'ホットキーの設定ではないが、設定されている自動巻戻秒数もついでに標示
         lines.Add("自動巻戻秒数" & (My.Settings.AutoBack) * 0.01 & "秒")
 
         MessageBox.Show(String.Join(Environment.NewLine, lines), "ホットキー設定一覧",

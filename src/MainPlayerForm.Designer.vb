@@ -511,6 +511,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 0)
         Me.TableLayoutPanel1.Margin = New System.Windows.Forms.Padding(5, 0, 5, 5)
+        Me.TableLayoutPanel1.MinimumSize = New System.Drawing.Size(506, 215)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.Padding = New System.Windows.Forms.Padding(3, 0, 3, 3)
         Me.TableLayoutPanel1.RowCount = 8

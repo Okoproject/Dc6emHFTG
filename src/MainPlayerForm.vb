@@ -272,6 +272,7 @@ Public Class MainPlayerForm
 
     Private Sub MainPlayerForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        '画面のちらつきを防止するため、描画を一時停止
         Me.SuspendLayout()
         SendMessage(Me.Handle, WM_SETREDRAW, False, IntPtr.Zero)
 
@@ -370,6 +371,15 @@ Public Class MainPlayerForm
         CheckBoxMpvPamel.Checked = Not originalGamenChecked
         CheckBoxMpvPamel.Checked = originalGamenChecked
 
+        'メインパネルのつぶれ防止
+        If TableLayoutPanel1.Height > 215 Then
+            TableLayoutPanel1.Height = 215
+        End If
+        If TableLayoutPanel1.Width > 506 Then
+            TableLayoutPanel1.Width = 506
+        End If
+
+        '上で止めていた描画を再開
         SendMessage(Me.Handle, WM_SETREDRAW, True, IntPtr.Zero)
         Me.Refresh()
 
@@ -2569,7 +2579,7 @@ Public Class MainPlayerForm
 
     Private Sub MainPlayerForm_Resize(sender As Object, e As EventArgs) Handles Me.Resize
         'テスト用
-        'TextBox2.Text = Me.Width & "," & Me.Height & "|" & TableLayoutPanel1.Width & "," & TableLayoutPanel1.Height
+        TextBox2.Text = Me.Width & "," & Me.Height & "|" & TableLayoutPanel1.Width & "," & TableLayoutPanel1.Height
 
         ' 折りたたまれている（非表示の）パネルの実測幅はほぼ0のため、表示中のパネルのみ更新する
         If Not SplitContainer1.Panel2Collapsed Then SetBMWidthDebug(SplitContainer1.Panel2.Width, "MainPlayerForm_Resize")
@@ -2985,6 +2995,7 @@ Public Class MainPlayerForm
 
     Private _equalizerForm As EqualizerForm = Nothing
 
+    'イコライザー画面呼び出し
     Private Sub ButtonEQ_Click(sender As Object, e As EventArgs) Handles ButtonEQ.Click
         If _equalizerForm Is Nothing OrElse _equalizerForm.IsDisposed Then
             _equalizerForm = New EqualizerForm()
@@ -2998,10 +3009,7 @@ Public Class MainPlayerForm
         _equalizerForm.BringToFront()
     End Sub
 
-    Private Sub Button38_Click(sender As Object, e As EventArgs)
-
-    End Sub
-
+    'PlayListパネルの操作
     Private Sub DataGridView2_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView2.CellContentClick
 
         Dim colIndex As Integer = e.ColumnIndex
@@ -3024,6 +3032,10 @@ Public Class MainPlayerForm
                 End If
 
         End Select
+    End Sub
+
+    Private Sub TableLayoutPanel1_Paint(sender As Object, e As PaintEventArgs) Handles TableLayoutPanel1.Paint
+
     End Sub
 
 #End Region
