@@ -506,7 +506,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.Controls.Add(Me.Button2, 2, 3)
         Me.TableLayoutPanel1.Controls.Add(Me.Button12, 2, 5)
         Me.TableLayoutPanel1.Controls.Add(Me.Button30, 12, 1)
-        Me.TableLayoutPanel1.Controls.Add(Me.ButtonEQ, 12, 2)
+        Me.TableLayoutPanel1.Controls.Add(Me.ButtonEQ, 11, 2)
         Me.TableLayoutPanel1.Controls.Add(Me.Button40, 0, 2)
         Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 0)
@@ -591,11 +591,11 @@ Partial Class MainPlayerForm
         'TextBox1
         '
         Me.TextBox1.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.TableLayoutPanel1.SetColumnSpan(Me.TextBox1, 10)
+        Me.TableLayoutPanel1.SetColumnSpan(Me.TextBox1, 9)
         Me.TextBox1.Location = New System.Drawing.Point(96, 94)
         Me.TextBox1.Margin = New System.Windows.Forms.Padding(1)
         Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(458, 22)
+        Me.TextBox1.Size = New System.Drawing.Size(412, 22)
         Me.TextBox1.TabIndex = 923
         '
         'Button3
@@ -1266,14 +1266,15 @@ Partial Class MainPlayerForm
         '
         'ButtonEQ
         '
+        Me.TableLayoutPanel1.SetColumnSpan(Me.ButtonEQ, 2)
         Me.ButtonEQ.Dock = System.Windows.Forms.DockStyle.Fill
         Me.ButtonEQ.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ButtonEQ.Font = New System.Drawing.Font("MS UI Gothic", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.ButtonEQ.Font = New System.Drawing.Font("MS UI Gothic", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.ButtonEQ.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.ButtonEQ.Location = New System.Drawing.Point(557, 72)
+        Me.ButtonEQ.Location = New System.Drawing.Point(511, 72)
         Me.ButtonEQ.Margin = New System.Windows.Forms.Padding(2)
         Me.ButtonEQ.Name = "ButtonEQ"
-        Me.ButtonEQ.Size = New System.Drawing.Size(42, 66)
+        Me.ButtonEQ.Size = New System.Drawing.Size(88, 66)
         Me.ButtonEQ.TabIndex = 976
         Me.ButtonEQ.Text = "EQ"
         Me.ToolTip1.SetToolTip(Me.ButtonEQ, "イコライザー画面の表示")

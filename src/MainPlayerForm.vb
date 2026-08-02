@@ -1255,15 +1255,31 @@ Public Class MainPlayerForm
     '''     しおりに追加
     ''' </summary>
     Private Sub AddBookmark()
-        ' しおり追加処理
+        DataGridView1.Rows.Add()
+        Dim i As Integer = DataGridView1.Rows.Count - 1
+        Dim appPath As String = Assembly.GetExecutingAssembly().Location
+
+        If String.IsNullOrEmpty(My.Settings.autoBMDir) Then
+            My.Settings.autoBMDir = Path.GetDirectoryName(appPath)
+        End If
+
+        DataGridView1.Rows(i).Cells(0).Value = Strings.Left(Label1.Text, 8)
+        DataGridView1.Rows(i).Cells(2).Value = TrackBar1.Value
+        DataGridView1.CurrentCell = DataGridView1(0, i)
+
+        If My.Settings.autoBM Then
+            WriteCsvFromDgv(TextBox1.Text)
+        Else
+            WriteCsvFromDgv("om_tmp")
+        End If
     End Sub
 
     ''' <summary>
     '''     再生/一時停止としおり追加
     ''' </summary>
     Private Sub TogglePlayPauseWithBookmark()
-        AddBookmark()
         TogglePlayPause()
+        AddBookmark()
     End Sub
 
     ''' <summary>
@@ -2967,9 +2983,19 @@ Public Class MainPlayerForm
                 & "LastIchi=" & My.Settings.LastIchi)
     End Sub
 
+    Private _equalizerForm As EqualizerForm = Nothing
+
     Private Sub ButtonEQ_Click(sender As Object, e As EventArgs) Handles ButtonEQ.Click
-        Dim f2 As New EqualizerForm()
-        f2.ShowDialog()
+        If _equalizerForm Is Nothing OrElse _equalizerForm.IsDisposed Then
+            _equalizerForm = New EqualizerForm()
+            AddHandler Me.FormClosed, Sub()
+                                          If _equalizerForm IsNot Nothing AndAlso Not _equalizerForm.IsDisposed Then
+                                              _equalizerForm.Close()
+                                          End If
+                                      End Sub
+        End If
+        _equalizerForm.Show()
+        _equalizerForm.BringToFront()
     End Sub
 
     Private Sub Button38_Click(sender As Object, e As EventArgs)

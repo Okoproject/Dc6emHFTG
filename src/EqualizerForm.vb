@@ -106,8 +106,56 @@ Public Class EqualizerForm
         Next
     End Sub
 
+    Private _noiseCancelEnabled As Boolean = False
+
+    Private Sub ButtonNC_Click(sender As Object, e As EventArgs) Handles ButtonNC.Click
+        Dim player = GetPlayer()
+        If player Is Nothing OrElse player.IsDisposed Then Return
+
+        _noiseCancelEnabled = Not _noiseCancelEnabled
+        If _noiseCancelEnabled Then
+            player.SetNoiseCancel()
+            ButtonNC.BackColor = Color.FromArgb(80, 180, 80)
+        Else
+            player.ClearNoiseCancel()
+            ButtonNC.BackColor = SystemColors.Control
+        End If
+    End Sub
+
     Private Sub ButtonClose_Click(sender As Object, e As EventArgs) Handles ButtonClose.Click
         Close()
+    End Sub
+
+    Private Sub ChannelRoutingChanged(sender As Object, e As EventArgs) _
+        Handles CheckBox1.CheckedChanged, CheckBox2.CheckedChanged,
+                CheckBox3.CheckedChanged, CheckBox4.CheckedChanged
+        Dim player = GetPlayer()
+        If player Is Nothing OrElse player.IsDisposed Then Return
+        player.SetChannelRouting(CheckBox1.Checked, CheckBox2.Checked,
+                                 CheckBox3.Checked, CheckBox4.Checked)
+        ButtonMono.BackColor = SystemColors.Control
+    End Sub
+
+    Private _monoEnabled As Boolean = False
+
+    Private Sub ButtonMono_Click(sender As Object, e As EventArgs) Handles ButtonMono.Click
+        Dim player = GetPlayer()
+        If player Is Nothing OrElse player.IsDisposed Then Return
+
+        _monoEnabled = Not _monoEnabled
+        If _monoEnabled Then
+            CheckBox1.Checked = True
+            CheckBox2.Checked = True
+            CheckBox3.Checked = True
+            CheckBox4.Checked = True
+            ButtonMono.BackColor = Color.FromArgb(80, 180, 80)
+        Else
+            CheckBox1.Checked = False
+            CheckBox2.Checked = False
+            CheckBox3.Checked = False
+            CheckBox4.Checked = False
+            ButtonMono.BackColor = SystemColors.Control
+        End If
     End Sub
 
 #End Region

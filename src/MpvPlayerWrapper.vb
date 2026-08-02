@@ -506,6 +506,57 @@ Public Class MpvPlayerWrapper
     End Sub
 
     ''' <summary>
+    '''     ノイズキャンセリングフィルタを追加する。
+    ''' </summary>
+    Public Sub SetNoiseCancel()
+        If _mpvHandle = IntPtr.Zero Then Return
+        DoMpvCommandString("af remove @noiseCancel")
+        DoMpvCommandString("af add @noiseCancel:afftdn=nf=-25")
+    End Sub
+
+    ''' <summary>
+    '''     ノイズキャンセリングフィルタを除去する。
+    ''' </summary>
+    Public Sub ClearNoiseCancel()
+        If _mpvHandle = IntPtr.Zero Then Return
+        DoMpvCommandString("af remove @noiseCancel")
+    End Sub
+
+    ''' <summary>
+    '''     ステレオチャンネルのルーティングを設定する。
+    ''' </summary>
+    ''' <param name="leftToLeft">左→左</param>
+    ''' <param name="leftToRight">左→右</param>
+    ''' <param name="rightToRight">右→右</param>
+    ''' <param name="rightToLeft">右→左</param>
+    Public Sub SetChannelRouting(leftToLeft As Boolean, leftToRight As Boolean,
+                                  rightToRight As Boolean, rightToLeft As Boolean)
+        If _mpvHandle = IntPtr.Zero Then Return
+        DoMpvCommandString("af remove @channelRoute")
+
+        Dim outLeftParts As New List(Of String)
+        Dim outRightParts As New List(Of String)
+        If leftToLeft Then outLeftParts.Add("c0")
+        If rightToLeft Then outLeftParts.Add("c1")
+        If leftToRight Then outRightParts.Add("c0")
+        If rightToRight Then outRightParts.Add("c1")
+
+        Dim outLeft = If(outLeftParts.Count > 0, String.Join("+", outLeftParts), "0")
+        Dim outRight = If(outRightParts.Count > 0, String.Join("+", outRightParts), "0")
+
+        Dim filterStr = String.Format("pan=2:{0}:{1}", outLeft, outRight)
+        DoMpvCommandString("af add @channelRoute:" & filterStr)
+    End Sub
+
+    ''' <summary>
+    '''     チャンネルルーティングフィルタを除去する。
+    ''' </summary>
+    Public Sub ClearChannelRouting()
+        If _mpvHandle = IntPtr.Zero Then Return
+        DoMpvCommandString("af remove @channelRoute")
+    End Sub
+
+    ''' <summary>
     '''     イコライザーをリセット（全バンドのフィルタを除去）する。
     ''' </summary>
     Public Sub ClearEqualizer()
