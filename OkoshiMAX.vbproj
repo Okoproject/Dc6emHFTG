@@ -156,6 +156,12 @@
     <Compile Include="src\ClipboardImageViewer.Designer.vb">
       <DependentUpon>ClipboardImageViewer.vb</DependentUpon>
     </Compile>
+    <Compile Include="src\EqualizerForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\EqualizerForm.Designer.vb">
+      <DependentUpon>EqualizerForm.vb</DependentUpon>
+    </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -183,6 +189,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="src\ClipboardImageViewer.resx">
       <DependentUpon>ClipboardImageViewer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\EqualizerForm.resx">
+      <DependentUpon>EqualizerForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

@@ -19,12 +19,9 @@ Friend NotInheritable Class M3u8PlaylistStore
             writer.WriteLine("#EXTM3U")
             For Each item As PlaylistItem In items
                 writer.WriteLine("#EXTINF:" & item.Duration & "," & item.FileName)
-                If Not String.IsNullOrEmpty(item.Memo) Then
-                    writer.WriteLine("#OKM-MEMO:" & item.Memo)
-                End If
-                If item.Position > 0 Then
-                    writer.WriteLine("#OKM-POS:" & item.Position)
-                End If
+                ' メモと再生位置は常に記録する（独自拡張タグ）
+                writer.WriteLine("#OKM-MEMO:" & If(item.Memo, ""))
+                writer.WriteLine("#OKM-POS:" & item.Position)
                 writer.WriteLine(item.FilePath)
             Next
         End Using

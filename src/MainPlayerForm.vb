@@ -240,9 +240,10 @@ Public Class MainPlayerForm
     Private Const ColFileName As Integer = 0
     Private Const ColFileLength As Integer = 1
     Private Const ColFileMemo As Integer = 2
-    Private Const ColFileDelete As Integer = 3
-    Private Const ColFilePosition As Integer = 4
-    Private Const ColFileProgress As Integer = 5
+    Private Const ColFilePosition As Integer = 3
+    Private Const ColFileProgress As Integer = 4
+    Private Const ColFileDelete As Integer = 5
+    Private Const ColFileResume As Integer = 6
 
     Private Shared ReadOnly MediaExtensions() As String = {
         ".mp4", ".avi", ".mkv", ".mov", ".wmv", ".flv", ".webm",
@@ -294,7 +295,9 @@ Public Class MainPlayerForm
             SplitContainer1.Panel2.BackColor = SystemColors.ControlDarkDark
         End If
         If DataGridView1 IsNot Nothing Then
-            DataGridView1.BackgroundColor = SystemColors.ControlDarkDark
+            DataGridView1.BackgroundColor = Color.DimGray
+            colMemo.DefaultCellStyle.BackColor = Color.White
+            colMemo.DefaultCellStyle.SelectionBackColor = Color.White
         End If
 
         ' ボタンフォントサイズの初期調整
@@ -331,10 +334,12 @@ Public Class MainPlayerForm
             AddHandler TableLayoutPanel2.Paint, AddressOf TableLayoutPanel2_Paint
         End If
         If DataGridView1 IsNot Nothing Then
-            DataGridView1.BackgroundColor = SystemColors.ControlDarkDark
-            DataGridView1.DefaultCellStyle.BackColor = SystemColors.ControlDarkDark
-            DataGridView1.AlternatingRowsDefaultCellStyle.BackColor = SystemColors.ControlDarkDark
+            DataGridView1.BackgroundColor = Color.DimGray
+            DataGridView1.DefaultCellStyle.BackColor = Color.DimGray
             SetDoubleBuffered(DataGridView1, True)
+            ' メモ列のセル背景を白に設定（グリッド背景はDimGray）
+            colMemo.DefaultCellStyle.BackColor = Color.White
+            colMemo.DefaultCellStyle.SelectionBackColor = Color.White
         End If
         ' Panel2のPaintイベントで背景を確実に描画
         AddHandler SplitContainer1.Panel2.Paint, AddressOf Panel2_Paint
@@ -508,6 +513,12 @@ Public Class MainPlayerForm
     Private _mpvReady As Boolean = False
     Private _suppressAutoPlay As Boolean = False
 
+    ''' <summary>
+    '''     再開再生時にファイル読み込み後に適用する開始位置（秒）。
+    '''     LoadFile は非同期なため、OnMediaChanged で消費する。
+    ''' </summary>
+    Private _resumeStartPosition As Double = 0.0R
+
     Private Sub OnMpvReady()
         _mpvReady = True
         Debug.WriteLine("mpvの準備が完了しました。これで動画を読み込めます。")
@@ -517,6 +528,10 @@ Public Class MainPlayerForm
     '''     メディア変更時の処理
     ''' </summary>
     Private Sub OnMediaChanged()
+        ' 再開再生用の開始位置を即座に消費（他の再生で残りしないように）
+        Dim resumePos As Double = _resumeStartPosition
+        _resumeStartPosition = 0
+
         ' TrackBar1の最大値をメディアの長さに設定
         Dim dur As Double = _mediaPlayer.Duration
         If dur > 0 Then
@@ -524,7 +539,7 @@ Public Class MainPlayerForm
             TrackBar1.Maximum = CInt(dur)
             Label1.Text = String.Format(My.Resources.TimeFormat, TimeSpan.FromSeconds(dur).ToString("hh\:mm\:ss"))
 
-            _mediaPlayer.Position = 0
+            _mediaPlayer.Position = Math.Min(resumePos, dur)
 
             ' プレイリスト項目のDurationを更新
             If _currentPlaylistIndex >= 0 AndAlso _currentPlaylistIndex < _playlistItems.Count Then
@@ -811,10 +826,11 @@ Public Class MainPlayerForm
                 SetDoubleBuffered(TableLayoutPanel2, True)
             End If
             If DataGridView1 IsNot Nothing Then
-                DataGridView1.BackgroundColor = SystemColors.ControlDarkDark
-                DataGridView1.DefaultCellStyle.BackColor = SystemColors.ControlDarkDark
-                DataGridView1.AlternatingRowsDefaultCellStyle.BackColor = SystemColors.ControlDarkDark
+                DataGridView1.BackgroundColor = Color.DimGray
+                DataGridView1.DefaultCellStyle.BackColor = Color.DimGray
                 SetDoubleBuffered(DataGridView1, True)
+                colMemo.DefaultCellStyle.BackColor = Color.White
+                colMemo.DefaultCellStyle.SelectionBackColor = Color.White
             End If
 
             SplitContainer1.Panel2.Invalidate()
@@ -1570,6 +1586,13 @@ Public Class MainPlayerForm
         End If
     End Sub
 
+    Private Sub DataGridView1_EditingControlShowing(sender As Object, e As DataGridViewEditingControlShowingEventArgs) _
+        Handles DataGridView1.EditingControlShowing
+        If TypeOf e.Control Is TextBox Then
+            DirectCast(e.Control, TextBox).ImeMode = ImeMode.On
+        End If
+    End Sub
+
     Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) _
         Handles DataGridView1.CellContentClick
         Dim colIndex As Integer = e.ColumnIndex
@@ -1679,11 +1702,23 @@ Public Class MainPlayerForm
 
     Private Sub Button31_Click(sender As Object, e As EventArgs) Handles Button31.Click
         Try
-            If WriteCsvFromDgv(TextBox1.Text) = True Then
-                MsgBox(My.Resources.ExportComplete, vbOKOnly)
-            Else
-                MsgBox(My.Resources.ExportFailed, vbOKOnly)
-            End If
+            Using sfd As New SaveFileDialog()
+                sfd.Title = "CSVファイル書き出し"
+                sfd.Filter = "CSVファイル|*.csv|すべてのファイル|*.*"
+                sfd.DefaultExt = "csv"
+                sfd.FileName = TextBox1.Text & ".csv"
+                If Not String.IsNullOrEmpty(My.Settings.autoBMDir) Then
+                    sfd.InitialDirectory = My.Settings.autoBMDir
+                End If
+                If sfd.ShowDialog() <> DialogResult.OK Then
+                    Return
+                End If
+                If WriteCsvFromDgv(sfd.FileName) = True Then
+                    MsgBox(My.Resources.ExportComplete, vbOKOnly)
+                Else
+                    MsgBox(My.Resources.ExportFailed, vbOKOnly)
+                End If
+            End Using
         Catch ex As Exception
             MsgBox(ex.Message, vbOKOnly)
         End Try
@@ -1776,6 +1811,7 @@ Public Class MainPlayerForm
     'ファイルを開くボタン
     Private Sub Button39_Click(sender As Object, e As EventArgs) Handles Button39.Click
         If OpenFileDialog1.ShowDialog() = DialogResult.OK Then
+            _resumeStartPosition = 0
             _mediaPlayer.LoadFile(OpenFileDialog1.FileName)
             My.Settings.LastOpenedFile = OpenFileDialog1.FileName
             DataGridView1.Rows.Clear()
@@ -1816,6 +1852,11 @@ Public Class MainPlayerForm
                 ' 最後に確定値を再設定する
                 SetBMWidthDebug(panelWidth, "ButtonShiori_Click(show)")
 
+                ' 表示直後の幅確定はPanel2固定（FixedPanel=Panel2）で行うが、
+                ' その後右端ドラッグでしおりパネル（Panel2）のサイズだけ変更するため、
+                ' FixedPanelをPanel1（メインプレイヤー側）にし伸縮先をPanel2へ向ける
+                SplitContainer1.FixedPanel = FixedPanel.Panel1
+
                 ' 背景色を確実に設定（Panel2, TableLayoutPanel2, DataGridView1 すべて）
                 SplitContainer1.Panel2.BackColor = SystemColors.ControlDarkDark
                 SetDoubleBuffered(SplitContainer1.Panel2, True)
@@ -1824,10 +1865,11 @@ Public Class MainPlayerForm
                     SetDoubleBuffered(TableLayoutPanel2, True)
                 End If
                 If DataGridView1 IsNot Nothing Then
-                    DataGridView1.BackgroundColor = SystemColors.ControlDarkDark
-                    DataGridView1.DefaultCellStyle.BackColor = SystemColors.ControlDarkDark
-                    DataGridView1.AlternatingRowsDefaultCellStyle.BackColor = SystemColors.ControlDarkDark
+                    DataGridView1.BackgroundColor = Color.DimGray
+                    DataGridView1.DefaultCellStyle.BackColor = Color.DimGray
                     SetDoubleBuffered(DataGridView1, True)
+                    colMemo.DefaultCellStyle.BackColor = Color.White
+                    colMemo.DefaultCellStyle.SelectionBackColor = Color.White
                 End If
             Else
                 ' 非表示：次回表示時の幅として現在の実幅を保存しつつ、フォーム幅は表示時に広げた量を
@@ -1895,6 +1937,7 @@ Public Class MainPlayerForm
         If files Is Nothing OrElse files.Length = 0 Then Return
 
         ' 元のコードと同じ直接再生（確実に動作させるため）
+        _resumeStartPosition = 0
         _mediaPlayer.LoadFile(files(0))
         My.Settings.LastOpenedFile = files(0)
 
@@ -2048,6 +2091,7 @@ Public Class MainPlayerForm
             End If
 
             _suppressAutoPlay = False
+            _resumeStartPosition = 0
             _mediaPlayer.LoadFile(url)
 
             ' 即座にクリアせず、MediaChanged イベントで正常読み込みを確認してからクリアする
@@ -2500,6 +2544,13 @@ Public Class MainPlayerForm
         Return _mediaPlayer
     End Function
 
+    ''' <summary>
+    '''     メディアプレイヤーを取得する
+    ''' </summary>
+    Friend Function GetMediaPlayer() As MpvPlayerWrapper
+        Return _mediaPlayer
+    End Function
+
     Private Sub MainPlayerForm_Resize(sender As Object, e As EventArgs) Handles Me.Resize
         'テスト用
         'TextBox2.Text = Me.Width & "," & Me.Height & "|" & TableLayoutPanel1.Width & "," & TableLayoutPanel1.Height
@@ -2626,6 +2677,11 @@ Public Class MainPlayerForm
             Return
         End If
 
+        If e.ColumnIndex = ColFileResume Then
+            ResumePlaylistItem(e.RowIndex)
+            Return
+        End If
+
         If e.ColumnIndex <> ColFileMemo Then
             PlayPlaylistItem(e.RowIndex)
         End If
@@ -2655,9 +2711,10 @@ Public Class MainPlayerForm
         row.Cells(0).Value = If(item.FileName, "")
         row.Cells(1).Value = "00:00:00"
         row.Cells(2).Value = If(item.Memo, "")
-        row.Cells(3).Value = "削除"
-        row.Cells(4).Value = ""
-        row.Cells(5).Value = "0%"
+        row.Cells(5).Value = "削除"
+        row.Cells(ColFileResume).Value = "再開"
+        row.Cells(3).Value = ""
+        row.Cells(4).Value = "0%"
         DataGridView2.Rows.Add(row)
     End Sub
 
@@ -2675,7 +2732,24 @@ Public Class MainPlayerForm
     Private Sub PlayPlaylistItem(index As Integer)
         If index < 0 OrElse index >= _playlistItems.Count Then Return
         _currentPlaylistIndex = index
+        _resumeStartPosition = 0
         _mediaPlayer.LoadFile(_playlistItems(index).FilePath)
+        DataGridView2.ClearSelection()
+        DataGridView2.Rows(index).Selected = True
+    End Sub
+
+    ''' <summary>
+    '''     指定行のファイルを Position 位置から再生する
+    ''' </summary>
+    Private Sub ResumePlaylistItem(index As Integer)
+        If index < 0 OrElse index >= _playlistItems.Count Then Return
+        Dim item = _playlistItems(index)
+        _currentPlaylistIndex = index
+        ' ファイル読み込み後の OnMediaChanged で位置を復元するため予約する
+        _resumeStartPosition = Math.Max(0.0R, item.Position)
+        _suppressAutoPlay = True
+        _mediaPlayer.LoadFile(item.FilePath)
+        _mediaPlayer.Play()
         DataGridView2.ClearSelection()
         DataGridView2.Rows(index).Selected = True
     End Sub
@@ -2711,6 +2785,7 @@ Public Class MainPlayerForm
                 ScanPlaylistDurations()
                 If addedCount > 0 Then
                     _suppressAutoPlay = True
+                    _resumeStartPosition = 0
                     _currentPlaylistIndex = firstIndex
                     _mediaPlayer.LoadFile(_playlistItems(firstIndex).FilePath)
                 End If
@@ -2719,8 +2794,18 @@ Public Class MainPlayerForm
     End Sub
 
     Private Sub Button42_Click(sender As Object, e As EventArgs) Handles Button42.Click
+        ' 選択中のプレイリスト行があればそのファイルを再生する。
+        ' 行が未選択の場合は従来通り（唯一の手動）次曲に進む。
+        If DataGridView2.SelectedCells.Count > 0 Then
+            Dim rowIndex As Integer = DataGridView2.SelectedCells(0).RowIndex
+            If rowIndex >= 0 AndAlso rowIndex < _playlistItems.Count Then
+                PlayPlaylistItem(rowIndex)
+                Return
+            End If
+        End If
+
         If _playlistItems.Count = 0 Then Return
-        Dim nextIndex = _currentPlaylistIndex + 1
+        Dim nextIndex As Integer = _currentPlaylistIndex + 1
         If nextIndex >= _playlistItems.Count Then nextIndex = 0
         PlayPlaylistItem(nextIndex)
     End Sub
@@ -2800,7 +2885,28 @@ Public Class MainPlayerForm
     End Sub
 
     Private Sub SavePlaylist(filePath As String)
+        CommitGridEdits()
+        ' 現在再生中の項目の位置を最新値で更新してから保存
+        If _currentPlaylistIndex >= 0 AndAlso _currentPlaylistIndex < _playlistItems.Count Then
+            _playlistItems(_currentPlaylistIndex).Position = _mediaPlayer.Position
+        End If
         M3u8PlaylistStore.Save(filePath, _playlistItems)
+    End Sub
+
+    ''' <summary>
+    '''     DataGridView の未確定編集を PlaylistItem に反映する
+    ''' </summary>
+    Private Sub CommitGridEdits()
+        ' 編集中のセルを確定（CurrentCell をクリアすることで CellEndEdit が発火する）
+        If DataGridView2.IsCurrentCellDirty Then
+            DataGridView2.CurrentCell = Nothing
+        End If
+        For i As Integer = 0 To Math.Min(DataGridView2.Rows.Count - 1, _playlistItems.Count - 1)
+            Dim memoCell = DataGridView2.Rows(i).Cells(ColFileMemo).Value
+            If memoCell IsNot Nothing Then
+                _playlistItems(i).Memo = memoCell.ToString()
+            End If
+        Next
     End Sub
 
     Private Sub RestorePlaylist()
@@ -2842,7 +2948,7 @@ Public Class MainPlayerForm
             End If
         Next
     End Sub
-
+    '必要なくなったら消す
     Private Sub Button30_Click(sender As Object, e As EventArgs) Handles Button30.Click
         MsgBox("autoBM=" & My.Settings.autoBM & vbCr _
                & "PL=" & My.Settings.PL & vbCr _
@@ -2858,7 +2964,40 @@ Public Class MainPlayerForm
                & "shiori=" & My.Settings.shiori & vbCr _
                & "AutoBack=" & My.Settings.AutoBack & vbCr _
                & "LastOpenedFile=" & My.Settings.LastOpenedFile & vbCr _
-               & "LastIchi=" & My.Settings.LastIchi)
+                & "LastIchi=" & My.Settings.LastIchi)
+    End Sub
+
+    Private Sub ButtonEQ_Click(sender As Object, e As EventArgs) Handles ButtonEQ.Click
+        Dim f2 As New EqualizerForm()
+        f2.ShowDialog()
+    End Sub
+
+    Private Sub Button38_Click(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub DataGridView2_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView2.CellContentClick
+
+        Dim colIndex As Integer = e.ColumnIndex
+
+        If e.RowIndex < 0 OrElse e.RowIndex >= _playlistItems.Count Then Return
+
+        Select Case colIndex
+
+            Case 5 ' 削除
+                Dim i As Integer = e.RowIndex
+                DataGridView2.Rows.RemoveAt(i)
+            Case 6 ' 再開
+                Dim i As Integer = e.RowIndex
+                If _playlistItems(i).Position > 0 Then
+                    'Positionに値が入っている場合はその位置から再開
+                    ResumePlaylistItem(i)
+                Else
+                    'Positionに値がない場合、頭から再生する
+                    PlayPlaylistItem(i)
+                End If
+
+        End Select
     End Sub
 
 #End Region

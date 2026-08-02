@@ -35,6 +35,10 @@ Public Class MpvPlayerWrapper
     Private Shared Function mpv_command(handle As IntPtr, args() As IntPtr) As Integer
     End Function
 
+    <DllImport(MpvDll, CallingConvention := CallingConvention.Cdecl, CharSet := CharSet.Ansi)>
+    Private Shared Function mpv_command_string(handle As IntPtr, command As String) As Integer
+    End Function
+
     ' mpv_set_option_string
     <DllImport(MpvDll, CallingConvention := CallingConvention.Cdecl, CharSet := CharSet.Ansi)>
     Private Shared Function mpv_set_option_string(handle As IntPtr, name As String, data As String) As Integer
@@ -359,6 +363,19 @@ Public Class MpvPlayerWrapper
     End Property
 
     ''' <summary>
+    '''     現在の音声レベル（dB）。mpvの audio-level プロパティ。
+    ''' </summary>
+    Public ReadOnly Property AudioLevel As Double
+        Get
+            If _mpvHandle = IntPtr.Zero Then Return -100
+            Dim level As Double = -100
+            Dim err = mpv_get_property(_mpvHandle, "audio-level", MpvFormatDouble, level)
+            If err < 0 Then Return -100
+            Return level
+        End Get
+    End Property
+
+    ''' <summary>
     '''     メディアファイルのフルパス。
     ''' </summary>
     Public ReadOnly Property FilePath As String
@@ -462,6 +479,42 @@ Public Class MpvPlayerWrapper
         DoMpvCommand("stop")
     End Sub
 
+    ''' <summary>
+    '''     イコライザーの周波数帯ごとのゲインを設定する（dB、-12～+12）。
+    '''     bands は 10 要素の配列で、31Hz, 62Hz, 125Hz, 250Hz, 500Hz, 1kHz, 2kHz, 4kHz, 8kHz, 16kHz の順。
+    ''' </summary>
+    Public Sub SetEqualizer(bands() As Double)
+        If _mpvHandle = IntPtr.Zero Then Return
+        If bands Is Nothing OrElse bands.Length <> 10 Then Return
+
+        Dim freqs() As Integer = {31, 62, 125, 250, 500, 1000, 2000, 4000, 8000, 16000}
+        Dim labels() As String = {"eq0", "eq1", "eq2", "eq3", "eq4",
+                                  "eq5", "eq6", "eq7", "eq8", "eq9"}
+
+        For i As Integer = 0 To 9
+            ' まず既存のバンドをラベルで個別除去（存在しなければ無視）
+            DoMpvCommandString("af remove @" & labels(i))
+
+            ' ゲインが 0 以外の場合のみフィルタをラベル付きで追加
+            If bands(i) <> 0 Then
+                Dim filterStr = String.Format(
+                    "equalizer=f={0}:width_type=h:width=100:g={1}",
+                    freqs(i), bands(i).ToString("0.0"))
+                DoMpvCommandString("af add @" & labels(i) & ":" & filterStr)
+            End If
+        Next
+    End Sub
+
+    ''' <summary>
+    '''     イコライザーをリセット（全バンドのフィルタを除去）する。
+    ''' </summary>
+    Public Sub ClearEqualizer()
+        If _mpvHandle = IntPtr.Zero Then Return
+        For i As Integer = 0 To 9
+            DoMpvCommandString("af remove @eq" & i)
+        Next
+    End Sub
+
 #End Region
 
 #Region "Private helpers"
@@ -487,6 +540,14 @@ Public Class MpvPlayerWrapper
                 End If
             Next
         End Try
+    End Sub
+
+    ''' <summary>
+    '''     mpv のコマンドを文字列で実行する（af 系コマンド用）
+    ''' </summary>
+    Private Sub DoMpvCommandString(command As String)
+        If _mpvHandle = IntPtr.Zero Then Return
+        mpv_command_string(_mpvHandle, command)
     End Sub
 
     Private Function GetPropertyString(name As String) As String

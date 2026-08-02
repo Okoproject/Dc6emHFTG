@@ -28,7 +28,7 @@ Partial Class MainPlayerForm
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainPlayerForm))
         Me.PageSetupDialog1 = New System.Windows.Forms.PageSetupDialog()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
@@ -40,9 +40,10 @@ Partial Class MainPlayerForm
         Me.File_Namae = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.File_Length = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.File_Memo = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.File_Delete = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.File_Position = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.File_Progress = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.File_Delete = New System.Windows.Forms.DataGridViewButtonColumn()
+        Me.再開 = New System.Windows.Forms.DataGridViewButtonColumn()
         Me.Button41 = New System.Windows.Forms.Button()
         Me.Button42 = New System.Windows.Forms.Button()
         Me.Button43 = New System.Windows.Forms.Button()
@@ -100,7 +101,7 @@ Partial Class MainPlayerForm
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Button12 = New System.Windows.Forms.Button()
         Me.Button30 = New System.Windows.Forms.Button()
-        Me.Button38 = New System.Windows.Forms.Button()
+        Me.ButtonEQ = New System.Windows.Forms.Button()
         Me.Button40 = New System.Windows.Forms.Button()
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
@@ -228,17 +229,17 @@ Partial Class MainPlayerForm
         Me.DataGridView2.AllowDrop = True
         Me.DataGridView2.AllowUserToAddRows = False
         Me.DataGridView2.AllowUserToOrderColumns = True
-        Me.DataGridView2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.DataGridView2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
         Me.DataGridView2.BackgroundColor = System.Drawing.Color.DimGray
         Me.DataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView2.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.File_Namae, Me.File_Length, Me.File_Memo, Me.File_Delete, Me.File_Position, Me.File_Progress})
+        Me.DataGridView2.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.File_Namae, Me.File_Length, Me.File_Memo, Me.File_Position, Me.File_Progress, Me.File_Delete, Me.再開})
         Me.TableLayoutPanel3.SetColumnSpan(Me.DataGridView2, 6)
         Me.DataGridView2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DataGridView2.GridColor = System.Drawing.Color.DimGray
         Me.DataGridView2.Location = New System.Drawing.Point(2, 34)
         Me.DataGridView2.Margin = New System.Windows.Forms.Padding(2)
         Me.DataGridView2.Name = "DataGridView2"
-        Me.DataGridView2.RowHeadersWidth = 51
+        Me.DataGridView2.RowHeadersWidth = 25
         Me.DataGridView2.RowTemplate.Height = 24
         Me.DataGridView2.Size = New System.Drawing.Size(272, 730)
         Me.DataGridView2.TabIndex = 6
@@ -248,36 +249,52 @@ Partial Class MainPlayerForm
         Me.File_Namae.HeaderText = "ファイル名"
         Me.File_Namae.MinimumWidth = 50
         Me.File_Namae.Name = "File_Namae"
+        Me.File_Namae.Width = 93
         '
         'File_Length
         '
         Me.File_Length.HeaderText = "長さ"
         Me.File_Length.MinimumWidth = 50
         Me.File_Length.Name = "File_Length"
+        Me.File_Length.Width = 61
         '
         'File_Memo
         '
         Me.File_Memo.HeaderText = "メモ"
         Me.File_Memo.MinimumWidth = 50
         Me.File_Memo.Name = "File_Memo"
-        '
-        'File_Delete
-        '
-        Me.File_Delete.HeaderText = "削除"
-        Me.File_Delete.MinimumWidth = 40
-        Me.File_Delete.Name = "File_Delete"
+        Me.File_Memo.Width = 57
         '
         'File_Position
         '
         Me.File_Position.HeaderText = "Position"
         Me.File_Position.MinimumWidth = 50
         Me.File_Position.Name = "File_Position"
+        Me.File_Position.Width = 87
         '
         'File_Progress
         '
         Me.File_Progress.HeaderText = "進捗"
         Me.File_Progress.MinimumWidth = 50
         Me.File_Progress.Name = "File_Progress"
+        Me.File_Progress.Width = 66
+        '
+        'File_Delete
+        '
+        Me.File_Delete.HeaderText = "削除"
+        Me.File_Delete.MinimumWidth = 40
+        Me.File_Delete.Name = "File_Delete"
+        Me.File_Delete.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.File_Delete.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.File_Delete.Width = 66
+        '
+        '再開
+        '
+        Me.再開.HeaderText = "再開"
+        Me.再開.MinimumWidth = 6
+        Me.再開.Name = "再開"
+        Me.再開.Text = "再開"
+        Me.再開.Width = 43
         '
         'Button41
         '
@@ -489,7 +506,7 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.Controls.Add(Me.Button2, 2, 3)
         Me.TableLayoutPanel1.Controls.Add(Me.Button12, 2, 5)
         Me.TableLayoutPanel1.Controls.Add(Me.Button30, 12, 1)
-        Me.TableLayoutPanel1.Controls.Add(Me.Button38, 12, 2)
+        Me.TableLayoutPanel1.Controls.Add(Me.ButtonEQ, 12, 2)
         Me.TableLayoutPanel1.Controls.Add(Me.Button40, 0, 2)
         Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 0)
@@ -1247,18 +1264,20 @@ Partial Class MainPlayerForm
         Me.Button30.Text = "Button30"
         Me.Button30.UseVisualStyleBackColor = True
         '
-        'Button38
+        'ButtonEQ
         '
-        Me.Button38.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button38.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button38.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Button38.Location = New System.Drawing.Point(557, 72)
-        Me.Button38.Margin = New System.Windows.Forms.Padding(2)
-        Me.Button38.Name = "Button38"
-        Me.Button38.Size = New System.Drawing.Size(42, 66)
-        Me.Button38.TabIndex = 974
-        Me.Button38.Text = "Button38"
-        Me.Button38.UseVisualStyleBackColor = True
+        Me.ButtonEQ.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.ButtonEQ.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.ButtonEQ.Font = New System.Drawing.Font("MS UI Gothic", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.ButtonEQ.ForeColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.ButtonEQ.Location = New System.Drawing.Point(557, 72)
+        Me.ButtonEQ.Margin = New System.Windows.Forms.Padding(2)
+        Me.ButtonEQ.Name = "ButtonEQ"
+        Me.ButtonEQ.Size = New System.Drawing.Size(42, 66)
+        Me.ButtonEQ.TabIndex = 976
+        Me.ButtonEQ.Text = "EQ"
+        Me.ToolTip1.SetToolTip(Me.ButtonEQ, "イコライザー画面の表示")
+        Me.ButtonEQ.UseVisualStyleBackColor = False
         '
         'Button40
         '
@@ -1306,7 +1325,7 @@ Partial Class MainPlayerForm
         '
         Me.DataGridView1.AllowUserToAddRows = False
         Me.DataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.DataGridView1.BackgroundColor = System.Drawing.Color.DimGray
+        Me.DataGridView1.BackgroundColor = System.Drawing.Color.Black
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colCounter, Me.colMemo, Me.colPosition, Me.colDelete})
         Me.TableLayoutPanel2.SetColumnSpan(Me.DataGridView1, 4)
@@ -1323,10 +1342,10 @@ Partial Class MainPlayerForm
         '
         'colCounter
         '
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        Me.colCounter.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        Me.colCounter.DefaultCellStyle = DataGridViewCellStyle1
         Me.colCounter.FillWeight = 80.0!
         Me.colCounter.HeaderText = "カウンタ"
         Me.colCounter.MinimumWidth = 6
@@ -1643,7 +1662,7 @@ Partial Class MainPlayerForm
     Friend WithEvents Button35 As System.Windows.Forms.Button
     Friend WithEvents SplitContainer3 As System.Windows.Forms.SplitContainer
     Friend WithEvents Button30 As System.Windows.Forms.Button
-    Friend WithEvents Button38 As System.Windows.Forms.Button
+    Friend WithEvents ButtonEQ As System.Windows.Forms.Button
     Friend WithEvents Button40 As System.Windows.Forms.Button
     Friend WithEvents TableLayoutPanel3 As System.Windows.Forms.TableLayoutPanel
     Friend WithEvents Button41 As System.Windows.Forms.Button
@@ -1657,12 +1676,13 @@ Partial Class MainPlayerForm
     Friend WithEvents colPosition As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents colDelete As System.Windows.Forms.DataGridViewButtonColumn
     Friend WithEvents DataGridView2 As System.Windows.Forms.DataGridView
-    Friend WithEvents File_Namae As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents File_Length As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents File_Memo As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents File_Delete As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents File_Position As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents File_Progress As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents MpvPanel As System.Windows.Forms.Panel
     Friend WithEvents TableLayoutPanel4 As TableLayoutPanel
+    Friend WithEvents File_Namae As DataGridViewTextBoxColumn
+    Friend WithEvents File_Length As DataGridViewTextBoxColumn
+    Friend WithEvents File_Memo As DataGridViewTextBoxColumn
+    Friend WithEvents File_Position As DataGridViewTextBoxColumn
+    Friend WithEvents File_Progress As DataGridViewTextBoxColumn
+    Friend WithEvents File_Delete As DataGridViewButtonColumn
+    Friend WithEvents 再開 As DataGridViewButtonColumn
 End Class

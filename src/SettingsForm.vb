@@ -471,7 +471,7 @@ Public Class SettingsForm
     '''     ジャンプホットキーラベルを更新
     ''' </summary>
     Private Sub UpdateJumpLabel(label As Label, modifier As Integer, keyCode As Integer)
-        label.Text = "秒(" & GetHotKeyDisplayText(modifier, keyCode) & ")"
+        label.Text = "秒[" & GetHotKeyDisplayText(modifier, keyCode) & "]"
     End Sub
 
     ''' <summary>
@@ -491,7 +491,7 @@ Public Class SettingsForm
     '''     単一の速度ラベルを更新
     ''' </summary>
     Private Sub UpdateSpeedLabel(label As Label, modifier As Integer, keyCode As Integer)
-        label.Text = "(" & GetHotKeyDisplayText(modifier, keyCode) & ")"
+        label.Text = "[" & GetHotKeyDisplayText(modifier, keyCode) & "]"
     End Sub
 
 #End Region
@@ -531,13 +531,23 @@ Public Class SettingsForm
         lines.Add("現在のホットキー設定一覧")
         lines.Add("")
 
-        For Each hotkeyType As HotKeyType In [Enum].GetValues(GetType(HotKeyType))
-            Dim label As String = ComboBox1.Items(CInt(hotkeyType)).ToString()
+        ' ComboBox1 の表示順（インデックス）と HotKeyType の対応は
+        ' _hotKeyTypeComboIndexMapping が一次情報。列挙体の序数とは一致しないため
+        ' インデックス順に走査してラベルと設定を対応させる。
+        For index As Integer = 0 To ComboBox1.Items.Count - 1
+            If Not _hotKeyTypeComboIndexMapping.ContainsKey(index) Then
+                Continue For
+            End If
+
+            Dim hotkeyType As HotKeyType = _hotKeyTypeComboIndexMapping(index)
+            Dim label As String = ComboBox1.Items(index).ToString()
             Dim modifier As Integer = CInt(CallByName(My.Settings, GetSettingModifierProperty(hotkeyType), CallType.Get))
             Dim key As Integer = CInt(CallByName(My.Settings, GetSettingKeyProperty(hotkeyType), CallType.Get))
 
             lines.Add(label & " : " & GetHotKeyDisplayText(modifier, key))
         Next
+
+        lines.Add("自動巻戻秒数" & (My.Settings.AutoBack) * 0.01 & "秒")
 
         MessageBox.Show(String.Join(Environment.NewLine, lines), "ホットキー設定一覧",
                         MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -668,7 +678,8 @@ Public Class SettingsForm
 
         ' 設定を反映
         My.Settings.Save()
-        MsgBox("AutoBack = " & My.Settings.AutoBack)
+
+        'MsgBox("AutoBack = " & My.Settings.AutoBack)
     End Sub
 
     Private Sub NumericUpDown1_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown1.ValueChanged
