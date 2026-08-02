@@ -65,6 +65,12 @@ Public Class MainPlayerForm
     Private Const ResizeBorderWidth As Integer = 25
 
     ''' <summary>
+    '''     コントローラー部（TableLayoutPanel1）の各行の最低高さ。
+    '''     フォームのサイズ変更時に、ボタン等のコントロールが潰れないよう各行を広げる下限。
+    ''' </summary>
+    Private Const ControllerRowMinHeight As Integer = 20
+
+    ''' <summary>
     '''     ウィンドウ状態の保存用
     ''' </summary>
     Private _previousWindowState As FormWindowState = FormWindowState.Normal
@@ -563,10 +569,26 @@ Public Class MainPlayerForm
     '''     コントローラー部の最小サイズを更新
     ''' </summary>
     Private Sub UpdateControllerMinSize()
-        'TableLayoutPanel1.MinimumSize = New Size(500, 75)
-        'TableLayoutPanel1.MinimumSize = New Size(514, 194)
-        'SplitContainer3.Panel2MinSize = 75
-        'SplitContainer3.SplitterDistance = Me.Height - 194
+        ' Row1～Row7の7行が Percentage で均等割り当てられるため、各行の高さが
+        ' ControllerRowMinHeight 以上になるまでコントローラー（SplitContainer3.Panel2）の
+        ' 最小高さを確保する。動画非表示時は Row0（32pxのAbsolute）も含む。
+        Const controllerRowCount As Integer = 7
+        Const layoutBuffer As Integer = 16
+        Dim row0Height As Integer = If(SplitContainer3.Panel1Collapsed, 32, 0)
+        Dim controllerMinHeight As Integer = row0Height + controllerRowCount * ControllerRowMinHeight + layoutBuffer
+        SplitContainer3.Panel2MinSize = controllerMinHeight
+
+        ' フォームの最小高さ：タイトルバー＋（動画パネル）＋コントローラー＋スプリッター
+        Dim minHeight As Integer = CustomTitleBarHeight + controllerMinHeight + SplitContainer3.SplitterWidth
+        If Not SplitContainer3.Panel1Collapsed Then
+            minHeight += Math.Max(SplitContainer3.Panel1MinSize, 100)
+        End If
+        Me.MinimumSize = New Size(Me.MinimumSize.Width, minHeight)
+
+        ' 現在の高さが新しい下限より小さい場合は下限まで広げ、各行が読める高さを保証する
+        If Me.Height < Me.MinimumSize.Height Then
+            Me.Height = Me.MinimumSize.Height
+        End If
     End Sub
 
     ''' <summary>
@@ -2422,12 +2444,12 @@ Public Class MainPlayerForm
 
         Select Case _resizeDirection
             Case "BottomRight"
-                Me.Size = New Size(_resizeStartSize.Width + dx, _resizeStartSize.Height + dy)
+                Me.Size = New Size(_resizeStartSize.Width + dx, Math.Max(Me.MinimumSize.Height, _resizeStartSize.Height + dy))
             Case "TopRight"
                 Me.Size = New Size(_resizeStartSize.Width + dx, Math.Max(Me.MinimumSize.Height, _resizeStartSize.Height - dy))
                 If dy > 0 Then Me.Location = New Point(_resizeStartLocation.X, _resizeStartLocation.Y + dy)
             Case "BottomLeft"
-                Me.Size = New Size(Math.Max(Me.MinimumSize.Width, _resizeStartSize.Width - dx), _resizeStartSize.Height + dy)
+                Me.Size = New Size(Math.Max(Me.MinimumSize.Width, _resizeStartSize.Width - dx), Math.Max(Me.MinimumSize.Height, _resizeStartSize.Height + dy))
                 If dx > 0 Then Me.Location = New Point(_resizeStartLocation.X + dx, _resizeStartLocation.Y)
             Case "TopLeft"
                 Me.Size = New Size(Math.Max(Me.MinimumSize.Width, _resizeStartSize.Width - dx), Math.Max(Me.MinimumSize.Height, _resizeStartSize.Height - dy))

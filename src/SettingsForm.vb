@@ -233,13 +233,18 @@ Public Class SettingsForm
     '''     速度コントロール設定の読み込み
     ''' </summary>
     Private Sub LoadSpeedControlSettings()
-        NumericUpDown28.Value = CDec(My.Settings.SC1 / 10.0)
-        NumericUpDown29.Value = CDec(My.Settings.SC2 / 10.0)
-        NumericUpDown30.Value = CDec(My.Settings.SC3 / 10.0)
-        NumericUpDown31.Value = CDec(My.Settings.SC4 / 10.0)
-        NumericUpDown32.Value = CDec(My.Settings.SC5 / 10.0)
-        NumericUpDown33.Value = CDec(My.Settings.SC6 / 10.0)
-        NumericUpDown34.Value = CDec(My.Settings.SC7 / 10.0)
+        Dim ctrls As NumericUpDown() = {NumericUpDown28, NumericUpDown29, NumericUpDown30,
+                                        NumericUpDown31, NumericUpDown32, NumericUpDown33, NumericUpDown34}
+        Dim props As String() = {"SC1", "SC2", "SC3", "SC4", "SC5", "SC6", "SC7"}
+
+        For i As Integer = 0 To ctrls.Length - 1
+            Dim v As Decimal = CDec(CallByName(My.Settings, props(i), CallType.Get) / 10.0)
+            ' 旧バージョンで誤保存された値（0 等）がコントロール可動範囲外になるのを防ぐ。
+            ' clamp 後の値は正しい SC 保存処理（×10）で再保存され、設定が self-heal する。
+            If v < ctrls(i).Minimum Then v = ctrls(i).Minimum
+            If v > ctrls(i).Maximum Then v = ctrls(i).Maximum
+            ctrls(i).Value = v
+        Next
 
         UpdateSpeedControlLabels()
     End Sub
@@ -406,14 +411,7 @@ Public Class SettingsForm
     '''     ホットキー表示を更新
     ''' </summary>
     Friend Sub UpdateHotKeyDisplay(modifier As Integer, keyCode As Integer)
-        Dim modifierText As String = GetModifierDisplayText(modifier)
-        Dim keyText As String = GetKeyDisplayText(keyCode)
-
-        If String.IsNullOrEmpty(modifierText) Then
-            Label3.Text = keyText
-        Else
-            Label3.Text = modifierText & " + " & keyText
-        End If
+        Label3.Text = GetHotKeyDisplayText(modifier, keyCode)
     End Sub
 
     ''' <summary>
@@ -453,13 +451,27 @@ Public Class SettingsForm
     End Sub
 
     ''' <summary>
-    '''     単一のジャンプラベルを更新
+    '''     修飾キーとキー入力から表示文字列を生成する（未設定の場合は「未設定」）
     ''' </summary>
-    Private Sub UpdateJumpLabel(label As Label, modifier As Integer, keyCode As Integer)
+    Friend Function GetHotKeyDisplayText(modifier As Integer, keyCode As Integer) As String
+        If keyCode <= 0 OrElse modifier < 0 Then
+            Return "未設定"
+        End If
+
         Dim modifierText As String = GetModifierDisplayText(modifier)
         Dim keyText As String = GetKeyDisplayText(keyCode)
-        Dim displayText As String = "秒(" & modifierText & " + " & keyText & ")"
-        label.Text = displayText.Replace("秒( + ", "秒(")
+
+        If String.IsNullOrEmpty(modifierText) Then
+            Return keyText
+        End If
+        Return modifierText & " + " & keyText
+    End Function
+
+    ''' <summary>
+    '''     ジャンプホットキーラベルを更新
+    ''' </summary>
+    Private Sub UpdateJumpLabel(label As Label, modifier As Integer, keyCode As Integer)
+        label.Text = "秒(" & GetHotKeyDisplayText(modifier, keyCode) & ")"
     End Sub
 
     ''' <summary>
@@ -479,10 +491,7 @@ Public Class SettingsForm
     '''     単一の速度ラベルを更新
     ''' </summary>
     Private Sub UpdateSpeedLabel(label As Label, modifier As Integer, keyCode As Integer)
-        Dim modifierText As String = GetModifierDisplayText(modifier)
-        Dim keyText As String = GetKeyDisplayText(keyCode)
-        Dim displayText As String = "(" & modifierText & " + " & keyText & ")"
-        label.Text = displayText.Replace("( + ", "(")
+        label.Text = "(" & GetHotKeyDisplayText(modifier, keyCode) & ")"
     End Sub
 
 #End Region
@@ -513,11 +522,25 @@ Public Class SettingsForm
     End Sub
 
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
-        ' リセット処理
+        ' リセット処理（いつの間にかなくなってる・・・）
     End Sub
 
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
-        ' 現在の設定一覧表示
+        ' 現在のホットキー設定を一覧表示
+        Dim lines As New System.Collections.Generic.List(Of String)
+        lines.Add("現在のホットキー設定一覧")
+        lines.Add("")
+
+        For Each hotkeyType As HotKeyType In [Enum].GetValues(GetType(HotKeyType))
+            Dim label As String = ComboBox1.Items(CInt(hotkeyType)).ToString()
+            Dim modifier As Integer = CInt(CallByName(My.Settings, GetSettingModifierProperty(hotkeyType), CallType.Get))
+            Dim key As Integer = CInt(CallByName(My.Settings, GetSettingKeyProperty(hotkeyType), CallType.Get))
+
+            lines.Add(label & " : " & GetHotKeyDisplayText(modifier, key))
+        Next
+
+        MessageBox.Show(String.Join(Environment.NewLine, lines), "ホットキー設定一覧",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
 
 #End Region
@@ -562,11 +585,8 @@ Public Class SettingsForm
         Button1_Click(Nothing, EventArgs.Empty)
     End Sub
 
-    Private Sub GroupBox10_Enter(sender As Object, e As EventArgs) Handles GroupBox10.Enter
-
-    End Sub
-
     Private Sub RadioButton6_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton6.CheckedChanged
+        '設定画面を閉じるときに保存するからいらないかも
         If RadioButton6.Checked = True Then
             My.Settings.AutoPlay = True
         Else
@@ -575,6 +595,7 @@ Public Class SettingsForm
     End Sub
 
     Private Sub RadioButton7_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton7.CheckedChanged
+        '設定画面を閉じるときに保存するからいらないかも
         If RadioButton7.Checked = True Then
             My.Settings.AutoPlay = False
         Else
@@ -584,6 +605,69 @@ Public Class SettingsForm
 
     Private Sub SettingsForm_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         My.Settings.AutoBack = NumericUpDown1.Value * 100
+
+        ' コントローラーのジャンプボタン設定（NumericUpDown2～21）を SK1～SK20 へ保存
+        For i As Integer = 2 To 21
+            Dim ctl = Me.Controls.Find("NumericUpDown" & i, True).FirstOrDefault()
+            If ctl IsNot Nothing Then
+                CallByName(My.Settings, "SK" & (i - 1), CallType.Set, CInt(DirectCast(ctl, NumericUpDown).Value))
+            End If
+        Next
+
+        ' コントローラーのジャンプボタン設定（NumericUpDown22～24）を MM1～MM3 へ保存
+        For i As Integer = 1 To 3
+            Dim ctl = Me.Controls.Find("NumericUpDown" & i + 21, True).FirstOrDefault()
+            If ctl IsNot Nothing Then
+                CallByName(My.Settings, "MM" & (i), CallType.Set, CInt(DirectCast(ctl, NumericUpDown).Value))
+            End If
+        Next
+        ' コントローラーのジャンプボタン設定（NumericUpDown25～27）を HO1～HO3 へ保存
+        For i As Integer = 1 To 3
+            Dim ctl = Me.Controls.Find("NumericUpDown" & i + 24, True).FirstOrDefault()
+            If ctl IsNot Nothing Then
+                CallByName(My.Settings, "HO" & (i), CallType.Set, CInt(DirectCast(ctl, NumericUpDown).Value))
+            End If
+        Next
+
+        ' コントローラーのスピードコントローラーボタン設定（NumericUpDown28～34）を SC1～SC7 へ保存
+        For i As Integer = 1 To 7
+            Dim ctl = Me.Controls.Find("NumericUpDown" & i + 27, True).FirstOrDefault()
+            If ctl IsNot Nothing Then
+                CallByName(My.Settings, "SC" & (i), CallType.Set, CInt(DirectCast(ctl, NumericUpDown).Value * 10))
+            End If
+        Next
+
+        'タイムコード修飾11の設定を保存
+        My.Settings.Atama = TextBox1.Text
+        My.Settings.Oshiri = TextBox2.Text
+        'タイムコード修飾2の設定を保存
+        My.Settings.Atama2 = TextBox4.Text
+        My.Settings.Oshiri2 = TextBox3.Text
+        'タイムコード修飾3の設定を保存
+        My.Settings.Atama3 = TextBox6.Text
+        My.Settings.Oshiri3 = TextBox5.Text
+
+        'Wordファイル読み込み時用の聞き取り付加部分のマークの設定を保存
+        My.Settings.Fuka = TextBox7.Text
+        'Wordファイル読み込み時用のその他部分のマークの設定を保存
+        My.Settings.Sonota = TextBox9.Text
+        'Wordファイル読み込み時用の不明部分（頭）のマークの設定を保存
+        My.Settings.Fumei = TextBox8.Text
+        'Wordファイル読み込み時用の不明部分（末尾）のマークの設定を保存
+        My.Settings.Fumei2 = TextBox10.Text
+
+        'ファイル読み込み時に一時停止するかそのまま再生するかどうかの設定を保存
+        If RadioButton4.Checked = False Then
+            My.Settings.ShioriPlay = False
+        End If
+
+        'しおり選択時に一時停止するかそのまま再生するかどうかの設定を保存
+        If RadioButton6.Checked = False Then
+            My.Settings.AutoPlay = False
+        End If
+
+        ' 設定を反映
+        My.Settings.Save()
         MsgBox("AutoBack = " & My.Settings.AutoBack)
     End Sub
 
