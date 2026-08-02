@@ -1472,20 +1472,10 @@ Public Class MainPlayerForm
         Dim btn = TryCast(sender, System.Windows.Forms.Button)
         If btn Is Nothing Then Return
 
-        ' ボタン名から番号を取得（例: "Button21" -> "1"）
-        ' Button21 は SC1, Button22 は SC2 ...
-        Dim buttonIndex As Integer
-        If Integer.TryParse(btn.Name.Replace("Button", ""), buttonIndex) Then
-            Dim scIndex = buttonIndex - SpeedButtonOffset
-            Dim settingName = "SC" & scIndex
-
-            Try
-                'TrackBar2.Value = CInt(CDbl(My.Settings(settingName)) * SpeedMultiplier)
-                TrackBar2.Value = My.Settings(settingName)
-                UpdateSpeedFromTrackBar()
-            Catch ex As Exception
-                ' 設定が見つからない場合などは何もしない
-            End Try
+        Dim speed As Double
+        If Double.TryParse(btn.Text, speed) Then
+            TrackBar2.Value = CInt(speed / SpeedMultiplier)
+            UpdateSpeedFromTrackBar()
         End If
     End Sub
 
