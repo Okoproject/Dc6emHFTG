@@ -178,13 +178,14 @@ Public Class MainPlayerForm
 #End Region
 
     ''' <summary>
-    '''     ダブルバッファリングでちらつきを抑制（WS_EX_COMPOSITEDを無効化して透過問題回避）
+    '''     ダブルバッファリングでちらつきを抑制
+    '''     WS_EX_APPWINDOW を追加してタスクバーにアイコンを表示
     ''' </summary>
     Protected Overrides ReadOnly Property CreateParams As CreateParams
         Get
             Dim cp = MyBase.CreateParams
-            ' WS_EX_COMPOSITEDを無効化（透過問題の原因になるため）
-            ' cp.ExStyle = cp.ExStyle Or &H2000000 ' WS_EX_COMPOSITED
+            ' WS_EX_APPWINDOW: タスクバーにアイコンを表示するために必要
+            cp.ExStyle = cp.ExStyle Or &H40000
             Return cp
         End Get
     End Property
@@ -3032,10 +3033,10 @@ Public Class MainPlayerForm
 
         Select Case colIndex
 
-            Case 5 ' 削除
+            Case ColFileDelete
                 Dim i As Integer = e.RowIndex
-                DataGridView2.Rows.RemoveAt(i)
-            Case 6 ' 再開
+                RemovePlaylistItem(i)
+            Case ColFileResume
                 Dim i As Integer = e.RowIndex
                 If _playlistItems(i).Position > 0 Then
                     'Positionに値が入っている場合はその位置から再開
