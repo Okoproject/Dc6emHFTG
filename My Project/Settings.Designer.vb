@@ -1577,25 +1577,13 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
-        Public Property PL() As Boolean
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property ActiveTab() As Integer
             Get
-                Return CType(Me("PL"),Boolean)
+                Return CType(Me("ActiveTab"),Integer)
             End Get
             Set
-                Me("PL") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("100")>  _
-        Public Property PL_Width() As Integer
-            Get
-                Return CType(Me("PL_Width"),Integer)
-            End Get
-            Set
-                Me("PL_Width") = value
+                Me("ActiveTab") = value
             End Set
         End Property
         

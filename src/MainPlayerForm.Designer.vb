@@ -34,7 +34,9 @@ Partial Class MainPlayerForm
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
-        Me.SplitContainer2 = New System.Windows.Forms.SplitContainer()
+        Me.TabControlSide = New System.Windows.Forms.TabControl()
+        Me.TabPageShiori = New System.Windows.Forms.TabPage()
+        Me.TabPagePlaylist = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
         Me.DataGridView2 = New System.Windows.Forms.DataGridView()
         Me.File_Namae = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -102,7 +104,6 @@ Partial Class MainPlayerForm
         Me.Button12 = New System.Windows.Forms.Button()
         Me.Button30 = New System.Windows.Forms.Button()
         Me.ButtonEQ = New System.Windows.Forms.Button()
-        Me.Button40 = New System.Windows.Forms.Button()
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.colCounter = New System.Windows.Forms.DataGridViewButtonColumn()
@@ -126,10 +127,9 @@ Partial Class MainPlayerForm
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.Panel2.SuspendLayout()
         Me.SplitContainer1.SuspendLayout()
-        CType(Me.SplitContainer2, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SplitContainer2.Panel1.SuspendLayout()
-        Me.SplitContainer2.Panel2.SuspendLayout()
-        Me.SplitContainer2.SuspendLayout()
+        Me.TabControlSide.SuspendLayout()
+        Me.TabPageShiori.SuspendLayout()
+        Me.TabPagePlaylist.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SplitContainer3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -163,39 +163,52 @@ Partial Class MainPlayerForm
         '
         'SplitContainer1.Panel1
         '
-        Me.SplitContainer1.Panel1.Controls.Add(Me.SplitContainer2)
+        Me.SplitContainer1.Panel1.Controls.Add(Me.SplitContainer3)
         Me.SplitContainer1.Panel1MinSize = 0
         '
         'SplitContainer1.Panel2
         '
         Me.SplitContainer1.Panel2.BackColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.SplitContainer1.Panel2.Controls.Add(Me.TableLayoutPanel2)
+        Me.SplitContainer1.Panel2.Controls.Add(Me.TabControlSide)
         Me.SplitContainer1.Panel2MinSize = 0
         Me.SplitContainer1.Size = New System.Drawing.Size(1601, 806)
         Me.SplitContainer1.SplitterDistance = 1280
         Me.SplitContainer1.SplitterWidth = 5
         Me.SplitContainer1.TabIndex = 0
         '
-        'SplitContainer2
+        'TabControlSide
         '
-        Me.SplitContainer2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SplitContainer2.Location = New System.Drawing.Point(0, 0)
-        Me.SplitContainer2.Margin = New System.Windows.Forms.Padding(1)
-        Me.SplitContainer2.Name = "SplitContainer2"
+        Me.TabControlSide.Controls.Add(Me.TabPageShiori)
+        Me.TabControlSide.Controls.Add(Me.TabPagePlaylist)
+        Me.TabControlSide.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TabControlSide.Location = New System.Drawing.Point(0, 0)
+        Me.TabControlSide.Margin = New System.Windows.Forms.Padding(1)
+        Me.TabControlSide.Name = "TabControlSide"
+        Me.TabControlSide.SelectedIndex = 0
+        Me.TabControlSide.Size = New System.Drawing.Size(316, 806)
+        Me.TabControlSide.TabIndex = 0
         '
-        'SplitContainer2.Panel1
+        'TabPageShiori
         '
-        Me.SplitContainer2.Panel1.Controls.Add(Me.TableLayoutPanel3)
-        Me.SplitContainer2.Panel1MinSize = 0
+        Me.TabPageShiori.Controls.Add(Me.TableLayoutPanel2)
+        Me.TabPageShiori.Location = New System.Drawing.Point(4, 24)
+        Me.TabPageShiori.Name = "TabPageShiori"
+        Me.TabPageShiori.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPageShiori.Size = New System.Drawing.Size(308, 778)
+        Me.TabPageShiori.TabIndex = 0
+        Me.TabPageShiori.Text = "しおり"
+        Me.TabPageShiori.UseVisualStyleBackColor = True
         '
-        'SplitContainer2.Panel2
+        'TabPagePlaylist
         '
-        Me.SplitContainer2.Panel2.Controls.Add(Me.SplitContainer3)
-        Me.SplitContainer2.Panel2MinSize = 0
-        Me.SplitContainer2.Size = New System.Drawing.Size(1280, 806)
-        Me.SplitContainer2.SplitterDistance = 276
-        Me.SplitContainer2.SplitterWidth = 5
-        Me.SplitContainer2.TabIndex = 0
+        Me.TabPagePlaylist.Controls.Add(Me.TableLayoutPanel3)
+        Me.TabPagePlaylist.Location = New System.Drawing.Point(4, 24)
+        Me.TabPagePlaylist.Name = "TabPagePlaylist"
+        Me.TabPagePlaylist.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPagePlaylist.Size = New System.Drawing.Size(308, 778)
+        Me.TabPagePlaylist.TabIndex = 1
+        Me.TabPagePlaylist.Text = "プレイリスト"
+        Me.TabPagePlaylist.UseVisualStyleBackColor = True
         '
         'TableLayoutPanel3
         '
@@ -507,7 +520,6 @@ Partial Class MainPlayerForm
         Me.TableLayoutPanel1.Controls.Add(Me.Button12, 2, 5)
         Me.TableLayoutPanel1.Controls.Add(Me.Button30, 12, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.ButtonEQ, 11, 2)
-        Me.TableLayoutPanel1.Controls.Add(Me.Button40, 0, 2)
         Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 0)
         Me.TableLayoutPanel1.Margin = New System.Windows.Forms.Padding(5, 0, 5, 5)
@@ -1184,7 +1196,7 @@ Partial Class MainPlayerForm
         Me.ButtonShiori.Name = "ButtonShiori"
         Me.ButtonShiori.Size = New System.Drawing.Size(90, 68)
         Me.ButtonShiori.TabIndex = 967
-        Me.ToolTip1.SetToolTip(Me.ButtonShiori, "しおり一覧")
+        Me.ToolTip1.SetToolTip(Me.ButtonShiori, "しおり／プレイリスト表示切替")
         Me.ButtonShiori.UseVisualStyleBackColor = False
         '
         'Button35
@@ -1280,21 +1292,6 @@ Partial Class MainPlayerForm
         Me.ButtonEQ.Text = "EQ"
         Me.ToolTip1.SetToolTip(Me.ButtonEQ, "イコライザー画面の表示")
         Me.ButtonEQ.UseVisualStyleBackColor = False
-        '
-        'Button40
-        '
-        Me.TableLayoutPanel1.SetColumnSpan(Me.Button40, 2)
-        Me.Button40.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button40.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button40.Font = New System.Drawing.Font("メイリオ", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Button40.Location = New System.Drawing.Point(5, 72)
-        Me.Button40.Margin = New System.Windows.Forms.Padding(2)
-        Me.Button40.Name = "Button40"
-        Me.Button40.Size = New System.Drawing.Size(88, 66)
-        Me.Button40.TabIndex = 975
-        Me.Button40.Text = "Button40"
-        Me.ToolTip1.SetToolTip(Me.Button40, "プレイリストの表示・非表示")
-        Me.Button40.UseVisualStyleBackColor = True
         '
         'TableLayoutPanel2
         '
@@ -1571,10 +1568,9 @@ Partial Class MainPlayerForm
         Me.SplitContainer1.Panel2.ResumeLayout(False)
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer1.ResumeLayout(False)
-        Me.SplitContainer2.Panel1.ResumeLayout(False)
-        Me.SplitContainer2.Panel2.ResumeLayout(False)
-        CType(Me.SplitContainer2, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SplitContainer2.ResumeLayout(False)
+        Me.TabControlSide.ResumeLayout(False)
+        Me.TabPageShiori.ResumeLayout(False)
+        Me.TabPagePlaylist.ResumeLayout(False)
         Me.TableLayoutPanel3.ResumeLayout(False)
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer3.Panel1.ResumeLayout(False)
@@ -1599,7 +1595,9 @@ Partial Class MainPlayerForm
     Friend WithEvents Timer1 As System.Windows.Forms.Timer
     Friend WithEvents OpenFileDialog1 As System.Windows.Forms.OpenFileDialog
     Friend WithEvents SplitContainer1 As System.Windows.Forms.SplitContainer
-    Friend WithEvents SplitContainer2 As System.Windows.Forms.SplitContainer
+    Friend WithEvents TabControlSide As System.Windows.Forms.TabControl
+    Friend WithEvents TabPageShiori As System.Windows.Forms.TabPage
+    Friend WithEvents TabPagePlaylist As System.Windows.Forms.TabPage
     Friend WithEvents Button34 As System.Windows.Forms.Button
     Friend WithEvents TextBox3 As System.Windows.Forms.TextBox
     Friend WithEvents Button32 As System.Windows.Forms.Button
@@ -1665,7 +1663,6 @@ Partial Class MainPlayerForm
     Friend WithEvents SplitContainer3 As System.Windows.Forms.SplitContainer
     Friend WithEvents Button30 As System.Windows.Forms.Button
     Friend WithEvents ButtonEQ As System.Windows.Forms.Button
-    Friend WithEvents Button40 As System.Windows.Forms.Button
     Friend WithEvents TableLayoutPanel3 As System.Windows.Forms.TableLayoutPanel
     Friend WithEvents Button41 As System.Windows.Forms.Button
     Friend WithEvents Button42 As System.Windows.Forms.Button
