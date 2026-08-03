@@ -30,18 +30,14 @@ Public Class MainPlayerForm
         BMWidth = value
         LogDebug($"[BMWidth] {source} => {value} (Panel2Collapsed={SplitContainer1.Panel2Collapsed}, Panel2.Width={SplitContainer1.Panel2.Width})")
     End Sub
-    'PLパネルの幅を保存する変数
-    Public PLWidth As Integer
     'フォーム自体の高さを保存する変数
     Public MainHeight As Integer
     'フォーム自体の幅を保存する変数
     Public MainWidth As Integer
     '動画表示パネルの高さを保存する変数
     Public ScrHeight As Integer
-    ' しおりパネル表示時にフォーム幅を広げた量（非表示時に同じ量だけ戻すため）
+    ' しおり／プレイリストパネル表示時にフォーム幅を広げた量（非表示時に同じ量だけ戻すため）
     Private _shioriWidthDelta As Integer = 0
-    ' プレイリストパネル表示時にフォーム幅を広げた量（非表示時に同じ量だけ戻すため）
-    Private _playlistWidthDelta As Integer = 0
     ' 動画表示パネル表示時にフォーム高さを広げた量（非表示時に同じ量だけ戻すため）
     Private _gamenHeightDelta As Integer = 0
     ' ApplyUiSettingsからCheckBoxMpvPamel.Checkedを設定する際、CheckBoxMpvPanel_CheckedChangedの
@@ -351,9 +347,8 @@ Public Class MainPlayerForm
         ' 　コントロール単位でダブルバッファリングを行う）
         SetDoubleBuffered(SplitContainer1, True)
         SetDoubleBuffered(SplitContainer1.Panel1, True)
-        SetDoubleBuffered(SplitContainer2, True)
-        SetDoubleBuffered(SplitContainer2.Panel1, True)
-        SetDoubleBuffered(SplitContainer2.Panel2, True)
+        ' TabControlはネイティブのタブコントロールをラップしており、DoubleBufferedを有効化すると
+        ' タブページの中身は描画されるがタブヘッダーが描画されなくなることがあるため対象外にする
         SetDoubleBuffered(SplitContainer3, True)
         SetDoubleBuffered(SplitContainer3.Panel2, True)
         SetDoubleBuffered(TableLayoutPanel1, True)
@@ -876,30 +871,8 @@ Public Class MainPlayerForm
             SetBMWidthDebug(My.Settings.Shiori_Width, "ApplyUiSettings(hide)")
         End If
 
-        ' プレイリストパネルの復元（左に飛び出し）
-        If My.Settings.PL = True Then
-            Dim panelWidth As Integer = If(My.Settings.PL_Width > 0, My.Settings.PL_Width, 300)
-            SplitContainer2.FixedPanel = FixedPanel.Panel2
-            ' Button40_Clickで非表示にする際、ここで広げた量だけ正確に戻すために記録する
-            ' スプリッター分の幅も含めないと、メインプレイヤー側がスプリッター幅の分だけ狭くなる
-            _playlistWidthDelta = panelWidth + SplitContainer2.SplitterWidth
-            Me.Left -= _playlistWidthDelta
-            Me.Width += _playlistWidthDelta
-            SplitContainer2.Panel1Collapsed = False
-            SplitContainer2.SplitterDistance = panelWidth
-            ' セッション中に一度もリサイズ操作が起きないとPLWidthが既定値0のままになり、
-            ' 終了時に0が保存されてしまうため、復元した値で明示的に初期化する
-            PLWidth = panelWidth
-            Button40.Text = "PL >"
-            Button40.ForeColor = Color.Green
-        Else
-            SplitContainer2.Panel1Collapsed = True
-            Button40.Text = "< PL"
-            Button40.ForeColor = Color.Black
-            ' 非表示状態で起動した場合、セッション中に初めてボタンで表示する際に保存済みの
-            ' 幅が使われるよう、ここで明示的に読み込んでおく（表示側は上のブロックで対応済み）
-            PLWidth = My.Settings.PL_Width
-        End If
+        ' しおり／プレイリストタブの復元（前回終了時に選択していたタブ）
+        TabControlSide.SelectedIndex = Math.Max(0, Math.Min(TabControlSide.TabCount - 1, My.Settings.ActiveTab))
 
         ' カスタムタイトルバーを最前面に（しおりパネル展開時に隠れないよう）
         If CustomTitleBar IsNot Nothing Then
@@ -957,27 +930,23 @@ Public Class MainPlayerForm
         ' UI状態の保存
         '動画再生パネルが表示されているかどうか
         My.Settings.gamen = CheckBoxMpvPamel.Checked
-        'しおりパネルが表示されているかどうか
+        'しおり／プレイリストパネルが表示されているかどうか
         My.Settings.shiori = Not SplitContainer1.Panel2Collapsed
-        'プレイリストパネルが表示されているかどうか
-        My.Settings.PL = Not SplitContainer2.Panel1Collapsed
+        '前回終了時に選択していたタブ
+        My.Settings.ActiveTab = TabControlSide.SelectedIndex
 
         ' パネルが表示中なら、途中の不明なイベント連鎖に影響されうるフィールドではなく、
         ' 保存の瞬間の実測値を直接使う（非表示中はほぼ0になるためフィールド値を使う）
         If Not SplitContainer1.Panel2Collapsed Then SetBMWidthDebug(SplitContainer1.Panel2.Width, "SaveCurrentSettings")
-        If Not SplitContainer2.Panel1Collapsed Then PLWidth = SplitContainer2.Panel1.Width
         If Not SplitContainer3.Panel1Collapsed Then ScrHeight = SplitContainer3.Panel1.Height
 
         'BMパネルの幅を保存
         My.Settings.Shiori_Width = BMWidth
-        'PLパネルの幅を保存
-        My.Settings.PL_Width = PLWidth
         '動画表示パネルの高さを保存
         My.Settings.Gamen_Height = ScrHeight
         'フォームのサイズを保存（コアサイズ＝パネル拡張分を除いたサイズ）
         Dim coreWidth As Integer = ClientSize.Width
         Dim coreHeight As Integer = ClientSize.Height
-        If Not SplitContainer2.Panel1Collapsed Then coreWidth -= SplitContainer2.Panel1.Width + SplitContainer2.SplitterWidth
         If Not SplitContainer1.Panel2Collapsed Then coreWidth -= SplitContainer1.Panel2.Width + SplitContainer1.SplitterWidth
         If Not SplitContainer3.Panel1Collapsed Then coreHeight -= SplitContainer3.Panel1.Height + SplitContainer3.SplitterWidth
         My.Settings.MyClientSize = New Size(coreWidth, coreHeight)
@@ -2250,11 +2219,13 @@ Public Class MainPlayerForm
         ' タイトルバーの基本設定 - Dock=Topでパディングを尊重してコンテンツを下に押し下げる
         If CustomTitleBar IsNot Nothing Then
             CustomTitleBar.Height = CustomTitleBarHeight
+            ' Anchorを設定するとDockがNoneにリセットされてしまい、SplitContainer1(Dock=Fill)が
+            ' タイトルバーの領域を除外せずフォーム全体を占有する原因になるため、Anchorは設定しない
+            ' （Dock=Topのみで横幅追従・上端固定は満たされる）
             CustomTitleBar.Dock = DockStyle.Top
             CustomTitleBar.Location = New Point(0, 0)
             CustomTitleBar.Size = New Size(Me.ClientSize.Width, CustomTitleBarHeight)
             CustomTitleBar.BackColor = Color.FromArgb(30, 30, 30)
-            CustomTitleBar.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
             CustomTitleBar.BringToFront()
         End If
 
@@ -2598,7 +2569,6 @@ Public Class MainPlayerForm
 
         ' 折りたたまれている（非表示の）パネルの実測幅はほぼ0のため、表示中のパネルのみ更新する
         If Not SplitContainer1.Panel2Collapsed Then SetBMWidthDebug(SplitContainer1.Panel2.Width, "MainPlayerForm_Resize")
-        If Not SplitContainer2.Panel1Collapsed Then PLWidth = SplitContainer2.Panel1.Width
         If Not SplitContainer3.Panel1Collapsed Then ScrHeight = SplitContainer3.Panel1.Height
 
         If BtnMaximize IsNot Nothing Then
@@ -2638,76 +2608,15 @@ Public Class MainPlayerForm
         End If
     End Sub
 
-    'PlayListの表示・非表示切替
-    Private Sub Button40_Click(sender As Object, e As EventArgs) Handles Button40.Click
-
-        ' ウィンドウの移動とパネル表示切替を1回の再描画にまとめ、ちらつきを防ぐ
-        LockWindowUpdate(Me.Handle)
-        Try
-            If SplitContainer2.Panel1Collapsed = True Then
-                ' 表示する場合
-                Dim panelWidth As Integer = If(PLWidth > 0, PLWidth, 300)
-
-                ' FixedPanelを先に設定（Panel2＝メインプレイヤー側の幅を固定）
-                SplitContainer2.FixedPanel = FixedPanel.Panel2
-
-                ' Panel1(プレイリスト)は新規に幅を割り当てる側なので、先にウィンドウを広げてから
-                ' Panel1の幅を絶対値（panelWidth）で確定させる。
-                ' （逆に先にSplitterDistanceを設定すると、FixedPanel=Panel2により
-                ' 　あとで広げた分がPanel1に二重加算され、幅が肥大化する）
-                ' スプリッター分の幅も含めて広げないと、メインプレイヤー側がスプリッター幅の分だけ
-                ' 狭くなり、TableLayoutPanel1内のボタン配置がずれる
-                _playlistWidthDelta = panelWidth + SplitContainer2.SplitterWidth
-                Me.SetBounds(Me.Left - _playlistWidthDelta, Me.Top, Me.Width + _playlistWidthDelta, Me.Height)
-                SplitContainer2.Panel1Collapsed = False
-                SplitContainer2.SplitterDistance = panelWidth
-
-                Button40.Text = "PL >"
-                Button40.ForeColor = Color.Green
-
-            Else
-                ' 非表示にする場合：次回表示時の幅として現在の実幅を保存しつつ、
-                ' フォーム幅は表示時に広げた量をそのまま戻す（実幅を使うと誤差が蓄積するため）
-                PLWidth = SplitContainer2.Panel1.Width
-
-                ' Panel1を非表示
-                SplitContainer2.Panel1Collapsed = True
-
-                Me.SetBounds(Me.Left + _playlistWidthDelta, Me.Top, Me.Width - _playlistWidthDelta, Me.Height)
-
-                Button40.Text = "< PL"
-                Button40.ForeColor = Color.Black
-
-            End If
-        Finally
-            LockWindowUpdate(IntPtr.Zero)
-        End Try
-        Me.Refresh()
-
-    End Sub
-
     Private Sub MainPlayerForm_ResizeBegin(sender As Object, e As EventArgs) Handles Me.ResizeBegin
         ' 折りたたまれている（非表示の）パネルの実測幅はほぼ0のため、表示中のパネルのみ更新する
         If Not SplitContainer1.Panel2Collapsed Then SetBMWidthDebug(SplitContainer1.Panel2.Width, "MainPlayerForm_ResizeBegin")
-        If Not SplitContainer2.Panel1Collapsed Then PLWidth = SplitContainer2.Panel1.Width
         If Not SplitContainer3.Panel1Collapsed Then ScrHeight = SplitContainer3.Panel1.Height
     End Sub
 
     Private Sub MainPlayerForm_ResizeEnd(sender As Object, e As EventArgs) Handles Me.ResizeEnd
         If Not SplitContainer1.Panel2Collapsed Then SetBMWidthDebug(SplitContainer1.Panel2.Width, "MainPlayerForm_ResizeEnd")
-        If Not SplitContainer2.Panel1Collapsed Then PLWidth = SplitContainer2.Panel1.Width
         If Not SplitContainer3.Panel1Collapsed Then ScrHeight = SplitContainer3.Panel1.Height
-    End Sub
-
-    Private Sub SplitContainer2_SplitterMoved(sender As Object, e As SplitterEventArgs) Handles SplitContainer2.SplitterMoved
-        PLWidth = SplitContainer2.Panel1.Width
-
-        ' 表示中に手動でスプリッターを動かした場合、非表示時にウィンドウを縮める量
-        ' （_playlistWidthDelta）もこの実測幅に合わせて更新しないと、表示時に広げた量のまま
-        ' 縮めてしまい、差分がメインプレイヤー側に残ってしまう
-        If Not SplitContainer2.Panel1Collapsed Then
-            _playlistWidthDelta = SplitContainer2.Panel1.Width + SplitContainer2.SplitterWidth
-        End If
     End Sub
 
     Private Sub DataGridView2_CellClick(sender As Object, e As DataGridViewCellEventArgs)
@@ -2992,8 +2901,7 @@ Public Class MainPlayerForm
     '必要なくなったら消す
     Private Sub Button30_Click(sender As Object, e As EventArgs) Handles Button30.Click
         MsgBox("autoBM=" & My.Settings.autoBM & vbCr _
-               & "PL=" & My.Settings.PL & vbCr _
-               & "PL_Width=" & My.Settings.PL_Width & vbCr _
+               & "ActiveTab=" & My.Settings.ActiveTab & vbCr _
                & "Gamen_Height=" & My.Settings.Gamen_Height & vbCr _
                & "Shiori_Width=" & My.Settings.Shiori_Width & vbCr _
                & "Main_Height=" & My.Settings.Main_Height & vbCr _
