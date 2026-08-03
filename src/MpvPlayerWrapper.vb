@@ -480,7 +480,7 @@ Public Class MpvPlayerWrapper
     End Sub
 
     ''' <summary>
-    '''     イコライザーの周波数帯ごとのゲインを設定する（dB、-12～+12）。
+    '''     イコライザーの周波数帯ごとのゲインを設定する（dB、-30～+30）。
     '''     bands は 10 要素の配列で、31Hz, 62Hz, 125Hz, 250Hz, 500Hz, 1kHz, 2kHz, 4kHz, 8kHz, 16kHz の順。
     ''' </summary>
     Public Sub SetEqualizer(bands() As Double)

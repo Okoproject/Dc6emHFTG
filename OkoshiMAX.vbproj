@@ -121,6 +121,10 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
+    <!-- EqualizerFormのスペクトラム表示用。WASAPIループバック録音でWasapiLoopbackCaptureとFFT(FastFourierTransform)を使用する -->
+    <PackageReference Include="NAudio" Version="2.3.0" />
+  </ItemGroup>
+  <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
     <Import Include="System" />
     <Import Include="System.Collections" />
@@ -179,6 +183,7 @@
     <Compile Include="src\BookmarkTextParser.vb" />
     <Compile Include="src\M3u8PlaylistStore.vb" />
     <Compile Include="src\PlaylistItem.vb" />
+    <Compile Include="src\AudioSpectrumAnalyzer.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="src\MainPlayerForm.resx">

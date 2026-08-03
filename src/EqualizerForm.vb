@@ -11,8 +11,29 @@ Public Class EqualizerForm
     Private Const BandCount As Integer = 10
 
     ''' <summary>ゲインの範囲（dB）</summary>
-    Private Const MinGain As Double = -12.0
-    Private Const MaxGain As Double = 12.0
+    Private Const MinGain As Double = -30.0
+    Private Const MaxGain As Double = 30.0
+
+    ''' <summary>LEDメーター1バンドあたりのセグメント数</summary>
+    Private Const SegmentCount As Integer = 16
+
+    ''' <summary>LEDセグメント間の隙間（ピクセル）</summary>
+    Private Const SegmentGapPx As Integer = 2
+
+    ''' <summary>
+    '''     無音とみなす音量下限（dB）。WASAPIループバックで測定される実際の音量は聴感より
+    '''     かなり小さい値になる（スピーカー側の増幅より手前を測定するため）ので、広めに取っている。
+    ''' </summary>
+    Private Const RmsFloorDb As Double = -90.0
+
+    ''' <summary>
+    '''     メーターが満杯（1.0）になる音量(dB)。WASAPIループバックの実測値は聴感よりかなり小さいため、
+    '''     0dBではなくこの値をそのまま満杯とみなす。値を下げるほどメーターが敏感になる。
+    ''' </summary>
+    Private Const CeilingDb As Double = -50.0
+
+    ''' <summary>各バンドの中心周波数(Hz)。AudioSpectrumAnalyzerへ渡す解析対象帯域。</summary>
+    Private Shared ReadOnly BandFrequenciesHz() As Integer = {31, 62, 125, 250, 500, 1000, 2000, 4000, 8000, 16000}
 
 #End Region
 
@@ -27,8 +48,8 @@ Public Class EqualizerForm
     ''' <summary>各バンドのピーク値（減衰アニメーション用）</summary>
     Private _bandPeaks(BandCount - 1) As Double
 
-    ''' <summary>各バンドのランダム変動用</summary>
-    Private _random As New Random()
+    ''' <summary>WASAPIループバック録音+FFTで実際の音声の帯域別音量を解析するアナライザー</summary>
+    Private _spectrumAnalyzer As AudioSpectrumAnalyzer
 
 #End Region
 
@@ -51,12 +72,17 @@ Public Class EqualizerForm
         ' メインフォームの右側に配置
         PositionRelativeToMainForm()
 
-        ' スペクトラム表示開始
+        ' WASAPIループバック録音を開始し、スペクトラム表示を開始
+        _spectrumAnalyzer = New AudioSpectrumAnalyzer(BandFrequenciesHz)
         TimerSpectrum.Start()
     End Sub
 
     Private Sub EqualizerForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         TimerSpectrum.Stop()
+        If _spectrumAnalyzer IsNot Nothing Then
+            _spectrumAnalyzer.Dispose()
+            _spectrumAnalyzer = Nothing
+        End If
     End Sub
 
     ''' <summary>
@@ -171,26 +197,16 @@ Public Class EqualizerForm
     '''     各バンドの表示レベルを更新する
     ''' </summary>
     Private Sub UpdateSpectrumLevels()
-        Dim player = GetPlayer()
-        Dim isPlaying As Boolean = False
-
-        If player IsNot Nothing AndAlso Not player.IsDisposed AndAlso Not player.IsIdle Then
-            isPlaying = player.IsPlaying
-        End If
+        Dim bandsDb = _spectrumAnalyzer.GetBandLevelsDb()
 
         For i As Integer = 0 To BandCount - 1
-            ' ゲインを 0～1 に正規化
-            Dim gainNorm As Double = (_trackBars(i).Value + 120) / 240.0
+            ' ゲインを 0～1 に正規化（帯域ごとの見た目の強調に使用）。TrackBarのMinimum/Maximumから算出する
+            Dim trackBar = _trackBars(i)
+            Dim gainNorm As Double = (trackBar.Value - trackBar.Minimum) / CDbl(trackBar.Maximum - trackBar.Minimum)
 
-            ' ランダム変動を追加（各バンドに異なる周波数のざらつき）
-            Dim jitter As Double = (_random.NextDouble() - 0.5) * 0.3
-
-            ' 再生中のみレベルを表示
-            Dim targetLevel As Double = 0
-            If isPlaying Then
-                ' ゲインが高いほどレベルが上がり、ランダム変動で自然な揺らぎを再現
-                targetLevel = 0.3 + gainNorm * 0.7 + jitter
-            End If
+            ' 実測音量（RMS dB）を0～1に正規化（下限=0、CeilingDb=1）
+            Dim normalized = Math.Max(0, Math.Min(1, (bandsDb(i) - RmsFloorDb) / (CeilingDb - RmsFloorDb)))
+            Dim targetLevel As Double = normalized * (0.7 + gainNorm * 0.3)
             targetLevel = Math.Max(0, Math.Min(1, targetLevel))
 
             ' スムージング（EMA）
@@ -221,32 +237,51 @@ Public Class EqualizerForm
         Dim totalPadding = padding * (BandCount + 1)
         Dim barWidth = (area.Width - totalPadding) / BandCount
 
+        ' LEDメーター用の縦幅（下部は周波数ラベル領域として確保）
+        Dim topMargin As Integer = 4
+        Dim labelAreaHeight As Integer = 16
+        Dim meterHeight As Single = Math.Max(0, area.Height - topMargin - labelAreaHeight)
+        Dim totalGap As Single = SegmentGapPx * (SegmentCount - 1)
+        Dim segmentHeight As Single = Math.Max(1.0F, (meterHeight - totalGap) / SegmentCount)
+
         For i As Integer = 0 To BandCount - 1
             Dim x As Single = CSng(padding + i * (barWidth + padding))
-            Dim barH As Single = CSng(_bandLevels(i) * (area.Height - 20))
-            Dim peakH As Single = CSng(_bandPeaks(i) * (area.Height - 20))
-            Dim y As Single = area.Height - barH - 16
-            Dim peakY As Single = area.Height - peakH - 16
 
-            ' ゲインに応じて色を変える
-            Dim gainVal = _trackBars(i).Value / 10.0
-            Dim barColor As Color = GetBarColor(gainVal, CSng(_bandLevels(i)))
+            Dim litCount As Integer = CInt(Math.Round(_bandLevels(i) * SegmentCount))
+            litCount = Math.Max(0, Math.Min(SegmentCount, litCount))
 
-            ' バー本体（グラデーション）
-            If barH > 1 Then
-                Using brush As New LinearGradientBrush(
-                    New RectangleF(x, y, CSng(barWidth), barH),
-                    ControlPaint.Dark(barColor, 0.3F), barColor, LinearGradientMode.Vertical)
-                    g.FillRectangle(brush, x, y, CSng(barWidth), barH)
+            ' ピークセグメント（現在のレベルより上にある場合のみ、白く浮かせて表示）
+            Dim peakSegment As Integer = CInt(Math.Round(_bandPeaks(i) * SegmentCount)) - 1
+
+            For j As Integer = 0 To SegmentCount - 1
+                Dim segY As Single = topMargin + (SegmentCount - 1 - j) * (segmentHeight + SegmentGapPx)
+                Dim segRect As New RectangleF(x, segY, CSng(barWidth), segmentHeight)
+
+                Dim baseColor As Color = GetSegmentColor(j, SegmentCount)
+                Dim isLit As Boolean = j < litCount
+                Dim isPeakMarker As Boolean = j = peakSegment AndAlso peakSegment >= litCount
+
+                Dim fillColor As Color
+                If isPeakMarker Then
+                    fillColor = Color.White
+                ElseIf isLit Then
+                    fillColor = baseColor
+                Else
+                    fillColor = DimColor(baseColor)
+                End If
+
+                Using brush As New SolidBrush(fillColor)
+                    g.FillRectangle(brush, segRect)
                 End Using
-            End If
 
-            ' ピークインジケーター（細い水平線）
-            If peakH > 2 Then
-                Using pen As New Pen(Color.White, 2)
-                    g.DrawLine(pen, x, peakY, x + CSng(barWidth), peakY)
-                End Using
-            End If
+                ' 点灯セグメントのみ上部にツヤ（グロス）を乗せて立体感を出す
+                If isLit OrElse isPeakMarker Then
+                    Using glossBrush As New SolidBrush(Color.FromArgb(70, 255, 255, 255))
+                        g.FillRectangle(glossBrush, segRect.X, segRect.Y,
+                                        segRect.Width, Math.Max(1.0F, segRect.Height * 0.35F))
+                    End Using
+                End If
+            Next
         Next
 
         ' ラベル描画（下部に周波数）
@@ -265,19 +300,26 @@ Public Class EqualizerForm
     End Sub
 
     ''' <summary>
-    '''     ゲインとレベルに応じたバーの色を取得する
+    '''     セグメント位置（下から何番目か）に応じたLEDの基準色を取得する（クラシックなVUメーター配色）
     ''' </summary>
-    Private Shared Function GetBarColor(gainDb As Double, level As Single) As Color
-        ' ゲインが正の場合は緑→黄→赤、負の場合は青→シアン
-        If gainDb >= 6 Then
-            Return Color.FromArgb(200, 50 + CInt(level * 100), 30, 30)
-        ElseIf gainDb >= 0 Then
-            Return Color.FromArgb(200, 30 + CInt(level * 120), 80 + CInt(level * 80), 30)
-        ElseIf gainDb >= -6 Then
-            Return Color.FromArgb(200, 30, 80 + CInt(level * 80), 30 + CInt(level * 120))
+    Private Shared Function GetSegmentColor(segmentIndex As Integer, segmentCount As Integer) As Color
+        Dim fraction As Double = segmentIndex / CDbl(segmentCount - 1)
+        If fraction < 0.6 Then
+            Return Color.FromArgb(255, 40, 200, 90)
+        ElseIf fraction < 0.85 Then
+            Return Color.FromArgb(255, 230, 200, 40)
         Else
-            Return Color.FromArgb(200, 30, 30 + CInt(level * 100), 80 + CInt(level * 80))
+            Return Color.FromArgb(255, 220, 60, 50)
         End If
+    End Function
+
+    ''' <summary>
+    '''     消灯中のLEDセグメント色（同系色を暗くした状態）を取得する
+    ''' </summary>
+    Private Shared Function DimColor(baseColor As Color) As Color
+        Const dimFactor As Double = 0.15
+        Return Color.FromArgb(255, CInt(baseColor.R * dimFactor),
+                               CInt(baseColor.G * dimFactor), CInt(baseColor.B * dimFactor))
     End Function
 
     ''' <summary>
