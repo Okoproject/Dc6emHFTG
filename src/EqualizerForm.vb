@@ -250,7 +250,7 @@ Public Class EqualizerForm
         Next
 
         ' ラベル描画（下部に周波数）
-        Using font As New Font("MS UI Gothic", 7)
+        Using font As New Font("メイリオ", 7)
             Using brush As New SolidBrush(Color.LightGray)
                 For i As Integer = 0 To BandCount - 1
                     Dim x As Single = CSng(padding + i * (barWidth + padding))

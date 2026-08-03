@@ -143,7 +143,7 @@ Partial Class EqualizerForm
         'Label31
         '
         Me.Label31.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label31.Font = New System.Drawing.Font("MS UI Gothic", 8.0!)
+        Me.Label31.Font = New System.Drawing.Font("メイリオ", 8.0!)
         Me.Label31.Location = New System.Drawing.Point(83, 0)
         Me.Label31.Name = "Label31"
         Me.Label31.Size = New System.Drawing.Size(62, 30)
@@ -154,7 +154,7 @@ Partial Class EqualizerForm
         'Label62
         '
         Me.Label62.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label62.Font = New System.Drawing.Font("MS UI Gothic", 8.0!)
+        Me.Label62.Font = New System.Drawing.Font("メイリオ", 8.0!)
         Me.Label62.Location = New System.Drawing.Point(151, 0)
         Me.Label62.Name = "Label62"
         Me.Label62.Size = New System.Drawing.Size(62, 30)
@@ -165,7 +165,7 @@ Partial Class EqualizerForm
         'Label125
         '
         Me.Label125.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label125.Font = New System.Drawing.Font("MS UI Gothic", 8.0!)
+        Me.Label125.Font = New System.Drawing.Font("メイリオ", 8.0!)
         Me.Label125.Location = New System.Drawing.Point(219, 0)
         Me.Label125.Name = "Label125"
         Me.Label125.Size = New System.Drawing.Size(62, 30)
@@ -176,7 +176,7 @@ Partial Class EqualizerForm
         'Label250
         '
         Me.Label250.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label250.Font = New System.Drawing.Font("MS UI Gothic", 8.0!)
+        Me.Label250.Font = New System.Drawing.Font("メイリオ", 8.0!)
         Me.Label250.Location = New System.Drawing.Point(287, 0)
         Me.Label250.Name = "Label250"
         Me.Label250.Size = New System.Drawing.Size(62, 30)
@@ -187,7 +187,7 @@ Partial Class EqualizerForm
         'Label500
         '
         Me.Label500.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label500.Font = New System.Drawing.Font("MS UI Gothic", 8.0!)
+        Me.Label500.Font = New System.Drawing.Font("メイリオ", 8.0!)
         Me.Label500.Location = New System.Drawing.Point(355, 0)
         Me.Label500.Name = "Label500"
         Me.Label500.Size = New System.Drawing.Size(62, 30)
@@ -198,7 +198,7 @@ Partial Class EqualizerForm
         'Label1k
         '
         Me.Label1k.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label1k.Font = New System.Drawing.Font("MS UI Gothic", 8.0!)
+        Me.Label1k.Font = New System.Drawing.Font("メイリオ", 8.0!)
         Me.Label1k.Location = New System.Drawing.Point(423, 0)
         Me.Label1k.Name = "Label1k"
         Me.Label1k.Size = New System.Drawing.Size(62, 30)
@@ -209,7 +209,7 @@ Partial Class EqualizerForm
         'Label2k
         '
         Me.Label2k.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label2k.Font = New System.Drawing.Font("MS UI Gothic", 8.0!)
+        Me.Label2k.Font = New System.Drawing.Font("メイリオ", 8.0!)
         Me.Label2k.Location = New System.Drawing.Point(491, 0)
         Me.Label2k.Name = "Label2k"
         Me.Label2k.Size = New System.Drawing.Size(62, 30)
@@ -220,7 +220,7 @@ Partial Class EqualizerForm
         'Label4k
         '
         Me.Label4k.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label4k.Font = New System.Drawing.Font("MS UI Gothic", 8.0!)
+        Me.Label4k.Font = New System.Drawing.Font("メイリオ", 8.0!)
         Me.Label4k.Location = New System.Drawing.Point(559, 0)
         Me.Label4k.Name = "Label4k"
         Me.Label4k.Size = New System.Drawing.Size(62, 30)
@@ -231,7 +231,7 @@ Partial Class EqualizerForm
         'Label8k
         '
         Me.Label8k.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label8k.Font = New System.Drawing.Font("MS UI Gothic", 8.0!)
+        Me.Label8k.Font = New System.Drawing.Font("メイリオ", 8.0!)
         Me.Label8k.Location = New System.Drawing.Point(627, 0)
         Me.Label8k.Name = "Label8k"
         Me.Label8k.Size = New System.Drawing.Size(62, 30)
@@ -242,7 +242,7 @@ Partial Class EqualizerForm
         'Label16k
         '
         Me.Label16k.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label16k.Font = New System.Drawing.Font("MS UI Gothic", 8.0!)
+        Me.Label16k.Font = New System.Drawing.Font("メイリオ", 8.0!)
         Me.Label16k.Location = New System.Drawing.Point(695, 0)
         Me.Label16k.Name = "Label16k"
         Me.Label16k.Size = New System.Drawing.Size(62, 30)
@@ -403,7 +403,7 @@ Partial Class EqualizerForm
         'LabelGain31
         '
         Me.LabelGain31.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.LabelGain31.Font = New System.Drawing.Font("MS UI Gothic", 8.0!)
+        Me.LabelGain31.Font = New System.Drawing.Font("メイリオ", 8.0!)
         Me.LabelGain31.Location = New System.Drawing.Point(83, 380)
         Me.LabelGain31.Name = "LabelGain31"
         Me.LabelGain31.Size = New System.Drawing.Size(62, 30)
@@ -414,7 +414,7 @@ Partial Class EqualizerForm
         'LabelGain62
         '
         Me.LabelGain62.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.LabelGain62.Font = New System.Drawing.Font("MS UI Gothic", 8.0!)
+        Me.LabelGain62.Font = New System.Drawing.Font("メイリオ", 8.0!)
         Me.LabelGain62.Location = New System.Drawing.Point(151, 380)
         Me.LabelGain62.Name = "LabelGain62"
         Me.LabelGain62.Size = New System.Drawing.Size(62, 30)
@@ -425,7 +425,7 @@ Partial Class EqualizerForm
         'LabelGain125
         '
         Me.LabelGain125.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.LabelGain125.Font = New System.Drawing.Font("MS UI Gothic", 8.0!)
+        Me.LabelGain125.Font = New System.Drawing.Font("メイリオ", 8.0!)
         Me.LabelGain125.Location = New System.Drawing.Point(219, 380)
         Me.LabelGain125.Name = "LabelGain125"
         Me.LabelGain125.Size = New System.Drawing.Size(62, 30)
@@ -436,7 +436,7 @@ Partial Class EqualizerForm
         'LabelGain250
         '
         Me.LabelGain250.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.LabelGain250.Font = New System.Drawing.Font("MS UI Gothic", 8.0!)
+        Me.LabelGain250.Font = New System.Drawing.Font("メイリオ", 8.0!)
         Me.LabelGain250.Location = New System.Drawing.Point(287, 380)
         Me.LabelGain250.Name = "LabelGain250"
         Me.LabelGain250.Size = New System.Drawing.Size(62, 30)
@@ -447,7 +447,7 @@ Partial Class EqualizerForm
         'LabelGain500
         '
         Me.LabelGain500.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.LabelGain500.Font = New System.Drawing.Font("MS UI Gothic", 8.0!)
+        Me.LabelGain500.Font = New System.Drawing.Font("メイリオ", 8.0!)
         Me.LabelGain500.Location = New System.Drawing.Point(355, 380)
         Me.LabelGain500.Name = "LabelGain500"
         Me.LabelGain500.Size = New System.Drawing.Size(62, 30)
@@ -458,7 +458,7 @@ Partial Class EqualizerForm
         'LabelGain1k
         '
         Me.LabelGain1k.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.LabelGain1k.Font = New System.Drawing.Font("MS UI Gothic", 8.0!)
+        Me.LabelGain1k.Font = New System.Drawing.Font("メイリオ", 8.0!)
         Me.LabelGain1k.Location = New System.Drawing.Point(423, 380)
         Me.LabelGain1k.Name = "LabelGain1k"
         Me.LabelGain1k.Size = New System.Drawing.Size(62, 30)
@@ -469,7 +469,7 @@ Partial Class EqualizerForm
         'LabelGain2k
         '
         Me.LabelGain2k.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.LabelGain2k.Font = New System.Drawing.Font("MS UI Gothic", 8.0!)
+        Me.LabelGain2k.Font = New System.Drawing.Font("メイリオ", 8.0!)
         Me.LabelGain2k.Location = New System.Drawing.Point(491, 380)
         Me.LabelGain2k.Name = "LabelGain2k"
         Me.LabelGain2k.Size = New System.Drawing.Size(62, 30)
@@ -480,7 +480,7 @@ Partial Class EqualizerForm
         'LabelGain4k
         '
         Me.LabelGain4k.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.LabelGain4k.Font = New System.Drawing.Font("MS UI Gothic", 8.0!)
+        Me.LabelGain4k.Font = New System.Drawing.Font("メイリオ", 8.0!)
         Me.LabelGain4k.Location = New System.Drawing.Point(559, 380)
         Me.LabelGain4k.Name = "LabelGain4k"
         Me.LabelGain4k.Size = New System.Drawing.Size(62, 30)
@@ -491,7 +491,7 @@ Partial Class EqualizerForm
         'LabelGain8k
         '
         Me.LabelGain8k.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.LabelGain8k.Font = New System.Drawing.Font("MS UI Gothic", 8.0!)
+        Me.LabelGain8k.Font = New System.Drawing.Font("メイリオ", 8.0!)
         Me.LabelGain8k.Location = New System.Drawing.Point(627, 380)
         Me.LabelGain8k.Name = "LabelGain8k"
         Me.LabelGain8k.Size = New System.Drawing.Size(62, 30)
@@ -502,7 +502,7 @@ Partial Class EqualizerForm
         'LabelGain16k
         '
         Me.LabelGain16k.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.LabelGain16k.Font = New System.Drawing.Font("MS UI Gothic", 8.0!)
+        Me.LabelGain16k.Font = New System.Drawing.Font("メイリオ", 8.0!)
         Me.LabelGain16k.Location = New System.Drawing.Point(695, 380)
         Me.LabelGain16k.Name = "LabelGain16k"
         Me.LabelGain16k.Size = New System.Drawing.Size(62, 30)
@@ -514,7 +514,7 @@ Partial Class EqualizerForm
         '
         Me.ButtonReset.Dock = System.Windows.Forms.DockStyle.Fill
         Me.ButtonReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ButtonReset.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold)
+        Me.ButtonReset.Font = New System.Drawing.Font("メイリオ", 8.0!, System.Drawing.FontStyle.Bold)
         Me.ButtonReset.Location = New System.Drawing.Point(3, 412)
         Me.ButtonReset.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.ButtonReset.Name = "ButtonReset"
@@ -528,7 +528,7 @@ Partial Class EqualizerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.ButtonNC, 2)
         Me.ButtonNC.Dock = System.Windows.Forms.DockStyle.Fill
         Me.ButtonNC.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ButtonNC.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold)
+        Me.ButtonNC.Font = New System.Drawing.Font("メイリオ", 8.0!, System.Drawing.FontStyle.Bold)
         Me.ButtonNC.Location = New System.Drawing.Point(355, 412)
         Me.ButtonNC.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.ButtonNC.Name = "ButtonNC"
@@ -541,7 +541,7 @@ Partial Class EqualizerForm
         '
         Me.ButtonClose.Dock = System.Windows.Forms.DockStyle.Fill
         Me.ButtonClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ButtonClose.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold)
+        Me.ButtonClose.Font = New System.Drawing.Font("メイリオ", 8.0!, System.Drawing.FontStyle.Bold)
         Me.ButtonClose.Location = New System.Drawing.Point(763, 412)
         Me.ButtonClose.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.ButtonClose.Name = "ButtonClose"
@@ -554,7 +554,7 @@ Partial Class EqualizerForm
         '
         Me.TableLayoutPanel1.SetColumnSpan(Me.LabelCH, 2)
         Me.LabelCH.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.LabelCH.Font = New System.Drawing.Font("MS UI Gothic", 8.0!)
+        Me.LabelCH.Font = New System.Drawing.Font("メイリオ", 8.0!)
         Me.LabelCH.Location = New System.Drawing.Point(3, 455)
         Me.LabelCH.Name = "LabelCH"
         Me.LabelCH.Size = New System.Drawing.Size(142, 30)
@@ -567,7 +567,7 @@ Partial Class EqualizerForm
         Me.CheckBox1.AutoSize = True
         Me.TableLayoutPanel1.SetColumnSpan(Me.CheckBox1, 2)
         Me.CheckBox1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CheckBox1.Font = New System.Drawing.Font("MS UI Gothic", 8.0!)
+        Me.CheckBox1.Font = New System.Drawing.Font("メイリオ", 8.0!)
         Me.CheckBox1.Location = New System.Drawing.Point(151, 458)
         Me.CheckBox1.Name = "CheckBox1"
         Me.CheckBox1.Size = New System.Drawing.Size(130, 24)
@@ -580,7 +580,7 @@ Partial Class EqualizerForm
         Me.CheckBox2.AutoSize = True
         Me.TableLayoutPanel1.SetColumnSpan(Me.CheckBox2, 2)
         Me.CheckBox2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CheckBox2.Font = New System.Drawing.Font("MS UI Gothic", 8.0!)
+        Me.CheckBox2.Font = New System.Drawing.Font("メイリオ", 8.0!)
         Me.CheckBox2.Location = New System.Drawing.Point(287, 458)
         Me.CheckBox2.Name = "CheckBox2"
         Me.CheckBox2.Size = New System.Drawing.Size(130, 24)
@@ -593,7 +593,7 @@ Partial Class EqualizerForm
         Me.CheckBox3.AutoSize = True
         Me.TableLayoutPanel1.SetColumnSpan(Me.CheckBox3, 2)
         Me.CheckBox3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CheckBox3.Font = New System.Drawing.Font("MS UI Gothic", 8.0!)
+        Me.CheckBox3.Font = New System.Drawing.Font("メイリオ", 8.0!)
         Me.CheckBox3.Location = New System.Drawing.Point(423, 458)
         Me.CheckBox3.Name = "CheckBox3"
         Me.CheckBox3.Size = New System.Drawing.Size(130, 24)
@@ -606,7 +606,7 @@ Partial Class EqualizerForm
         Me.CheckBox4.AutoSize = True
         Me.TableLayoutPanel1.SetColumnSpan(Me.CheckBox4, 2)
         Me.CheckBox4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CheckBox4.Font = New System.Drawing.Font("MS UI Gothic", 8.0!)
+        Me.CheckBox4.Font = New System.Drawing.Font("メイリオ", 8.0!)
         Me.CheckBox4.Location = New System.Drawing.Point(559, 458)
         Me.CheckBox4.Name = "CheckBox4"
         Me.CheckBox4.Size = New System.Drawing.Size(130, 24)
@@ -619,7 +619,7 @@ Partial Class EqualizerForm
         Me.TableLayoutPanel1.SetColumnSpan(Me.ButtonMono, 2)
         Me.ButtonMono.Dock = System.Windows.Forms.DockStyle.Fill
         Me.ButtonMono.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ButtonMono.Font = New System.Drawing.Font("MS UI Gothic", 8.0!, System.Drawing.FontStyle.Bold)
+        Me.ButtonMono.Font = New System.Drawing.Font("メイリオ", 8.0!, System.Drawing.FontStyle.Bold)
         Me.ButtonMono.Location = New System.Drawing.Point(695, 458)
         Me.ButtonMono.Name = "ButtonMono"
         Me.ButtonMono.Size = New System.Drawing.Size(166, 24)

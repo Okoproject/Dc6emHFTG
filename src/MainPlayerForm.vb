@@ -388,6 +388,7 @@ Public Class MainPlayerForm
 
     ''' <summary>
     ''' TableLayoutPanel1内のボタンフォントサイズを自動調整
+    ''' テキストがボタンの幅と高さに収まるようにする
     ''' </summary>
     Private Sub AdjustTableLayoutPanelButtonFonts()
         If TableLayoutPanel1 Is Nothing Then Return
@@ -395,9 +396,28 @@ Public Class MainPlayerForm
         For Each ctrl As Control In GetAllControls(TableLayoutPanel1)
             If TypeOf ctrl Is System.Windows.Forms.Button Then
                 Dim btn = DirectCast(ctrl, System.Windows.Forms.Button)
+                If String.IsNullOrEmpty(btn.Text) Then Continue For
+
                 ' ボタンの高さから適切なフォントサイズを計算（パディング考慮）
                 Dim availableHeight = btn.Height - btn.Margin.Vertical - 4
-                Dim fontSize = CSng(Math.Max(7, Math.Min(14, availableHeight * 0.45)))
+                Dim maxFontSize = CSng(Math.Max(7, Math.Min(14, availableHeight * 0.45)))
+
+                ' テキストがボタンの幅に収まる最大のフォントサイズを求める
+                Dim fontSize = maxFontSize
+                Dim availableWidth = btn.Width - btn.Margin.Horizontal - 8
+                If availableWidth > 0 Then
+                    Dim testFont As New Font(btn.Font.FontFamily, fontSize, btn.Font.Style)
+                    Dim textSize = TextRenderer.MeasureText(btn.Text, testFont)
+                    If textSize.Width > availableWidth Then
+                        While fontSize > 7 AndAlso textSize.Width > availableWidth
+                            fontSize -= 0.5F
+                            testFont.Dispose()
+                            testFont = New Font(btn.Font.FontFamily, fontSize, btn.Font.Style)
+                            textSize = TextRenderer.MeasureText(btn.Text, testFont)
+                        End While
+                    End If
+                    testFont.Dispose()
+                End If
 
                 ' サイズが変わっていない場合にFontを作り直すと、幅だけの変化（例：プレイリスト開閉）でも
                 ' 全ボタンが不要に再描画されてしまうため、実際にサイズが変わる場合のみ再代入する
@@ -1306,6 +1326,10 @@ Public Class MainPlayerForm
     Private Sub SetPlaybackSpeed(speed As Double)
         _currentPlaybackSpeed = speed
         _mediaPlayer.Speed = speed
+        ' TrackBar2のValueを連動させる（Min=5, Max=40 → 0.5〜4.0倍速）
+        Dim trackValue = CInt(speed / SpeedMultiplier)
+        trackValue = Math.Max(TrackBar2.Minimum, Math.Min(TrackBar2.Maximum, trackValue))
+        TrackBar2.Value = trackValue
         Label4.Text = "x" & speed.ToString("F1")
     End Sub
 
